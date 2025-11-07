@@ -1,0 +1,498 @@
+{% extends 'components/includes/base.html' %}
+{% load static %}
+
+{% block title %}{{ page_title }}{% endblock %}
+
+{% block extra_css %}
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = {
+        theme: {
+            extend: {
+                fontFamily: {
+                    'sans': ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+                },
+                colors: {
+                    'gray': {
+                        50: '#fafafa',
+                        100: '#f5f5f5',
+                        200: '#e5e5e5',
+                        300: '#d4d4d4',
+                        400: '#a3a3a3',
+                        500: '#737373',
+                        600: '#525252',
+                        700: '#404040',
+                        800: '#262626',
+                        900: '#171717',
+                    }
+                }
+            }
+        }
+    }
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+    .status-badge {
+        @apply inline-flex items-center px-3 py-1.5 rounded-full text-sm font-medium border;
+    }
+    .status-pending { @apply bg-orange-50 text-orange-800 border-orange-200; }
+    .status-confirmed { @apply bg-blue-50 text-blue-800 border-blue-200; }
+    .status-processing { @apply bg-indigo-50 text-indigo-800 border-indigo-200; }
+    .status-shipped { @apply bg-purple-50 text-purple-800 border-purple-200; }
+    .status-delivered { @apply bg-green-50 text-green-800 border-green-200; }
+    .status-cancelled { @apply bg-red-50 text-red-800 border-red-200; }
+    
+    .timeline-item {
+        @apply flex items-start space-x-4 pb-8 relative;
+    }
+    .timeline-item:not(:last-child)::after {
+        content: '';
+        @apply absolute left-4 top-10 w-0.5 h-full bg-gray-200;
+    }
+    .timeline-item.completed::after {
+        @apply bg-black;
+    }
+    
+    .timeline-icon {
+        @apply w-8 h-8 rounded-full border-2 border-gray-300 bg-white flex items-center justify-center flex-shrink-0 z-10;
+    }
+    .timeline-icon.completed {
+        @apply border-black bg-black text-white;
+    }
+    .timeline-icon.cancelled {
+        @apply border-red-500 bg-red-500 text-white;
+    }
+    
+    .item-image {
+        @apply w-20 h-20 object-cover rounded-lg border border-gray-200;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+       
+
+        <!-- Order Header -->
+        <div class="bg-white border border-gray-200 rounded-xl p-6 sm:p-8 mb-6">
+            <div class="flex flex-col lg:flex-row lg:items-start lg:justify-between">
+                <div class="flex-1">
+                    <h1 class="text-2xl sm:text-3xl font-bold text-black mb-3">Order #{{ order.order_id }}</h1>
+                    <div class="flex flex-col sm:flex-row sm:items-center gap-3 mb-3">
+                        <span class="status-badge status-{{ order.status }}">
+                            {{ order.get_status_display }}
+                        </span>
+                        {% if order.payment_status == 'paid' %}
+                            <span class="inline-flex items-center px-3 py-1.5 rounded-full text-sm font-medium bg-green-50 text-green-800 border border-green-200">
+                                Payment Completed
+                            </span>
+                        {% elif order.payment_status == 'failed' %}
+                            <span class="inline-flex items-center px-3 py-1.5 rounded-full text-sm font-medium bg-red-50 text-red-800 border border-red-200">
+                                Payment Failed
+                            </span>
+                        {% elif order.payment_status == 'pending' %}
+                            <span class="inline-flex items-center px-3 py-1.5 rounded-full text-sm font-medium bg-yellow-50 text-yellow-800 border border-yellow-200">
+                                Payment Pending
+                            </span>
+                        {% endif %}
+                    </div>
+                    <p class="text-gray-600 text-sm sm:text-base">Placed on {{ order.created_at|date:"F d, Y \a\t g:i A" }}</p>
+                </div>
+                
+                <!-- Order Actions -->
+                <div class="mt-6 lg:mt-0 flex flex-col sm:flex-row gap-3 lg:flex-shrink-0">
+                    {% if can_cancel %}
+                        <button onclick="cancelOrder()" 
+                                class="bg-black text-white px-6 py-3 rounded-lg font-medium hover:bg-gray-800 transition-colors duration-200 text-center">
+                            Cancel Order
+                        </button>
+                    {% endif %}
+                    
+                    {% if order.payment_status == 'paid' %}
+                        <a href="{% url 'download_invoice' order.order_id %}" 
+                           class="bg-white border border-gray-300 text-black px-6 py-3 rounded-lg text-center font-medium hover:bg-gray-50 transition-colors duration-200">
+                            Download Invoice
+                        </a>
+                    {% endif %}
+                    
+                    {% if order.status == 'delivered' %}
+                        <a href="{% url 'orders:reorder' order.order_id %}" 
+                           class="bg-black text-white px-6 py-3 rounded-lg text-center font-medium hover:bg-gray-800 transition-colors duration-200">
+                            Reorder Items
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- Main Content -->
+            <div class="lg:col-span-2 space-y-6">
+                <!-- Order Items -->
+                <div class="bg-white border border-gray-200 rounded-xl p-6">
+                    <h2 class="text-xl font-semibold text-black mb-6">Order Items ({{ order_summary.item_count }} item{{ order_summary.item_count|pluralize }})</h2>
+                    <div class="space-y-4">
+                        {% for item in order.items.all %}
+                            <div class="flex items-start space-x-4 p-4 border border-gray-100 rounded-lg hover:border-gray-200 transition-colors">
+                                <!-- Item Image -->
+                                <div class="flex-shrink-0">
+                                    {% if item.variant.image %}
+                                        <img src="{{ item.variant.image.url }}" alt="{{ item.product_name }}" class="item-image">
+                                    {% elif item.product.get_primary_image %}
+                                        <img src="{{ item.product.get_primary_image }}" alt="{{ item.product_name }}" class="item-image">
+                                    {% else %}
+                                        <div class="item-image bg-gray-100 flex items-center justify-center">
+                                            <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                            </svg>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                
+                                <!-- Item Details -->
+                                <div class="flex-1 min-w-0">
+                                    <h3 class="font-semibold text-black text-lg mb-1">{{ item.product_name }}</h3>
+                                    {% if item.variant_details %}
+                                        <p class="text-sm text-gray-600 mb-3">{{ item.variant_details }}</p>
+                                    {% endif %}
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-sm text-gray-600">Qty: {{ item.quantity }}</span>
+                                        <div class="text-right">
+                                            <div class="text-xl font-semibold text-black">₹{{ item.total_price|floatformat:0 }}</div>
+                                            <div class="text-sm text-gray-500">₹{{ item.unit_price|floatformat:0 }} each</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Order Timeline -->
+                <div class="bg-white border border-gray-200 rounded-xl p-6">
+                    <h2 class="text-xl font-semibold text-black mb-6">Order Timeline</h2>
+                    <div class="space-y-0">
+                        {% for step in timeline %}
+                            <div class="timeline-item {% if step.completed %}completed{% endif %} {% if step.is_cancelled %}cancelled{% endif %}">
+                                <div class="timeline-icon {% if step.completed %}completed{% endif %} {% if step.is_cancelled %}cancelled{% endif %}">
+                                    {% if step.icon == 'check-circle' %}
+                                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                        </svg>
+                                    {% elif step.icon == 'truck' %}
+                                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                            <path d="M8 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM15 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z"></path>
+                                            <path d="M3 4a1 1 0 011-1h1a1 1 0 011 1v7a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM7.268 4A2 2 0 019.25 2h7.5A2.25 2.25 0 0119 4.25v6.5A2.25 2.25 0 0116.75 13H15a1 1 0 01-1-1V4H7.268z"></path>
+                                        </svg>
+                                    {% elif step.icon == 'x-circle' %}
+                                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                                        </svg>
+                                    {% endif %}
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <h3 class="font-medium text-black text-lg">{{ step.title }}</h3>
+                                    <p class="text-gray-600 mt-1">{{ step.description }}</p>
+                                    {% if step.date %}
+                                        <p class="text-sm text-gray-500 mt-2">{{ step.date|date:"M d, Y \a\t g:i A" }}</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Status Updates History -->
+                {% if status_updates %}
+                    <div class="bg-white border border-gray-200 rounded-xl p-6">
+                        <h2 class="text-xl font-semibold text-black mb-6">Status History</h2>
+                        <div class="space-y-4">
+                            {% for update in status_updates %}
+                                <div class="border-l-4 border-black pl-6 py-3 bg-gray-50 rounded-r-lg">
+                                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                                        <span class="font-medium text-black">
+                                            {% if update.old_status %}
+                                                {{ update.old_status|capfirst }} → {{ update.new_status|capfirst }}
+                                            {% else %}
+                                                Status changed to {{ update.new_status|capfirst }}
+                                            {% endif %}
+                                        </span>
+                                        <span class="text-sm text-gray-500">{{ update.created_at|date:"M d, Y g:i A" }}</span>
+                                    </div>
+                                    {% if update.notes %}
+                                        <p class="text-sm text-gray-600 mt-2">{{ update.notes }}</p>
+                                    {% endif %}
+                                    {% if update.updated_by %}
+                                        <p class="text-xs text-gray-500 mt-2">Updated by {{ update.updated_by.get_full_name|default:update.updated_by.username }}</p>
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Sidebar -->
+            <div class="space-y-6">
+                <!-- Order Summary -->
+                <div class="bg-white border border-gray-200 rounded-xl p-6">
+                    <h2 class="text-lg font-semibold text-black mb-6">Order Summary</h2>
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-600">Subtotal ({{ order_summary.total_quantity }} items)</span>
+                            <span class="font-medium text-black">₹{{ order_summary.subtotal|floatformat:0 }}</span>
+                        </div>
+                        {% if order_summary.discount > 0 %}
+                            <div class="flex justify-between items-center text-green-700">
+                                <span>Discount</span>
+                                <span class="font-medium">-₹{{ order_summary.discount|floatformat:0 }}</span>
+                            </div>
+                        {% endif %}
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-600">Shipping</span>
+                            <span class="font-medium text-black">
+                                {% if order_summary.shipping == 0 %}
+                                    Free
+                                {% else %}
+                                    ₹{{ order_summary.shipping|floatformat:0 }}
+                                {% endif %}
+                            </span>
+                        </div>
+                        {% if order_summary.tax > 0 %}
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-600">Tax</span>
+                                <span class="font-medium text-black">₹{{ order_summary.tax|floatformat:0 }}</span>
+                            </div>
+                        {% endif %}
+                        <div class="border-t pt-4">
+                            <div class="flex justify-between items-center">
+                                <span class="text-lg font-semibold text-black">Total</span>
+                                <span class="text-2xl font-bold text-black">₹{{ order_summary.total|floatformat:0 }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Payment Information -->
+                <div class="bg-white border border-gray-200 rounded-xl p-6">
+                    <h2 class="text-lg font-semibold text-black mb-6">Payment Details</h2>
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-600">Method</span>
+                            <span class="font-medium text-black capitalize">{{ order.get_payment_method_display }}</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-600">Status</span>
+                            <span class="font-medium capitalize {% if order.payment_status == 'paid' %}text-green-700{% elif order.payment_status == 'failed' %}text-red-700{% else %}text-orange-700{% endif %}">
+                                {{ order.get_payment_status_display }}
+                            </span>
+                        </div>
+                        {% if order.payment_reference %}
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-600">Reference</span>
+                                <span class="font-mono text-sm text-black">{{ order.payment_reference }}</span>
+                            </div>
+                        {% endif %}
+                        {% if order.coupon_code %}
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-600">Coupon</span>
+                                <span class="font-mono text-sm text-black">{{ order.coupon_code }}</span>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Shipping Information -->
+                <div class="bg-white border border-gray-200 rounded-xl p-6">
+                    <h2 class="text-lg font-semibold text-black mb-6">Shipping Address</h2>
+                    {% if order.shipping_address %}
+                        <div class="text-sm space-y-1">
+                            <p class="font-medium text-black">{{ order.shipping_address.first_name }} {{ order.shipping_address.last_name }}</p>
+                            <p class="text-gray-600">{{ order.shipping_address.address_line_1 }}</p>
+                            {% if order.shipping_address.address_line_2 %}
+                                <p class="text-gray-600">{{ order.shipping_address.address_line_2 }}</p>
+                            {% endif %}
+                            <p class="text-gray-600">{{ order.shipping_address.city }}, {{ order.shipping_address.state }} {{ order.shipping_address.postal_code }}</p>
+                            <p class="text-gray-600">{{ order.shipping_address.country }}</p>
+                            {% if order.shipping_address.phone %}
+                                <p class="text-gray-600 mt-3">Phone: {{ order.shipping_address.phone }}</p>
+                            {% endif %}
+                        </div>
+                    {% else %}
+                        <p class="text-gray-500">No shipping address provided</p>
+                    {% endif %}
+                </div>
+
+                <!-- Tracking Information -->
+                {% if delivery_info.tracking_available or delivery_info.estimated_delivery %}
+                    <div class="bg-white border border-gray-200 rounded-xl p-6">
+                        <h2 class="text-lg font-semibold text-black mb-6">Delivery Information</h2>
+                        <div class="space-y-4">
+                            {% if order.tracking_id %}
+                                <div>
+                                    <span class="text-sm text-gray-600 block mb-1">Tracking ID</span>
+                                    <p class="font-mono text-sm text-black">{{ order.tracking_id }}</p>
+                                </div>
+                            {% endif %}
+                            {% if order.courier_partner %}
+                                <div>
+                                    <span class="text-sm text-gray-600 block mb-1">Courier Partner</span>
+                                    <p class="text-black">{{ order.courier_partner }}</p>
+                                </div>
+                            {% endif %}
+                            {% if delivery_info.estimated_delivery %}
+                                <div>
+                                    <span class="text-sm text-gray-600 block mb-1">Estimated Delivery</span>
+                                    <p class="text-black">{{ delivery_info.estimated_delivery|date:"M d, Y" }}</p>
+                                </div>
+                            {% endif %}
+                            {% if delivery_info.delivery_date %}
+                                <div>
+                                    <span class="text-sm text-gray-600 block mb-1">Delivered On</span>
+                                    <p class="text-green-700 font-medium">{{ delivery_info.delivery_date|date:"M d, Y \a\t g:i A" }}</p>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endif %}
+
+                <!-- Order Notes -->
+                {% if order.order_notes %}
+                    <div class="bg-white border border-gray-200 rounded-xl p-6">
+                        <h2 class="text-lg font-semibold text-black mb-6">Order Notes</h2>
+                        <p class="text-sm text-gray-600 leading-relaxed">{{ order.order_notes }}</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Cancel Order Modal -->
+<div id="cancelModal" class="fixed inset-0 bg-black bg-opacity-50 overflow-y-auto h-full w-full hidden z-50">
+    <div class="relative top-20 mx-auto p-5 border w-full max-w-md shadow-2xl rounded-2xl bg-white m-4">
+        <div class="mt-3 text-center">
+            <h3 class="text-xl font-semibold text-black mb-4">Cancel Order</h3>
+            <div class="mb-6">
+                <p class="text-gray-600">
+                    Are you sure you want to cancel order #{{ order.order_id }}? This action cannot be undone.
+                </p>
+            </div>
+            <div class="flex flex-col sm:flex-row justify-center gap-3">
+                <button id="cancelConfirm" 
+                        class="bg-red-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-red-700 transition-colors">
+                    Yes, Cancel Order
+                </button>
+                <button onclick="closeCancelModal()" 
+                        class="bg-gray-200 text-black px-6 py-3 rounded-lg font-medium hover:bg-gray-300 transition-colors">
+                    Keep Order
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+
+<script>
+    window.ORDER_ID = "{{ order.order_id }}";
+</script>
+
+
+<script>
+// Ensure DOM is loaded before defining functions
+document.addEventListener('DOMContentLoaded', function() {
+    
+    // Define functions in global scope
+    window.cancelOrder = function() {
+        document.getElementById('cancelModal').classList.remove('hidden');
+    }
+
+    window.closeCancelModal = function() {
+        document.getElementById('cancelModal').classList.add('hidden');
+    }
+
+    // Event listener for cancel confirmation
+    const cancelConfirmBtn = document.getElementById('cancelConfirm');
+    if (cancelConfirmBtn) {
+        cancelConfirmBtn.addEventListener('click', function() {
+            fetch(`/user_orders/{{ order.order_id }}/cancel/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken')
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    location.reload();
+                } else {
+                    alert(data.message || 'Failed to cancel order');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Failed to cancel order');
+            })
+            .finally(() => {
+                closeCancelModal();
+            });
+        });
+    }
+
+    // Get CSRF token function
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+});
+
+// Alternative approach - define functions globally without DOMContentLoaded
+// Use this if you need the functions available immediately
+
+/*
+function cancelOrder() {
+    document.getElementById('cancelModal').classList.remove('hidden');
+}
+
+function closeCancelModal() {
+    document.getElementById('cancelModal').classList.add('hidden');
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    const cancelConfirmBtn = document.getElementById('cancelConfirm');
+    if (cancelConfirmBtn) {
+        cancelConfirmBtn.addEventListener('click', function() {
+            // ... rest of the code same as above
+        });
+    }
+});
+*/
+
+// Auto-refresh order status every 30 seconds for active orders
+{% if order.status in 'pending,confirmed,processing,shipped' %}
+setInterval(function() {
+    fetch(`/orders/{{ order.order_id }}/status/`)
+        .then(response => response.json())
+        .then(data => {
+            // You can update status indicators here without full page reload
+            console.log('Current status:', data.status);
+        })
+        .catch(error => console.error('Error checking status:', error));
+}, 30000);
+{% endif %}
+</script>
+{% endblock %}

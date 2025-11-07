@@ -1,0 +1,119 @@
+<!-- templates/products/partials/product_grid.html -->
+<!-- Partial template for AJAX loading of product grid -->
+
+{% for product in products %}
+<div class="product-card">
+    <!-- Product Badges -->
+    <div class="product-badges">
+        {% if product.is_new_arrival %}
+        <span class="badge badge-new">NEW</span>
+        {% endif %}
+        {% if product.get_discount_percent %}
+        <span class="badge badge-sale">{{ product.get_discount_percent }}% OFF</span>
+        {% endif %}
+        {% if product.is_bestseller %}
+        <span class="badge badge-bestseller">BESTSELLER</span>
+        {% endif %}
+        {% if product.is_featured %}
+        <span class="badge badge-featured">FEATURED</span>
+        {% endif %}
+    </div>
+
+    <!-- Product Actions -->
+    <div class="product-actions">
+        <button class="action-btn" onclick="toggleWishlist({{ product.id }})" title="Add to Wishlist">
+            ♡
+        </button>
+        <button class="action-btn" onclick="quickView({{ product.id }})" title="Quick View">
+            👁
+        </button>
+        <button class="action-btn" onclick="addToCompare({{ product.id }})" title="Compare">
+            ⚖
+        </button>
+    </div>
+
+    <!-- Product Image -->
+    <div class="product-image">
+        <a href="{% url 'products:product-detail' product.slug %}">
+            {% if product.get_primary_image %}
+            <img src="{{ product.get_primary_image }}" alt="{{ product.name }}">
+            {% else %}
+            <div style="height: 100%; background: #f0f0f0; display: flex; align-items: center; justify-content: center; color: #666;">
+                No Image Available
+            </div>
+            {% endif %}
+        </a>
+    </div>
+
+    <!-- Product Info -->
+    <div class="product-info">
+        <h3 class="product-title">
+            <a href="{% url 'products:product-detail' product.slug %}">{{ product.name }}</a>
+        </h3>
+        
+        <div class="product-meta">
+            {{ product.brand.name }} | {{ product.category.name }}
+        </div>
+
+        <!-- Product Rating -->
+        {% if product.avg_rating %}
+        <div class="product-rating">
+            <span class="stars">
+                {% for i in "12345" %}
+                    {% if forloop.counter <= product.avg_rating %}★{% else %}☆{% endif %}
+                {% endfor %}
+            </span>
+            <span>({{ product.review_count }} reviews)</span>
+        </div>
+        {% endif %}
+
+        <!-- Product Price -->
+        <div class="product-price">
+            {% if product.discounted_price %}
+            <span class="price-original">${{ product.base_price }}</span>
+            <span class="price-current">${{ product.discounted_price }}</span>
+            <span class="discount-percent">{{ product.get_discount_percent }}% OFF</span>
+            {% else %}
+            <span class="price-current">${{ product.base_price }}</span>
+            {% endif %}
+        </div>
+
+        <!-- Available Colors -->
+        {% if product.get_available_colors %}
+        <div class="product-colors">
+            {% for color in product.get_available_colors|slice:":5" %}
+            <div class="color-swatch" 
+                 style="background: {{ color.hex_code }};" 
+                 title="{{ color.name }}"></div>
+            {% endfor %}
+            {% if product.get_available_colors|length > 5 %}
+            <span style="font-size: 0.8rem; color: #666;">+{{ product.get_available_colors|length|add:"-5" }} more</span>
+            {% endif %}
+        </div>
+        {% endif %}
+
+        <!-- Stock Status -->
+        <div class="stock-status">
+            {% if product.is_in_stock %}
+            <span class="in-stock">✓ In Stock</span>
+            {% else %}
+            <span class="out-of-stock">✗ Out of Stock</span>
+            {% endif %}
+        </div>
+
+        <!-- Action Buttons -->
+        <div style="display: flex; gap: 0.5rem; margin-top: 1rem;">
+            <a href="{% url 'products:product-detail' product.slug %}" 
+               style="flex: 1; background: #007bff; color: white; padding: 0.75rem; border-radius: 5px; text-decoration: none; text-align: center;">
+                View Details
+            </a>
+            {% if product.is_in_stock %}
+            <button onclick="addToCart({{ product.id }})" 
+                    style="background: #28a745; color: white; border: none; padding: 0.75rem 1rem; border-radius: 5px; cursor: pointer;">
+                🛒
+            </button>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endfor %}

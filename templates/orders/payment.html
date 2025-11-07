@@ -1,0 +1,267 @@
+{% extends 'components/includes/base.html'%}
+
+{% block content %}
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Your Payment - Skatezo</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Custom Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'inter': ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+                    },
+                    colors: {
+                        'primary': '#000000',
+                        'secondary': '#6B7280',
+                        'accent': '#F3F4F6',
+                        'border': '#E5E7EB',
+                    },
+                    animation: {
+                        'spin-slow': 'spin 1.5s linear infinite',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+        .logo-gradient {
+            background: linear-gradient(135deg, #000000 0%, #374151 100%);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-inter">
+    <!-- Header with Logo -->
+    <div class="bg-white border-b border-border">
+        <div class="max-w-2xl mx-auto px-4 py-6">
+            <div class="flex items-center justify-center">
+               <div class="w-12 h-12 rounded-full logo-gradient flex items-center justify-center mr-3 overflow-hidden">
+                    <img src="{% static 'brand/images/skatezo.jpeg' %}" class="w-full h-full object-cover rounded-full">
+                </div>
+
+                <h1 class="text-2xl font-semibold text-primary">Skatezo</h1>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="min-h-screen bg-gray-50 py-8 px-4">
+        <div class="max-w-lg mx-auto">
+            <!-- Progress Indicator -->
+            
+            <!-- Payment Card -->
+            <div class="bg-white rounded-2xl shadow-sm border border-border overflow-hidden">
+                <!-- Header -->
+                <div class="px-6 py-5 border-b border-border">
+                    <h2 class="text-xl font-semibold text-primary">Complete Payment</h2>
+                    <p class="text-secondary text-sm mt-1">Review your order and complete the payment</p>
+                </div>
+
+                <!-- Order Summary -->
+                <div class="px-6 py-5 bg-accent/30">
+                    <h3 class="font-medium text-primary mb-4">Order Summary</h3>
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center">
+                            <span class="text-secondary text-sm">Order ID</span>
+                            <span class="font-mono text-sm text-primary font-medium">{{ order.order_id }}</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-secondary text-sm">Total Amount</span>
+                            <span class="text-2xl font-semibold text-primary">₹{{ order.total_amount }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Payment Section -->
+                <div class="px-6 py-6">
+                    <!-- Security Badge -->
+                    <div class="flex items-center justify-center mb-6">
+                        <div class="flex items-center bg-green-50 px-3 py-2 rounded-full">
+                            <svg class="w-4 h-4 text-green-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/>
+                            </svg>
+                            <span class="text-green-700 text-xs font-medium">Secured by Razorpay</span>
+                        </div>
+                    </div>
+
+                    <!-- Payment Button -->
+                    <button id="rzp-button" class="w-full bg-primary text-white py-4 rounded-xl font-medium text-lg hover:bg-gray-800 transition-colors duration-200 focus:outline-none focus:ring-4 focus:ring-primary/20 active:scale-98 transform">
+                        Pay ₹{{ order.total_amount }} Now
+                    </button>
+
+                    <!-- Processing State -->
+                    <div id="payment-processing" class="hidden">
+                        <div class="flex flex-col items-center justify-center py-8">
+                            <div class="w-12 h-12 border-4 border-primary/20 border-t-primary rounded-full animate-spin-slow mb-4"></div>
+                            <h3 class="font-medium text-primary mb-2">Processing Payment</h3>
+                            <p class="text-secondary text-sm text-center">Please don't close this window. We're securely processing your payment...</p>
+                        </div>
+                    </div>
+
+                    <!-- Payment Methods -->
+                    <div class="mt-6 pt-6 border-t border-border">
+                        <p class="text-center text-xs text-secondary mb-4">We accept</p>
+                        <div class="flex items-center justify-center space-x-4 opacity-60">
+                            <div class="w-8 h-5 bg-gradient-to-r from-blue-600 to-blue-400 rounded text-white text-xs flex items-center justify-center font-bold">VISA</div>
+                            <div class="w-8 h-5 bg-gradient-to-r from-red-600 to-orange-400 rounded text-white text-xs flex items-center justify-center font-bold">MC</div>
+                            <div class="w-8 h-5 bg-gradient-to-r from-purple-600 to-purple-400 rounded text-white text-xs flex items-center justify-center font-bold">UPI</div>
+                            <div class="w-8 h-5 bg-gradient-to-r from-green-600 to-green-400 rounded text-white text-xs flex items-center justify-center font-bold">NB</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="mt-6 text-center">
+                <p class="text-xs text-secondary">
+                    By proceeding, you agree to our 
+                    <a href="#" class="text-primary hover:underline">Terms of Service</a> and 
+                    <a href="#" class="text-primary hover:underline">Privacy Policy</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Razorpay SDK -->
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+    <!-- Your existing JavaScript (unchanged) -->
+    <script>
+    // Helper function to get CSRF token
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    // Wait for DOM to be fully loaded
+    document.addEventListener('DOMContentLoaded', function() {
+        const payButton = document.getElementById('rzp-button');
+        const processingDiv = document.getElementById('payment-processing');
+        
+        if (!payButton) {
+            console.error('Payment button not found');
+            return;
+        }
+
+        // Check if Razorpay is loaded
+        if (typeof Razorpay === 'undefined') {
+            console.error('Razorpay SDK not loaded');
+            alert('Payment system not available. Please refresh the page.');
+            return;
+        }
+
+        payButton.onclick = function(e) {
+            e.preventDefault();
+            
+            // Validate required parameters
+            const keyId = "{{ razorpay_key_id }}";
+            const amount = "{{ amount }}";
+            const orderId = "{{ razorpay_order_id }}";
+            
+            if (!keyId || !amount || !orderId) {
+                alert('Payment configuration incomplete. Please try again.');
+                console.error('Missing required payment parameters');
+                return;
+            }
+
+            var options = {
+                "key": keyId,
+                "amount": amount, // Amount in paise
+                "currency": "{{ currency }}",
+                "name": "Skatezo",
+                "description": "Order {{ order.order_id }}",
+                "order_id": orderId,
+                "handler": function (response) {
+                    // Show processing indicator
+                    processingDiv.classList.remove('hidden');
+                    payButton.classList.add('hidden');
+
+                    // Send payment verification request to backend
+                    fetch('/orders/verify-payment/', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': getCookie('csrftoken')
+                        },
+                        body: JSON.stringify({
+                            razorpay_payment_id: response.razorpay_payment_id,
+                            razorpay_order_id: response.razorpay_order_id,
+                            razorpay_signature: response.razorpay_signature
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            window.location.href = data.redirect_url;
+                        } else {
+                            alert('Payment verification failed: ' + data.error);
+                            window.location.reload();
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Payment verification error:', error);
+                        alert('Error processing payment: ' + error);
+                        window.location.reload();
+                    });
+                },
+                "prefill": {
+                    "name": "{{ user_name }}",
+                    "email": "{{ request.user.email }}",
+                    "contact": "{{ user_phone }}"
+                },
+                "theme": {
+                    "color": "#000000"
+                },
+                "modal": {
+                    "ondismiss": function() {
+                        // Handle payment modal dismissal
+                        console.log("Payment modal closed");
+                        // Reset UI state
+                        processingDiv.classList.add('hidden');
+                        payButton.classList.remove('hidden');
+                    }
+                }
+            };
+
+            try {
+                var rzp = new Razorpay(options);
+                rzp.open();
+            } catch (error) {
+                console.error('Error opening Razorpay:', error);
+                alert('Payment system error. Please try again.');
+            }
+        };
+    });
+    </script>
+</body>
+</html>
+{% endblock %}

@@ -1,0 +1,1182 @@
+{% extends 'components/includes/base.html' %}
+{% load static %}
+
+{% block title %}Future Purchase Dashboard{% endblock %}
+
+{% block extra_css %}
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = {
+        darkMode: 'class',
+        theme: {
+            extend: {
+                colors: {
+                    primary: {
+                        50: '#eff6ff',
+                        100: '#dbeafe',
+                        200: '#bfdbfe',
+                        300: '#93c5fd',
+                        400: '#60a5fa',
+                        500: '#3b82f6',
+                        600: '#2563eb',
+                        700: '#1d4ed8',
+                        800: '#1e40af',
+                        900: '#1e3a8a'
+                    },
+                    dark: {
+                        50: '#f8fafc',
+                        100: '#f1f5f9',
+                        200: '#e2e8f0',
+                        300: '#cbd5e1',
+                        400: '#94a3b8',
+                        500: '#64748b',
+                        600: '#475569',
+                        700: '#334155',
+                        800: '#1e293b',
+                        900: '#0f172a'
+                    }
+                },
+                fontFamily: {
+                    'sans': ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+                },
+                boxShadow: {
+                    'card': '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)',
+                    'card-hover': '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+                    'glow': '0 0 20px rgba(59, 130, 246, 0.3)'
+                },
+                animation: {
+                    'fade-in': 'fadeIn 0.5s ease-in-out',
+                    'slide-up': 'slideUp 0.3s ease-out',
+                    'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite'
+                }
+            }
+        }
+    }
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+    
+    @keyframes slideUp {
+        from { transform: translateY(10px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+    }
+    
+    .glass-effect {
+        backdrop-filter: blur(10px);
+        background: rgba(15, 23, 42, 0.8);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .gradient-border {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 1px;
+        border-radius: 12px;
+    }
+    
+    .gradient-border > div {
+        background: #0f172a;
+        border-radius: 11px;
+    }
+    
+    .custom-scrollbar::-webkit-scrollbar {
+        width: 6px;
+    }
+    
+    .custom-scrollbar::-webkit-scrollbar-track {
+        background: #1e293b;
+        border-radius: 3px;
+    }
+    
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: #475569;
+        border-radius: 3px;
+    }
+    
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+        background: #64748b;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="dark min-h-screen bg-gradient-to-br from-dark-900 via-dark-800 to-dark-900">
+    <!-- Background Pattern -->
+    <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23334155" fill-opacity="0.05"%3E%3Cpath d="m36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-30"></div>
+    
+    <div class="relative z-10 p-4 lg:p-8">
+        <!-- Dashboard Header -->
+        <div class="mb-8 animate-fade-in">
+            <div class="max-w-7xl mx-auto">
+                <div class="glass-effect rounded-2xl p-6 lg:p-8">
+                    <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between">
+                        <div class="mb-4 lg:mb-0">
+                            <h1 class="text-3xl lg:text-4xl font-bold text-white mb-2 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                                Future Purchase Dashboard
+                            </h1>
+                            <p class="text-dark-300 text-lg">Manage and monitor your scheduled purchases with intelligent automation</p>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <button onclick="refreshDashboard()" class="inline-flex items-center px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-lg transition-all duration-200 hover:shadow-glow">
+                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                                </svg>
+                                Refresh
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Statistics Cards -->
+        <div class="mb-8 animate-slide-up">
+            <div class="max-w-7xl mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+                    <!-- Total Purchases -->
+                    <div class="gradient-border">
+                        <div class="p-6">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-dark-400 text-sm font-medium mb-1">Total Purchases</p>
+                                    <p class="text-2xl font-bold text-white" id="total-purchases">{{ stats.total_purchases }}</p>
+                                </div>
+                                <div class="bg-blue-500/20 p-3 rounded-xl">
+                                    <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Active Purchases -->
+                    <div class="gradient-border">
+                        <div class="p-6">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-dark-400 text-sm font-medium mb-1">Active Purchases</p>
+                                    <p class="text-2xl font-bold text-white" id="active-purchases">{{ stats.active_purchases }}</p>
+                                </div>
+                                <div class="bg-green-500/20 p-3 rounded-xl">
+                                    <svg class="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Auto Purchases -->
+                    <div class="gradient-border">
+                        <div class="p-6">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-dark-400 text-sm font-medium mb-1">Auto Purchases</p>
+                                    <p class="text-2xl font-bold text-white" id="auto-purchases">{{ stats.auto_purchases }}</p>
+                                </div>
+                                <div class="bg-purple-500/20 p-3 rounded-xl">
+                                    <svg class="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Estimated Value -->
+                    <div class="gradient-border">
+                        <div class="p-6">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-dark-400 text-sm font-medium mb-1">Estimated Value</p>
+                                    <p class="text-2xl font-bold text-white" id="total-value">${{ stats.total_estimated_value|floatformat:2 }}</p>
+                                </div>
+                                <div class="bg-yellow-500/20 p-3 rounded-xl">
+                                    <svg class="w-6 h-6 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Due This Week -->
+                    <div class="gradient-border">
+                        <div class="p-6">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-dark-400 text-sm font-medium mb-1">Due This Week</p>
+                                    <p class="text-2xl font-bold text-white" id="upcoming-week">{{ stats.upcoming_this_week }}</p>
+                                </div>
+                                <div class="bg-red-500/20 p-3 rounded-xl">
+                                    <svg class="w-6 h-6 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filters and Controls -->
+        <div class="mb-8">
+            <div class="max-w-7xl mx-auto">
+                <div class="glass-effect rounded-2xl p-6">
+                    <form id="filter-form" method="get">
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 items-end">
+                            <!-- Search -->
+                            <div class="lg:col-span-2">
+                                <label class="block text-sm font-medium text-dark-300 mb-2">Search Purchases</label>
+                                <div class="relative">
+                                    <input type="text" name="search" class="w-full bg-dark-700 border border-dark-600 rounded-lg px-4 py-3 pl-10 text-white placeholder-dark-400 focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200" placeholder="Search by title, product..." value="{{ current_filters.search }}">
+                                    <svg class="absolute left-3 top-3.5 w-5 h-5 text-dark-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                            
+                            <!-- Status Filter -->
+                            <div>
+                                <label class="block text-sm font-medium text-dark-300 mb-2">Status</label>
+                                <select name="status" class="w-full bg-dark-700 border border-dark-600 rounded-lg px-4 py-3 text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200">
+                                    <option value="all">All Status</option>
+                                    {% for value, label in status_choices %}
+                                        <option value="{{ value }}" {% if current_filters.status == value %}selected{% endif %}>{{ label }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            
+                            <!-- Action Type Filter -->
+                            <div>
+                                <label class="block text-sm font-medium text-dark-300 mb-2">Action Type</label>
+                                <select name="action" class="w-full bg-dark-700 border border-dark-600 rounded-lg px-4 py-3 text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200">
+                                    <option value="all">All Actions</option>
+                                    {% for value, label in action_choices %}
+                                        <option value="{{ value }}" {% if current_filters.action == value %}selected{% endif %}>{{ label }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            
+                            <!-- Filter Button -->
+                            <div>
+                                <button type="submit" class="w-full bg-gradient-to-r from-primary-600 to-purple-600 hover:from-primary-700 hover:to-purple-700 text-white font-medium py-3 px-6 rounded-lg transition-all duration-200 hover:shadow-glow flex items-center justify-center">
+                                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.207A1 1 0 013 6.5V4z"></path>
+                                    </svg>
+                                    Filter
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Purchases Section -->
+        <div class="max-w-7xl mx-auto">
+            <div class="glass-effect rounded-2xl overflow-hidden">
+                <!-- Section Header -->
+                <div class="p-6 border-b border-dark-700">
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+                        <h2 class="text-xl font-semibold text-white mb-4 sm:mb-0">Your Future Purchases</h2>
+                        <div class="flex items-center space-x-3">
+                            <span class="text-sm text-dark-400">Last updated: just now</span>
+                        </div>
+                    </div>
+                </div>
+
+                {% if purchases %}
+                    <!-- Desktop Table View -->
+                    <div class="hidden lg:block overflow-x-auto custom-scrollbar">
+                        <table class="w-full">
+                            <thead class="bg-dark-800">
+                                <tr>
+                                    <th class="px-6 py-4 text-left text-xs font-medium text-dark-300 uppercase tracking-wider">Purchase Details</th>
+                                    <th class="px-6 py-4 text-left text-xs font-medium text-dark-300 uppercase tracking-wider">Scheduled Date</th>
+                                    <th class="px-6 py-4 text-left text-xs font-medium text-dark-300 uppercase tracking-wider">Status</th>
+                                    <th class="px-6 py-4 text-left text-xs font-medium text-dark-300 uppercase tracking-wider">Priority</th>
+                                    <th class="px-6 py-4 text-left text-xs font-medium text-dark-300 uppercase tracking-wider">Estimated Cost</th>
+                                    <th class="px-6 py-4 text-left text-xs font-medium text-dark-300 uppercase tracking-wider">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-dark-700">
+                                {% for purchase in purchases %}
+                                <tr data-purchase-id="{{ purchase.id }}" class="hover:bg-dark-800/50 transition-colors duration-200">
+                                    <td class="px-6 py-4">
+                                        <div class="space-y-1">
+                                            <div class="text-white font-medium">{{ purchase.title }}</div>
+                                            <div class="text-dark-300 text-sm">{{ purchase.product.name }}</div>
+                                            {% if purchase.variant %}
+                                                <div class="text-dark-400 text-xs">{{ purchase.variant.color.name }} - {{ purchase.variant.size.name }}</div>
+                                            {% endif %}
+                                            <div class="text-dark-400 text-xs">Qty: {{ purchase.quantity }} | {{ purchase.get_frequency_display }}</div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="space-y-1">
+                                            <div class="text-white text-sm">{{ purchase.scheduled_date|date:"M d, Y H:i" }}</div>
+                                            {% if purchase.next_execution_date %}
+                                                <div class="text-dark-400 text-xs">Next: {{ purchase.next_execution_date|date:"M d, Y" }}</div>
+                                            {% endif %}
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-500/20 text-green-400 border border-green-500/30">
+                                            {{ purchase.get_priority_display }}
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="space-y-1">
+                                            <div class="text-white font-medium">${{ purchase.get_estimated_total|floatformat:2 }}</div>
+                                            {% if purchase.max_price %}
+                                                <div class="text-dark-400 text-xs">Max: ${{ purchase.max_price|floatformat:2 }}</div>
+                                            {% endif %}
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center space-x-2">
+                                            <button onclick="viewPurchaseDetails({{ purchase.id }})" class="inline-flex items-center px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs rounded-md transition-colors duration-200">
+                                                <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                                </svg>
+                                                View
+                                            </button>
+                                            {% if purchase.is_active %}
+                                                <button onclick="togglePurchaseActive({{ purchase.id }})" class="inline-flex items-center px-3 py-1.5 bg-yellow-600 hover:bg-yellow-700 text-white text-xs rounded-md transition-colors duration-200">
+                                                    <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                                    </svg>
+                                                    Pause
+                                                </button>
+                                            {% else %}
+                                                <button onclick="togglePurchaseActive({{ purchase.id }})" class="inline-flex items-center px-3 py-1.5 bg-green-600 hover:bg-green-700 text-white text-xs rounded-md transition-colors duration-200">
+                                                    <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1m4 0h1m-6 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                                    </svg>
+                                                    Resume
+                                                </button>
+                                            {% endif %}
+                                            <button onclick="deletePurchase({{ purchase.id }}, '{{ purchase.title|escapejs }}')" class="inline-flex items-center px-3 py-1.5 bg-red-600 hover:bg-red-700 text-white text-xs rounded-md transition-colors duration-200">
+                                                <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                                </svg>
+                                                Delete
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Mobile Card View -->
+                    <div class="lg:hidden divide-y divide-dark-700">
+                        {% for purchase in purchases %}
+                        <div data-purchase-id="{{ purchase.id }}" class="p-6">
+                            <div class="space-y-4">
+                                <!-- Purchase Info -->
+                                <div>
+                                    <h3 class="text-white font-medium mb-1">{{ purchase.title }}</h3>
+                                    <p class="text-dark-300 text-sm">{{ purchase.product.name }}</p>
+                                    {% if purchase.variant %}
+                                        <p class="text-dark-400 text-xs mt-1">{{ purchase.variant.color.name }} - {{ purchase.variant.size.name }}</p>
+                                    {% endif %}
+                                </div>
+                                
+                                <!-- Details Grid -->
+                                <div class="grid grid-cols-2 gap-4 text-sm">
+                                    <div>
+                                        <p class="text-dark-400 mb-1">Scheduled Date</p>
+                                        <p class="text-white">{{ purchase.scheduled_date|date:"M d, Y" }}</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-dark-400 mb-1">Estimated Cost</p>
+                                        <p class="text-white font-medium">${{ purchase.get_estimated_total|floatformat:2 }}</p>
+                                    </div>
+                                </div>
+                                
+                                <!-- Status and Actions -->
+                                <div class="flex items-center justify-between">
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-500/20 text-green-400 border border-green-500/30">
+                                        {{ purchase.get_priority_display }}
+                                    </span>
+                                    <div class="flex items-center space-x-2">
+                                        <button onclick="viewPurchaseDetails({{ purchase.id }})" class="p-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md transition-colors duration-200">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                            </svg>
+                                        </button>
+                                        {% if purchase.is_active %}
+                                            <button onclick="togglePurchaseActive({{ purchase.id }})" class="p-2 bg-yellow-600 hover:bg-yellow-700 text-white rounded-md transition-colors duration-200">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                                </svg>
+                                            </button>
+                                        {% else %}
+                                            <button onclick="togglePurchaseActive({{ purchase.id }})" class="p-2 bg-green-600 hover:bg-green-700 text-white rounded-md transition-colors duration-200">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1m4 0h1m-6 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                                </svg>
+                                            </button>
+                                        {% endif %}
+                                        <button onclick="deletePurchase({{ purchase.id }}, '{{ purchase.title|escapejs }}')" class="p-2 bg-red-600 hover:bg-red-700 text-white rounded-md transition-colors duration-200">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Pagination -->
+                    {% if purchases.has_other_pages %}
+                        <div class="px-6 py-4 border-t border-dark-700">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center space-x-2">
+                                    {% if purchases.has_previous %}
+                                        <a href="?page=1{% for key, value in current_filters.items %}&{{ key }}={{ value }}{% endfor %}" class="inline-flex items-center px-3 py-2 bg-dark-700 hover:bg-dark-600 text-white text-sm rounded-md transition-colors duration-200">
+                                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 19l-7-7 7-7m8 14l-7-7 7-7"></path>
+                                            </svg>
+                                            First
+                                        </a>
+                                        <a href="?page={{ purchases.previous_page_number }}{% for key, value in current_filters.items %}&{{ key }}={{ value }}{% endfor %}" class="inline-flex items-center px-3 py-2 bg-dark-700 hover:bg-dark-600 text-white text-sm rounded-md transition-colors duration-200">
+                                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                                            </svg>
+                                            Previous
+                                        </a>
+                                    {% endif %}
+                                </div>
+
+                                <span class="text-dark-300 text-sm">
+                                    Page {{ purchases.number }} of {{ purchases.paginator.num_pages }}
+                                </span>
+
+                                <div class="flex items-center space-x-2">
+                                    {% if purchases.has_next %}
+                                        <a href="?page={{ purchases.next_page_number }}{% for key, value in current_filters.items %}&{{ key }}={{ value }}{% endfor %}" class="inline-flex items-center px-3 py-2 bg-dark-700 hover:bg-dark-600 text-white text-sm rounded-md transition-colors duration-200">
+                                            Next
+                                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                            </svg>
+                                        </a>
+                                        <a href="?page={{ purchases.paginator.num_pages }}{% for key, value in current_filters.items %}&{{ key }}={{ value }}{% endfor %}" class="inline-flex items-center px-3 py-2 bg-dark-700 hover:bg-dark-600 text-white text-sm rounded-md transition-colors duration-200">
+                                            Last
+                                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"></path>
+                                            </svg>
+                                        </a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% else %}
+                    <!-- Empty State -->
+                    <div class="p-12 text-center">
+                        <div class="mx-auto w-24 h-24 bg-dark-700 rounded-full flex items-center justify-center mb-6">
+                            <svg class="w-12 h-12 text-dark-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 3H3m4 10L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17M17 13v4a2 2 0 01-2 2H9a2 2 0 01-2-2v-4m8 0V9a2 2 0 00-2-2H9a2 2 0 00-2 2v4.01"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-white mb-2">No Future Purchases Found</h3>
+                        <p class="text-dark-300 mb-6 max-w-md mx-auto">
+                            {% if current_filters.search or current_filters.status != 'all' or current_filters.action != 'all' or current_filters.priority != 'all' %}
+                                No purchases match your current filters. Try adjusting your search criteria or clear all filters.
+                            {% else %}
+                                You haven't scheduled any future purchases yet. Start by adding your first automated purchase to streamline your shopping experience.
+                            {% endif %}
+                        </p>
+                        <div class="flex flex-col sm:flex-row items-center justify-center space-y-3 sm:space-y-0 sm:space-x-4">
+                            <a href="#" class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-primary-600 to-purple-600 hover:from-primary-700 hover:to-purple-700 text-white font-medium rounded-lg transition-all duration-200 hover:shadow-glow">
+                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                </svg>
+                                Add New Purchase
+                            </a>
+                            {% if current_filters.search or current_filters.status != 'all' or current_filters.action != 'all' or current_filters.priority != 'all' %}
+                                <a href="?" class="inline-flex items-center px-6 py-3 bg-dark-700 hover:bg-dark-600 text-white font-medium rounded-lg transition-colors duration-200">
+                                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                    </svg>
+                                    Clear Filters
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Custom Modal for Purchase Details -->
+<div id="purchase-details-modal" class="fixed inset-0 z-50 hidden">
+    <div class="fixed inset-0 bg-black/80 backdrop-blur-sm transition-opacity"></div>
+    <div class="fixed inset-0 z-10 overflow-y-auto">
+        <div class="flex min-h-full items-center justify-center p-4">
+            <div class="relative transform overflow-hidden rounded-2xl glass-effect max-w-4xl w-full max-h-[90vh] overflow-y-auto custom-scrollbar transition-all">
+                <div class="p-6 border-b border-dark-700">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-xl font-semibold text-white">Purchase Details</h3>
+                        <button onclick="closeModal('purchase-details-modal')" class="p-2 hover:bg-dark-700 rounded-lg text-dark-400 hover:text-white transition-colors duration-200">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="p-6" id="purchase-details-content">
+                    <div class="flex items-center justify-center py-12">
+                        <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-500"></div>
+                        <span class="ml-3 text-dark-300">Loading purchase details...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modern Toast Container -->
+<div id="toast-container" class="fixed top-4 right-4 z-50 space-y-4"></div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// CSRF Token Setup
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+const csrftoken = getCookie('csrftoken');
+
+// Modal Management
+function openModal(modalId) {
+    const modal = document.getElementById(modalId);
+    modal.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+    // Add animation
+    setTimeout(() => {
+        modal.querySelector('.transform').classList.add('scale-100', 'opacity-100');
+        modal.querySelector('.transform').classList.remove('scale-95', 'opacity-0');
+    }, 10);
+}
+
+function closeModal(modalId) {
+    const modal = document.getElementById(modalId);
+    modal.querySelector('.transform').classList.add('scale-95', 'opacity-0');
+    modal.querySelector('.transform').classList.remove('scale-100', 'opacity-100');
+    setTimeout(() => {
+        modal.classList.add('hidden');
+        document.body.style.overflow = 'auto';
+    }, 200);
+}
+
+// Close modal when clicking outside
+window.onclick = function(event) {
+    const modals = document.querySelectorAll('[id$="-modal"]');
+    modals.forEach(modal => {
+        if (event.target === modal) {
+            closeModal(modal.id);
+        }
+    });
+}
+
+// Modern Toast Notifications
+function showToast(message, type = 'success') {
+    const toastContainer = document.getElementById('toast-container');
+    const toast = document.createElement('div');
+    
+    const icons = {
+        success: '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>',
+        error: '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>',
+        warning: '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>',
+        info: '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>'
+    };
+    
+    const colors = {
+        success: 'bg-green-500/20 border-green-500/30 text-green-400',
+        error: 'bg-red-500/20 border-red-500/30 text-red-400',
+        warning: 'bg-yellow-500/20 border-yellow-500/30 text-yellow-400',
+        info: 'bg-blue-500/20 border-blue-500/30 text-blue-400'
+    };
+    
+    toast.className = `flex items-center p-4 mb-4 text-sm rounded-lg border backdrop-blur-sm transform translate-x-full transition-all duration-300 ${colors[type]}`;
+    toast.innerHTML = `
+        <div class="flex items-center">
+            ${icons[type]}
+            <span class="ml-3 font-medium">${message}</span>
+        </div>
+        <button onclick="this.parentElement.remove()" class="ml-auto -mx-1.5 -my-1.5 p-1.5 inline-flex h-8 w-8 rounded-lg hover:bg-white/10 transition-colors duration-200">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+        </button>
+    `;
+    
+    toastContainer.appendChild(toast);
+    
+    // Animate in
+    setTimeout(() => {
+        toast.classList.remove('translate-x-full');
+        toast.classList.add('translate-x-0');
+    }, 10);
+    
+    // Auto remove after 5 seconds
+    setTimeout(() => {
+        toast.classList.add('translate-x-full');
+        setTimeout(() => {
+            if (toast.parentNode) {
+                toast.parentNode.removeChild(toast);
+            }
+        }, 300);
+    }, 5000);
+}
+
+// View Purchase Details with Enhanced Styling
+async function viewPurchaseDetails(purchaseId) {
+    const modal = document.getElementById('purchase-details-modal');
+    const content = document.getElementById('purchase-details-content');
+    
+    // Show loading state
+    content.innerHTML = `
+        <div class="flex items-center justify-center py-12">
+            <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-500"></div>
+            <span class="ml-3 text-dark-300">Loading purchase details...</span>
+        </div>
+    `;
+    
+    openModal('purchase-details-modal');
+    
+    try {
+        const response = await fetch(`/schedule_purchase/future-purchases/details/${purchaseId}/`, {
+            method: 'GET',
+            headers: {
+                'X-CSRFToken': csrftoken,
+                'Content-Type': 'application/json',
+            },
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            const purchase = data.data;
+            const canExecute = purchase.can_execute;
+            
+            content.innerHTML = `
+                <div class="space-y-6">
+                    <!-- Basic Information -->
+                    <div class="bg-dark-800/50 rounded-xl p-6 border border-dark-700">
+                        <h4 class="text-lg font-semibold text-white mb-4 flex items-center">
+                            <svg class="w-5 h-5 mr-2 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                            </svg>
+                            Basic Information
+                        </h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="space-y-3">
+                                <div>
+                                    <label class="block text-sm font-medium text-dark-400 mb-1">Title</label>
+                                    <p class="text-white font-medium">${purchase.title}</p>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-dark-400 mb-1">Product</label>
+                                    <p class="text-white">${purchase.product_name}</p>
+                                </div>
+                                ${purchase.variant_info ? `
+                                <div>
+                                    <label class="block text-sm font-medium text-dark-400 mb-1">Variant</label>
+                                    <p class="text-white">${purchase.variant_info}</p>
+                                </div>
+                                ` : ''}
+                            </div>
+                            <div class="space-y-3">
+                                <div>
+                                    <label class="block text-sm font-medium text-dark-400 mb-1">Quantity</label>
+                                    <p class="text-white font-medium">${purchase.quantity}</p>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-dark-400 mb-1">Status</label>
+                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-500/20 text-green-400 border border-green-500/30">
+                                        ${purchase.status}
+                                    </span>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-dark-400 mb-1">Priority</label>
+                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-500/20 text-blue-400 border border-blue-500/30">
+                                        ${purchase.priority}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Scheduling Information -->
+                    <div class="bg-dark-800/50 rounded-xl p-6 border border-dark-700">
+                        <h4 class="text-lg font-semibold text-white mb-4 flex items-center">
+                            <svg class="w-5 h-5 mr-2 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                            </svg>
+                            Scheduling Details
+                        </h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="space-y-3">
+                                <div>
+                                    <label class="block text-sm font-medium text-dark-400 mb-1">Scheduled Date</label>
+                                    <p class="text-white font-medium">${purchase.scheduled_date}</p>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-dark-400 mb-1">Frequency</label>
+                                    <p class="text-white">${purchase.frequency}</p>
+                                </div>
+                            </div>
+                            <div class="space-y-3">
+                                ${purchase.next_execution_date ? `
+                                <div>
+                                    <label class="block text-sm font-medium text-dark-400 mb-1">Next Execution</label>
+                                    <p class="text-white font-medium">${purchase.next_execution_date}</p>
+                                </div>
+                                ` : ''}
+                                <div>
+                                    <label class="block text-sm font-medium text-dark-400 mb-1">Total Executions</label>
+                                    <p class="text-white font-medium">${purchase.execution_count}</p>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-dark-400 mb-1">Can Execute</label>
+                                    <div class="flex items-center">
+                                        <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${canExecute[0] ? 'bg-green-500/20 text-green-400 border border-green-500/30' : 'bg-red-500/20 text-red-400 border border-red-500/30'}">
+                                            ${canExecute[0] ? '✅ Yes' : '❌ No'}
+                                        </span>
+                                    </div>
+                                    ${!canExecute[0] ? `<p class="text-dark-400 text-sm mt-1">${canExecute[1]}</p>` : ''}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Financial Information -->
+                    <div class="bg-dark-800/50 rounded-xl p-6 border border-dark-700">
+                        <h4 class="text-lg font-semibold text-white mb-4 flex items-center">
+                            <svg class="w-5 h-5 mr-2 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
+                            </svg>
+                            Financial Details
+                        </h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="space-y-3">
+                                <div>
+                                    <label class="block text-sm font-medium text-dark-400 mb-1">Estimated Total</label>
+                                    <p class="text-2xl font-bold text-green-400">${purchase.estimated_total.toFixed(2)}</p>
+                                </div>
+                                ${purchase.max_price ? `
+                                <div>
+                                    <label class="block text-sm font-medium text-dark-400 mb-1">Max Price</label>
+                                    <p class="text-lg font-semibold text-white">${purchase.max_price.toFixed(2)}</p>
+                                </div>
+                                ` : ''}
+                            </div>
+                            ${purchase.budget_limit ? `
+                            <div class="space-y-3">
+                                <div>
+                                    <label class="block text-sm font-medium text-dark-400 mb-1">Budget Limit</label>
+                                    <p class="text-lg font-semibold text-white">${purchase.budget_limit.toFixed(2)}</p>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-dark-400 mb-1">Spent Amount</label>
+                                    <p class="text-lg font-semibold text-white">${purchase.spent_amount.toFixed(2)}</p>
+                                </div>
+                            </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                    
+                    ${purchase.notes ? `
+                    <!-- Notes -->
+                    <div class="bg-dark-800/50 rounded-xl p-6 border border-dark-700">
+                        <h4 class="text-lg font-semibold text-white mb-4 flex items-center">
+                            <svg class="w-5 h-5 mr-2 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                            </svg>
+                            Notes
+                        </h4>
+                        <div class="bg-dark-700/50 rounded-lg p-4 border border-dark-600">
+                            <p class="text-dark-200">${purchase.notes}</p>
+                        </div>
+                    </div>
+                    ` : ''}
+                    
+                    <!-- Action Buttons -->
+                    <div class="flex flex-col sm:flex-row items-center justify-end space-y-3 sm:space-y-0 sm:space-x-4 pt-6 border-t border-dark-700">
+                        <button onclick="closeModal('purchase-details-modal')" class="w-full sm:w-auto px-6 py-3 bg-dark-700 hover:bg-dark-600 text-white font-medium rounded-lg transition-colors duration-200">
+                            Close
+                        </button>
+                        <button onclick="editPurchase(${purchase.id})" class="w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-primary-600 to-purple-600 hover:from-primary-700 hover:to-purple-700 text-white font-medium rounded-lg transition-all duration-200 hover:shadow-glow">
+                            <svg class="w-5 h-5 mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                            </svg>
+                            Edit Purchase
+                        </button>
+                    </div>
+                </div>
+            `;
+        } else {
+            content.innerHTML = `
+                <div class="text-center py-12">
+                    <div class="mx-auto w-16 h-16 bg-red-500/20 rounded-full flex items-center justify-center mb-4">
+                        <svg class="w-8 h-8 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                        </svg>
+                    </div>
+                    <h4 class="text-lg font-semibold text-white mb-2">Error Loading Details</h4>
+                    <p class="text-dark-300 mb-6">${data.error}</p>
+                    <button onclick="closeModal('purchase-details-modal')" class="px-6 py-3 bg-dark-700 hover:bg-dark-600 text-white font-medium rounded-lg transition-colors duration-200">
+                        Close
+                    </button>
+                </div>
+            `;
+        }
+    } catch (error) {
+        content.innerHTML = `
+            <div class="text-center py-12">
+                <div class="mx-auto w-16 h-16 bg-red-500/20 rounded-full flex items-center justify-center mb-4">
+                    <svg class="w-8 h-8 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                </div>
+                <h4 class="text-lg font-semibold text-white mb-2">Network Error</h4>
+                <p class="text-dark-300 mb-6">Failed to load purchase details. Please check your connection and try again.</p>
+                <button onclick="closeModal('purchase-details-modal')" class="px-6 py-3 bg-dark-700 hover:bg-dark-600 text-white font-medium rounded-lg transition-colors duration-200">
+                    Close
+                </button>
+            </div>
+        `;
+    }
+}
+
+// Toggle Purchase Active Status
+async function togglePurchaseActive(purchaseId) {
+    const row = document.querySelector(`tr[data-purchase-id="${purchaseId}"], div[data-purchase-id="${purchaseId}"]`);
+    const button = row.querySelector('.bg-yellow-600, .bg-green-600');
+    
+    // Add loading state
+    const originalContent = button.innerHTML;
+    button.innerHTML = `
+        <div class="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+    `;
+    button.disabled = true;
+    
+    try {
+        const response = await fetch(`/schedule_purchase/future-purchases/toggle-active/${purchaseId}/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': csrftoken,
+                'Content-Type': 'application/json',
+            },
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            // Update button based on new state
+            if (data.is_active) {
+                button.className = button.className.replace('bg-green-600 hover:bg-green-700', 'bg-yellow-600 hover:bg-yellow-700');
+                button.innerHTML = `
+                    <svg class="w-3 h-3 mr-1 lg:w-4 lg:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <span class="hidden lg:inline">Pause</span>
+                `;
+            } else {
+                button.className = button.className.replace('bg-yellow-600 hover:bg-yellow-700', 'bg-green-600 hover:bg-green-700');
+                button.innerHTML = `
+                    <svg class="w-3 h-3 mr-1 lg:w-4 lg:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1m4 0h1m-6 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <span class="hidden lg:inline">Resume</span>
+                `;
+            }
+            button.disabled = false;
+            showToast(data.message, 'success');
+            refreshStats();
+        } else {
+            button.innerHTML = originalContent;
+            button.disabled = false;
+            showToast(data.error, 'error');
+        }
+    } catch (error) {
+        button.innerHTML = originalContent;
+        button.disabled = false;
+        showToast('Network error. Please try again.', 'error');
+    }
+}
+
+// Delete Purchase with Enhanced Confirmation
+async function deletePurchase(purchaseId, title) {
+    // Create custom confirmation modal
+    const confirmModal = document.createElement('div');
+    confirmModal.className = 'fixed inset-0 z-50 flex items-center justify-center p-4';
+    confirmModal.innerHTML = `
+        <div class="fixed inset-0 bg-black/80 backdrop-blur-sm"></div>
+        <div class="relative bg-dark-800 rounded-2xl border border-dark-700 max-w-md w-full p-6">
+            <div class="text-center">
+                <div class="mx-auto w-16 h-16 bg-red-500/20 rounded-full flex items-center justify-center mb-4">
+                    <svg class="w-8 h-8 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-lg font-semibold text-white mb-2">Delete Purchase</h3>
+                <p class="text-dark-300 mb-6">Are you sure you want to delete <strong class="text-white">"${title}"</strong>? This action cannot be undone.</p>
+                <div class="flex space-x-4">
+                    <button onclick="this.closest('.fixed').remove()" class="flex-1 px-4 py-2 bg-dark-700 hover:bg-dark-600 text-white rounded-lg transition-colors duration-200">
+                        Cancel
+                    </button>
+                    <button onclick="confirmDelete(${purchaseId})" class="flex-1 px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors duration-200">
+                        Delete
+                    </button>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(confirmModal);
+    document.body.style.overflow = 'hidden';
+    
+    window.confirmDelete = async function(id) {
+        const deleteButton = confirmModal.querySelector('.bg-red-600');
+        deleteButton.innerHTML = `
+            <div class="animate-spin rounded-full h-4 w-4 border-b-2 border-white mx-auto"></div>
+        `;
+        deleteButton.disabled = true;
+        
+        try {
+            const response = await fetch(`/schedule_purchase/future-purchases/delete/${id}/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': csrftoken,
+                    'Content-Type': 'application/json',
+                },
+            });
+            
+            const data = await response.json();
+            
+            if (data.success) {
+                // Remove row from table with animation
+                const row = document.querySelector(`tr[data-purchase-id="${id}"], div[data-purchase-id="${id}"]`);
+                if (row) {
+                    row.style.transform = 'translateX(-100%)';
+                    row.style.opacity = '0';
+                    row.style.transition = 'all 0.3s ease-out';
+                    setTimeout(() => row.remove(), 300);
+                }
+                
+                confirmModal.remove();
+                document.body.style.overflow = 'auto';
+                showToast(data.message, 'success');
+                refreshStats();
+                
+                // Check if table is empty
+                setTimeout(() => {
+                    const tbody = document.querySelector('.purchases-table tbody');
+                    const mobileCards = document.querySelector('.lg\\:hidden');
+                    if ((tbody && tbody.children.length === 0) || (mobileCards && mobileCards.children.length === 0)) {
+                        location.reload(); // Reload to show empty state
+                    }
+                }, 400);
+            } else {
+                confirmModal.remove();
+                document.body.style.overflow = 'auto';
+                showToast(data.error, 'error');
+            }
+        } catch (error) {
+            confirmModal.remove();
+            document.body.style.overflow = 'auto';
+            showToast('Network error. Please try again.', 'error');
+        }
+    };
+}
+
+// Refresh Dashboard Stats with Loading Animation
+async function refreshStats() {
+    const statCards = document.querySelectorAll('[id$="-purchases"], [id$="-value"], [id$="-week"]');
+    
+    // Add loading animation to stat cards
+    statCards.forEach(card => {
+        card.style.opacity = '0.6';
+        card.innerHTML = `<div class="animate-pulse bg-dark-600 h-6 w-16 rounded"></div>`;
+    });
+    
+    try {
+        const response = await fetch('/schedule_purchase/future-purchases/stats/', {
+            method: 'GET',
+            headers: {
+                'X-CSRFToken': csrftoken,
+                'Content-Type': 'application/json',
+            },
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            const stats = data.stats;
+            
+            // Animate stat updates
+            setTimeout(() => {
+                document.getElementById('total-purchases').textContent = stats.total_purchases;
+                document.getElementById('active-purchases').textContent = stats.active_purchases;
+                document.getElementById('auto-purchases').textContent = stats.auto_purchases;
+                document.getElementById('total-value').textContent = `${stats.total_estimated_value.toFixed(2)}`;
+                document.getElementById('upcoming-week').textContent = stats.upcoming_this_week;
+                
+                statCards.forEach(card => {
+                    card.style.opacity = '1';
+                });
+            }, 300);
+        }
+    } catch (error) {
+        console.error('Failed to refresh stats:', error);
+        statCards.forEach(card => {
+            card.style.opacity = '1';
+        });
+        showToast('Failed to refresh statistics', 'warning');
+    }
+}
+
+// Refresh Dashboard with Loading State
+function refreshDashboard() {
+    // Add loading overlay
+    const loadingOverlay = document.createElement('div');
+    loadingOverlay.className = 'fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center';
+    loadingOverlay.innerHTML = `
+        <div class="bg-dark-800 rounded-2xl p-8 border border-dark-700">
+            <div class="flex items-center">
+                <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-500"></div>
+                <span class="ml-4 text-white font-medium">Refreshing dashboard...</span>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(loadingOverlay);
+    
+    setTimeout(() => {
+        location.reload();
+    }, 1000);
+}
+
+// Edit Purchase (Enhanced placeholder)
+function editPurchase(purchaseId) {
+    closeModal('purchase-details-modal');
+    showToast('Edit functionality coming soon! This feature is under development.', 'info');
+}
+
+// Auto-refresh stats every 30 seconds
+setInterval(refreshStats, 30000);
+
+// Enhanced Filter form auto-submit with debouncing
+document.addEventListener('DOMContentLoaded', function() {
+    const filterSelects = document.querySelectorAll('.filter-select, select[name="status"], select[name="action"]');
+    const searchInput = document.querySelector('input[name="search"]');
+    let searchTimeout;
+    
+    // Auto-submit on select change
+    filterSelects.forEach(select => {
+        select.addEventListener('change', function() {
+            const form = document.getElementById('filter-form');
+            // Add loading state to button
+            const submitBtn = form.querySelector('button[type="submit"]');
+            const originalContent = submitBtn.innerHTML;
+            submitBtn.innerHTML = `
+                <div class="animate-spin rounded-full h-5 w-5 border-b-2 border-white mx-auto"></div>
+            `;
+            form.submit();
+        });
+    });
+    
+    // Debounced search
+    if (searchInput) {
+        searchInput.addEventListener('input', function() {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+                document.getElementById('filter-form').submit();
+            }, 500);
+        });
+    }
+    
+    // Add keyboard shortcuts
+    document.addEventListener('keydown', function(e) {
+        // Escape key to close modals
+        if (e.key === 'Escape') {
+            const openModal = document.querySelector('[id$="-modal"]:not(.hidden)');
+            if (openModal) {
+                closeModal(openModal.id);
+            }
+        }
+        
+        // Ctrl/Cmd + K to focus search
+        if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+            e.preventDefault();
+            searchInput?.focus();
+        }
+        
+        // R key to refresh (when not in input)
+        if (e.key === 'r' && !e.target.matches('input, textarea, select')) {
+            e.preventDefault();
+            refreshStats();
+        }
+    });
+    
+    // Add smooth scroll behavior
+    document.documentElement.style.scrollBehavior = 'smooth';
+    
+    // Initialize page with fade-in animation
+    document.body.style.opacity = '0';
+    setTimeout(() => {
+        document.body.style.transition = 'opacity 0.5s ease-in-out';
+        document.body.style.opacity = '1';
+    }, 100);
+});
+
+// Add intersection observer for animations
+const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+};
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.style.animationDelay = '0s';
+            entry.target.classList.add('animate-slide-up');
+        }
+    });
+}, observerOptions);
+
+// Observe all stat cards and sections
+document.addEventListener('DOMContentLoaded', function() {
+    const elementsToAnimate = document.querySelectorAll('.gradient-border, .glass-effect');
+    elementsToAnimate.forEach(el => observer.observe(el));
+});
+</script>
+{% endblock %}

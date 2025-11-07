@@ -1,0 +1,572 @@
+{% extends 'components/includes/base.html' %}
+{% load static %}
+
+{% block title %}{{ page_title }}{% endblock %}
+
+{% block extra_css %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = {
+        theme: {
+            extend: {
+                fontFamily: {
+                    'sans': ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+                },
+                colors: {
+                    primary: {
+                        50: '#f0f9ff',
+                        100: '#e0f2fe',
+                        500: '#0ea5e9',
+                        600: '#0284c7',
+                        700: '#0369a1',
+                    }
+                },
+                boxShadow: {
+                    'card': '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)',
+                    'card-hover': '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+                },
+            }
+        }
+    }
+</script>
+<style>
+    .stats-card {
+        @apply bg-white border border-gray-200 rounded-lg p-4 text-center hover:shadow-card-hover transition-all duration-200;
+    }
+    .stats-number {
+        @apply text-2xl font-semibold mb-1;
+    }
+    .stats-label {
+        @apply text-sm text-gray-600 font-medium;
+    }
+    .filter-section {
+        @apply bg-white border border-gray-200 rounded-lg p-4 sm:p-6 mb-6;
+    }
+    .order-card {
+        @apply bg-white border border-gray-200 rounded-lg shadow-card hover:shadow-card-hover transition-all duration-200;
+    }
+    .status-badge {
+        @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+    }
+    .status-pending {
+        @apply bg-yellow-100 text-yellow-800;
+    }
+    .status-confirmed {
+        @apply bg-blue-100 text-blue-800;
+    }
+    .status-shipped {
+        @apply bg-indigo-100 text-indigo-800;
+    }
+    .status-delivered {
+        @apply bg-green-100 text-green-800;
+    }
+    .status-cancelled {
+        @apply bg-red-100 text-red-800;
+    }
+    .btn-primary {
+        @apply bg-black text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-800 transition-colors duration-200;
+    }
+    .btn-secondary {
+        @apply bg-gray-100 text-gray-700 px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-200 transition-colors duration-200;
+    }
+    .btn-danger {
+        @apply bg-red-50 text-red-700 px-4 py-2 rounded-md text-sm font-medium hover:bg-red-100 transition-colors duration-200;
+    }
+    .btn-success {
+        @apply bg-green-50 text-green-700 px-4 py-2 rounded-md text-sm font-medium hover:bg-green-100 transition-colors duration-200;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+        <!-- Page Header -->
+        <div class="mb-8">
+            <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">My Orders</h1>
+            <p class="text-gray-600 text-sm sm:text-base">Track and manage your orders</p>
+        </div>
+
+        <!-- Order Statistics -->
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4 mb-8">
+            <div class="stats-card">
+                <div class="stats-number text-gray-900">{{ order_stats.total_orders }}</div>
+                <div class="stats-label">Total Orders</div>
+            </div>
+            <div class="stats-card">
+                <div class="stats-number text-gray-900">{{ order_stats.pending_orders }}</div>
+                <div class="stats-label">Pending</div>
+            </div>
+            <div class="stats-card">
+                <div class="stats-number text-gray-900">{{ order_stats.delivered_orders }}</div>
+                <div class="stats-label">Delivered</div>
+            </div>
+            <div class="stats-card">
+                <div class="stats-number text-gray-900">{{ order_stats.cancelled_orders }}</div>
+                <div class="stats-label">Cancelled</div>
+            </div>
+            <div class="stats-card col-span-2 sm:col-span-1">
+                <div class="stats-number text-gray-900">₹{{ order_stats.total_spent|floatformat:0 }}</div>
+                <div class="stats-label">Total Spent</div>
+            </div>
+        </div>
+
+        <!-- Filters and Search -->
+        <div class="filter-section">
+            <form method="get" class="space-y-4">
+                <!-- Mobile: Stack all filters vertically -->
+                <div class="block sm:hidden space-y-4">
+                    <!-- Search -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-900 mb-2">Search Orders</label>
+                        <input type="text" name="search" value="{{ search_query }}" 
+                               placeholder="Order ID, Product, Tracking..." 
+                               class="w-full border border-gray-300 rounded-md px-3 py-2.5 text-sm focus:ring-2 focus:ring-black focus:border-black">
+                    </div>
+                    
+                    <!-- Status Filter -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-900 mb-2">Status</label>
+                        <select name="status" class="w-full border border-gray-300 rounded-md px-3 py-2.5 text-sm focus:ring-2 focus:ring-black focus:border-black">
+                            <option value="">All Statuses</option>
+                            {% for status_code, status_name in status_choices %}
+                                <option value="{{ status_code }}" {% if current_status == status_code %}selected{% endif %}>
+                                    {{ status_name }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    
+                    <!-- Date Filters in a row -->
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-900 mb-2">From Date</label>
+                            <input type="date" name="date_from" value="{{ date_from }}"
+                                   class="w-full border border-gray-300 rounded-md px-3 py-2.5 text-sm focus:ring-2 focus:ring-black focus:border-black">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-900 mb-2">To Date</label>
+                            <input type="date" name="date_to" value="{{ date_to }}"
+                                   class="w-full border border-gray-300 rounded-md px-3 py-2.5 text-sm focus:ring-2 focus:ring-black focus:border-black">
+                        </div>
+                    </div>
+                    
+                    <!-- Submit Button -->
+                    <button type="submit" class="w-full btn-primary py-3 font-medium">
+                        Apply Filters
+                    </button>
+                </div>
+
+                <!-- Desktop: Grid layout -->
+                <div class="hidden sm:grid sm:grid-cols-12 gap-4">
+                    <!-- Search -->
+                    <div class="col-span-12 md:col-span-4">
+                        <label class="block text-sm font-medium text-gray-900 mb-2">Search Orders</label>
+                        <input type="text" name="search" value="{{ search_query }}" 
+                               placeholder="Order ID, Product, Tracking..." 
+                               class="w-full border border-gray-300 rounded-md px-3 py-2.5 text-sm focus:ring-2 focus:ring-black focus:border-black">
+                    </div>
+                    
+                    <!-- Status Filter -->
+                    <div class="col-span-6 md:col-span-2">
+                        <label class="block text-sm font-medium text-gray-900 mb-2">Status</label>
+                        <select name="status" class="w-full border border-gray-300 rounded-md px-3 py-2.5 text-sm focus:ring-2 focus:ring-black focus:border-black">
+                            <option value="">All Statuses</option>
+                            {% for status_code, status_name in status_choices %}
+                                <option value="{{ status_code }}" {% if current_status == status_code %}selected{% endif %}>
+                                    {{ status_name }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    
+                    <!-- Date From -->
+                    <div class="col-span-6 md:col-span-2">
+                        <label class="block text-sm font-medium text-gray-900 mb-2">From Date</label>
+                        <input type="date" name="date_from" value="{{ date_from }}"
+                               class="w-full border border-gray-300 rounded-md px-3 py-2.5 text-sm focus:ring-2 focus:ring-black focus:border-black">
+                    </div>
+                    
+                    <!-- Date To -->
+                    <div class="col-span-6 md:col-span-2">
+                        <label class="block text-sm font-medium text-gray-900 mb-2">To Date</label>
+                        <input type="date" name="date_to" value="{{ date_to }}"
+                               class="w-full border border-gray-300 rounded-md px-3 py-2.5 text-sm focus:ring-2 focus:ring-black focus:border-black">
+                    </div>
+                    
+                    <!-- Submit Button -->
+                    <div class="col-span-6 md:col-span-2 flex items-end">
+                        <button type="submit" class="w-full btn-primary">
+                            Filter
+                        </button>
+                    </div>
+                </div>
+            </form>
+            
+            <!-- Clear Filters -->
+            {% if search_query or current_status or date_from or date_to %}
+                <div class="mt-4 pt-4 border-t border-gray-200">
+                    <a href="{% url 'orders:order_list' %}" class="text-sm text-gray-600 hover:text-gray-900 font-medium">
+                        Clear all filters
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Sort and Results Info -->
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 gap-4">
+            <div class="text-sm text-gray-600">
+                Showing {{ orders.start_index }}-{{ orders.end_index }} of {{ orders.paginator.count }} orders
+            </div>
+            <div class="flex items-center space-x-3">
+                <label class="text-sm text-gray-600 font-medium">Sort by:</label>
+                <form method="get" class="inline">
+                    {% for key, value in request.GET.items %}
+                        {% if key != 'sort' %}
+                            <input type="hidden" name="{{ key }}" value="{{ value }}">
+                        {% endif %}
+                    {% endfor %}
+                    <select name="sort" onchange="this.form.submit()" 
+                            class="border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-black focus:border-black">
+                        <option value="-created_at" {% if current_sort == '-created_at' %}selected{% endif %}>Newest First</option>
+                        <option value="created_at" {% if current_sort == 'created_at' %}selected{% endif %}>Oldest First</option>
+                        <option value="-total_amount" {% if current_sort == '-total_amount' %}selected{% endif %}>Highest Amount</option>
+                        <option value="total_amount" {% if current_sort == 'total_amount' %}selected{% endif %}>Lowest Amount</option>
+                        <option value="status" {% if current_sort == 'status' %}selected{% endif %}>Status A-Z</option>
+                    </select>
+                </form>
+            </div>
+        </div>
+
+        <!-- Orders List -->
+        {% if orders %}
+            <div class="space-y-4">
+                {% for order in orders %}
+                    <div class="order-card">
+                        <div class="p-4 sm:p-6">
+                            <!-- Mobile Layout -->
+                            <div class="block lg:hidden">
+                                <!-- Order Header -->
+                                <div class="flex items-start justify-between mb-4">
+                                    <div class="flex-1">
+                                        <div class="flex items-center space-x-3 mb-2">
+                                            <h3 class="text-base font-semibold text-gray-900">
+                                                #{{ order.order_id }}
+                                            </h3>
+                                            <span class="status-badge status-{{ order.status }}">
+                                                {{ order.get_status_display }}
+                                            </span>
+                                        </div>
+                                        
+                                        {% if order.payment_status == 'paid' %}
+                                            <span class="inline-flex items-center text-xs bg-green-100 text-green-800 px-2 py-1 rounded-md font-medium">
+                                                PAID
+                                            </span>
+                                        {% elif order.payment_status == 'failed' %}
+                                            <span class="inline-flex items-center text-xs bg-red-100 text-red-800 px-2 py-1 rounded-md font-medium">
+                                                PAYMENT FAILED
+                                            </span>
+                                        {% endif %}
+                                    </div>
+                                    <div class="text-right">
+                                        <div class="text-lg font-bold text-gray-900">₹{{ order.total_amount|floatformat:0 }}</div>
+                                        <div class="text-xs text-gray-500">{{ order.get_total_items }} item{{ order.get_total_items|pluralize }}</div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Order Info -->
+                                <div class="space-y-2 mb-4">
+                                    <div class="text-sm text-gray-600">
+                                        <span class="font-medium">Date:</span> {{ order.created_at|date:"M d, Y" }}
+                                    </div>
+                                    
+                                    <!-- Order Items Preview -->
+                                    <div>
+                                        <div class="flex flex-wrap gap-1">
+                                            {% for item in order.items.all|slice:":2" %}
+                                                <span class="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded">
+                                                    {{ item.product_name|truncatechars:20 }}
+                                                    {% if item.variant_details %}({{ item.variant_details }}){% endif %}
+                                                    x{{ item.quantity }}
+                                                </span>
+                                            {% endfor %}
+                                            {% if order.items.count > 2 %}
+                                                <span class="text-xs text-gray-500 px-2 py-1">
+                                                    +{{ order.items.count|add:"-2" }} more
+                                                </span>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Tracking Info -->
+                                    {% if order.tracking_id %}
+                                        <div class="text-sm">
+                                            <span class="font-medium text-gray-700">Tracking:</span>
+                                            <span class="text-gray-600 font-mono text-xs">{{ order.tracking_id }}</span>
+                                            {% if order.courier_partner %}
+                                                <span class="text-gray-500 text-xs">via {{ order.courier_partner }}</span>
+                                            {% endif %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                
+                                <!-- Actions -->
+                                <div class="flex flex-col space-y-2">
+                                    <a href="{% url 'order_detail' order.order_id %}" class="btn-primary text-center">
+                                        View Details
+                                    </a>
+                                    <div class="flex space-x-2">
+                                        {% if order.can_be_cancelled %}
+                                            <button onclick="cancelOrder('{{ order.order_id }}')" class="btn-danger flex-1 text-center">
+                                                Cancel
+                                            </button>
+                                        {% endif %}
+                                        {% if order.status == 'delivered' %}
+                                            <a href="{% url 'reorder' order.order_id %}" class="btn-success flex-1 text-center">
+                                                Reorder
+                                            </a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Desktop Layout -->
+                            <div class="hidden lg:flex lg:items-center lg:justify-between">
+                                <!-- Order Info -->
+                                <div class="flex-1">
+                                    <div class="flex items-center space-x-4 mb-3">
+                                        <h3 class="text-lg font-semibold text-gray-900">
+                                            Order #{{ order.order_id }}
+                                        </h3>
+                                        <span class="status-badge status-{{ order.status }}">
+                                            {{ order.get_status_display }}
+                                        </span>
+                                        {% if order.payment_status == 'paid' %}
+                                            <span class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded font-medium">
+                                                PAID
+                                            </span>
+                                        {% elif order.payment_status == 'failed' %}
+                                            <span class="text-xs bg-red-100 text-red-800 px-2 py-1 rounded font-medium">
+                                                PAYMENT FAILED
+                                            </span>
+                                        {% endif %}
+                                    </div>
+                                    
+                                    <div class="grid grid-cols-3 gap-6 text-sm text-gray-600 mb-3">
+                                        <div>
+                                            <span class="font-medium text-gray-900">Date:</span>
+                                            <div>{{ order.created_at|date:"M d, Y" }}</div>
+                                        </div>
+                                        <div>
+                                            <span class="font-medium text-gray-900">Items:</span>
+                                            <div>{{ order.get_total_items }} item{{ order.get_total_items|pluralize }}</div>
+                                        </div>
+                                        <div>
+                                            <span class="font-medium text-gray-900">Total:</span>
+                                            <div class="text-xl font-bold text-gray-900">₹{{ order.total_amount|floatformat:0 }}</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Order Items Preview -->
+                                    <div class="mb-3">
+                                        <div class="flex flex-wrap gap-2">
+                                            {% for item in order.items.all|slice:":3" %}
+                                                <span class="text-sm bg-gray-100 text-gray-700 px-3 py-1 rounded">
+                                                    {{ item.product_name }}
+                                                    {% if item.variant_details %}({{ item.variant_details }}){% endif %}
+                                                    x{{ item.quantity }}
+                                                </span>
+                                            {% endfor %}
+                                            {% if order.items.count > 3 %}
+                                                <span class="text-sm text-gray-500 px-3 py-1">
+                                                    +{{ order.items.count|add:"-3" }} more
+                                                </span>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Tracking Info -->
+                                    {% if order.tracking_id %}
+                                        <div class="text-sm">
+                                            <span class="font-medium text-gray-900">Tracking ID:</span>
+                                            <span class="text-gray-600 font-mono">{{ order.tracking_id }}</span>
+                                            {% if order.courier_partner %}
+                                                <span class="text-gray-500">via {{ order.courier_partner }}</span>
+                                            {% endif %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                
+                                <!-- Actions -->
+                                <div class="ml-6 flex flex-col gap-2 min-w-[140px]">
+                                    <a href="{% url 'order_detail' order.order_id %}" class="btn-primary text-center">
+                                        View Details
+                                    </a>
+                                    
+                                    {% if order.can_be_cancelled %}
+                                        <button onclick="cancelOrder('{{ order.order_id }}')" class="btn-danger text-center">
+                                            Cancel Order
+                                        </button>
+                                    {% endif %}
+                                    
+                                    {% if order.status == 'delivered' %}
+                                        <a href="{% url 'reorder' order.order_id %}" class="btn-success text-center">
+                                            Reorder
+                                        </a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <!-- Pagination -->
+            {% if orders.has_other_pages %}
+                <div class="mt-8 flex justify-center">
+                    <nav class="flex items-center space-x-2">
+                        {% if orders.has_previous %}
+                            <a href="?{% for key, value in request.GET.items %}{% if key != 'page' %}{{ key }}={{ value }}&{% endif %}{% endfor %}page=1"
+                               class="px-3 py-2 text-sm text-gray-600 hover:text-gray-900 font-medium">First</a>
+                            <a href="?{% for key, value in request.GET.items %}{% if key != 'page' %}{{ key }}={{ value }}&{% endif %}{% endfor %}page={{ orders.previous_page_number }}"
+                               class="px-3 py-2 text-sm text-gray-600 hover:text-gray-900 font-medium">Previous</a>
+                        {% endif %}
+
+                        {% for num in orders.paginator.page_range %}
+                            {% if orders.number == num %}
+                                <span class="px-3 py-2 text-sm font-semibold text-white bg-black rounded-md">{{ num }}</span>
+                            {% elif num > orders.number|add:'-3' and num < orders.number|add:'3' %}
+                                <a href="?{% for key, value in request.GET.items %}{% if key != 'page' %}{{ key }}={{ value }}&{% endif %}{% endfor %}page={{ num }}"
+                                   class="px-3 py-2 text-sm text-gray-600 hover:text-gray-900 font-medium">{{ num }}</a>
+                            {% endif %}
+                        {% endfor %}
+
+                        {% if orders.has_next %}
+                            <a href="?{% for key, value in request.GET.items %}{% if key != 'page' %}{{ key }}={{ value }}&{% endif %}{% endfor %}page={{ orders.next_page_number }}"
+                               class="px-3 py-2 text-sm text-gray-600 hover:text-gray-900 font-medium">Next</a>
+                            <a href="?{% for key, value in request.GET.items %}{% if key != 'page' %}{{ key }}={{ value }}&{% endif %}{% endfor %}page={{ orders.paginator.num_pages }}"
+                               class="px-3 py-2 text-sm text-gray-600 hover:text-gray-900 font-medium">Last</a>
+                        {% endif %}
+                    </nav>
+                </div>
+            {% endif %}
+
+        {% else %}
+            <!-- Empty State -->
+            <div class="text-center py-12 sm:py-16">
+                <div class="mx-auto h-16 w-16 sm:h-24 sm:w-24 text-gray-400 mb-4">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-full h-full">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" 
+                              d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-lg font-semibold text-gray-900 mb-2">No orders found</h3>
+                <p class="text-gray-600 text-sm sm:text-base mb-6 max-w-md mx-auto">
+                    {% if search_query or current_status or date_from or date_to %}
+                        No orders match your current filters. Try adjusting your search criteria.
+                    {% else %}
+                        You haven't placed any orders yet. Start shopping to see your orders here.
+                    {% endif %}
+                </p>
+                <div>
+                    {% if search_query or current_status or date_from or date_to %}
+                        <a href="{% url 'my_orders' %}" class="btn-primary">
+                            Clear Filters
+                        </a>
+                    {% else %}
+                        <a href="/" class="btn-primary">
+                            Start Shopping
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Cancel Order Modal -->
+<div id="cancelModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden z-50">
+    <div class="relative top-20 mx-auto p-5 border w-full max-w-md shadow-lg rounded-lg bg-white mx-4">
+        <div class="mt-3 text-center">
+            <h3 class="text-lg font-semibold text-gray-900 mb-4">Cancel Order</h3>
+            <div class="mb-6">
+                <p class="text-sm text-gray-600">
+                    Are you sure you want to cancel this order? This action cannot be undone.
+                </p>
+            </div>
+            <div class="flex flex-col sm:flex-row justify-center space-y-3 sm:space-y-0 sm:space-x-3">
+                <button id="cancelConfirm" 
+                        class="bg-red-600 text-white px-6 py-2 rounded-md text-sm font-medium hover:bg-red-700 transition-colors duration-200">
+                    Yes, Cancel Order
+                </button>
+                <button onclick="closeCancelModal()" 
+                        class="bg-gray-100 text-gray-700 px-6 py-2 rounded-md text-sm font-medium hover:bg-gray-200 transition-colors duration-200">
+                    Keep Order
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+let cancelOrderId = null;
+
+function cancelOrder(orderId) {
+    cancelOrderId = orderId;
+    document.getElementById('cancelModal').classList.remove('hidden');
+}
+
+function closeCancelModal() {
+    document.getElementById('cancelModal').classList.add('hidden');
+    cancelOrderId = null;
+}
+
+document.getElementById('cancelConfirm').addEventListener('click', function() {
+    if (!cancelOrderId) return;
+    
+    fetch(`/orders/${cancelOrderId}/cancel/`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCookie('csrftoken')
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            location.reload();
+        } else {
+            alert(data.message || 'Failed to cancel order');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Failed to cancel order');
+    })
+    .finally(() => {
+        closeCancelModal();
+    });
+});
+
+// Get CSRF token function
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+</script>
+{% endblock %}

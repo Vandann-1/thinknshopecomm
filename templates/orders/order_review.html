@@ -1,0 +1,674 @@
+{% extends 'components/includes/base.html' %}
+
+{% block title %}Order Review - Complete Your Purchase{% endblock %}
+
+{% block extra_head %}
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = {
+        theme: {
+            extend: {
+                fontFamily: {
+                    'inter': ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+                },
+                colors: {
+                    'gray': {
+                        50: '#fafafa',
+                        100: '#f5f5f5',
+                        200: '#e5e5e5',
+                        300: '#d4d4d4',
+                        400: '#a3a3a3',
+                        500: '#737373',
+                        600: '#525252',
+                        700: '#404040',
+                        800: '#262626',
+                        900: '#171717',
+                    }
+                },
+                spacing: {
+                    '18': '4.5rem',
+                },
+                animation: {
+                    'fade-in': 'fadeIn 0.5s ease-in-out',
+                    'slide-up': 'slideUp 0.3s ease-out',
+                }
+            }
+        }
+    }
+</script>
+
+<!-- Inter Font -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+    body { 
+        font-family: 'Inter', system-ui, -apple-system, sans-serif; 
+    }
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes slideUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    .payment-option input:checked + .payment-content {
+        border-color: #000000;
+        background-color: #f9fafb;
+        box-shadow: 0 0 0 1px #000000, 0 4px 12px rgba(0, 0, 0, 0.1);
+        transform: translateY(-1px);
+    }
+    
+    .payment-option .payment-content {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .payment-option .payment-content::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.04), transparent);
+        transition: left 0.6s ease-in-out;
+    }
+    
+    .payment-option input:checked + .payment-content::before {
+        left: 100%;
+    }
+    
+    .payment-option:hover .payment-content {
+        border-color: #374151;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        transform: translateY(-0.5px);
+    }
+    
+    .payment-option input:checked + .payment-content .checkmark {
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
+    }
+    
+    .payment-option .payment-content .checkmark {
+        opacity: 0;
+        transform: scale(0.8) rotate(-10deg);
+        transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    
+    .payment-fade-in {
+        animation: paymentFadeIn 0.5s ease-out forwards;
+    }
+    
+    @keyframes paymentFadeIn {
+        0% {
+            opacity: 0;
+            transform: translateY(10px) scale(0.98);
+        }
+        100% {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+    }
+    
+    .selection-ripple {
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .selection-ripple::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        border-radius: 50%;
+        background: rgba(0, 0, 0, 0.1);
+        transform: translate(-50%, -50%);
+        transition: width 0.4s ease-out, height 0.4s ease-out;
+    }
+    
+    .selection-ripple.active::after {
+        width: 200%;
+        height: 200%;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-gray-50 py-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <!-- Progress Steps -->
+        <div class="mb-8">
+            <div class="flex items-center justify-between max-w-2xl mx-auto">
+                <!-- Step 1 - Completed -->
+                <div class="flex items-center">
+                    <div class="flex items-center justify-center w-8 h-8 bg-gray-900 text-white rounded-full text-sm font-medium">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                    <span class="ml-2 text-sm font-medium text-gray-900 hidden sm:inline">Product</span>
+                </div>
+                
+                <!-- Connector -->
+                <div class="flex-1 h-0.5 bg-gray-900 mx-4"></div>
+                
+                <!-- Step 2 - Completed -->
+                <div class="flex items-center">
+                    <div class="flex items-center justify-center w-8 h-8 bg-gray-900 text-white rounded-full text-sm font-medium">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                    <span class="ml-2 text-sm font-medium text-gray-900 hidden sm:inline">Address</span>
+                </div>
+                
+                <!-- Connector -->
+                <div class="flex-1 h-0.5 bg-gray-900 mx-4"></div>
+                
+                <!-- Step 3 - Current -->
+                <div class="flex items-center">
+                    <div class="flex items-center justify-center w-8 h-8 bg-gray-900 text-white rounded-full text-sm font-medium">
+                        3
+                    </div>
+                    <span class="ml-2 text-sm font-medium text-gray-900 hidden sm:inline">Review & Pay</span>
+                </div>
+                
+                <!-- Connector -->
+                <div class="flex-1 h-0.5 bg-gray-200 mx-4"></div>
+                
+                <!-- Step 4 - Pending -->
+                <div class="flex items-center">
+                    <div class="flex items-center justify-center w-8 h-8 bg-gray-200 text-gray-600 rounded-full text-sm font-medium">
+                        4
+                    </div>
+                    <span class="ml-2 text-sm font-medium text-gray-500 hidden sm:inline">Complete</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-semibold text-gray-900 mb-2">Review Your Order</h1>
+            <p class="text-gray-600">Please review all details before placing your order</p>
+        </div>
+
+        <!-- Main Content Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            
+            <!-- Left Column - Order Details -->
+            <div class="lg:col-span-2 space-y-6">
+                
+                <!-- Product Details -->
+                <div class="bg-white rounded-lg border border-gray-200 p-6 animate-fade-in">
+                    <h2 class="text-lg font-medium text-gray-900 mb-4">Product Details</h2>
+                    
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        {% if variant.image %}
+                            <img src="{{ variant.image.url }}" alt="{{ variant.product.name }}" class="w-full sm:w-24 h-24 object-cover rounded-lg border border-gray-200">
+                        {% else %}
+                            <div class="w-full sm:w-24 h-24 bg-gray-100 rounded-lg border border-gray-200 flex items-center justify-center">
+                                <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                </svg>
+                            </div>
+                        {% endif %}
+                        
+                        <div class="flex-1">
+                            <h3 class="font-medium text-gray-900 mb-2">{{ variant.product.name }}</h3>
+                            
+                            <div class="space-y-2">
+                                <div class="flex items-center gap-3">
+                                    <div class="flex items-center gap-2">
+                                        <div class="w-4 h-4 rounded-full border border-gray-300" style="background-color: {{ variant.color.hex_code|default:'#cccccc' }};"></div>
+                                        <span class="text-sm text-gray-600">{{ variant.color.name|default:'N/A' }}</span>
+                                    </div>
+                                    <div class="text-sm text-gray-600">
+                                        Size: <span class="font-medium">{{ variant.size.name|default:'N/A' }}</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="text-sm text-gray-600">
+                                    Quantity: <span class="font-medium">{{ quantity }}</span>
+                                </div>
+                                
+                                <div class="flex items-center gap-2">
+                                    <span class="text-lg font-semibold text-gray-900">₹{{ unit_price }}</span>
+                                    {% if variant.original_price > unit_price %}
+                                        <span class="text-sm text-gray-500 line-through">₹{{ variant.original_price }}</span>
+                                    {% endif %}
+                                </div>
+                                
+                                <div class="text-xs text-gray-500">
+                                    SKU: {{ variant.sku|default:'N/A' }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Delivery Address -->
+                <div class="bg-white rounded-lg border border-gray-200 p-6 animate-fade-in">
+                    <div class="flex items-center justify-between mb-4">
+                        <h2 class="text-lg font-medium text-gray-900">Delivery Address</h2>
+                        {% if selected_address %}
+                            <button class="text-gray-900 text-sm font-medium hover:text-gray-700 underline transition-colors" id="changeAddressBtn">
+                                Change
+                            </button>
+                        {% endif %}
+                    </div>
+                    
+                    {% if selected_address %}
+                        <div class="border border-gray-200 rounded-lg p-4 bg-gray-50">
+                            <div class="font-medium text-gray-900 mb-1">{{ selected_address.full_name }}</div>
+                            <div class="text-gray-600 text-sm space-y-1">
+                                <div>{{ selected_address.address_line_1 }}</div>
+                                {% if selected_address.address_line_2 %}
+                                    <div>{{ selected_address.address_line_2 }}</div>
+                                {% endif %}
+                                <div>{{ selected_address.city }}, {{ selected_address.state }} {{ selected_address.postal_code }}</div>
+                                <div>{{ selected_address.country }}</div>
+                                <div>Phone: {{ selected_address.phone_number }}</div>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="border border-gray-300 rounded-lg p-4 bg-gray-50">
+                            <div class="flex items-center gap-2">
+                                <svg class="w-5 h-5 text-gray-900" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                                </svg>
+                                <span class="text-gray-900 font-medium">No address selected</span>
+                            </div>
+                            <p class="text-gray-700 text-sm mt-1">
+                                Please <a href="#" class="font-medium underline hover:no-underline" id="selectAddressBtn">select an address</a> to continue.
+                            </p>
+                        </div>
+                    {% endif %}
+                </div>
+
+                <!-- Payment Method -->
+                <div class="bg-white rounded-lg border border-gray-200 p-6 animate-fade-in">
+                    <h2 class="text-lg font-medium text-gray-900 mb-4">Payment Method</h2>
+                    
+                    <form id="orderForm">
+                        {% csrf_token %}
+                        <div class="space-y-3">
+                            <label class="payment-option cursor-pointer block">
+                                <input type="radio" id="razorpay" name="payment_method" value="razorpay" class="sr-only" checked>
+                                <div class="payment-content border-2 border-gray-200 rounded-lg p-4 transition-all duration-200 hover:border-gray-400">
+                                    <div class="flex items-center gap-3">
+                                        <div class="text-2xl">💳</div>
+                                        <div>
+                                            <div class="font-medium text-gray-900">Pay Online</div>
+                                            <div class="text-sm text-gray-600">Credit/Debit Card, UPI, Net Banking, Wallets</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </label>
+                            
+                            <label class="payment-option cursor-pointer block">
+                                <input type="radio" id="cod" name="payment_method" value="cod" class="sr-only">
+                                <div class="payment-content border-2 border-gray-200 rounded-lg p-4 transition-all duration-200 hover:border-gray-400">
+                                    <div class="flex items-center gap-3">
+                                        <div class="text-2xl">💰</div>
+                                        <div>
+                                            <div class="font-medium text-gray-900">Cash on Delivery</div>
+                                            <div class="text-sm text-gray-600">Pay when your order is delivered</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+
+                        <div class="mt-4 p-3 bg-gray-50 border border-gray-200 rounded-lg">
+                            <div class="flex items-center gap-2 text-gray-900">
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path>
+                                </svg>
+                                <span class="text-sm font-medium">Your payment information is secure and encrypted</span>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Order Notes -->
+                <div class="bg-white rounded-lg border border-gray-200 p-6 animate-fade-in">
+                    <h2 class="text-lg font-medium text-gray-900 mb-4">Order Notes (Optional)</h2>
+                    <textarea name="order_notes" 
+                              placeholder="Any special instructions for your order..." 
+                              class="w-full p-3 border border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-gray-400 focus:border-transparent transition-all duration-200"
+                              rows="3"></textarea>
+                </div>
+
+            </div>
+
+            <!-- Right Column - Order Summary -->
+            <div class="lg:col-span-1">
+                <div class="bg-white rounded-lg border border-gray-200 p-6 sticky top-8 animate-fade-in">
+                    <h2 class="text-lg font-medium text-gray-900 mb-4">Order Summary</h2>
+                    
+                    <div class="space-y-3">
+                        <div class="flex justify-between text-sm">
+                            <span class="text-gray-600">Subtotal ({{ quantity }} item{{ quantity|pluralize }})</span>
+                            <span class="font-medium">₹{{ subtotal }}</span>
+                        </div>
+                        
+                        {% if discount_amount > 0 %}
+                            <div class="flex justify-between text-sm text-gray-900">
+                                <span>Discount ({{ coupon_code }})</span>
+                                <span class="font-medium">-₹{{ discount_amount }}</span>
+                            </div>
+                        {% endif %}
+                        
+                        <div class="flex justify-between text-sm">
+                            <span class="text-gray-600">Shipping</span>
+                            <span class="font-medium">{% if shipping_cost == 0 %}<span class="text-gray-900 font-semibold">FREE</span>{% else %}₹{{ shipping_cost }}{% endif %}</span>
+                        </div>
+                        
+                        <div class="flex justify-between text-sm">
+                            <span class="text-gray-600">Tax (18% GST)</span>
+                            <span class="font-medium">₹{{ tax_amount }}</span>
+                        </div>
+                        
+                        <hr class="border-gray-200">
+                        
+                        <div class="flex justify-between text-lg font-semibold">
+                            <span>Total Amount</span>
+                            <span>₹{{ total_amount }}</span>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 p-3 bg-gray-50 border border-gray-200 rounded-lg">
+                        <p class="text-xs text-gray-700">
+                            <svg class="w-4 h-4 inline mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                            </svg>
+                            Free shipping on orders above ₹500
+                        </p>
+                    </div>
+
+                    <div class="mt-6 space-y-3">
+                        <button type="button" 
+                                class="w-full py-3 px-4 bg-gray-100 text-gray-700 font-medium rounded-lg hover:bg-gray-200 transition-colors duration-200" 
+                                id="goBackBtn">
+                            ← Back to Address
+                        </button>
+                        <button type="button" 
+                                class="w-full py-3 px-4 bg-black text-white font-medium rounded-lg hover:bg-gray-800 transition-colors duration-200 shadow-sm" 
+                                id="placeOrderBtn">
+                            Place Order →
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+// Payment method selection
+document.querySelectorAll('input[name="payment_method"]').forEach(radio => {
+    radio.addEventListener('change', function() {
+        // Remove selected state from all options
+        document.querySelectorAll('.payment-option').forEach(option => {
+            option.classList.remove('selected');
+        });
+        // Add selected state to current option
+        this.closest('.payment-option').classList.add('selected');
+    });
+});
+
+// Initialize first option as selected
+document.querySelector('.payment-option').classList.add('selected');
+</script>
+<!--=================================================================================================================================================================================================  -->
+<script>
+// Define functions in global scope immediately
+window.placeOrder = null;
+window.goBack = null;
+window.changeAddress = null;
+
+// CSRF Token helper
+function getCSRFToken() {
+    return document.querySelector('[name=csrfmiddlewaretoken]')?.value || 
+           document.querySelector('meta[name=csrf-token]')?.getAttribute('content') || '';
+}
+
+// Global placeOrder function - defined immediately
+window.placeOrder = async function() {
+    const placeOrderBtn = document.getElementById('placeOrderBtn');
+    const selectedPaymentMethod = document.querySelector('input[name="payment_method"]:checked')?.value;
+    const orderNotes = document.querySelector('textarea[name="order_notes"]')?.value || '';
+
+    if (!window.orderDetails?.variant_id || !window.orderDetails?.address_id) {
+        showAlert('error', 'Missing order details. Please go back and select all options.');
+        return;
+    }
+
+    if (!selectedPaymentMethod) {
+        showAlert('error', 'Please select a payment method.');
+        return;
+    }
+
+    try {
+        // Show loading state
+        placeOrderBtn.classList.add('loading');
+        placeOrderBtn.disabled = true;
+
+        // Prepare form data
+        const formData = new FormData();
+        formData.append('variant_id', window.orderDetails.variant_id);
+        formData.append('quantity', window.orderDetails.quantity);
+        formData.append('address_id', window.orderDetails.address_id);
+        formData.append('payment_method', selectedPaymentMethod);
+        formData.append('order_notes', orderNotes);
+        formData.append('coupon_code', window.orderDetails.coupon_code || '');
+        formData.append('csrfmiddlewaretoken', getCSRFToken());
+
+        const response = await fetch('/orders/review/', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+            }
+        });
+
+        if (selectedPaymentMethod === 'cod') {
+            if (response.redirected) {
+                window.location.href = response.url;
+            } else {
+                const data = await response.json();
+                if (data.success) {
+                    window.location.href = data.redirect_url;
+                } else {
+                    showAlert('error', data.error || 'Failed to place order');
+                }
+            }
+      } else if (selectedPaymentMethod === 'razorpay') {
+    if (response.ok) {
+        const data = await response.json();
+        if (data.redirect_url) {
+            // 🔥 Force actual browser redirect
+            window.location.href = data.redirect_url;
+        } else {
+            showAlert('error', 'Redirect URL not provided by server');
+        }
+    } else {
+        const data = await response.json();
+        showAlert('error', data.error || 'Failed to initiate payment');
+    }
+}
+
+    } catch (error) {
+        console.error('Order placement error:', error);
+        showAlert('error', 'Network error occurred. Please try again.');
+    } finally {
+        // Reset button state
+        placeOrderBtn.classList.remove('loading');
+        placeOrderBtn.disabled = false;
+    }
+};
+
+// Global goBack function
+window.goBack = function() {
+    if (window.history.length > 1) {
+        window.history.back();
+    } else {
+        // Fallback if no history
+        window.location.href = '/';
+    }
+};
+
+// Global changeAddress function
+window.changeAddress = function() {
+    // You can implement this based on your address selection flow
+    // For now, going back to previous step
+    window.history.back();
+};
+
+// Initialize page with proper event handling
+document.addEventListener('DOMContentLoaded', function() {
+    // Store order details from Django context
+    window.orderDetails = {
+        variant_id: {{ variant.id|default:'null' }},
+        quantity: {{ quantity|default:'1' }},
+        address_id: {% if selected_address %}'{{ selected_address.id }}'{% else %}null{% endif %},
+        coupon_code: '{{ coupon_code|default:""|escapejs }}'
+    };
+
+    // Initialize payment method selection
+    initializePaymentMethods();
+
+    // Add event listeners to buttons
+    const placeOrderBtn = document.getElementById('placeOrderBtn');
+    if (placeOrderBtn) {
+        placeOrderBtn.addEventListener('click', window.placeOrder);
+    }
+
+    const goBackBtn = document.getElementById('goBackBtn');
+    if (goBackBtn) {
+        goBackBtn.addEventListener('click', window.goBack);
+    }
+
+    const changeAddressBtn = document.getElementById('changeAddressBtn');
+    if (changeAddressBtn) {
+        changeAddressBtn.addEventListener('click', window.changeAddress);
+    }
+
+    const selectAddressBtn = document.getElementById('selectAddressBtn');
+    if (selectAddressBtn) {
+        selectAddressBtn.addEventListener('click', window.changeAddress);
+    }
+
+    // Initialize button text
+    updatePlaceOrderButton();
+
+    // Load saved notes
+    const savedNotes = sessionStorage.getItem('orderNotes');
+    if (savedNotes) {
+        const notesTextarea = document.querySelector('textarea[name="order_notes"]');
+        if (notesTextarea) {
+            notesTextarea.value = savedNotes;
+        }
+    }
+
+    // Auto-save order notes (debounced)
+    let notesTimeout;
+    const notesTextarea = document.querySelector('textarea[name="order_notes"]');
+    if (notesTextarea) {
+        notesTextarea.addEventListener('input', function() {
+            clearTimeout(notesTimeout);
+            notesTimeout = setTimeout(() => {
+                sessionStorage.setItem('orderNotes', this.value);
+            }, 1000);
+        });
+    }
+
+    // Keyboard shortcuts
+    document.addEventListener('keydown', function(e) {
+        if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+            e.preventDefault();
+            window.placeOrder();
+        }
+    });
+
+    // Prevent accidental page refresh
+    window.addEventListener('beforeunload', function(e) {
+        e.preventDefault();
+        e.returnValue = '';
+    });
+});
+
+function initializePaymentMethods() {
+    const paymentOptions = document.querySelectorAll('.payment-option');
+    paymentOptions.forEach(option => {
+        option.addEventListener('click', function() {
+            paymentOptions.forEach(opt => opt.classList.remove('selected'));
+            this.classList.add('selected');
+            const radio = this.querySelector('input[type="radio"]');
+            if (radio) {
+                radio.checked = true;
+            }
+            updatePlaceOrderButton();
+        });
+    });
+}
+
+function updatePlaceOrderButton() {
+    const placeOrderBtn = document.getElementById('placeOrderBtn');
+    const selectedMethod = document.querySelector('input[name="payment_method"]:checked')?.value;
+    
+    if (!placeOrderBtn) return;
+    
+    if (selectedMethod === 'cod') {
+        placeOrderBtn.innerHTML = 'Place Order →';
+        placeOrderBtn.className = 'btn btn-success';
+    } else {
+        placeOrderBtn.innerHTML = 'Proceed to Pay →';
+        placeOrderBtn.className = 'btn btn-primary';
+    }
+}
+
+function showAlert(type, message) {
+    const existingAlerts = document.querySelectorAll('.alert');
+    existingAlerts.forEach(alert => alert.remove());
+
+    const alert = document.createElement('div');
+    alert.className = `alert alert-${type}`;
+    
+    const alertTypes = {
+        'success': '✓',
+        'error': '⚠',
+        'warning': '⚠',
+        'info': 'ℹ'
+    };
+    
+    alert.innerHTML = `
+        <span>${alertTypes[type] || 'ℹ'}</span>
+        <span>${message}</span>
+        <button onclick="this.parentElement.remove()" style="margin-left: auto; background: none; border: none; font-size: 18px; cursor: pointer;">&times;</button>
+    `;
+    
+    const container = document.querySelector('.container');
+    if (container) {
+        container.insertBefore(alert, container.firstChild);
+    }
+    
+    setTimeout(() => {
+        if (alert.parentElement) {
+            alert.remove();
+        }
+    }, 5000);
+}
+</script>
+</body>
+</html>
+{% endblock %}

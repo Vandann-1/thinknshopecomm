@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop Clothes - Skatezo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'skate-purple': '#667eea',
+                        'skate-dark': '#764ba2',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .product-card {
+            transition: all 0.3s ease;
+        }
+        .product-card:hover {
+            transform: translateY(-8px);
+        }
+        .hero-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .wishlist-btn {
+            transition: all 0.3s ease;
+        }
+        .wishlist-btn:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="hero-bg shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="#" class="text-white text-2xl font-bold">Skatezo</a>
+                    <span class="text-white/80 ml-2 text-sm">Mumbai</span>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#" class="text-white hover:text-white/80 transition">Home</a>
+                    <a href="#" class="text-white hover:text-white/80 transition">Boards</a>
+                    <a href="#" class="text-white font-semibold border-b-2 border-white/30 transition">Clothes</a>
+                    <a href="#" class="text-white hover:text-white/80 transition">Accessories</a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button class="text-white hover:text-white/80 transition">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                    </button>
+                    <button class="text-white hover:text-white/80 transition relative">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.1 5H19"></path>
+                        </svg>
+                        <span class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                    </button>
+                    <a href="#" class="text-white hover:text-white/80 transition">Login</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-bg py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-4xl md:text-6xl font-bold text-white mb-4">
+                Street Wear Collection
+            </h1>
+            <p class="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
+                Fresh threads for the Mumbai skate scene. From hoodies to tees, gear up in style.
+            </p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <button class="bg-white text-skate-purple px-6 py-3 rounded-full font-semibold hover:bg-gray-100 transition">
+                    New Arrivals
+                </button>
+                <button class="border-2 border-white text-white px-6 py-3 rounded-full font-semibold hover:bg-white hover:text-skate-purple transition">
+                    Sale Items
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filters -->
+    <section class="bg-white shadow-sm py-6">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-wrap items-center justify-between gap-4">
+                <div class="flex flex-wrap items-center gap-4">
+                    <span class="text-gray-700 font-medium">Filter by:</span>
+                    <select class="border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-skate-purple focus:border-transparent">
+                        <option>All Categories</option>
+                        <option>T-Shirts</option>
+                        <option>Hoodies</option>
+                        <option>Pants</option>
+                        <option>Caps</option>
+                    </select>
+                    <select class="border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-skate-purple focus:border-transparent">
+                        <option>All Sizes</option>
+                        <option>S</option>
+                        <option>M</option>
+                        <option>L</option>
+                        <option>XL</option>
+                        <option>XXL</option>
+                    </select>
+                    <select class="border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-skate-purple focus:border-transparent">
+                        <option>Price Range</option>
+                        <option>Under ₹1000</option>
+                        <option>₹1000 - ₹2000</option>
+                        <option>₹2000 - ₹3000</option>
+                        <option>Above ₹3000</option>
+                    </select>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="text-gray-700">Sort by:</span>
+                    <select class="border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-skate-purple focus:border-transparent">
+                        <option>Featured</option>
+                        <option>Price: Low to High</option>
+                        <option>Price: High to Low</option>
+                        <option>Newest</option>
+                        <option>Best Selling</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Grid -->
+    <section class="py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                
+                <!-- Product 1 -->
+                <div class="product-card bg-white rounded-2xl shadow-lg overflow-hidden group">
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&h=400&fit=crop" alt="Skate Life Hoodie" class="w-full h-64 object-cover">
+                        <button class="wishlist-btn absolute top-4 right-4 bg-white/80 backdrop-blur-sm p-2 rounded-full shadow-lg">
+                            <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-2">Skate Beanie</h3>
+                        <p class="text-gray-600 text-sm mb-3">Cozy beanie for those Mumbai winter sessions</p>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center gap-2">
+                                <span class="text-2xl font-bold text-skate-purple">₹799</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="flex text-yellow-400">
+                                    ★★★★☆
+                                </div>
+                                <span class="text-gray-500 text-sm ml-1">(9)</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="flex gap-1">
+                                <span class="w-6 h-6 bg-black rounded-full border-2 border-gray-300 cursor-pointer"></span>
+                                <span class="w-6 h-6 bg-red-500 rounded-full border-2 border-gray-300 cursor-pointer"></span>
+                                <span class="w-6 h-6 bg-gray-500 rounded-full border-2 border-gray-300 cursor-pointer"></span>
+                            </div>
+                            <button class="bg-skate-purple text-white px-4 py-2 rounded-lg hover:bg-skate-dark transition font-medium">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Load More Button -->
+            <div class="text-center mt-12">
+                <button class="bg-white border-2 border-skate-purple text-skate-purple px-8 py-3 rounded-full font-semibold hover:bg-skate-purple hover:text-white transition">
+                    Load More Products
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="hero-bg py-16">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl font-bold text-white mb-4">Stay Fresh with Skatezo</h2>
+            <p class="text-white/90 mb-8">Get the latest drops, exclusive deals, and Mumbai skate scene updates.</p>
+            <div class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+                <input type="email" placeholder="Enter your email" class="flex-1 px-4 py-3 rounded-lg border-0 focus:ring-2 focus:ring-white/50">
+                <button class="bg-white text-skate-purple px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition">
+                    Subscribe
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-2xl font-bold mb-4">Skatezo</h3>
+                    <p class="text-gray-400 mb-4">Mumbai's premier destination for skateboard culture and street fashion.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.174-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.097.118.110.221.81.402-.09.402-.293 1.181-.333 1.346-.053.225-.172.271-.402.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.357-.629-2.376-1.378l-.651 2.497c-.229.896-.67 1.68-.67 1.68s-.33.498-1.262.83c-1.33.464-2.714.641-4.128.641C5.396 24.002.029 18.635.029 11.987.029 5.367 5.396.003 12.017.003z"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Shop</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition">New Arrivals</a></li>
+                        <li><a href="#" class="hover:text-white transition">T-Shirts</a></li>
+                        <li><a href="#" class="hover:text-white transition">Hoodies</a></li>
+                        <li><a href="#" class="hover:text-white transition">Pants</a></li>
+                        <li><a href="#" class="hover:text-white transition">Accessories</a></li>
+                        <li><a href="#" class="hover:text-white transition">Sale</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Support</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition">Contact Us</a></li>
+                        <li><a href="#" class="hover:text-white transition">Size Guide</a></li>
+                        <li><a href="#" class="hover:text-white transition">Shipping Info</a></li>
+                        <li><a href="#" class="hover:text-white transition">Returns</a></li>
+                        <li><a href="#" class="hover:text-white transition">FAQ</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Visit Our Store</h4>
+                    <div class="text-gray-400">
+                        <p class="mb-2">123 Linking Road</p>
+                        <p class="mb-2">Bandra West, Mumbai</p>
+                        <p class="mb-2">Maharashtra 400050</p>
+                        <p class="mb-4">+91 98765 43210</p>
+                        <p class="text-sm">Mon-Sun: 10AM - 10PM</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 Skatezo. All rights reserved. | Privacy Policy | Terms of Service</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple cart functionality (static)
+        let cartCount = 0;
+        const cartCountElement = document.querySelector('.absolute.-top-2.-right-2');
+        
+        // Add to cart functionality
+        document.querySelectorAll('button:contains("Add to Cart")').forEach(button => {
+            button.addEventListener('click', function() {
+                cartCount++;
+                cartCountElement.textContent = cartCount;
+                
+                // Simple success feedback
+                this.textContent = 'Added!';
+                this.classList.add('bg-green-500');
+                this.classList.remove('bg-skate-purple');
+                
+                setTimeout(() => {
+                    this.textContent = 'Add to Cart';
+                    this.classList.remove('bg-green-500');
+                    this.classList.add('bg-skate-purple');
+                }, 1500);
+            });
+        });
+        
+        // Wishlist functionality
+        document.querySelectorAll('.wishlist-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const heart = this.querySelector('svg');
+                heart.classList.toggle('text-red-500');
+                heart.classList.toggle('text-gray-600');
+                
+                if (heart.classList.contains('text-red-500')) {
+                    heart.setAttribute('fill', 'currentColor');
+                } else {
+                    heart.setAttribute('fill', 'none');
+                }
+            });
+        });
+        
+        // Color selection functionality
+        document.querySelectorAll('.rounded-full.cursor-pointer').forEach(colorBtn => {
+            colorBtn.addEventListener('click', function() {
+                // Remove active state from siblings
+                this.parentNode.querySelectorAll('.rounded-full').forEach(btn => {
+                    btn.classList.remove('ring-2', 'ring-skate-purple', 'ring-offset-2');
+                });
+                
+                // Add active state to clicked color
+                this.classList.add('ring-2', 'ring-skate-purple', 'ring-offset-2');
+            });
+        });
+    </script>
+</body>
+</html>
+                        <div class="absolute top-4 left-4">
+                            <span class="bg-red-500 text-white px-2 py-1 rounded-full text-xs font-semibold">New</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-2">Skate Life Hoodie</h3>
+                        <p class="text-gray-600 text-sm mb-3">Premium cotton blend hoodie with street graphics</p>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center gap-2">
+                                <span class="text-2xl font-bold text-skate-purple">₹2,499</span>
+                                <span class="text-gray-400 line-through text-sm">₹2,999</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="flex text-yellow-400">
+                                    ★★★★★
+                                </div>
+                                <span class="text-gray-500 text-sm ml-1">(24)</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="flex gap-1">
+                                <span class="w-6 h-6 bg-black rounded-full border-2 border-gray-300 cursor-pointer"></span>
+                                <span class="w-6 h-6 bg-gray-700 rounded-full border-2 border-gray-300 cursor-pointer"></span>
+                                <span class="w-6 h-6 bg-white rounded-full border-2 border-gray-300 cursor-pointer"></span>
+                            </div>
+                            <button class="bg-skate-purple text-white px-4 py-2 rounded-lg hover:bg-skate-dark transition font-medium">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 2 -->
+                <div class="product-card bg-white rounded-2xl shadow-lg overflow-hidden group">
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=400&h=400&fit=crop" alt="Mumbai Streets Tee" class="w-full h-64 object-cover">
+                        <button class="wishlist-btn absolute top-4 right-4 bg-white/80 backdrop-blur-sm p-2 rounded-full shadow-lg">
+                            <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                            </svg>
+                        </button>
+                        <div class="absolute top-4 left-4">
+                            <span class="bg-green-500 text-white px-2 py-1 rounded-full text-xs font-semibold">Sale</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-2">Mumbai Streets Tee</h3>
+                        <p class="text-gray-600 text-sm mb-3">Soft cotton tee with local Mumbai vibes</p>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center gap-2">
+                                <span class="text-2xl font-bold text-skate-purple">₹899</span>
+                                <span class="text-gray-400 line-through text-sm">₹1,199</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="flex text-yellow-400">
+                                    ★★★★☆
+                                </div>
+                                <span class="text-gray-500 text-sm ml-1">(18)</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="flex gap-1">
+                                <span class="w-6 h-6 bg-red-500 rounded-full border-2 border-gray-300 cursor-pointer"></span>
+                                <span class="w-6 h-6 bg-blue-500 rounded-full border-2 border-gray-300 cursor-pointer"></span>
+                                <span class="w-6 h-6 bg-green-500 rounded-full border-2 border-gray-300 cursor-pointer"></span>
+                            </div>
+                            <button class="bg-skate-purple text-white px-4 py-2 rounded-lg hover:bg-skate-dark transition font-medium">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 3 -->
+                <div class="product-card bg-white rounded-2xl shadow-lg overflow-hidden group">
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1542272604-787c3835535d?w=400&h=400&fit=crop" alt="Cargo Skate Pants" class="w-full h-64 object-cover">
+                        <button class="wishlist-btn absolute top-4 right-4 bg-white/80 backdrop-blur-sm p-2 rounded-full shadow-lg">
+                            <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-2">Cargo Skate Pants</h3>
+                        <p class="text-gray-600 text-sm mb-3">Durable cargo pants with skate-friendly fit</p>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center gap-2">
+                                <span class="text-2xl font-bold text-skate-purple">₹3,299</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="flex text-yellow-400">
+                                    ★★★★★
+                                </div>
+                                <span class="text-gray-500 text-sm ml-1">(31)</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="flex gap-1">
+                                <span class="w-6 h-6 bg-black rounded-full border-2 border-gray-300 cursor-pointer"></span>
+                                <span class="w-6 h-6 bg-gray-600 rounded-full border-2 border-gray-300 cursor-pointer"></span>
+                                <span class="w-6 h-6 bg-green-800 rounded-full border-2 border-gray-300 cursor-pointer"></span>
+                            </div>
+                            <button class="bg-skate-purple text-white px-4 py-2 rounded-lg hover:bg-skate-dark transition font-medium">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 4 -->
+                <div class="product-card bg-white rounded-2xl shadow-lg overflow-hidden group">
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1588117472013-59bb13edafec?w=400&h=400&fit=crop" alt="Skate Cap" class="w-full h-64 object-cover">
+                        <button class="wishlist-btn absolute top-4 right-4 bg-white/80 backdrop-blur-sm p-2 rounded-full shadow-lg">
+                            <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                            </svg>
+                        </button>
+                        <div class="absolute top-4 left-4">
+                            <span class="bg-purple-500 text-white px-2 py-1 rounded-full text-xs font-semibold">Limited</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-2">Skatezo Snapback</h3>
+                        <p class="text-gray-600 text-sm mb-3">Classic snapback with embroidered logo</p>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center gap-2">
+                                <span class="text-2xl font-bold text-skate-purple">₹1,499</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="flex text-yellow-400">
+                                    ★★★★☆
+                                </div>
+                                <span class="text-gray-500 text-sm ml-1">(12)</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="flex gap-1">
+                                <span class="w-6 h-6 bg-black rounded-full border-2 border-gray-300 cursor-pointer"></span>
+                                <span class="w-6 h-6 bg-red-500 rounded-full border-2 border-gray-300 cursor-pointer"></span>
+                                <span class="w-6 h-6 bg-blue-500 rounded-full border-2 border-gray-300 cursor-pointer"></span>
+                            </div>
+                            <button class="bg-skate-purple text-white px-4 py-2 rounded-lg hover:bg-skate-dark transition font-medium">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 5 -->
+                <div class="product-card bg-white rounded-2xl shadow-lg overflow-hidden group">
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=400&h=400&fit=crop" alt="Vintage Skate Jacket" class="w-full h-64 object-cover">
+                        <button class="wishlist-btn absolute top-4 right-4 bg-white/80 backdrop-blur-sm p-2 rounded-full shadow-lg">
+                            <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-2">Vintage Skate Jacket</h3>
+                        <p class="text-gray-600 text-sm mb-3">Retro-inspired bomber jacket for street style</p>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center gap-2">
+                                <span class="text-2xl font-bold text-skate-purple">₹4,999</span>
+                                <span class="text-gray-400 line-through text-sm">₹5,999</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="flex text-yellow-400">
+                                    ★★★★★
+                                </div>
+                                <span class="text-gray-500 text-sm ml-1">(8)</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="flex gap-1">
+                                <span class="w-6 h-6 bg-black rounded-full border-2 border-gray-300 cursor-pointer"></span>
+                                <span class="w-6 h-6 bg-green-700 rounded-full border-2 border-gray-300 cursor-pointer"></span>
+                                <span class="w-6 h-6 bg-orange-500 rounded-full border-2 border-gray-300 cursor-pointer"></span>
+                            </div>
+                            <button class="bg-skate-purple text-white px-4 py-2 rounded-lg hover:bg-skate-dark transition font-medium">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 6 -->
+                <div class="product-card bg-white rounded-2xl shadow-lg overflow-hidden group">
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1503341455253-b2e723bb3dbb?w=400&h=400&fit=crop" alt="Graphic Long Sleeve" class="w-full h-64 object-cover">
+                        <button class="wishlist-btn absolute top-4 right-4 bg-white/80 backdrop-blur-sm p-2 rounded-full shadow-lg">
+                            <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                            </svg>
+                        </button>
+                        <div class="absolute top-4 left-4">
+                            <span class="bg-orange-500 text-white px-2 py-1 rounded-full text-xs font-semibold">Hot</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-2">Graphic Long Sleeve</h3>
+                        <p class="text-gray-600 text-sm mb-3">Eye-catching graphics on premium fabric</p>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center gap-2">
+                                <span class="text-2xl font-bold text-skate-purple">₹1,799</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="flex text-yellow-400">
+                                    ★★★★☆
+                                </div>
+                                <span class="text-gray-500 text-sm ml-1">(22)</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="flex gap-1">
+                                <span class="w-6 h-6 bg-black rounded-full border-2 border-gray-300 cursor-pointer"></span>
+                                <span class="w-6 h-6 bg-white rounded-full border-2 border-gray-300 cursor-pointer"></span>
+                                <span class="w-6 h-6 bg-gray-400 rounded-full border-2 border-gray-300 cursor-pointer"></span>
+                            </div>
+                            <button class="bg-skate-purple text-white px-4 py-2 rounded-lg hover:bg-skate-dark transition font-medium">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 7 -->
+                <div class="product-card bg-white rounded-2xl shadow-lg overflow-hidden group">
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=400&h=400&fit=crop" alt="Skate Shorts" class="w-full h-64 object-cover">
+                        <button class="wishlist-btn absolute top-4 right-4 bg-white/80 backdrop-blur-sm p-2 rounded-full shadow-lg">
+                            <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-2">Skate Shorts</h3>
+                        <p class="text-gray-600 text-sm mb-3">Comfortable shorts perfect for skating sessions</p>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center gap-2">
+                                <span class="text-2xl font-bold text-skate-purple">₹1,999</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="flex text-yellow-400">
+                                    ★★★★★
+                                </div>
+                                <span class="text-gray-500 text-sm ml-1">(15)</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="flex gap-1">
+                                <span class="w-6 h-6 bg-black rounded-full border-2 border-gray-300 cursor-pointer"></span>
+                                <span class="w-6 h-6 bg-gray-600 rounded-full border-2 border-gray-300 cursor-pointer"></span>
+                                <span class="w-6 h-6 bg-blue-600 rounded-full border-2 border-gray-300 cursor-pointer"></span>
+                            </div>
+                            <button class="bg-skate-purple text-white px-4 py-2 rounded-lg hover:bg-skate-dark transition font-medium">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 8 -->
+                <div class="product-card bg-white rounded-2xl shadow-lg overflow-hidden group">
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1618354691373-d851c5c3a990?w=400&h=400&fit=crop" alt="Beanie" class="w-full h-64 object-cover">
+                        <button class="wishlist-btn absolute top-4 right-4 bg-white/80 backdrop-blur-sm p-2 rounded-full shadow-lg">
+                            <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5

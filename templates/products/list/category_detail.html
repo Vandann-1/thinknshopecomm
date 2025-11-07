@@ -1,0 +1,1472 @@
+
+<!-- Enhanced templates/products/list/category_detail.html--- -->
+{% extends 'components/includes/base.html' %}
+{% load static %}
+
+{% block title %}{{ meta_title }}{% endblock %}
+{% block meta_description %}{{ meta_description }}{% endblock %}
+
+{% block extra_css %}
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          primary: {
+            50: '#eff6ff',
+            100: '#dbeafe',
+            500: '#3b82f6',
+            600: '#2563eb',
+            700: '#1d4ed8',
+            900: '#1e3a8a'
+          },
+          gray: {
+            50: '#f9fafb',
+            100: '#f3f4f6',
+            200: '#e5e7eb',
+            300: '#d1d5db',
+            400: '#9ca3af',
+            500: '#6b7280',
+            600: '#4b5563',
+            700: '#374151',
+            800: '#1f2937',
+            900: '#111827'
+          }
+        },
+        fontFamily: {
+          'sans': ['-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
+          'display': ['Inter', 'system-ui', 'sans-serif']
+        },
+        boxShadow: {
+          'card': '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)',
+          'card-hover': '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)'
+        }
+      }
+    }
+  }
+</script>
+
+<!-- ======================================================================================================================================================== -->
+<style>
+  /* NUCLEAR OPTION: Maximum specificity override for base template body styles */
+  
+  /* Reset everything at the highest possible specificity */
+  html[data-category-active] body,
+  html[data-category-active],
+  body[data-category-active],
+  body.category-active,
+  html.category-active body,
+  html.category-active,
+  body:has(.category-template),
+  html:has(.category-template) body,
+  html:has(.category-template) {
+    background-color: #ffffff !important;
+    background: #ffffff !important;
+    background-image: none !important;
+    background-attachment: initial !important;
+    background-clip: initial !important;
+    background-origin: initial !important;
+    background-position: initial !important;
+    background-repeat: initial !important;
+    background-size: initial !important;
+    color: #111827 !important;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+    line-height: 1.5 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    min-height: 100vh !important;
+    overflow-x: auto !important;
+    overflow-y: auto !important;
+  }
+
+  /* Force override any pseudo-elements on body */
+  html[data-category-active] body::before,
+  html[data-category-active] body::after,
+  body[data-category-active]::before,
+  body[data-category-active]::after,
+  body:has(.category-template)::before,
+  body:has(.category-template)::after {
+    display: none !important;
+    content: none !important;
+    background: none !important;
+  }
+
+  /* Category template container with maximum isolation */
+  .category-template,
+  div.category-template,
+  section.category-template,
+  main.category-template {
+    /* Create new stacking context */
+    position: relative !important;
+    z-index: 1 !important;
+    
+    /* Reset all possible inherited styles */
+    all: unset !important;
+    
+    /* Re-apply our styles */
+    display: block !important;
+    box-sizing: border-box !important;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+    line-height: 1.5 !important;
+    color: #111827 !important;
+    background-color: #ffffff !important;
+    background: #ffffff !important;
+    width: 100% !important;
+    min-height: 100vh !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Force all children to inherit category template styles */
+  .category-template *,
+  .category-template *::before,
+  .category-template *::after {
+    box-sizing: border-box !important;
+  }
+
+  /* Headings with nuclear specificity */
+  html body .category-template h1,
+  html body .category-template h2,
+  html body .category-template h3,
+  html body .category-template h4,
+  .category-template h1,
+  .category-template h2,
+  .category-template h3,
+  .category-template h4 {
+    font-family: Inter, system-ui, sans-serif !important;
+    font-weight: 600 !important;
+    line-height: 1.25 !important;
+    color: #111827 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: none !important;
+    border: none !important;
+  }
+
+  /* Links with nuclear specificity */
+  html body .category-template a,
+  html body .category-template a:link,
+  html body .category-template a:visited,
+  html body .category-template a:hover,
+  html body .category-template a:active,
+  html body .category-template a:focus,
+  .category-template a,
+  .category-template a:link,
+  .category-template a:visited,
+  .category-template a:hover,
+  .category-template a:active,
+  .category-template a:focus {
+    color: inherit !important;
+    text-decoration: none !important;
+    background: none !important;
+    border: none !important;
+    outline: none !important;
+  }
+
+  /* Buttons with nuclear specificity */
+  html body .category-template button,
+  html body .category-template input[type="button"],
+  html body .category-template input[type="submit"],
+  .category-template button,
+  .category-template input[type="button"],
+  .category-template input[type="submit"] {
+    font-family: inherit !important;
+    background: inherit !important;
+    border: inherit !important;
+    color: inherit !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Loading overlay with nuclear specificity */
+  html body .category-template .loading-overlay,
+  .category-template .loading-overlay {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    background: rgba(255, 255, 255, 0.9) !important;
+    display: none !important;
+    justify-content: center !important;
+    align-items: center !important;
+    z-index: 9999 !important;
+  }
+
+  .category-template .loading-overlay.show {
+    display: flex !important;
+  }
+
+  html body .category-template .loading-spinner,
+  .category-template .loading-spinner {
+    width: 40px !important;
+    height: 40px !important;
+    border: 3px solid #e5e7eb !important;
+    border-top: 3px solid #3b82f6 !important;
+    border-radius: 50% !important;
+    animation: category-template-spin 1s linear infinite !important;
+  }
+
+  @keyframes category-template-spin {
+    0% { transform: rotate(0deg) !important; }
+    100% { transform: rotate(360deg) !important; }
+  }
+
+  /* Filter overlay for mobile with nuclear specificity */
+  html body .category-template .filter-overlay,
+  .category-template .filter-overlay {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    background: rgba(0, 0, 0, 0.5) !important;
+    z-index: 40 !important;
+    display: none !important;
+  }
+
+  /* Product card hover effects with nuclear specificity */
+  html body .category-template .product-card,
+  .category-template .product-card {
+    transition: all 0.3s ease !important;
+    background: inherit !important;
+  }
+
+  html body .category-template .product-card:hover,
+  .category-template .product-card:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
+  }
+
+  /* Custom scrollbar for filter sidebar with nuclear specificity */
+  html body .category-template .filter-sidebar::-webkit-scrollbar,
+  .category-template .filter-sidebar::-webkit-scrollbar {
+    width: 6px !important;
+  }
+
+  html body .category-template .filter-sidebar::-webkit-scrollbar-track,
+  .category-template .filter-sidebar::-webkit-scrollbar-track {
+    background: #f3f4f6 !important;
+  }
+
+  html body .category-template .filter-sidebar::-webkit-scrollbar-thumb,
+  .category-template .filter-sidebar::-webkit-scrollbar-thumb {
+    background: #d1d5db !important;
+    border-radius: 3px !important;
+  }
+
+  html body .category-template .filter-sidebar::-webkit-scrollbar-thumb:hover,
+  .category-template .filter-sidebar::-webkit-scrollbar-thumb:hover {
+    background: #9ca3af !important;
+  }
+
+  /* Mobile responsive with nuclear specificity */
+  @media (max-width: 768px) {
+    html body .category-template .desktop-grid,
+    .category-template .desktop-grid {
+      display: none !important;
+    }
+
+    html body .category-template .mobile-layout,
+    .category-template .mobile-layout {
+      display: block !important;
+    }
+
+    html body .category-template .filter-sidebar,
+    .category-template .filter-sidebar {
+      position: fixed !important;
+      top: 0 !important;
+      left: -100% !important;
+      width: 85% !important;
+      height: 100vh !important;
+      background: white !important;
+      z-index: 50 !important;
+      transition: left 0.3s ease !important;
+      overflow-y: auto !important;
+    }
+
+    html body .category-template .filter-sidebar.active,
+    .category-template .filter-sidebar.active {
+      left: 0 !important;
+    }
+  }
+
+  /* Stars styling with nuclear specificity */
+  html body .category-template .stars,
+  .category-template .stars {
+    color: #fbbf24 !important;
+    font-size: 14px !important;
+  }
+
+  /* Badge animations with nuclear specificity */
+  html body .category-template .badge,
+  .category-template .badge {
+    animation: category-template-pulse 2s infinite !important;
+  }
+
+  @keyframes category-template-pulse {
+    0%, 100% { opacity: 1 !important; }
+    50% { opacity: 0.8 !important; }
+  }
+
+  /* Emergency override for stubborn base templates */
+  .category-template-wrapper {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    background: #ffffff !important;
+    z-index: 999999 !important;
+    overflow-y: auto !important;
+  }
+
+  /* Hide base template when category is active */
+  html[data-category-active] body > *:not(.category-template):not(.category-template-wrapper),
+  html[data-category-active] body > *:not([class*="category"]) {
+    display: none !important;
+  }
+</style>
+<script>
+// Super aggressive JavaScript override
+(function() {
+  'use strict';
+  
+  function forceOverrideBaseTemplate() {
+    // Add data attributes for maximum specificity
+    document.documentElement.setAttribute('data-category-active', 'true');
+    document.body.setAttribute('data-category-active', 'true');
+    document.body.classList.add('category-active');
+    document.documentElement.classList.add('category-active');
+    
+    // Force body styles directly
+    const bodyStyles = {
+      'background-color': '#ffffff',
+      'background': '#ffffff',
+      'background-image': 'none',
+      'color': '#111827',
+      'font-family': '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+      'line-height': '1.5',
+      'margin': '0',
+      'padding': '0',
+      'min-height': '100vh'
+    };
+    
+    // Apply styles with maximum priority
+    Object.entries(bodyStyles).forEach(([property, value]) => {
+      document.body.style.setProperty(property, value, 'important');
+      document.documentElement.style.setProperty(property, value, 'important');
+    });
+    
+    // Remove any base template classes that might interfere
+    const body = document.body;
+    const classList = Array.from(body.classList);
+    classList.forEach(className => {
+      if (!className.includes('category') && !className.includes('template')) {
+        body.classList.remove(className);
+      }
+    });
+    
+    // Watch for any attempts to change body styles
+    const observer = new MutationObserver(function(mutations) {
+      mutations.forEach(function(mutation) {
+        if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
+          // Re-apply our styles if something tries to change them
+          Object.entries(bodyStyles).forEach(([property, value]) => {
+            document.body.style.setProperty(property, value, 'important');
+          });
+        }
+      });
+    });
+    
+    observer.observe(document.body, {
+      attributes: true,
+      attributeFilter: ['style', 'class']
+    });
+  }
+  
+  // Run immediately
+  forceOverrideBaseTemplate();
+  
+  // Run on DOM ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', forceOverrideBaseTemplate);
+  }
+  
+  // Run on window load as final fallback
+  window.addEventListener('load', forceOverrideBaseTemplate);
+  
+  // Force override every 100ms for the first 5 seconds (nuclear option)
+  let attempts = 0;
+  const forceInterval = setInterval(() => {
+    forceOverrideBaseTemplate();
+    attempts++;
+    if (attempts >= 50) { // Stop after 5 seconds
+      clearInterval(forceInterval);
+    }
+  }, 100);
+})();
+</script>
+<!-- ============================================================================================================================================== -->
+{% endblock %}
+
+{% block content %}
+<div class="category-template">
+  <!-- Loading Overlay -->
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="loading-spinner"></div>
+  </div>
+
+  <!-- Mobile Filter Overlay -->
+  <div class="filter-overlay" id="filterOverlay" onclick="toggleMobileFilters()"></div>
+
+  <!-- Breadcrumb -->
+
+  <!-- Category Header -->
+  <div class="bg-white shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div class="flex flex-col md:flex-row md:items-center md:space-x-8">
+        {% if category.image %}
+        <div class="flex-shrink-0 mb-4 md:mb-0">
+          <img src="{{ category.image.url }}" 
+               alt="{{ category.name }}" 
+               class="w-24 h-24 md:w-32 md:h-32 rounded-2xl object-cover shadow-lg border-4 border-white">
+        </div>
+        {% endif %}
+        <div class="flex-1">
+          <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-3">{{ category.name }}</h1>
+          {% if category.description %}
+          <p class="text-lg text-gray-600 mb-4 leading-relaxed">{{ category.description }}</p>
+          {% endif %}
+          <div class="flex flex-wrap gap-6 text-sm text-gray-600">
+            <div class="flex items-center">
+              <svg class="w-4 h-4 mr-2 text-primary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
+              </svg>
+              <span class="font-medium">{{ category_stats.total_products }}</span> Products
+            </div>
+            <div class="flex items-center">
+              <svg class="w-4 h-4 mr-2 text-primary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
+              </svg>
+              <span class="font-medium">{{ category_stats.brands_count }}</span> Brands
+            </div>
+            {% if category_stats.avg_price %}
+            <div class="flex items-center">
+              <svg class="w-4 h-4 mr-2 text-primary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
+              </svg>
+              Avg. <span class="font-semibold">${{ category_stats.avg_price|floatformat:0 }}</span>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Category Statistics -->
+  <div class="bg-gray-50 py-6">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+        <div class="bg-white rounded-xl p-4 text-center shadow-card">
+          <div class="text-2xl font-bold text-primary-600 mb-1">{{ category_stats.total_products }}</div>
+          <div class="text-sm text-gray-600">Total Products</div>
+        </div>
+        <div class="bg-white rounded-xl p-4 text-center shadow-card">
+          <div class="text-2xl font-bold text-primary-600 mb-1">{{ category_stats.in_stock_products }}</div>
+          <div class="text-sm text-gray-600">In Stock</div>
+        </div>
+        <div class="bg-white rounded-xl p-4 text-center shadow-card">
+          <div class="text-2xl font-bold text-primary-600 mb-1">{{ category_stats.brands_count }}</div>
+          <div class="text-sm text-gray-600">Brands</div>
+        </div>
+        <div class="bg-white rounded-xl p-4 text-center shadow-card">
+          <div class="text-2xl font-bold text-primary-600 mb-1">{{ category_stats.new_arrivals_count }}</div>
+          <div class="text-sm text-gray-600">New Arrivals</div>
+        </div>
+        <div class="bg-white rounded-xl p-4 text-center shadow-card">
+          <div class="text-2xl font-bold text-primary-600 mb-1">{{ category_stats.on_sale_count }}</div>
+          <div class="text-sm text-gray-600">On Sale</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Subcategories -->
+  {% if subcategories %}
+  <div class="bg-white py-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-2xl font-bold text-gray-900 mb-6">Explore Subcategories</h2>
+      <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+        {% for subcategory in subcategories %}
+        <a href="{% url 'products:category-detail' subcategory.slug %}" 
+           class="group bg-gray-50 hover:bg-gray-100 rounded-xl p-4 text-center transition-all duration-200 hover:shadow-card-hover">
+          <h4 class="font-semibold text-gray-900 group-hover:text-primary-600 transition-colors mb-2">{{ subcategory.name }}</h4>
+          <p class="text-sm text-gray-500">{{ subcategory.product_count }} products</p>
+        </a>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- Current Filters -->
+  {% if current_filters %}
+  <div class="bg-primary-50 border-y border-primary-100 py-4">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-wrap items-center gap-3">
+        <h4 class="text-sm font-semibold text-gray-900">Active Filters:</h4>
+        {% for filter_type, values in current_filters.items %}
+          {% for value in values %}
+          <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-primary-100 text-primary-800">
+            {{ filter_type }}: {{ value }}
+            <button onclick="removeFilter('{{ filter_type|lower }}', '{{ value }}')" 
+                    class="ml-2 text-primary-600 hover:text-primary-800">
+              <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+              </svg>
+            </button>
+          </span>
+          {% endfor %}
+        {% endfor %}
+        <a href="{% url 'products:category-detail' category.slug %}" 
+           class="text-sm text-red-600 hover:text-red-800 font-medium">
+          Clear All Filters
+        </a>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- Main Content -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="lg:grid lg:grid-cols-4 lg:gap-8 desktop-grid">
+      <!-- Filter Sidebar -->
+      <div class="lg:col-span-1">
+        <div class="filter-sidebar bg-white rounded-xl border border-gray-200 p-6 sticky top-4 max-h-screen overflow-y-auto" id="filterSidebar">
+          <div class="flex justify-between items-center mb-6">
+            <h3 class="text-lg font-semibold text-gray-900">Filters</h3>
+            <button class="mobile-close lg:hidden text-gray-400 hover:text-gray-600" onclick="toggleMobileFilters()">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+              </svg>
+            </button>
+          </div>
+
+          <form id="filterForm" method="GET" class="space-y-6">
+            <!-- Price Range Filter -->
+            <div class="border-b border-gray-200 pb-6">
+              <h4 class="text-sm font-semibold text-gray-900 mb-4 flex items-center">
+                <svg class="w-4 h-4 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
+                </svg>
+                Price Range
+              </h4>
+              <div class="grid grid-cols-2 gap-3">
+                <input type="number" 
+                       name="min_price" 
+                       placeholder="Min" 
+                       value="{{ request.GET.min_price }}"
+                       min="0"
+                       class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
+                <input type="number" 
+                       name="max_price" 
+                       placeholder="Max" 
+                       value="{{ request.GET.max_price }}"
+                       min="0"
+                       class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
+              </div>
+              {% if price_range.min_price and price_range.max_price %}
+              <div class="text-xs text-gray-500 mt-2">
+                Range: ${{ price_range.min_price }} - ${{ price_range.max_price }}
+              </div>
+              {% endif %}
+            </div>
+
+            <!-- Brand Filter -->
+            {% if available_brands %}
+            <div class="border-b border-gray-200 pb-6">
+              <h4 class="text-sm font-semibold text-gray-900 mb-4 flex items-center">
+                <svg class="w-4 h-4 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
+                </svg>
+                Brands
+              </h4>
+              <div class="space-y-3 max-h-48 overflow-y-auto">
+                {% for brand in available_brands %}
+                <label class="flex items-center justify-between cursor-pointer group">
+                  <div class="flex items-center">
+                    <input type="checkbox" 
+                           name="brand" 
+                           value="{{ brand.slug }}" 
+                           id="brand_{{ brand.id }}"
+                           {% if brand.slug in request.GET.brand %}checked{% endif %}
+                           class="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500">
+                    <span class="ml-3 text-sm text-gray-700 group-hover:text-gray-900">{{ brand.name }}</span>
+                  </div>
+                  <span class="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-full">({{ brand.product_count }})</span>
+                </label>
+                {% endfor %}
+              </div>
+            </div>
+            {% endif %}
+
+            <!-- Color Filter -->
+            {% if available_colors %}
+            <div class="border-b border-gray-200 pb-6">
+              <h4 class="text-sm font-semibold text-gray-900 mb-4 flex items-center">
+                <svg class="w-4 h-4 mr-2 text-pink-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM21 5a2 2 0 00-2-2h-4a2 2 0 00-2 2v12a4 4 0 004 4h4a2 2 0 002-2V5z"></path>
+                </svg>
+                Colors
+              </h4>
+              <div class="space-y-3 max-h-48 overflow-y-auto">
+                {% for color in available_colors %}
+                <label class="flex items-center justify-between cursor-pointer group">
+                  <div class="flex items-center">
+                    <input type="checkbox" 
+                           name="color" 
+                           value="{{ color.slug }}" 
+                           id="color_{{ color.id }}"
+                           {% if color.slug in request.GET.color %}checked{% endif %}
+                           class="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500">
+                    <div class="ml-3 flex items-center">
+                      <div class="w-4 h-4 rounded-full border border-gray-300 mr-2" 
+                           style="background: {{ color.hex_code }};"></div>
+                      <span class="text-sm text-gray-700 group-hover:text-gray-900">{{ color.name }}</span>
+                    </div>
+                  </div>
+                  <span class="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-full">({{ color.product_count }})</span>
+                </label>
+                {% endfor %}
+              </div>
+            </div>
+            {% endif %}
+
+            <!-- Size Filter -->
+            {% if available_sizes %}
+            <div class="border-b border-gray-200 pb-6">
+              <h4 class="text-sm font-semibold text-gray-900 mb-4 flex items-center">
+                <svg class="w-4 h-4 mr-2 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4a1 1 0 011-1h4m12 12v4a1 1 0 01-1 1h-4m-6-6h.01M9 16h.01"></path>
+                </svg>
+                Sizes
+              </h4>
+              <div class="space-y-3 max-h-48 overflow-y-auto">
+                {% for size in available_sizes %}
+                <label class="flex items-center justify-between cursor-pointer group">
+                  <div class="flex items-center">
+                    <input type="checkbox" 
+                           name="size" 
+                           value="{{ size.name }}" 
+                           id="size_{{ size.id }}"
+                           {% if size.name in request.GET.size %}checked{% endif %}
+                           class="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500">
+                    <span class="ml-3 text-sm text-gray-700 group-hover:text-gray-900">{{ size.name }} ({{ size.get_category_display }})</span>
+                  </div>
+                  <span class="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-full">({{ size.product_count }})</span>
+                </label>
+                {% endfor %}
+              </div>
+            </div>
+            {% endif %}
+
+            <!-- Gender Filter -->
+            {% if gender_choices %}
+            <div class="border-b border-gray-200 pb-6">
+              <h4 class="text-sm font-semibold text-gray-900 mb-4 flex items-center">
+                <svg class="w-4 h-4 mr-2 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                </svg>
+                Gender
+              </h4>
+              <div class="space-y-3">
+                {% for value, label in gender_choices %}
+                <label class="flex items-center cursor-pointer group">
+                  <input type="radio" 
+                         name="gender" 
+                         value="{{ value }}" 
+                         id="gender_{{ value }}"
+                         {% if value == request.GET.gender %}checked{% endif %}
+                         class="w-4 h-4 text-primary-600 border-gray-300 focus:ring-primary-500">
+                  <span class="ml-3 text-sm text-gray-700 group-hover:text-gray-900">{{ label }}</span>
+                </label>
+                {% endfor %}
+              </div>
+            </div>
+            {% endif %}
+
+            <!-- Material Filter -->
+            {% if available_materials %}
+            <div class="border-b border-gray-200 pb-6">
+              <h4 class="text-sm font-semibold text-gray-900 mb-4 flex items-center">
+                <svg class="w-4 h-4 mr-2 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path>
+                </svg>
+                Materials
+              </h4>
+              <div class="space-y-3 max-h-48 overflow-y-auto">
+                {% for material in available_materials %}
+                <label class="flex items-center justify-between cursor-pointer group">
+                  <div class="flex items-center">
+                    <input type="checkbox" 
+                           name="material" 
+                           value="{{ material.name }}" 
+                           id="material_{{ material.id }}"
+                           {% if material.name in request.GET.material %}checked{% endif %}
+                           class="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500">
+                    <span class="ml-3 text-sm text-gray-700 group-hover:text-gray-900">{{ material.name }}</span>
+                  </div>
+                  <span class="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-full">({{ material.product_count }})</span>
+                </label>
+                {% endfor %}
+              </div>
+            </div>
+            {% endif %}
+
+            <!-- Special Filters -->
+            <div class="border-b border-gray-200 pb-6">
+              <h4 class="text-sm font-semibold text-gray-900 mb-4 flex items-center">
+                <svg class="w-4 h-4 mr-2 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
+                </svg>
+                Special
+              </h4>
+              <div class="space-y-3">
+                <label class="flex items-center cursor-pointer group">
+                  <input type="checkbox" 
+                         name="in_stock" 
+                         value="1" 
+                         id="in_stock"
+                         {% if request.GET.in_stock %}checked{% endif %}
+                         class="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500">
+                  <span class="ml-3 text-sm text-gray-700 group-hover:text-gray-900">In Stock Only</span>
+                </label>
+                <label class="flex items-center cursor-pointer group">
+                  <input type="checkbox" 
+                         name="on_sale" 
+                         value="1" 
+                         id="on_sale"
+                         {% if request.GET.on_sale %}checked{% endif %}
+                         class="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500">
+                  <span class="ml-3 text-sm text-gray-700 group-hover:text-gray-900">On Sale</span>
+                </label>
+                <label class="flex items-center cursor-pointer group">
+                  <input type="checkbox" 
+                         name="new_arrivals" 
+                         value="1" 
+                         id="new_arrivals"
+                         {% if request.GET.new_arrivals %}checked{% endif %}
+                         class="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500">
+                  <span class="ml-3 text-sm text-gray-700 group-hover:text-gray-900">New Arrivals</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Rating Filter -->
+            <div class="pb-6">
+              <h4 class="text-sm font-semibold text-gray-900 mb-4 flex items-center">
+                <svg class="w-4 h-4 mr-2 text-yellow-500" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
+                </svg>
+                Minimum Rating
+              </h4>
+              <div class="space-y-3">
+                {% for rating in "54321" %}
+                <label class="flex items-center cursor-pointer group">
+                  <input type="radio" 
+                         name="min_rating" 
+                         value="{{ rating }}" 
+                         id="rating_{{ rating }}"
+                         {% if rating == request.GET.min_rating %}checked{% endif %}
+                         class="w-4 h-4 text-primary-600 border-gray-300 focus:ring-primary-500">
+                  <div class="ml-3 flex items-center">
+                    <div class="stars text-yellow-400 mr-2">
+                      {% for i in "12345"|slice:":"|slice:rating %}★{% endfor %}
+                    </div>
+                    <span class="text-sm text-gray-700 group-hover:text-gray-900">& up</span>
+                  </div>
+                </label>
+                {% endfor %}
+              </div>
+            </div>
+
+            <div class="pt-4 space-y-3">
+              <button type="submit" 
+                      class="w-full bg-primary-600 hover:bg-primary-700 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 focus:ring-2 focus:ring-primary-500 focus:ring-offset-2">
+                Apply Filters
+              </button>
+              <a href="{% url 'products:category-detail' category.slug %}" 
+                 class="block w-full text-center text-gray-600 hover:text-gray-800 text-sm font-medium py-2">
+                Clear All Filters
+              </a>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Products Section -->
+      <div class="lg:col-span-3">
+        <!-- Mobile Filter Toggle -->
+        <button class="lg:hidden w-full mb-6 bg-white border border-gray-300 rounded-lg py-3 px-4 flex items-center justify-center text-gray-700 hover:bg-gray-50 transition-colors" 
+                onclick="toggleMobileFilters()">
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.414A1 1 0 013 6.707V4z"></path>
+          </svg>
+          Show Filters
+        </button>
+
+        <!-- Products Header -->
+        <div class="bg-white rounded-xl border border-gray-200 p-6 mb-6">
+          <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+            <div>
+              <h2 class="text-xl font-bold text-gray-900">{{ category.name }} Products</h2>
+              <p class="text-sm text-gray-600 mt-1">
+                Showing {{ page_obj.start_index }}-{{ page_obj.end_index }} of {{ page_obj.paginator.count }} products
+              </p>
+            </div>
+
+            <div class="flex flex-col sm:flex-row gap-3">
+              <!-- View Toggle -->
+              <div class="flex bg-gray-100 rounded-lg p-1">
+                <button type="button" 
+                        class="px-3 py-2 rounded-md text-sm font-medium transition-colors bg-white text-gray-900 shadow-sm" 
+                        onclick="setViewMode('grid')">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
+                  </svg>
+                </button>
+                <button type="button" 
+                        class="px-3 py-2 rounded-md text-sm font-medium text-gray-500 hover:text-gray-900 transition-colors" 
+                        onclick="setViewMode('list')">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
+                  </svg>
+                </button>
+              </div>
+
+              <!-- Sort Controls -->
+              <select onchange="updateSort(this.value)" 
+                      class="px-4 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-white">
+                <option value="">Sort by...</option>
+                <option value="name" {% if request.GET.sort == 'name' %}selected{% endif %}>Name A-Z</option>
+                <option value="-name" {% if request.GET.sort == '-name' %}selected{% endif %}>Name Z-A</option>
+                <option value="price" {% if request.GET.sort == 'price' %}selected{% endif %}>Price Low to High</option>
+                <option value="-price" {% if request.GET.sort == '-price' %}selected{% endif %}>Price High to Low</option>
+                <option value="rating" {% if request.GET.sort == 'rating' %}selected{% endif %}>Highest Rated</option>
+                <option value="popularity" {% if request.GET.sort == 'popularity' %}selected{% endif %}>Most Popular</option>
+                <option value="newest" {% if request.GET.sort == 'newest' %}selected{% endif %}>Newest First</option>
+                <option value="discount" {% if request.GET.sort == 'discount' %}selected{% endif %}>Biggest Discount</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Products Grid -->
+        {% if products %}
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="productContainer">
+          {% for product in products %}
+          <div class="product-card bg-white rounded-xl border border-gray-200 overflow-hidden group relative">
+            <!-- Product Badges -->
+            <div class="absolute top-3 left-3 z-10 flex flex-col gap-1">
+              {% if product.is_new_arrival %}
+              <span class="badge bg-blue-500 text-white text-xs font-semibold px-2 py-1 rounded-full">NEW</span>
+              {% endif %}
+              {% if product.get_discount_percent %}
+              <span class="badge bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded-full">{{ product.get_discount_percent }}% OFF</span>
+              {% endif %}
+              {% if product.is_bestseller %}
+              <span class="badge bg-amber-500 text-white text-xs font-semibold px-2 py-1 rounded-full">BESTSELLER</span>
+              {% endif %}
+              {% if product.is_featured %}
+              <span class="badge bg-purple-500 text-white text-xs font-semibold px-2 py-1 rounded-full">FEATURED</span>
+              {% endif %}
+            </div>
+
+            <!-- Product Actions  Btns-->
+            <div class="absolute top-3 right-3 z-10 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+               <button onclick="grabWishList({{ product.id }})" 
+                                            class="bg-white hover:bg-gray-50 p-2 rounded-full shadow-lg border border-gray-200 text-gray-600 hover:text-red-500 transition-colors"
+                                            title="Add to Wishlist">
+                                        <i class="far fa-heart text-gray-600 dark:text-gray-400 hover:text-red-500 transition-colors"></i>
+                                    </button>
+                                    <button onclick="quickView({{ product.id }})" 
+                                            class="bg-white hover:bg-gray-50 p-2 rounded-full shadow-lg border border-gray-200 text-gray-600 hover:text-red-500 transition-colors"
+                                            title="Quick View">
+                                        <i class="far fa-eye text-gray-600 dark:text-gray-400 hover:text-primary-500 transition-colors"></i>
+                                    </button>
+                                    <!-- add to cart -->
+                                    <button onclick="EcommerceCartModal.fillProductIntoCart({{ product.id }})" 
+                                            class="bg-white hover:bg-gray-50 p-2 rounded-full shadow-lg border border-gray-200 text-gray-600 hover:text-red-500 transition-colors"
+                                            title="Add To Cart">
+                                        <i class="fas fa-cart-plus text-gray-600 dark:text-gray-400 hover:text-primary-500 transition-colors"></i>
+                                    </button>
+                                    <!-- Schedule Purchase -->
+                                    <button onclick="schedulePurchase({{ product.id }})" 
+                                            class="bg-white hover:bg-gray-50 p-2 rounded-full shadow-lg border border-gray-200 text-gray-600 hover:text-red-500 transition-colors"
+                                            title="Future Purchase">
+                                       <i class="fas fa-rocket text-gray-600 dark:text-gray-400 hover:text-primary-500 transition-colors"></i>
+                                    </button>
+            </div>
+
+            <!-- Product Image -->
+            <div class="aspect-square bg-gray-100 overflow-hidden">
+              <a href="{% url 'products:product-detail' product.slug %}">
+                {% if product.get_primary_image %}
+                <img src="{{ product.get_primary_image }}" 
+                     alt="{{ product.name }}" 
+                     class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                {% else %}
+                <div class="w-full h-full flex items-center justify-center text-gray-400">
+                  <svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                  </svg>
+                </div>
+                {% endif %}
+              </a>
+            </div>
+
+            <!-- Product Info -->
+            <div class="p-4">
+              <div class="flex items-start justify-between mb-2">
+                <h3 class="font-semibold text-gray-900 group-hover:text-primary-600 transition-colors line-clamp-2">
+                  <a href="{% url 'products:product-detail' product.slug %}">{{ product.name }}</a>
+                </h3>
+              </div>
+
+              <div class="text-sm text-gray-500 mb-2">
+                {{ product.brand.name }} • {{ product.category.name }}
+              </div>
+
+              <!-- Product Rating -->
+              {% if product.avg_rating %}
+              <div class="flex items-center mb-3">
+                <div class="stars text-yellow-400 mr-2">
+                  {% for i in "12345" %}
+                    {% if forloop.counter <= product.avg_rating %}★{% else %}☆{% endif %}
+                  {% endfor %}
+                </div>
+                <span class="text-sm text-gray-500">({{ product.review_count }})</span>
+              </div>
+              {% endif %}
+
+              <!-- Product Price -->
+              <div class="mb-3">
+                {% if product.discounted_price %}
+                <div class="flex items-center gap-2">
+                  <span class="text-lg font-bold text-gray-900">${{ product.discounted_price }}</span>
+                  <span class="text-sm text-gray-500 line-through">${{ product.base_price }}</span>
+                  <span class="text-xs font-semibold text-red-600 bg-red-50 px-2 py-1 rounded-full">{{ product.get_discount_percent }}% OFF</span>
+                </div>
+                {% else %}
+                <span class="text-lg font-bold text-gray-900">${{ product.base_price }}</span>
+                {% endif %}
+              </div>
+
+              <!-- Available Colors -->
+              {% if product.get_available_colors %}
+              <div class="mb-3">
+                <div class="flex items-center gap-1">
+                  {% for color in product.get_available_colors|slice:":5" %}
+                  <div class="w-4 h-4 rounded-full border-2 border-gray-200" 
+                       style="background: {{ color.hex_code }};" 
+                       title="{{ color.name }}"></div>
+                  {% endfor %}
+                  {% if product.get_available_colors|length > 5 %}
+                  <span class="text-xs text-gray-500 ml-1">+{{ product.get_available_colors|length|add:"-5" }}</span>
+                  {% endif %}
+                </div>
+              </div>
+              {% endif %}
+
+              <!-- Available Sizes -->
+              {% if product.get_available_sizes %}
+              <div class="mb-3">
+                <div class="text-xs text-gray-600">
+                  <span class="font-medium">Sizes:</span>
+                  {% for size in product.get_available_sizes|slice:":4" %}
+                  {{ size.name }}{% if not forloop.last %}, {% endif %}
+                  {% endfor %}
+                  {% if product.get_available_sizes|length > 4 %}
+                  +{{ product.get_available_sizes|length|add:"-4" }}
+                  {% endif %}
+                </div>
+              </div>
+              {% endif %}
+
+              <!-- Stock Status -->
+              <div class="mb-4">
+                {% if product.is_in_stock %}
+                <div class="flex items-center text-sm text-green-600">
+                  <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                  </svg>
+                  In Stock ({{ product.get_total_stock }} items)
+                </div>
+                {% else %}
+                <div class="flex items-center text-sm text-red-600">
+                  <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                  </svg>
+                  Out of Stock
+                </div>
+                {% endif %}
+              </div>
+
+              <!-- Action Buttons -->
+              <div class="flex gap-2">
+                <a href="{% url 'products:product-detail' product.slug %}" 
+                   class="flex-1 bg-primary-600 hover:bg-primary-700 text-white text-center font-medium py-2.5 px-4 rounded-lg transition-colors duration-200">
+                  View Details
+                </a>
+                {% if product.is_in_stock %}
+                <button onclick="addToCart({{ product.id }})" 
+                        class="bg-green-600 hover:bg-green-700 text-white p-2.5 rounded-lg transition-colors duration-200"
+                        title="Add to Cart">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.293 2.293A1 1 0 005.414 17H19M7 13v4a2 2 0 002 2h4m6 0v1a1 1 0 11-2 0v-1m-4 0V9a1 1 0 112 0v8.01"></path>
+                  </svg>
+                </button>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+
+        <!-- Pagination -->
+        {% if is_paginated %}
+        <div class="flex justify-center mt-8">
+          <nav class="flex items-center space-x-1" aria-label="Pagination">
+            {% if page_obj.has_previous %}
+            <a href="?page=1{{ request.GET.urlencode }}" 
+               class="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-50 hover:text-gray-700">
+              First
+            </a>
+            <a href="?page={{ page_obj.previous_page_number }}{{ request.GET.urlencode }}" 
+               class="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 hover:bg-gray-50 hover:text-gray-700">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+              </svg>
+            </a>
+            {% endif %}
+            
+            <span class="px-4 py-2 text-sm font-medium text-white bg-primary-600 border border-primary-600">
+              {{ page_obj.number }}
+            </span>
+            
+            {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}{{ request.GET.urlencode }}" 
+               class="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 hover:bg-gray-50 hover:text-gray-700">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+              </svg>
+            </a>
+            <a href="?page={{ page_obj.paginator.num_pages }}{{ request.GET.urlencode }}" 
+               class="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-50 hover:text-gray-700">
+              Last
+            </a>
+            {% endif %}
+          </nav>
+        </div>
+        {% endif %}
+
+        {% else %}
+        <!-- No Products Found -->
+        <div class="bg-white rounded-xl border border-gray-200 p-12 text-center">
+          <div class="mx-auto w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mb-6">
+            <svg class="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 009.586 13H7"></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-semibold text-gray-900 mb-2">No products found</h3>
+          <p class="text-gray-600 mb-6">
+            {% if current_filters %}
+            We couldn't find any products matching your current filters. Try adjusting your criteria or browse other categories.
+            {% else %}
+            There are no products available in this category at the moment.
+            {% endif %}
+          </p>
+          <div class="flex flex-col sm:flex-row gap-3 justify-center">
+            {% if current_filters %}
+            <a href="{% url 'products:category-detail' category.slug %}" 
+               class="bg-primary-600 hover:bg-primary-700 text-white font-medium py-3 px-6 rounded-lg transition-colors">
+              Clear All Filters
+            </a>
+            {% endif %}
+            <a href="{% url 'products:category-list' %}" 
+               class="bg-gray-100 hover:bg-gray-200 text-gray-900 font-medium py-3 px-6 rounded-lg transition-colors">
+              Browse All Categories
+            </a>
+          </div>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Mobile Layout (Hidden on Desktop) -->
+    <div class="mobile-layout lg:hidden" style="display: none;">
+      <!-- Mobile content would go here if needed -->
+    </div>
+  </div>
+
+  <!-- Related Categories -->
+  {% if related_categories %}
+  <div class="bg-gray-50 py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-2xl font-bold text-gray-900 text-center mb-8">You might also like</h2>
+      <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+        {% for related in related_categories %}
+        <a href="{% url 'products:category-detail' related.slug %}" 
+           class="group bg-white hover:bg-gray-50 rounded-xl p-6 text-center transition-all duration-200 hover:shadow-card-hover border border-gray-200">
+          <div class="w-12 h-12 mx-auto mb-3 bg-primary-100 rounded-lg flex items-center justify-center group-hover:bg-primary-200 transition-colors">
+            <svg class="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
+            </svg>
+          </div>
+          <h4 class="font-semibold text-gray-900 group-hover:text-primary-600 transition-colors text-sm">{{ related.name }}</h4>
+          <p class="text-xs text-gray-500 mt-1">Explore {{ related.name|lower }}</p>
+        </a>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  {% endif %}
+</div>
+<!-- ====================================================================================================================================== -->
+<script>
+// JavaScript functionality
+function toggleMobileFilters() {
+  const sidebar = document.getElementById('filterSidebar');
+  const overlay = document.getElementById('filterOverlay');
+  
+  if (sidebar.classList.contains('active')) {
+    sidebar.classList.remove('active');
+    overlay.style.display = 'none';
+    document.body.style.overflow = '';
+  } else {
+    sidebar.classList.add('active');
+    overlay.style.display = 'block';
+    document.body.style.overflow = 'hidden';
+  }
+}
+
+function setViewMode(mode) {
+  const container = document.getElementById('productContainer');
+  const buttons = document.querySelectorAll('.view-toggle button');
+  
+  buttons.forEach(btn => {
+    btn.classList.remove('bg-white', 'text-gray-900', 'shadow-sm');
+    btn.classList.add('text-gray-500', 'hover:text-gray-900');
+  });
+  
+  event.target.classList.add('bg-white', 'text-gray-900', 'shadow-sm');
+  event.target.classList.remove('text-gray-500', 'hover:text-gray-900');
+  
+  if (mode === 'list') {
+    container.className = 'space-y-4';
+    // Add list view styles
+  } else {
+    container.className = 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6';
+  }
+}
+
+function updateSort(value) {
+  const url = new URL(window.location);
+  if (value) {
+    url.searchParams.set('sort', value);
+  } else {
+    url.searchParams.delete('sort');
+  }
+  window.location = url;
+}
+
+function removeFilter(filterType, value) {
+  const url = new URL(window.location);
+  const params = url.searchParams.getAll(filterType);
+  const filtered = params.filter(p => p !== value);
+  
+  url.searchParams.delete(filterType);
+  filtered.forEach(p => url.searchParams.append(filterType, p));
+  
+  window.location = url;
+}
+
+function toggleWishlist(productId) {
+  // Add wishlist functionality
+  console.log('Toggle wishlist for product:', productId);
+  // You can implement AJAX call here
+}
+
+function quickView(productId) {
+  // Add quick view functionality
+  console.log('Quick view for product:', productId);
+  // You can implement modal functionality here
+}
+
+function addToCompare(productId) {
+  // Add compare functionality
+  console.log('Add to compare for product:', productId);
+  // You can implement compare functionality here
+}
+
+function addToCart(productId) {
+  // Add to cart functionality
+  console.log('Add to cart for product:', productId);
+  // You can implement AJAX call here
+}
+
+// Show loading overlay during page transitions
+function showLoading() {
+  document.getElementById('loadingOverlay').style.display = 'flex';
+}
+
+// Form submission handling
+document.getElementById('filterForm').addEventListener('submit', function() {
+  showLoading();
+});
+
+// Handle filter changes
+document.querySelectorAll('#filterForm input, #filterForm select').forEach(element => {
+  if (element.type === 'checkbox' || element.type === 'radio') {
+    element.addEventListener('change', function() {
+      // Auto-submit form on filter change (optional)
+      // this.form.submit();
+    });
+  }
+});
+
+// Keyboard navigation for accessibility
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    const sidebar = document.getElementById('filterSidebar');
+    if (sidebar.classList.contains('active')) {
+      toggleMobileFilters();
+    }
+  }
+});
+
+// Intersection Observer for lazy loading (if needed)
+if ('IntersectionObserver' in window) {
+  const imageObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const img = entry.target;
+        if (img.dataset.src) {
+          img.src = img.dataset.src;
+          img.removeAttribute('data-src');
+          imageObserver.unobserve(img);
+        }
+      }
+    });
+  });
+
+  document.querySelectorAll('img[data-src]').forEach(img => {
+    imageObserver.observe(img);
+  });
+}
+
+// Smooth scroll behavior for pagination
+document.querySelectorAll('a[href*="page="]').forEach(link => {
+  link.addEventListener('click', function() {
+    showLoading();
+  });
+});
+
+// Price range input validation
+document.querySelectorAll('input[name="min_price"], input[name="max_price"]').forEach(input => {
+  input.addEventListener('input', function() {
+    const minPrice = document.querySelector('input[name="min_price"]').value;
+    const maxPrice = document.querySelector('input[name="max_price"]').value;
+    
+    if (minPrice && maxPrice && parseFloat(minPrice) > parseFloat(maxPrice)) {
+      this.setCustomValidity('Minimum price cannot be greater than maximum price');
+    } else {
+      this.setCustomValidity('');
+    }
+  });
+});
+
+// Initialize tooltips (if using a tooltip library)
+// You can add tooltip functionality here
+
+// Analytics tracking (add your analytics code)
+function trackFilterChange(filterType, value, action) {
+  // Track filter usage
+  console.log('Filter tracking:', filterType, value, action);
+  // Add your analytics tracking code here
+}
+
+// Track product interactions
+function trackProductView(productId) {
+  console.log('Product view:', productId);
+  // Add your analytics tracking code here
+}
+
+// Performance optimization: Debounce search inputs
+function debounce(func, wait) {
+  let timeout;
+  return function executedFunction(...args) {
+    const later = () => {
+      clearTimeout(timeout);
+      func(...args);
+    };
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  };
+}
+
+// Add debounced search functionality if you have search inputs
+const debouncedSearch = debounce(function(query) {
+  // Implement search functionality
+  console.log('Search query:', query);
+}, 300);
+
+// Initialize page
+document.addEventListener('DOMContentLoaded', function() {
+  // Hide loading overlay
+  document.getElementById('loadingOverlay').style.display = 'none';
+  
+  // Initialize any other components
+  console.log('Category page initialized');
+});
+</script>
+<!-- =============================================================================================================================================== -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Auto-submit filters on change
+    const filterForm = document.getElementById('filterForm');
+    const filterInputs = filterForm.querySelectorAll('input, select');
+    
+    filterInputs.forEach(input => {
+        input.addEventListener('change', function() {
+            if (this.type === 'checkbox' || this.type === 'radio') {
+                setTimeout(() => {
+                    showLoading();
+                    filterForm.submit();
+                }, 100);
+            }
+        });
+    });
+
+    // Price range inputs submit on blur
+    const priceInputs = filterForm.querySelectorAll('input[name="min_price"], input[name="max_price"]');
+    priceInputs.forEach(input => {
+        input.addEventListener('blur', function() {
+            showLoading();
+            filterForm.submit();
+        });
+    });
+});
+
+function showLoading() {
+    document.getElementById('loadingOverlay').style.display = 'flex';
+}
+
+function hideLoading() {
+    document.getElementById('loadingOverlay').style.display = 'none';
+}
+
+function updateSort(sortValue) {
+    const url = new URL(window.location.href);
+    if (sortValue) {
+        url.searchParams.set('sort', sortValue);
+    } else {
+        url.searchParams.delete('sort');
+    }
+    url.searchParams.delete('page'); // Reset to first page
+    showLoading();
+    window.location.href = url.toString();
+}
+
+function setViewMode(mode) {
+    const productContainer = document.getElementById('productContainer');
+    const viewButtons = document.querySelectorAll('.view-toggle button');
+    
+    viewButtons.forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
+    
+    if (mode === 'list') {
+        productContainer.className = 'product-list';
+    } else {
+        productContainer.className = 'product-grid';
+    }
+}
+
+function toggleMobileFilters() {
+    const sidebar = document.getElementById('filterSidebar');
+    const overlay = document.getElementById('filterOverlay');
+    
+    sidebar.classList.toggle('open');
+    overlay.classList.toggle('open');
+    
+    overlay.onclick = function() {
+        sidebar.classList.remove('open');
+        overlay.classList.remove('open');
+    };
+}
+
+function removeFilter(filterType, value) {
+    const url = new URL(window.location.href);
+    const params = url.searchParams;
+    
+    // Get all values for this filter type
+    const values = params.getAll(filterType);
+    
+    // Remove all instances and add back the ones we want to keep
+    params.delete(filterType);
+    values.forEach(v => {
+        if (v !== value) {
+            params.append(filterType, v);
+        }
+    });
+    
+    params.delete('page'); // Reset to first page
+    showLoading();
+    window.location.href = url.toString();
+}
+
+// Product interaction functions
+function toggleWishlist(productId) {
+    // AJAX call to toggle wishlist
+    fetch(`/products/wishlist/toggle/${productId}/`, {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+            'Content-Type': 'application/json',
+        },
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            const btn = event.target;
+            btn.innerHTML = data.added ? '♥' : '♡';
+            btn.style.color = data.added ? '#dc3545' : '';
+        }
+    });
+}
+
+function quickView(productId) {
+    // Open product quick view modal
+    console.log('Quick view for product:', productId);
+    // Implementation would open a modal with product details
+}
+
+function addToCompare(productId) {
+    // Add product to comparison list
+    console.log('Add to compare:', productId);
+    // Implementation would add to comparison functionality
+}
+
+function addToCart(productId) {
+    // Add product to cart
+    console.log('Add to cart:', productId);
+    // Implementation would add product to cart
+}
+
+// Hide loading on page load
+window.addEventListener('load', hideLoading);
+</script>
+{% endblock %}

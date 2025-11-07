@@ -1,0 +1,618 @@
+<!-- products/partials/product_quick_view.html ----->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Quick View</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        },
+                        dark: {
+                            50: '#f8fafc',
+                            100: '#f1f5f9',
+                            200: '#e2e8f0',
+                            300: '#cbd5e1',
+                            400: '#94a3b8',
+                            500: '#64748b',
+                            600: '#475569',
+                            700: '#334155',
+                            800: '#1e293b',
+                            850: '#172033',
+                            900: '#0f172a',
+                            950: '#020617',
+                        }
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.3s ease-in-out',
+                        'slide-up': 'slideUp 0.3s ease-out',
+                        'pulse-soft': 'pulseSoft 2s infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(10px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        },
+                        pulseSoft: {
+                            '0%, 100%': { opacity: '1' },
+                            '50%': { opacity: '0.8' },
+                        }
+                    },
+                    boxShadow: {
+                        'soft': '0 2px 15px -3px rgba(0, 0, 0, 0.07), 0 10px 20px -2px rgba(0, 0, 0, 0.04)',
+                        'medium': '0 4px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+                        'strong': '0 10px 40px -10px rgba(0, 0, 0, 0.2)',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        .color-swatch {
+            transition: all 0.2s ease-in-out;
+        }
+        .color-swatch:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(14, 165, 233, 0.4);
+        }
+        .color-option.active .color-swatch {
+            box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.5), 0 0 20px rgba(14, 165, 233, 0.3);
+            transform: scale(1.1);
+        }
+        .size-btn {
+            transition: all 0.2s ease-in-out;
+        }
+        .thumbnail-image {
+            transition: all 0.2s ease-in-out;
+            cursor: pointer;
+        }
+        .thumbnail-image:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(14, 165, 233, 0.3);
+        }
+        .thumbnail-image.active {
+            box-shadow: 0 0 0 2px #0ea5e9, 0 0 20px rgba(14, 165, 233, 0.4);
+        }
+        .main-product-image {
+            transition: opacity 0.3s ease-in-out;
+        }
+        .rating-stars {
+            display: inline-flex;
+            align-items: center;
+        }
+        .badge-discount {
+            animation: pulseSoft 2s infinite;
+        }
+        .product-quick-view {
+            animation: slideUp 0.3s ease-out;
+        }
+        .glass-effect {
+            backdrop-filter: blur(10px);
+            background: rgba(15, 23, 42, 0.8);
+        }
+        .glow-effect:hover {
+            box-shadow: 0 0 30px rgba(14, 165, 233, 0.3);
+        }
+    </style>
+</head>
+<body class="bg-dark-900 font-sans min-h-screen">
+
+<!-- products/partials/product_quick_view.html -->
+<div class="product-quick-view bg-dark-800 border border-dark-700 rounded-2xl shadow-strong max-w-7xl mx-auto p-8 animate-fade-in" data-product-id="{{ product.id }}">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        
+        <!-- Product Images Section -->
+        <div class="product-images space-y-6">
+            <!-- Main Image -->
+            <div class="main-image group relative bg-dark-850 border border-dark-700 rounded-2xl overflow-hidden aspect-square">
+                {% if primary_image %}
+                    <img src="{{ primary_image.image.url }}" 
+                         alt="{{ primary_image.alt_text|default:product.name }}"
+                         class="main-product-image w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
+                         id="mainQuickImage">
+                    <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-300"></div>
+                {% else %}
+                    <div class="no-image-placeholder flex flex-col items-center justify-center h-full text-dark-400">
+                        <i class="fas fa-image text-6xl mb-4"></i>
+                        <p class="text-lg font-medium">No image available</p>
+                    </div>
+                {% endif %}
+            </div>
+            
+            <!-- Thumbnail Gallery -->
+            {% if gallery_images|length > 1 %}
+            <div class="image-thumbnails">
+                <div class="grid grid-cols-5 gap-3">
+                    {% for image in gallery_images %}
+                        <div class="aspect-square">
+                            <img src="{{ image.image.url }}" 
+                                 alt="{{ image.alt_text|default:product.name }}"
+                                 class="thumbnail-image w-full h-full object-cover rounded-lg border-2 border-dark-600 hover:border-dark-500 {% if image == primary_image %}active border-primary-500{% endif %}"
+                                 data-main-image="{{ image.image.url }}"
+                                 onclick="changeMainImage(this)">
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        
+        <!-- Product Details Section -->
+        <div class="product-details space-y-8">
+            <!-- Brand & Product Header -->
+            <div class="product-header">
+                <div class="flex items-center justify-between mb-3">
+                    <span class="text-sm font-medium text-primary-400 uppercase tracking-wider">{{ product.brand.name }}</span>
+                    <div class="flex items-center gap-2">
+                        <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-dark-700 border border-dark-600 text-dark-200">
+                            {{ product.category.name }}
+                        </span>
+                    </div>
+                </div>
+                
+                <h1 class="text-3xl lg:text-4xl font-bold text-white leading-tight mb-3">{{ product.name }}</h1>
+                
+                <div class="flex items-center gap-4 text-sm text-dark-400">
+                    <span>SKU: <span class="font-mono text-dark-300">{{ product.sku }}</span></span>
+                </div>
+            </div>
+            
+            <!-- Rating Section -->
+            {% if review_count > 0 %}
+            <div class="product-rating">
+                <div class="flex items-center gap-3">
+                    <div class="rating-stars flex items-center">
+                        {% for i in "12345" %}
+                            <i class="fas fa-star text-lg {% if forloop.counter <= avg_rating %}text-yellow-400{% else %}text-gray-300{% endif %}"></i>
+                        {% endfor %}
+                    </div>
+                    <span class="text-lg font-semibold text-white">{{ avg_rating }}</span>
+                    <span class="text-dark-400">·</span>
+                    <span class="text-dark-300">{{ review_count }} review{{ review_count|pluralize }}</span>
+                </div>
+            </div>
+            {% endif %}
+            
+            <!-- Pricing Section -->
+            <div class="product-pricing">
+                {% if min_price == max_price %}
+                    <div class="price-container">
+                        {% if product.discounted_price %}
+                            <div class="flex items-center gap-4 mb-2">
+                                <span class="text-4xl font-bold text-white">${{ product.discounted_price }}</span>
+                                <span class="text-2xl text-dark-400 line-through">${{ product.base_price }}</span>
+                            </div>
+                            <div class="inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold bg-red-500/20 border border-red-500/30 text-red-400 badge-discount">
+                                <i class="fas fa-bolt mr-1"></i>
+                                {{ product.get_discount_percent }}% OFF
+                            </div>
+                        {% else %}
+                            <span class="text-4xl font-bold text-white">${{ product.base_price }}</span>
+                        {% endif %}
+                    </div>
+                {% else %}
+                    <div class="price-range">
+                        <span class="text-4xl font-bold text-white">${{ min_price }} - ${{ max_price }}</span>
+                        <p class="text-sm text-dark-400 mt-1">Price varies by variant</p>
+                    </div>
+                {% endif %}
+            </div>
+            
+            <!-- Short Description -->
+            {% if product.short_description %}
+            <div class="product-description">
+                <p class="text-dark-200 text-lg leading-relaxed">{{ product.short_description|truncatewords:20 }}</p>
+            </div>
+            {% endif %}
+            
+            <!-- Product Attributes -->
+            <div class="product-attributes bg-dark-850 border border-dark-700 rounded-xl p-6">
+                <h3 class="font-semibold text-white mb-4">Product Details</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {% if product.gender %}
+                        <div class="attribute-item">
+                            <span class="text-sm font-medium text-dark-400">Gender:</span>
+                            <span class="text-sm text-dark-200 capitalize ml-2">{{ product.get_gender_display }}</span>
+                        </div>
+                    {% endif %}
+                    
+                    {% if product.season %}
+                        <div class="attribute-item">
+                            <span class="text-sm font-medium text-dark-400">Season:</span>
+                            <span class="text-sm text-dark-200 ml-2">{{ product.season }}</span>
+                        </div>
+                    {% endif %}
+                    
+                    {% if product.materials.exists %}
+                        <div class="attribute-item sm:col-span-2">
+                            <span class="text-sm font-medium text-dark-400 block mb-2">Materials:</span>
+                            <div class="flex flex-wrap gap-2">
+                                {% for material in product.materials.all %}
+                                    <span class="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium bg-primary-500/20 border border-primary-500/30 text-primary-300">
+                                        {{ material.name }}
+                                    </span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <!-- Variant Selection -->
+            {% if available_colors or available_sizes %}
+            <div class="variant-selection space-y-6">
+                <!-- Color Selection -->
+                {% if available_colors %}
+                <div class="color-selection">
+                    <label class="block text-lg font-semibold text-white mb-4">
+                        Color: <span id="selectedColorName" class="font-normal text-dark-300"></span>
+                    </label>
+                    <div class="color-options flex flex-wrap gap-3">
+                        {% for color in available_colors %}
+                            <div class="color-option group cursor-pointer" 
+                                 data-color-id="{{ color.id }}"
+                                 data-color-name="{{ color.name }}"
+                                 title="{{ color.name }}"
+                                 onclick="selectColor({{ color.id }})">
+                                <div class="color-swatch w-12 h-12 rounded-full border-2 border-dark-600 group-hover:border-dark-500" 
+                                     style="background-color: {{ color.hex_code }};"></div>
+                                <span class="color-name block text-xs text-center text-dark-400 mt-2 group-hover:text-dark-200">{{ color.name }}</span>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+                
+                <!-- Size Selection -->
+                {% if available_sizes %}
+                <div class="size-selection">
+                    <div class="flex items-center justify-between mb-4">
+                        <label class="text-lg font-semibold text-white">Size</label>
+                        <button class="text-sm text-primary-400 hover:text-primary-300 font-medium">Size Guide</button>
+                    </div>
+                    <div class="size-options grid grid-cols-4 sm:grid-cols-6 gap-3">
+                        {% for size in available_sizes %}
+                            <button type="button" 
+                                    class="size-btn h-12 border-2 border-dark-600 hover:border-dark-500 rounded-lg font-medium text-dark-200 transition-all duration-200 hover:bg-dark-700"
+                                    data-size-id="{{ size.id }}"
+                                    data-size-name="{{ size.name }}"
+                                    onclick="selectSize({{ size.id }})">
+                                {{ size.name }}
+                            </button>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+            {% endif %}
+            
+            <!-- Stock Status -->
+            <div class="stock-status">
+                {% if product.is_in_stock %}
+                    <div class="flex items-center gap-3 p-4 bg-green-500/20 border border-green-500/30 rounded-lg">
+                        <div class="flex-shrink-0">
+                            <i class="fas fa-check-circle text-green-400 text-xl"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm font-semibold text-green-300">In Stock</p>
+                            <p class="text-xs text-green-400">{{ product.get_total_stock }} items available</p>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="flex items-center gap-3 p-4 bg-red-500/20 border border-red-500/30 rounded-lg">
+                        <div class="flex-shrink-0">
+                            <i class="fas fa-times-circle text-red-400 text-xl"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm font-semibold text-red-300">Out of Stock</p>
+                            <p class="text-xs text-red-400">Currently unavailable</p>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+            
+            <!-- Action Buttons -->
+            <div class="product-actions space-y-4">
+                {% if product.is_in_stock %}
+                    <button type="button" 
+                            class="add-to-cart-btn w-full bg-primary-600 hover:bg-primary-500 text-white font-semibold py-4 px-8 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl glow-effect transform hover:scale-[1.02] active:scale-[0.98]"
+                            data-product-id="{{ product.id }}"
+                            onclick="addToCart({{ product.id }})">
+                        <i class="fas fa-shopping-cart mr-3"></i>Add to Cart
+                    </button>
+                {% else %}
+                    <button type="button" class="w-full bg-dark-700 text-dark-400 font-semibold py-4 px-8 rounded-xl cursor-not-allowed border border-dark-600" disabled>
+                        <i class="fas fa-times mr-3"></i>Out of Stock
+                    </button>
+                {% endif %}
+                
+                <div class="grid grid-cols-2 gap-4">
+                    <button type="button" 
+                            class="wishlist-btn flex items-center justify-center py-3 px-6 border-2 border-dark-600 hover:border-red-500/50 hover:bg-red-500/10 text-dark-300 hover:text-red-400 font-medium rounded-xl transition-all duration-200"
+                            data-product-id="{{ product.id }}"
+                            onclick="toggleWishlist({{ product.id }})">
+                        <i class="far fa-heart mr-2"></i>Wishlist
+                    </button>
+                    <a href="{{ product.get_absolute_url }}" 
+                       class="flex items-center justify-center py-3 px-6 border-2 border-primary-600/50 hover:border-primary-500 hover:bg-primary-500/10 text-primary-400 hover:text-primary-300 font-medium rounded-xl transition-all duration-200">
+                        <i class="fas fa-eye mr-2"></i>Details
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Quick Features -->
+            {% if product.features %}
+            <div class="product-features border-t border-dark-700 pt-6">
+                <h3 class="text-lg font-semibold text-white mb-4">Key Features</h3>
+                <div class="features-text prose prose-sm prose-invert text-dark-200">
+                    {{ product.features|truncatewords:15|linebreaks }}
+                </div>
+            </div>
+            {% endif %}
+            
+            <!-- Trust Badges -->
+            <div class="trust-badges border-t border-dark-700 pt-6">
+                <div class="grid grid-cols-3 gap-4 text-center">
+                    <div class="flex flex-col items-center group">
+                        <div class="w-12 h-12 bg-primary-500/20 border border-primary-500/30 rounded-full flex items-center justify-center mb-3 group-hover:bg-primary-500/30 transition-colors duration-200">
+                            <i class="fas fa-shipping-fast text-xl text-primary-400"></i>
+                        </div>
+                        <span class="text-xs font-medium text-dark-300">Free Shipping</span>
+                    </div>
+                    <div class="flex flex-col items-center group">
+                        <div class="w-12 h-12 bg-primary-500/20 border border-primary-500/30 rounded-full flex items-center justify-center mb-3 group-hover:bg-primary-500/30 transition-colors duration-200">
+                            <i class="fas fa-undo-alt text-xl text-primary-400"></i>
+                        </div>
+                        <span class="text-xs font-medium text-dark-300">Easy Returns</span>
+                    </div>
+                    <div class="flex flex-col items-center group">
+                        <div class="w-12 h-12 bg-primary-500/20 border border-primary-500/30 rounded-full flex items-center justify-center mb-3 group-hover:bg-primary-500/30 transition-colors duration-200">
+                            <i class="fas fa-shield-alt text-xl text-primary-400"></i>
+                        </div>
+                        <span class="text-xs font-medium text-dark-300">Secure Payment</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript for Quick View Functionality -->
+<script>
+function changeMainImage(thumbnail) {
+    const mainImage = document.getElementById('mainQuickImage');
+    const newImageUrl = thumbnail.getAttribute('data-main-image');
+    
+    if (mainImage && newImageUrl) {
+        mainImage.style.opacity = '0.7';
+        setTimeout(() => {
+            mainImage.src = newImageUrl;
+            mainImage.style.opacity = '1';
+        }, 150);
+        
+        // Update active thumbnail
+        document.querySelectorAll('.thumbnail-image').forEach(img => {
+            img.classList.remove('active', 'border-primary-500');
+            img.classList.add('border-dark-600');
+        });
+        thumbnail.classList.add('active', 'border-primary-500');
+        thumbnail.classList.remove('border-dark-600');
+    }
+}
+
+function selectColor(colorId) {
+    // Remove active class from all color options
+    document.querySelectorAll('.color-option').forEach(option => {
+        option.classList.remove('active');
+        const swatch = option.querySelector('.color-swatch');
+        swatch.style.boxShadow = '';
+        swatch.style.transform = '';
+    });
+    
+    // Add active class to selected color
+    const selectedColor = document.querySelector(`[data-color-id="${colorId}"]`);
+    if (selectedColor) {
+        selectedColor.classList.add('active');
+        const swatch = selectedColor.querySelector('.color-swatch');
+        swatch.style.boxShadow = '0 0 0 3px rgba(59, 130, 246, 0.3)';
+        swatch.style.transform = 'scale(1.1)';
+        
+        // Update selected color name
+        const colorName = selectedColor.getAttribute('data-color-name');
+        const colorNameSpan = document.getElementById('selectedColorName');
+        if (colorNameSpan) {
+            colorNameSpan.textContent = colorName;
+        }
+    }
+    
+    // Update variants based on color selection
+    updateVariantAvailability();
+}
+
+function selectSize(sizeId) {
+    // Remove active class from all size buttons
+    document.querySelectorAll('.size-btn').forEach(btn => {
+        btn.classList.remove('active', 'bg-primary-600', 'text-white', 'border-primary-600');
+        btn.classList.add('border-dark-600', 'text-dark-200');
+    });
+    
+    // Add active class to selected size
+    const selectedSize = document.querySelector(`[data-size-id="${sizeId}"]`);
+    if (selectedSize) {
+        selectedSize.classList.add('active', 'bg-primary-600', 'text-white', 'border-primary-600');
+        selectedSize.classList.remove('border-dark-600', 'text-dark-200');
+    }
+    
+    // Update variants based on size selection
+    updateVariantAvailability();
+}
+
+function updateVariantAvailability() {
+    // This function would make an AJAX call to check variant availability
+    // based on selected color and size combinations
+    const selectedColor = document.querySelector('.color-option.active');
+    const selectedSize = document.querySelector('.size-btn.active');
+    
+    if (selectedColor && selectedSize) {
+        const colorId = selectedColor.getAttribute('data-color-id');
+        const sizeId = selectedSize.getAttribute('data-size-id');
+        const productId = document.querySelector('.product-quick-view').getAttribute('data-product-id');
+        
+        // Make AJAX call to check variant availability and update pricing
+        // Implementation depends on your backend API
+    }
+}
+
+function addToCart(productId) {
+    const selectedColor = document.querySelector('.color-option.active');
+    const selectedSize = document.querySelector('.size-btn.active');
+    const addToCartBtn = document.querySelector('.add-to-cart-btn');
+    
+    // Validation
+    if (document.querySelectorAll('.color-option').length > 0 && !selectedColor) {
+        // Show error for color selection
+        showNotification('Please select a color', 'error');
+        return;
+    }
+    
+    if (document.querySelectorAll('.size-btn').length > 0 && !selectedSize) {
+        // Show error for size selection
+        showNotification('Please select a size', 'error');
+        return;
+    }
+    
+    // Button loading state
+    addToCartBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-3"></i>Adding...';
+    addToCartBtn.disabled = true;
+    
+    // Add to cart logic
+    const data = {
+        product_id: productId,
+        color_id: selectedColor ? selectedColor.getAttribute('data-color-id') : null,
+        size_id: selectedSize ? selectedSize.getAttribute('data-size-id') : null,
+        quantity: 1
+    };
+    
+    // Simulate API call
+    setTimeout(() => {
+        // Reset button
+        addToCartBtn.innerHTML = '<i class="fas fa-shopping-cart mr-3"></i>Add to Cart';
+        addToCartBtn.disabled = false;
+        
+        // Show success message
+        showNotification('Product added to cart!', 'success');
+        
+        // Make AJAX call to add to cart
+        // Implementation depends on your cart system
+        console.log('Adding to cart:', data);
+    }, 1000);
+}
+// Toggle Wishlist
+function toggleWishlist(productId) {
+    const wishlistBtn = document.querySelector('.wishlist-btn');
+    const originalHTML = wishlistBtn.innerHTML;
+    
+    wishlistBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Processing...';
+    wishlistBtn.disabled = true;
+    
+    fetch(`/product/wishlist/add/${productId}/`, {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': getCsrfToken(),
+            'X-Requested-With': 'XMLHttpRequest'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            if (data.added) {
+                wishlistBtn.innerHTML = '<i class="fas fa-heart me-2"></i>In Wishlist';
+                wishlistBtn.classList.remove('btn-outline-danger');
+                wishlistBtn.classList.add('btn-danger');
+            } else {
+                wishlistBtn.innerHTML = '<i class="far fa-heart me-2"></i>Wishlist';
+                wishlistBtn.classList.remove('btn-danger');
+                wishlistBtn.classList.add('btn-outline-danger');
+            }
+            
+            showToast('Success', data.message, 'success');
+        } else {
+            throw new Error(data.error || 'Failed to update wishlist');
+        }
+    })
+    .catch(error => {
+        console.error('Wishlist error:', error);
+        showToast('Error', error.message, 'error');
+    })
+    .finally(() => {
+        setTimeout(() => {
+            wishlistBtn.disabled = false;
+        }, 500);
+    });
+}
+
+function showNotification(message, type = 'info') {
+    // Create notification element
+    const notification = document.createElement('div');
+    notification.className = `fixed top-4 right-4 px-6 py-4 rounded-lg shadow-xl border z-50 animate-slide-up glass-effect ${
+        type === 'success' ? 'border-green-500/50 bg-green-500/20 text-green-300' :
+        type === 'error' ? 'border-red-500/50 bg-red-500/20 text-red-300' :
+        'border-blue-500/50 bg-blue-500/20 text-blue-300'
+    }`;
+    notification.innerHTML = `
+        <div class="flex items-center">
+            <i class="fas ${
+                type === 'success' ? 'fa-check-circle' :
+                type === 'error' ? 'fa-exclamation-circle' :
+                'fa-info-circle'
+            } mr-2"></i>
+            ${message}
+        </div>
+    `;
+    
+    document.body.appendChild(notification);
+    
+    // Remove notification after 3 seconds
+    setTimeout(() => {
+        notification.style.opacity = '0';
+        setTimeout(() => {
+            document.body.removeChild(notification);
+        }, 300);
+    }, 3000);
+}
+
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', function() {
+    // Add any initialization code here
+    console.log('Product Quick View initialized');
+});
+</script>
+
+</body>
+</html>

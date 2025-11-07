@@ -1,0 +1,82 @@
+<!-- base.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}My E-commerce{% endblock %}</title>
+    {% block head %}{% endblock %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="{% static 'javascript/product_list/product_list.js'%}"></script>
+    <script src="{% static 'javascript/user_cart/cart.js'%}"></script>
+    <script src="{% static 'javascript/future_purchase/future_purchase.js' %}"></script>
+    <script src="{% static 'javascript/address/address.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'css/brand_list/brand_list.css'%}">
+    <link rel="stylesheet" href="{% static 'css/orders/product_selection.css'%}">
+    <script src="{% static 'javascript/product_selection/product_selection.js'%}"></script>
+    <link rel="stylesheet" href="{% static 'css/orders/order_review.css'%}">
+    <!-- Load Razorpay after our script -->
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script src="{% static 'razorpay/razorpay.js'%}"></script>
+    <script>
+        window.ORDER_ID = "{{ order.order_id }}";
+    </script>
+    <script src="{% static 'javascript/user_orders/order_detail.js'%}"></script>
+</head>
+<body>
+
+<style>
+/* Subtle, extra-thin, low-contrast dark blue scrollbar for .custom-scrollbar containers */
+.custom-scrollbar {
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  scrollbar-width: thin !important;                      /* Firefox: force thin scrollbar */
+  scrollbar-color: #2e3a4d #232838 !important;           /* Firefox: subtle blue thumb and track */
+}
+
+/* Chrome, Edge, Safari */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 3px !important;                                 /* Extra thin */
+  height: 3px !important;
+  background: #232838 !important;                        /* Dark blue track */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #2e3a4d !important;                        /* Subtle, muted dark blue thumb */
+  border-radius: 8px !important;
+  min-height: 20px !important;
+  transition: background 0.2s !important;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #3c4760 !important;                        /* Slightly lighter on hover */
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #232838 !important;                        /* Dark blue track */
+  border-radius: 8px !important;
+}
+
+.custom-scrollbar::-webkit-scrollbar-corner {
+  background: transparent !important;
+}
+</style>
+    <!-- Include header -->
+    {% include "components/includes/header.html" %}
+
+    <!-- Main content area -->
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <!-- Include footer -->
+    {% include "components/includes/footer.html" %}
+
+    {% block scripts %}
+    {% endblock %}
+</body>
+</html>
+
+

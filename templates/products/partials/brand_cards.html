@@ -1,0 +1,72 @@
+<!-- products/partials/brand_cards.html -->
+{% for brand in brands %}
+<div class="card brand-card" style="text-align: center;">
+    {% if brand.is_featured %}
+    <div style="background: #ffd700; color: #000; padding: 0.25rem; font-size: 0.8rem; font-weight: bold; margin-bottom: 0.5rem;">
+        ⭐ FEATURED
+    </div>
+    {% endif %}
+
+    {% if brand.logo %}
+    <img src="{{ brand.logo.url }}" alt="{{ brand.name }}" style="height: 120px; object-fit: contain; margin-bottom: 1rem;">
+    {% else %}
+    <div style="height: 120px; background: #f8f9fa; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; border-radius: 8px;">
+        <span style="font-size: 1.2rem; font-weight: bold; color: #666;">{{ brand.name }}</span>
+    </div>
+    {% endif %}
+
+    <h3>{{ brand.name }}</h3>
+
+    {% if brand.description %}
+    <p style="color: #666; font-size: 0.9rem; height: 3rem; overflow: hidden;">{{ brand.description|truncatewords:15 }}</p>
+    {% endif %}
+
+    <!-- Brand Info -->
+    <div class="brand-info" style="margin: 0.5rem 0; font-size: 0.85rem; color: #888;">
+        {% if brand.country %}
+        <span>📍 {{ brand.country }}</span>
+        {% endif %}
+        {% if brand.established_year %}
+        <span style="margin-left: 0.5rem;">📅 Est. {{ brand.established_year }}</span>
+        {% endif %}
+    </div>
+
+    <!-- Brand Rating (if you have a method to calculate it) -->
+    {% comment %}
+    <!-- Uncomment this section if you add avg_rating calculation to your Brand model -->
+    {% if brand.avg_rating %}
+    <div class="brand-rating" style="display: flex; justify-content: center; margin: 0.5rem 0; align-items: center;">
+        <span class="rating-stars" style="color: #ffc107; margin-right: 0.25rem;">
+            {% for i in "12345" %}
+                {% if forloop.counter <= brand.avg_rating|floatformat:0 %}
+                    ★
+                {% else %}
+                    ☆
+                {% endif %}
+            {% endfor %}
+        </span>
+        <span style="font-size: 0.8rem; color: #666;">({{ brand.avg_rating|floatformat:1 }})</span>
+    </div>
+    {% endif %}
+    {% endcomment %}
+
+    <!-- Brand Actions -->
+    <div class="brand-actions" style="margin-top: 1rem;">
+        <a href="{% url 'products:brand_detail' brand.slug %}" class="btn btn-primary btn-sm" style="margin: 0.25rem;">
+            View Products
+        </a>
+        {% if brand.website_url %}
+        <a href="{{ brand.website_url }}" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm" style="margin: 0.25rem;">
+            🌐 Website
+        </a>
+        {% endif %}
+    </div>
+</div>
+{% empty %}
+<div class="col-12">
+    <div class="alert alert-info text-center">
+        <h4>No brands found</h4>
+        <p>No brands are currently available. Please check back later.</p>
+    </div>
+</div>
+{% endfor %}

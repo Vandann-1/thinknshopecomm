@@ -1,0 +1,603 @@
+<!--  -->
+{% extends 'components/includes/base.html' %}
+{% load static %}
+
+{% block title %}Categories - Fashion Store{% endblock %}
+
+{% block extra_css %}
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      fontFamily: {
+        'sans': ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+      },
+      colors: {
+        primary: {
+          50: '#f0f9ff',
+          100: '#e0f2fe',
+          200: '#bae6fd',
+          300: '#7dd3fc',
+          400: '#38bdf8',
+          500: '#0ea5e9',
+          600: '#0284c7',
+          700: '#0369a1',
+          800: '#075985',
+          900: '#0c4a6e',
+        },
+        neutral: {
+          50: '#fafafa',
+          100: '#f5f5f5',
+          200: '#e5e5e5',
+          300: '#d4d4d4',
+          400: '#a3a3a3',
+          500: '#737373',
+          600: '#525252',
+          700: '#404040',
+          800: '#262626',
+          900: '#171717',
+        }
+      },
+      boxShadow: {
+        'soft': '0 2px 15px -3px rgba(0, 0, 0, 0.07), 0 10px 20px -2px rgba(0, 0, 0, 0.04)',
+        'card': '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)',
+        'hover': '0 10px 25px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+      }
+    }
+  }
+}
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* Complete reset for base template styles */
+body, html, main, .container, .content, #content, .main-content {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  color: #171717 !important;
+  font-family: 'Inter', sans-serif !important;
+  all: unset !important;
+}
+
+/* Force light theme overrides */
+* {
+  box-sizing: border-box !important;
+}
+
+body {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  color: #171717 !important;
+  font-family: 'Inter', sans-serif !important;
+  line-height: 1.5 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Override any dark theme classes */
+.dark, .dark-theme, .bg-dark, .theme-dark {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  color: #171717 !important;
+}
+
+/* Force container resets */
+.container, .main-container, #main, main {
+  all: unset !important;
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  width: 100% !important;
+  display: block !important;
+}
+
+/* Custom styles */
+.category-card-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.category-card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.gradient-overlay {
+  background: linear-gradient(135deg, rgba(14, 165, 233, 0.05) 0%, rgba(59, 130, 246, 0.05) 100%);
+}
+
+.stat-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  border: 1px solid rgba(14, 165, 233, 0.1);
+}
+
+.search-input:focus {
+  outline: none;
+  ring: 2px;
+  ring-color: rgb(14 165 233 / 0.2);
+  border-color: rgb(14 165 233);
+}
+
+.subcategory-badge {
+  background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+  transition: all 0.2s ease;
+}
+
+.subcategory-badge:hover {
+  background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%);
+  transform: translateY(-1px);
+}
+
+/* Enhanced Mobile-First Responsive Styles */
+@media (max-width: 640px) {
+  /* Mobile-optimized padding and margins */
+  .mobile-padding {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+  
+  /* Ensure proper spacing on mobile */
+  .mobile-category-card {
+    min-height: 280px;
+  }
+  
+  /* Optimize text sizing for mobile */
+  .mobile-text-sm {
+    font-size: 0.75rem;
+    line-height: 1rem;
+  }
+  
+  .mobile-text-base {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+  }
+  
+  /* Mobile-specific button styling */
+  .mobile-btn {
+    padding: 0.75rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+  }
+  
+  /* Mobile stats cards optimization */
+  .mobile-stat-card {
+    padding: 1rem 0.75rem;
+    text-align: center;
+  }
+  
+  /* Mobile hero section adjustments */
+  .mobile-hero-title {
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+    font-weight: 700;
+  }
+  
+  .mobile-hero-subtitle {
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+}
+
+/* Tablet optimizations */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .tablet-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Touch-friendly interactions */
+@media (hover: none) and (pointer: coarse) {
+  .category-card-hover:active {
+    transform: scale(0.98);
+  }
+  
+  .subcategory-badge:active {
+    transform: scale(0.95);
+  }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Force light background wrapper -->
+<div class="min-h-screen bg-white" style="background: #ffffff !important; background-color: #ffffff !important;">
+  
+  <!-- Hero Section - Mobile Optimized -->
+  <section class="bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 py-8 sm:py-12 lg:py-16 xl:py-20" style="background: linear-gradient(135deg, #f8fafc 0%, #eff6ff 50%, #eef2ff 100%) !important;">
+    <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+      <div class="text-center">
+        <h1 class="mobile-hero-title sm:text-4xl lg:text-5xl xl:text-6xl font-bold text-neutral-900 mb-3 sm:mb-6 tracking-tight">
+          Shop by Category
+        </h1>
+        <p class="mobile-hero-subtitle sm:text-xl lg:text-2xl text-neutral-600 max-w-3xl mx-auto leading-relaxed px-2 sm:px-4">
+          Discover our complete range of premium fashion categories
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-6 sm:py-12 bg-white" style="background: #ffffff !important;">
+    <!-- Search and Filter Section - Mobile Optimized -->
+    <div class="mb-6 sm:mb-12">
+      <form method="GET" class="max-w-2xl mx-auto">
+        <div class="relative">
+          <div class="absolute inset-y-0 left-0 pl-3 sm:pl-4 flex items-center pointer-events-none">
+            <svg class="h-4 w-4 sm:h-5 sm:w-5 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+            </svg>
+          </div>
+          <input 
+            type="text" 
+            name="search" 
+            value="{{ search_query }}"
+            placeholder="Search categories..." 
+            class="search-input w-full pl-10 sm:pl-12 pr-16 sm:pr-20 py-3 sm:py-4 text-sm sm:text-lg border border-neutral-200 rounded-xl bg-white shadow-soft focus:border-primary-500 transition-all duration-200"
+          >
+          <button 
+            type="submit" 
+            class="absolute right-1 top-1 bottom-1 px-3 sm:px-6 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 text-xs sm:text-base"
+          >
+            Search
+          </button>
+        </div>
+        {% if search_query %}
+        <div class="text-center mt-3 sm:mt-4">
+          <a href="{% url 'products:category-list' %}" 
+             class="inline-flex items-center px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium text-neutral-600 bg-neutral-100 hover:bg-neutral-200 rounded-lg transition-colors duration-200">
+            <svg class="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+            Clear Search
+          </a>
+        </div>
+        {% endif %}
+      </form>
+    </div>
+
+    <!-- Statistics Section - Mobile Optimized -->
+    <div class="mb-8 sm:mb-16">
+      <h2 class="text-xl sm:text-3xl font-bold text-neutral-900 text-center mb-4 sm:mb-10">Category Overview</h2>
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
+        <div class="stat-card mobile-stat-card sm:p-6 lg:p-8 rounded-xl sm:rounded-2xl shadow-card text-center bg-white">
+          <div class="text-xl sm:text-3xl lg:text-4xl font-bold text-primary-600 mb-1 sm:mb-2">{{ total_categories }}</div>
+          <div class="text-neutral-600 font-medium text-xs sm:text-base">Total Categories</div>
+        </div>
+        <div class="stat-card mobile-stat-card sm:p-6 lg:p-8 rounded-xl sm:rounded-2xl shadow-card text-center bg-white">
+          <div class="text-xl sm:text-3xl lg:text-4xl font-bold text-primary-600 mb-1 sm:mb-2">{{ featured_categories|length }}</div>
+          <div class="text-neutral-600 font-medium text-xs sm:text-base">Featured Categories</div>
+        </div>
+        <div class="stat-card mobile-stat-card sm:p-6 lg:p-8 rounded-xl sm:rounded-2xl shadow-card text-center bg-white">
+          <div class="text-xl sm:text-3xl lg:text-4xl font-bold text-primary-600 mb-1 sm:mb-2">{{ popular_categories|length }}</div>
+          <div class="text-neutral-600 font-medium text-xs sm:text-base">Popular Categories</div>
+        </div>
+        <div class="stat-card mobile-stat-card sm:p-6 lg:p-8 rounded-xl sm:rounded-2xl shadow-card text-center bg-white">
+          <div class="text-xl sm:text-3xl lg:text-4xl font-bold text-primary-600 mb-1 sm:mb-2">{{ categories|length }}</div>
+          <div class="text-neutral-600 font-medium text-xs sm:text-base">Main Categories</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Featured Categories - Mobile Optimized -->
+    {% if featured_categories %}
+    <section class="mb-12 sm:mb-20">
+      <div class="text-center mb-6 sm:mb-12">
+        <h2 class="text-xl sm:text-3xl lg:text-4xl font-bold text-neutral-900 mb-2 sm:mb-4">Featured Categories</h2>
+        <p class="text-sm sm:text-lg text-neutral-600 max-w-2xl mx-auto px-2 sm:px-4">Our most popular and trending categories, handpicked for you</p>
+      </div>
+      
+      <!-- Mobile: 2 columns, Tablet+: responsive grid -->
+      <div class="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-8">
+        {% for category in featured_categories %}
+        <div class="category-card-hover bg-white rounded-xl sm:rounded-2xl shadow-card overflow-hidden group mobile-category-card">
+          <div class="relative h-32 sm:h-56 lg:h-64 overflow-hidden">
+            {% if category.image %}
+            <img src="{{ category.image.url }}" alt="{{ category.name }}" 
+                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            {% else %}
+            <div class="w-full h-full bg-gradient-to-br from-primary-100 to-primary-200 flex items-center justify-center">
+              <span class="text-base sm:text-2xl font-bold text-primary-700">{{ category.name|first }}</span>
+            </div>
+            {% endif %}
+            <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center">
+              <span class="text-white font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-xs sm:text-base">
+                Explore {{ category.name }}
+              </span>
+            </div>
+          </div>
+          
+          <div class="p-3 sm:p-6 lg:p-8 bg-white">
+            <h3 class="text-sm sm:text-2xl font-bold text-neutral-900 mb-1 sm:mb-3 line-clamp-1">{{ category.name }}</h3>
+            <p class="text-neutral-600 mb-3 sm:mb-6 leading-relaxed text-xs sm:text-base line-clamp-2">{{ category.description|truncatewords:8 }}</p>
+            
+            <div class="flex items-center justify-between mb-3 sm:mb-6 text-xs text-neutral-500 flex-wrap gap-1">
+              <span class="flex items-center">
+                <svg class="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+                </svg>
+                {{ category.total_products }} Products
+              </span>
+              <span class="flex items-center">
+                <svg class="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+                </svg>
+                {{ category.subcategory_count }} Subcategories
+              </span>
+            </div>
+            
+            <a href="{% url 'products:category-detail' category.slug %}" 
+               class="mobile-btn block w-full text-center bg-primary-600 hover:bg-primary-700 text-white font-semibold sm:py-4 sm:px-6 rounded-lg sm:rounded-xl transition-colors duration-200 sm:text-base">
+              Explore Category
+            </a>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </section>
+    {% endif %}
+
+    <!-- Main Categories Grid - Mobile Optimized with 2 columns -->
+    <section class="mb-12 sm:mb-20">
+      <div class="text-center mb-6 sm:mb-12">
+        <h2 class="text-xl sm:text-3xl lg:text-4xl font-bold text-neutral-900 mb-2 sm:mb-4">All Categories</h2>
+        <p class="text-sm sm:text-lg text-neutral-600 max-w-2xl mx-auto px-2 sm:px-4">Browse through our complete collection of categories</p>
+      </div>
+      
+      {% if categories %}
+      <!-- Mobile: 2 columns, SM: 2 columns, LG: 3 columns, XL: 4 columns -->
+      <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6 lg:gap-8">
+        {% for category in categories %}
+        <div class="category-card-hover bg-white rounded-xl sm:rounded-2xl shadow-card overflow-hidden group mobile-category-card">
+          <div class="relative h-28 sm:h-48 overflow-hidden">
+            {% if category.image %}
+            <img src="{{ category.image.url }}" alt="{{ category.name }}" 
+                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            {% else %}
+            <div class="w-full h-full bg-gradient-to-br from-neutral-100 to-neutral-200 flex items-center justify-center">
+              <span class="text-sm sm:text-xl font-bold text-neutral-600">{{ category.name|first }}</span>
+            </div>
+            {% endif %}
+            <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center">
+              <span class="text-white font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-xs sm:text-sm">
+                View Products
+              </span>
+            </div>
+          </div>
+          
+          <div class="p-3 sm:p-6 bg-white">
+            <h3 class="text-sm sm:text-xl font-bold text-neutral-900 mb-1 sm:mb-3 line-clamp-1">{{ category.name }}</h3>
+            <p class="text-neutral-600 text-xs sm:text-sm mb-2 sm:mb-4 leading-relaxed line-clamp-2">
+              {{ category.description|truncatewords:10 }}
+            </p>
+            
+            <!-- Category Statistics - Mobile Optimized -->
+            <div class="flex items-center justify-between mb-2 sm:mb-4 text-xs text-neutral-500 flex-wrap gap-1">
+              <span class="flex items-center">
+                <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+                </svg>
+                {{ category.total_products }}
+              </span>
+              {% if category.subcategory_count %}
+              <span class="flex items-center">
+                <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+                </svg>
+                {{ category.subcategory_count }}
+              </span>
+              {% endif %}
+            </div>
+            
+            <!-- Subcategories - Mobile Optimized -->
+            {% if category.subcategories.all %}
+            <div class="mb-3 sm:mb-4 hidden sm:block">
+              <p class="text-xs font-semibold text-neutral-700 mb-2">Subcategories:</p>
+              <div class="flex flex-wrap gap-1">
+                {% for subcategory in category.subcategories.all|slice:":2" %}
+                <a href="{% url 'products:category-detail' subcategory.slug %}" 
+                   class="subcategory-badge inline-block px-2 py-1 text-xs font-medium text-neutral-600 rounded-md">
+                  {{ subcategory.name }}
+                </a>
+                {% endfor %}
+                {% if category.subcategories.all|length > 2 %}
+                <span class="inline-block px-2 py-1 text-xs font-medium text-amber-700 bg-amber-100 rounded-md">
+                  +{{ category.subcategories.all|length|add:"-2" }} more
+                </span>
+                {% endif %}
+              </div>
+            </div>
+            {% endif %}
+            
+            <a href="{% url 'products:category-detail' category.slug %}" 
+               class="mobile-btn block w-full text-center bg-neutral-900 hover:bg-neutral-800 text-white font-semibold sm:py-3 sm:px-4 rounded-lg sm:rounded-xl transition-colors duration-200 sm:text-base">
+              View Products
+            </a>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+
+      <!-- Pagination - Mobile Optimized -->
+      {% if is_paginated %}
+      <div class="mt-8 sm:mt-16">
+        <nav class="flex items-center justify-center space-x-1 sm:space-x-2 flex-wrap gap-1 sm:gap-2">
+          {% if page_obj.has_previous %}
+          <a href="?page=1{% if search_query %}&search={{ search_query }}{% endif %}" 
+             class="px-2 sm:px-4 py-2 text-xs sm:text-sm font-medium text-neutral-600 bg-white border border-neutral-200 rounded-lg hover:bg-neutral-50 transition-colors duration-200">
+            First
+          </a>
+          <a href="?page={{ page_obj.previous_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}" 
+             class="px-2 sm:px-4 py-2 text-xs sm:text-sm font-medium text-neutral-600 bg-white border border-neutral-200 rounded-lg hover:bg-neutral-50 transition-colors duration-200">
+            Previous
+          </a>
+          {% endif %}
+          
+          <span class="px-3 sm:px-6 py-2 text-xs sm:text-sm font-semibold text-primary-600 bg-primary-50 border border-primary-200 rounded-lg">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+          </span>
+          
+          {% if page_obj.has_next %}
+          <a href="?page={{ page_obj.next_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}" 
+             class="px-2 sm:px-4 py-2 text-xs sm:text-sm font-medium text-neutral-600 bg-white border border-neutral-200 rounded-lg hover:bg-neutral-50 transition-colors duration-200">
+            Next
+          </a>
+          <a href="?page={{ page_obj.paginator.num_pages }}{% if search_query %}&search={{ search_query }}{% endif %}" 
+             class="px-2 sm:px-4 py-2 text-xs sm:text-sm font-medium text-neutral-600 bg-white border border-neutral-200 rounded-lg hover:bg-neutral-50 transition-colors duration-200">
+            Last
+          </a>
+          {% endif %}
+        </nav>
+      </div>
+      {% endif %}
+
+      {% else %}
+      <div class="text-center py-12 sm:py-20 bg-neutral-50 rounded-xl sm:rounded-2xl mx-2 sm:mx-0">
+        <div class="max-w-md mx-auto px-4">
+          <svg class="w-12 h-12 sm:w-16 sm:h-16 text-neutral-300 mx-auto mb-4 sm:mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+          </svg>
+          <h3 class="text-base sm:text-xl font-semibold text-neutral-600 mb-3 sm:mb-4">
+            {% if search_query %}
+            No categories found for "{{ search_query }}"
+            {% else %}
+            No categories available
+            {% endif %}
+          </h3>
+          {% if search_query %}
+          <a href="{% url 'products:category-list' %}" 
+             class="inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 bg-primary-600 hover:bg-primary-700 text-white font-semibold rounded-xl transition-colors duration-200 text-sm sm:text-base">
+            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+            </svg>
+            Browse All Categories
+          </a>
+          {% endif %}
+        </div>
+      </div>
+      {% endif %}
+    </section>
+
+    <!-- Popular Categories Section - Mobile Optimized -->
+    {% if popular_categories %}
+    <section class="mb-8 sm:mb-12">
+      <div class="gradient-overlay rounded-2xl sm:rounded-3xl p-4 sm:p-8 lg:p-12">
+        <div class="text-center mb-6 sm:mb-12">
+          <h2 class="text-xl sm:text-3xl lg:text-4xl font-bold text-neutral-900 mb-2 sm:mb-4">Most Popular Categories</h2>
+          <p class="text-sm sm:text-lg text-neutral-600 max-w-2xl mx-auto px-2 sm:px-4">Trending categories that our customers love most</p>
+        </div>
+        
+        <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6">
+          {% for category in popular_categories|slice:":8" %}
+          <a href="{% url 'products:category-detail' category.slug %}" 
+             class="group block p-3 sm:p-6 bg-white hover:bg-neutral-50 border border-neutral-100 hover:border-primary-200 rounded-xl sm:rounded-2xl transition-all duration-200 hover:shadow-hover">
+            <div class="text-center">
+              <h4 class="text-xs sm:text-lg font-semibold text-neutral-900 mb-1 sm:mb-2 group-hover:text-primary-600 transition-colors duration-200 line-clamp-1">
+                {{ category.name }}
+              </h4>
+              <p class="text-primary-600 font-bold text-sm sm:text-lg">{{ category.product_count }}</p>
+              <p class="text-neutral-500 text-xs sm:text-sm">products</p>
+            </div>
+          </a>
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+    {% endif %}
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Enhanced search form handling
+    const searchForm = document.querySelector('form[method="GET"]');
+    if (searchForm) {
+        searchForm.addEventListener('submit', function() {
+            const submitButton = this.querySelector('button[type="submit"]');
+            const originalText = submitButton.innerHTML;
+            submitButton.innerHTML = '<svg class="animate-spin -ml-1 mr-1 h-3 w-3 sm:h-4 sm:w-4 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg><span class="hidden sm:inline">Searching...</span><span class="sm:hidden">...</span>';
+            submitButton.disabled = true;
+            
+            // Re-enable after 3 seconds as fallback
+            setTimeout(() => {
+                submitButton.innerHTML = originalText;
+                submitButton.disabled = false;
+            }, 3000);
+        });
+    }
+    
+    // Smooth scroll behavior for anchor links
+    if (window.location.hash === '#categories') {
+        const element = document.querySelector('section');
+        if (element) {
+            element.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+    }
+    
+    // Add intersection observer for animation on scroll (optimized for mobile)
+    const observerOptions = {
+        threshold: window.innerWidth < 640 ? 0.05 : 0.1, // Lower threshold for mobile
+        rootMargin: '0px 0px -30px 0px' // Smaller margin for mobile
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, observerOptions);
+    
+    // Observe category cards for scroll animation (with mobile-optimized delays)
+    document.querySelectorAll('.category-card-hover').forEach((card, index) => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        const delay = window.innerWidth < 640 ? index * 0.05 : index * 0.1; // Faster animation on mobile
+        card.style.transition = `opacity 0.6s ease ${delay}s, transform 0.6s ease ${delay}s`;
+        observer.observe(card);
+    });
+    
+    // Touch-friendly interactions for mobile
+    if ('ontouchstart' in window) {
+        document.querySelectorAll('.category-card-hover').forEach(card => {
+            card.addEventListener('touchstart', function() {
+                this.style.transform = 'scale(0.98)';
+            });
+            
+            card.addEventListener('touchend', function() {
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 150);
+            });
+        });
+    }
+    
+    // Optimize performance on mobile by reducing animation complexity
+    if (window.innerWidth < 640) {
+        const style = document.createElement('style');
+        style.textContent = `
+            .category-card-hover:hover {
+                transform: translateY(-2px) !important;
+            }
+            
+            .group-hover\\:scale-105 {
+                transform: scale(1.02) !important;
+            }
+        `;
+        document.head.appendChild(style);
+    }
+    
+    // Handle viewport changes for responsive behavior
+    let resizeTimeout;
+    window.addEventListener('resize', function() {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(function() {
+            // Refresh intersection observer on resize
+            observer.disconnect();
+            document.querySelectorAll('.category-card-hover').forEach(card => {
+                observer.observe(card);
+            });
+        }, 250);
+    });
+});
+</script>
+{% endblock %}

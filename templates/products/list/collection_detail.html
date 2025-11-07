@@ -1,0 +1,120 @@
+
+{% extends 'base.html' %}
+
+{% block title %}{{ collection.name }} - Fashion Store{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div style="margin: 2rem 0;">
+        <!-- Breadcrumb -->
+        <nav style="margin-bottom: 1rem;">
+            <a href="{% url 'products:home' %}">Home</a> > 
+            <a href="#collections">Collections</a> > 
+            <span>{{ collection.name }}</span>
+        </nav>
+
+        <!-- Collection Header -->
+        <div style="text-align: center; margin-bottom: 3rem; padding: 3rem; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 8px;">
+            {% if collection.image %}
+            <img src="{{ collection.image.url }}" alt="{{ collection.name }}" style="width: 200px; height: 200px; object-fit: cover; border-radius: 50%; margin-bottom: 1rem; border: 4px solid white;">
+            {% endif %}
+            <h1 style="margin-bottom: 1rem;">{{ collection.name }}</h1>
+            {% if collection.description %}
+            <p style="font-size: 1.2rem; max-width: 600px; margin: 0 auto; opacity: 0.9;">{{ collection.description }}</p>
+            {% endif %}
+        </div>
+
+        <!-- Products -->
+        <section>
+            <div style="display: flex; justify-content: between; align-items: center; margin-bottom: 2rem;">
+                <h2>Collection Products ({{ products|length }} items)</h2>
+                <div>
+                    <span style="color: #666;">Sort by:</span>
+                    <select onchange="location = this.value;" style="margin-left: 0.5rem; padding: 0.25rem;">
+                        <option value="?">Default</option>
+                        <option value="?sort=name">Name A-Z</option>
+                        <option value="?sort=-name">Name Z-A</option>
+                        <option value="?sort=base_price">Price Low to High</option>
+                        <option value="?sort=-base_price">Price High to Low</option>
+                    </select>
+                </div>
+            </div>
+
+            {% if products %}
+            <div class="grid grid-4">
+                {% for product in products %}
+                <div class="card">
+                    <a href="{% url 'products:product-detail' product.slug %}">
+                        {% if product.gallery.first %}
+                        <img src="{{ product.gallery.first.image.url }}" alt="{{ product.name }}">
+                        {% else %}
+                        <div style="height: 200px; background: #f0f0f0; display: flex; align-items: center; justify-content: center;">
+                            <span>No Image</span>
+                        </div>
+                        {% endif %}
+                    </a>
+                    
+                    <h3><a href="{% url 'products:product-detail' product.slug %}" style="text-decoration: none; color: #333;">{{ product.name }}</a></h3>
+                    <p>{{ product.brand.name }} | {{ product.category.name }}</p>
+                    
+                    <div class="price">
+                        {% if product.discounted_price %}
+                        <span style="text-decoration: line-through; color: #999;">${{ product.base_price }}</span>
+                        <span>${{ product.discounted_price }}</span>
+                        <span style="background: #dc3545; color: white; padding: 0.1rem 0.3rem; font-size: 0.8rem; border-radius: 3px; margin-left: 0.5rem;">
+                            {{ product.get_discount_percent }}% OFF
+                        </span>
+                        {% else %}
+                        <span>${{ product.base_price }}</span>
+                        {% endif %}
+                    </div>
+                    
+                    <!-- Product badges -->
+                    <div style="margin: 0.5rem 0;">
+                        {% if product.is_new_arrival %}
+                        <span style="background: #28a745; color: white; padding: 0.1rem 0.3rem; font-size: 0.8rem; border-radius: 3px; margin-right: 0.25rem;">NEW</span>
+                        {% endif %}
+                        {% if product.is_bestseller %}
+                        <span style="background: #ffc107; color: black; padding: 0.1rem 0.3rem; font-size: 0.8rem; border-radius: 3px; margin-right: 0.25rem;">BESTSELLER</span>
+                        {% endif %}
+                        {% if product.is_featured %}
+                        <span style="background: #17a2b8; color: white; padding: 0.1rem 0.3rem; font-size: 0.8rem; border-radius: 3px;">FEATURED</span>
+                        {% endif %}
+                    </div>
+                    
+                    {% if product.is_in_stock %}
+                    <p style="color: #28a745; font-size: 0.9rem;">✓ In Stock</p>
+                    {% else %}
+                    <p style="color: #dc3545; font-size: 0.9rem;">✗ Out of Stock</p>
+                    {% endif %}
+                    
+                    <a href="{% url 'products:product-detail' product.slug %}" class="btn btn-primary">View Details</a>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- Pagination -->
+            {% if is_paginated %}
+            <div class="pagination">
+                {% if page_obj.has_previous %}
+                <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                {% endif %}
+                
+                <span class="current">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+                
+                {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">Next</a>
+                {% endif %}
+            </div>
+            {% endif %}
+
+            {% else %}
+            <div style="text-align: center; padding: 3rem;">
+                <h3>No products found in this collection</h3>
+                <a href="{% url 'products:product-list' %}" class="btn btn-primary">Browse All Products</a>
+            </div>
+            {% endif %}
+        </section>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,106 @@
+
+    .filter-section {
+        background: #f8f9fa;
+        padding: 1.5rem;
+        border-radius: 8px;
+        margin-bottom: 2rem;
+    }
+    .filter-row {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+        flex-wrap: wrap;
+        margin-bottom: 1rem;
+    }
+    .filter-group {
+        display: flex;
+        flex-direction: column;
+        min-width: 150px;
+    }
+    .filter-group label {
+        font-weight: 500;
+        margin-bottom: 0.25rem;
+        font-size: 0.9rem;
+    }
+    .brand-stats {
+        display: flex;
+        gap: 2rem;
+        margin-bottom: 1.5rem;
+        font-size: 0.9rem;
+        color: #666;
+    }
+    .featured-section {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 2rem;
+        border-radius: 12px;
+        margin-bottom: 3rem;
+    }
+    .featured-brands {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 1rem;
+        margin-top: 1.5rem;
+    }
+    .featured-brand-card {
+        background: rgba(255,255,255,0.1);
+        padding: 1rem;
+        border-radius: 8px;
+        text-align: center;
+        transition: transform 0.2s;
+    }
+    .featured-brand-card:hover {
+        transform: translateY(-2px);
+        background: rgba(255,255,255,0.2);
+    }
+    .brand-card {
+        transition: transform 0.2s, box-shadow 0.2s;
+        border: 1px solid #e9ecef;
+        border-radius: 12px;
+        overflow: hidden;
+    }
+    .brand-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    }
+    .brand-rating {
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+        font-size: 0.9rem;
+    }
+    .rating-stars {
+        color: #ffc107;
+    }
+    .clear-filters {
+        background: #dc3545;
+        color: white;
+        border: none;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-block;
+    }
+    .results-info {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+        padding: 1rem;
+        background: #e9ecef;
+        border-radius: 8px;
+    }
+    @media (max-width: 768px) {
+        .filter-row {
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .filter-group {
+            width: 100%;
+        }
+        .brand-stats {
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+    }

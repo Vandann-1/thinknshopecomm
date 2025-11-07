@@ -1,0 +1,465 @@
+<!-- --- -->
+{% extends 'components/includes/base.html' %}
+
+{% block title %}Brands - Fashion Store{% endblock %}
+
+{% block extra_head %}
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = {
+        theme: {
+            extend: {
+                fontFamily: {
+                    'sans': ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+                },
+                colors: {
+                    primary: {
+                        50: '#f8fafc',
+                        100: '#f1f5f9',
+                        500: '#64748b',
+                        600: '#475569',
+                        700: '#334155',
+                    },
+                    gray: {
+                        50: '#f8fafc',
+                        100: '#f1f5f9',
+                        200: '#e2e8f0',
+                        300: '#cbd5e1',
+                        400: '#94a3b8',
+                        500: '#64748b',
+                        600: '#475569',
+                        700: '#334155',
+                        800: '#1e293b',
+                        900: '#0f172a',
+                    }
+                },
+                spacing: {
+                    '18': '4.5rem',
+                    '88': '22rem',
+                },
+                animation: {
+                    'fadeIn': 'fadeIn 0.6s ease-in-out',
+                    'slideUp': 'slideUp 0.4s ease-out',
+                }
+            }
+        }
+    }
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+    @keyframes slideUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    .brand-card {
+        transition: all 0.3s ease;
+    }
+    .brand-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+    }
+    .filter-chip {
+        transition: all 0.2s ease;
+    }
+    .filter-chip:hover {
+        transform: translateY(-1px);
+    }
+    .btn-dark {
+        background-color: #0f172a;
+        color: white;
+        transition: all 0.2s ease;
+    }
+    .btn-dark:hover {
+        background-color: #1e293b;
+        transform: translateY(-1px);
+    }
+    .btn-light {
+        background-color: #f8fafc;
+        color: #0f172a;
+        border: 1px solid #e2e8f0;
+        transition: all 0.2s ease;
+    }
+    .btn-light:hover {
+        background-color: #f1f5f9;
+        border-color: #cbd5e1;
+        transform: translateY(-1px);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-white">
+    <!-- Header Section -->
+    <div class="bg-white border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+            <div class="text-center">
+                <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">Our Brand Collection</h1>
+                <p class="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto">Discover premium fashion from the world's most trusted brands</p>
+            </div>
+            
+            <!-- Statistics Bar -->
+            <div class="mt-8 sm:mt-12 grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div class="bg-gray-50 rounded-xl p-4 sm:p-6 text-center border border-gray-100">
+                    <div class="text-2xl sm:text-3xl font-bold text-gray-900">{{ total_brands }}</div>
+                    <div class="text-sm font-medium text-gray-600 mt-1">Total Brands</div>
+                </div>
+                <div class="bg-gray-50 rounded-xl p-4 sm:p-6 text-center border border-gray-100">
+                    <div class="text-2xl sm:text-3xl font-bold text-gray-900">{{ brands_with_products }}</div>
+                    <div class="text-sm font-medium text-gray-600 mt-1">Active Brands</div>
+                </div>
+                <div class="bg-gray-50 rounded-xl p-4 sm:p-6 text-center border border-gray-100">
+                    <div class="text-2xl sm:text-3xl font-bold text-gray-900">{{ page_obj.paginator.count }}</div>
+                    <div class="text-sm font-medium text-gray-600 mt-1">Search Results</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+        <!-- Featured Brands Section -->
+        {% if featured_brands and not search_query %}
+        <div class="mb-8 sm:mb-12 animate-fadeIn">
+            <div class="bg-gray-50 rounded-xl border border-gray-100 p-6 sm:p-8">
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
+                    <div>
+                        <h2 class="text-xl sm:text-2xl font-bold text-gray-900">Featured Brands</h2>
+                        <p class="text-gray-600 mt-1">Premium brands handpicked for quality and style</p>
+                    </div>
+                    <div class="flex items-center space-x-2 mt-3 sm:mt-0">
+                        <div class="w-2 h-2 bg-gray-900 rounded-full"></div>
+                        <span class="text-sm font-medium text-gray-900">Featured</span>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-3 sm:gap-6">
+                    {% for brand in featured_brands %}
+                    <a href="{% url 'products:brand-detail' brand.slug %}" class="group">
+                        <div class="bg-white rounded-xl p-4 sm:p-6 text-center hover:bg-gray-50 transition-all duration-200 border border-gray-100 hover:border-gray-200">
+                            {% if brand.logo %}
+                            <img src="{{ brand.logo.url }}" alt="{{ brand.name }}" class="h-12 sm:h-16 w-auto mx-auto mb-3 object-contain group-hover:scale-105 transition-transform duration-200">
+                            {% else %}
+                            <div class="h-12 sm:h-16 bg-gray-100 rounded-lg flex items-center justify-center mb-3">
+                                <span class="text-xs sm:text-sm font-semibold text-gray-700">{{ brand.name|truncatechars:6 }}</span>
+                            </div>
+                            {% endif %}
+                            <div class="font-semibold text-gray-900 text-xs sm:text-sm group-hover:text-gray-700 transition-colors">{{ brand.name }}</div>
+                            <div class="text-xs text-gray-500 mt-1">{{ brand.product_count }} products</div>
+                        </div>
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Search and Filters Section -->
+        <div class="bg-gray-50 rounded-xl border border-gray-100 p-4 sm:p-6 mb-6 sm:mb-8">
+            <form method="get" id="filterForm" class="space-y-4">
+                <!-- Search Bar -->
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                        <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                    </div>
+                    <input type="text" name="search" value="{{ search_query }}" 
+                           placeholder="Search brands..." 
+                           class="w-full pl-12 pr-4 py-3 sm:py-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-gray-900 focus:border-gray-900 text-gray-900 placeholder-gray-500 transition-all duration-200 bg-white">
+                </div>
+
+                <!-- Horizontal Filter Controls for Mobile & Desktop -->
+                <div class="flex flex-col space-y-3">
+                    <!-- First Row: Country and Featured (always horizontal) -->
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label for="country" class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Country</label>
+                            <select name="country" id="country" class="w-full px-3 py-2 sm:py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-gray-900 focus:border-gray-900 bg-white text-gray-900 transition-all duration-200 text-xs sm:text-sm">
+                                <option value="">All Countries</option>
+                                {% for country in countries %}
+                                <option value="{{ country }}" {% if country == selected_country %}selected{% endif %}>
+                                    {{ country }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div>
+                            <label for="featured" class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Featured</label>
+                            <select name="featured" id="featured" class="w-full px-3 py-2 sm:py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-gray-900 focus:border-gray-900 bg-white text-gray-900 transition-all duration-200 text-xs sm:text-sm">
+                                <option value="">All Brands</option>
+                                <option value="true" {% if selected_featured == 'true' %}selected{% endif %}>Featured Only</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Second Row: Min Products and Sort (always horizontal) -->
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label for="min_products" class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Min Products</label>
+                            <input type="number" name="min_products" id="min_products" value="{{ min_products }}" 
+                                   placeholder="e.g., 5" min="0" 
+                                   class="w-full px-3 py-2 sm:py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-gray-900 focus:border-gray-900 bg-white text-gray-900 transition-all duration-200 text-xs sm:text-sm">
+                        </div>
+
+                        <div>
+                            <label for="sort" class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Sort by</label>
+                            <select name="sort" id="sort" class="w-full px-3 py-2 sm:py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-gray-900 focus:border-gray-900 bg-white text-gray-900 transition-all duration-200 text-xs sm:text-sm">
+                                <option value="name" {% if selected_sort == 'name' %}selected{% endif %}>Name A-Z</option>
+                                <option value="name_desc" {% if selected_sort == 'name_desc' %}selected{% endif %}>Name Z-A</option>
+                                <option value="products" {% if selected_sort == 'products' %}selected{% endif %}>Most Products</option>
+                                <option value="products_asc" {% if selected_sort == 'products_asc' %}selected{% endif %}>Least Products</option>
+                                <option value="rating" {% if selected_sort == 'rating' %}selected{% endif %}>Highest Rated</option>
+                                <option value="established" {% if selected_sort == 'established' %}selected{% endif %}>Newest</option>
+                                <option value="established_asc" {% if selected_sort == 'established_asc' %}selected{% endif %}>Oldest</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons Row (horizontal) -->
+                    <div class="flex space-x-3">
+                        <button type="submit" class="flex-1 btn-dark font-semibold py-2.5 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2 text-sm">
+                            Apply Filters
+                        </button>
+                        {% if search_query or selected_country or selected_featured or min_products %}
+                        <a href="{% url 'products:brand-list' %}" class="flex-1 text-center btn-light font-medium py-2.5 px-4 rounded-lg text-sm">
+                            Clear Filters
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- Results Info -->
+        {% if search_query or selected_country or selected_featured or min_products %}
+        <div class="bg-gray-50 border border-gray-200 rounded-xl p-4 mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between">
+            <div class="text-gray-800">
+                <span class="font-semibold">{{ page_obj.paginator.count }}</span> brands found
+                {% if search_query %} for <span class="font-medium">"{{ search_query }}"</span>{% endif %}
+                {% if selected_country %} in <span class="font-medium">{{ selected_country }}</span>{% endif %}
+            </div>
+            <div class="text-sm text-gray-600 mt-2 sm:mt-0">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Brand Grid - Mobile Responsive: 2 per row -->
+        <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6 mb-8 sm:mb-12" id="brandGrid">
+            {% for brand in brands %}
+            <div class="brand-card bg-white rounded-xl border border-gray-100 overflow-hidden hover:border-gray-200 transition-all duration-200">
+                <!-- Featured Badge -->
+                {% if brand.is_featured %}
+                <div class="bg-gray-900 text-white text-xs font-bold px-2 sm:px-3 py-1 text-center">
+                    ⭐ FEATURED
+                </div>
+                {% endif %}
+
+                <div class="p-3 sm:p-6">
+                    <!-- Brand Logo -->
+                    <div class="flex justify-center mb-3 sm:mb-4">
+                        {% if brand.logo %}
+                        <img src="{{ brand.logo.url }}" alt="{{ brand.name }}" class="h-12 sm:h-20 w-auto object-contain">
+                        {% else %}
+                        <div class="h-12 sm:h-20 w-12 sm:w-20 bg-gray-100 rounded-xl flex items-center justify-center">
+                            <span class="text-sm sm:text-lg font-bold text-gray-700">{{ brand.name|first }}</span>
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Brand Name -->
+                    <h3 class="text-sm sm:text-xl font-bold text-gray-900 text-center mb-2 leading-tight">{{ brand.name }}</h3>
+
+                    <!-- Description - Hidden on mobile -->
+                    {% if brand.description %}
+                    <p class="text-gray-600 text-xs sm:text-sm text-center mb-3 sm:mb-4 line-clamp-2 leading-relaxed hidden sm:block">{{ brand.description|truncatewords:15 }}</p>
+                    {% endif %}
+
+                    <!-- Rating -->
+                    {% if brand.avg_rating %}
+                    <div class="flex items-center justify-center mb-2 sm:mb-4 space-x-1">
+                        <div class="flex text-gray-800 text-xs sm:text-sm">
+                            {% for i in "12345" %}
+                                {% if brand.avg_rating >= forloop.counter %}★{% else %}☆{% endif %}
+                            {% endfor %}
+                        </div>
+                        <span class="text-xs text-gray-600 ml-1 sm:ml-2">({{ brand.avg_rating|floatformat:1 }})</span>
+                    </div>
+                    {% endif %}
+
+                    <!-- Brand Info -->
+                    <div class="flex flex-wrap justify-center gap-1 sm:gap-2 mb-2 sm:mb-4">
+                        {% if brand.country %}
+                        <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                            {{ brand.country }}
+                        </span>
+                        {% endif %}
+                        {% if brand.established_year %}
+                        <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                            {{ brand.established_year }}
+                        </span>
+                        {% endif %}
+                    </div>
+
+                    <!-- Product Count -->
+                    <div class="text-center mb-2 sm:mb-4">
+                        <span class="text-sm sm:text-lg font-semibold text-gray-900">{{ brand.product_count }}</span>
+                        <span class="text-xs sm:text-sm text-gray-600"> product{{ brand.product_count|pluralize }}</span>
+                    </div>
+
+                    <!-- Price Range - Hidden on mobile -->
+                    {% if brand.min_price and brand.max_price %}
+                    <div class="text-center mb-4 hidden sm:block">
+                        <span class="text-lg font-bold text-gray-900">
+                            ${{ brand.min_price|floatformat:0 }} - ${{ brand.max_price|floatformat:0 }}
+                        </span>
+                    </div>
+                    {% endif %}
+
+                    <!-- Action Buttons -->
+                    <div class="space-y-1.5 sm:space-y-2">
+                        <a href="{% url 'products:brand-detail' brand.slug %}" 
+                           class="w-full btn-dark font-semibold py-2 sm:py-3 px-3 sm:px-4 rounded-lg text-center block text-xs sm:text-base">
+                            View Products
+                        </a>
+                        {% if brand.website_url %}
+                        <a href="{{ brand.website_url }}" target="_blank" 
+                           class="w-full btn-light font-medium py-1.5 sm:py-2.5 px-3 sm:px-4 rounded-lg text-center block text-xs">
+                            Website
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- No Results -->
+        {% if not brands %}
+        <div class="text-center py-12 sm:py-16">
+            <div class="mx-auto w-16 sm:w-24 h-16 sm:h-24 bg-gray-100 rounded-full flex items-center justify-center mb-4 sm:mb-6">
+                <svg class="w-8 sm:w-12 h-8 sm:h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                </svg>
+            </div>
+            <h3 class="text-xl sm:text-2xl font-bold text-gray-900 mb-3">No brands found</h3>
+            <p class="text-gray-600 mb-4 sm:mb-6 max-w-md mx-auto text-sm sm:text-base">We couldn't find any brands matching your criteria. Try adjusting your search or filter settings.</p>
+            <a href="{% url 'products:brand-list' %}" class="btn-dark font-semibold py-2 sm:py-3 px-4 sm:px-6 rounded-lg transition-colors duration-200 text-sm sm:text-base">
+                View All Brands
+            </a>
+        </div>
+        {% endif %}
+
+        <!-- Pagination -->
+        {% if is_paginated %}
+        <div class="bg-gray-50 rounded-xl border border-gray-100 p-4 sm:p-6">
+            <nav class="flex items-center justify-between">
+                <!-- Mobile Pagination -->
+                <div class="flex-1 flex justify-between sm:hidden">
+                    {% if page_obj.has_previous %}
+                    <a href="?page={{ page_obj.previous_page_number }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.country %}&country={{ request.GET.country }}{% endif %}{% if request.GET.featured %}&featured={{ request.GET.featured }}{% endif %}{% if request.GET.min_products %}&min_products={{ request.GET.min_products }}{% endif %}{% if request.GET.sort %}&sort={{ request.GET.sort }}{% endif %}" 
+                       class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                        Previous
+                    </a>
+                    {% endif %}
+                    {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.country %}&country={{ request.GET.country }}{% endif %}{% if request.GET.featured %}&featured={{ request.GET.featured }}{% endif %}{% if request.GET.min_products %}&min_products={{ request.GET.min_products }}{% endif %}{% if request.GET.sort %}&sort={{ request.GET.sort }}{% endif %}" 
+                       class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                        Next
+                    </a>
+                    {% endif %}
+                </div>
+                
+                <!-- Desktop Pagination -->
+                <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+                    <div>
+                        <p class="text-sm text-gray-700">
+                            Showing page <span class="font-medium">{{ page_obj.number }}</span> of <span class="font-medium">{{ page_obj.paginator.num_pages }}</span>
+                            (<span class="font-medium">{{ page_obj.paginator.count }}</span> total brands)
+                        </p>
+                    </div>
+                    <div>
+                        <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px">
+                            {% if page_obj.has_previous %}
+                            <a href="?page=1{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.country %}&country={{ request.GET.country }}{% endif %}{% if request.GET.featured %}&featured={{ request.GET.featured }}{% endif %}{% if request.GET.min_products %}&min_products={{ request.GET.min_products }}{% endif %}{% if request.GET.sort %}&sort={{ request.GET.sort }}{% endif %}" 
+                               class="relative inline-flex items-center px-3 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                                First
+                            </a>
+                            <a href="?page={{ page_obj.previous_page_number }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.country %}&country={{ request.GET.country }}{% endif %}{% if request.GET.featured %}&featured={{ request.GET.featured }}{% endif %}{% if request.GET.min_products %}&min_products={{ request.GET.min_products }}{% endif %}{% if request.GET.sort %}&sort={{ request.GET.sort }}{% endif %}" 
+                               class="relative inline-flex items-center px-3 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                                Previous
+                            </a>
+                            {% endif %}
+                            
+                            <span class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-gray-900 text-sm font-medium text-white">
+                                {{ page_obj.number }}
+                            </span>
+                            
+                            {% if page_obj.has_next %}
+                            <a href="?page={{ page_obj.next_page_number }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.country %}&country={{ request.GET.country }}{% endif %}{% if request.GET.featured %}&featured={{ request.GET.featured }}{% endif %}{% if request.GET.min_products %}&min_products={{ request.GET.min_products }}{% endif %}{% if request.GET.sort %}&sort={{ request.GET.sort }}{% endif %}" 
+                               class="relative inline-flex items-center px-3 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                                Next
+                            </a>
+                            <a href="?page={{ page_obj.paginator.num_pages }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.country %}&country={{ request.GET.country }}{% endif %}{% if request.GET.featured %}&featured={{ request.GET.featured }}{% endif %}{% if request.GET.min_products %}&min_products={{ request.GET.min_products }}{% endif %}{% if request.GET.sort %}&sort={{ request.GET.sort }}{% endif %}" 
+                               class="relative inline-flex items-center px-3 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                                Last
+                            </a>
+                            {% endif %}
+                        </nav>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+// Auto-submit form on filter change
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('filterForm');
+    const selects = form.querySelectorAll('select');
+    
+    selects.forEach(select => {
+        select.addEventListener('change', function() {
+            form.submit();
+        });
+    });
+    
+    // Debounced search
+    const searchInput = form.querySelector('input[name="search"]');
+    let searchTimeout;
+    
+    searchInput.addEventListener('input', function() {
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(() => {
+            form.submit();
+        }, 500);
+    });
+
+    // Add loading state to form submissions
+    form.addEventListener('submit', function() {
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const originalText = submitBtn.textContent;
+        submitBtn.textContent = 'Loading...';
+        submitBtn.disabled = true;
+        
+        setTimeout(() => {
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
+        }, 2000);
+    });
+
+    // Animate cards on load
+    const cards = document.querySelectorAll('.brand-card');
+    cards.forEach((card, index) => {
+        card.style.animationDelay = `${index * 0.05}s`;
+        card.classList.add('animate-slideUp');
+    });
+});
+</script>
+{% endblock %}
