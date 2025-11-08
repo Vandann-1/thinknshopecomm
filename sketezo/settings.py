@@ -19,10 +19,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-kr*q^n7m_t%uk2j6oe=qv181!bg^d-#j_c5pk=!u3_=bx)i-lm'
 
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = [
@@ -64,10 +61,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    # development mode middleware
-    # 'dev_mode.middlewares.DevModeByHTTPS',
-    # mobile otp authentication
-    
+
+
 ]
 
 ROOT_URLCONF = 'sketezo.urls'
@@ -91,15 +86,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'sketezo.wsgi.application'
 
 
-# Database - (FOR PRODUCTION ONLY)
-# https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-# DATABASES = {
-#     'default': dj_database_url.parse(
-#         "postgresql://skatezo_user:fpLQVX6utanwQBSN1eCNvGhbvlrT1L9A@dpg-d1ug8hre5dus73dn3to0-a.oregon-postgres.render.com/skatezo",
-#         conn_max_age=600,
-#         ssl_require=True
-#     )
-# }
 
 # For Development Only
 DATABASES = {
@@ -167,6 +153,4 @@ MEDIA_ROOT = BASE_DIR / 'media'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-# Razorpay Credentials For Development Only 
-RAZORPAY_KEY_ID = "rzp_test_jJJrl2JogIrKeo"
-RAZORPAY_KEY_SECRET = "oqJBApRaO4rOYdd4cTcUc7m4"
+# Razor

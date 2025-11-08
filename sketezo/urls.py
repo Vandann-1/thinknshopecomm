@@ -32,7 +32,7 @@ urlpatterns = [
     path('cart/',include('cart.urls')),
     path('schedule_purchase/',include('schedule_purchase.urls')),
     path('address/',include('address.urls')),
-    path('orders/',include('orders.urls')),
+    # path('orders/',include('orders.urls')),
     path('user_orders/',include('user_orders.urls')),
 ]
 
