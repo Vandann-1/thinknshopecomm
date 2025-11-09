@@ -92,7 +92,7 @@ def logout_view(request):
 # Optional: Profile view to show user info
 @login_required
 def profile_view(request):
-    return render(request, 'accounts/authenctication/profile.html', {'user': request.user})
+    return render(request, 'profile.html', {'user': request.user})
 
 
 

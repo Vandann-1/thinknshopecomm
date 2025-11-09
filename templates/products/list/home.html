@@ -1,4 +1,6 @@
-{%load static%}
+{% load static %}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -143,6 +145,29 @@
             border-radius: 50%;
             font-weight: 700;
         }
+
+        /* --- Profile Icon Styles --- */
+        .profile-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: var(--bg-off-white);
+            color: var(--text-dark);
+            font-size: 1.2em; /* Adjust icon size */
+            transition: all 0.3s ease;
+             /* Optional: Add a border for better definition on white bg */
+            border: 1px solid #e0e0e0;
+        }
+
+        .profile-icon:hover {
+            background-color: var(--primary-color);
+            color: var(--bg-white);
+            border-color: var(--primary-color);
+        }
+
 
         .nav-categories-wrapper { border-top: 1px solid var(--bg-off-white); border-bottom: 1px solid var(--bg-off-white); }
         .nav-categories {
@@ -515,7 +540,8 @@
                 <a href="#" class="logo">Thinkn<span>Shop.</span></a>
 
                 <div class="nav-actions" style="flex: 1; justify-content: flex-end;">
-                    <a href="#" class="nav-icon-link">Account</a>
+                    <a href="{% url 'login' %}" class="profile-icon" title="Account">
+                        👤 </a>
                     <a href="#" class="nav-icon-link" style="display: flex; align-items: center;">
                         Cart <span class="cart-count">2</span>
                     </a>
@@ -700,7 +726,7 @@
                     </p>
                     <div class="social-links">
                         <a href="#" class="social-link-text">INSTAGRAM</a>
-                        <a href="#" class="social-link-text">TIKTOK</a>
+                        <a href="#" class="social-link-text">LINKEDIN</a>
                         <a href="#" class="social-link-text">X / TWITTER</a>
                     </div>
                 </div>

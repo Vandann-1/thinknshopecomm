@@ -5,51 +5,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register - Skatezo</title>
+    <title>Join ThinknShop</title>
     
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     fontFamily: {
-                        'inter': ['Inter', 'sans-serif'],
+                        'outfit': ['Outfit', 'sans-serif'],
                     },
                     colors: {
-                        'gray-50': '#fafafa',
-                        'gray-100': '#f5f5f5',
-                        'gray-200': '#e5e5e5',
-                        'gray-300': '#d4d4d4',
-                        'gray-400': '#a3a3a3',
-                        'gray-500': '#737373',
-                        'gray-600': '#525252',
-                        'gray-700': '#404040',
-                        'gray-800': '#262626',
-                        'gray-900': '#171717',
+                        brand: {
+                            red: '#dc2626',      // Vibrant red
+                            redDark: '#b91c1c',  // Darker red for hover
+                            gray: '#737373',     // Muted text on light background
+                        }
                     },
                     animation: {
-                        'fade-in': 'fadeIn 0.8s ease-out',
-                        'slide-up': 'slideUp 0.6s ease-out',
-                        'float': 'float 3s ease-in-out infinite',
+                        'fade-in-up': 'fadeInUp 0.8s ease-out',
                     },
                     keyframes: {
-                        fadeIn: {
+                        fadeInUp: {
                             '0%': { opacity: '0', transform: 'translateY(20px)' },
                             '100%': { opacity: '1', transform: 'translateY(0)' }
                         },
-                        slideUp: {
-                            '0%': { opacity: '0', transform: 'translateY(30px)' },
-                            '100%': { opacity: '1', transform: 'translateY(0)' }
-                        },
-                        float: {
-                            '0%, 100%': { transform: 'translateY(0px)' },
-                            '50%': { transform: 'translateY(-10px)' }
-                        }
                     }
                 }
             }
@@ -58,262 +41,251 @@
     
     <style>
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Outfit', sans-serif;
+            background-color: #ffffff; /* Pure white background */
         }
         
-        /* Input focus styles */
-        .form-input:focus {
-            box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
+        /* Light glass-card effect */
+        .glass-card-light {
+            background: rgba(255, 255, 255, 0.7); /* Slightly translucent white */
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 0, 0, 0.05); /* Very subtle light border */
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.1); /* Soft shadow */
         }
+
+        /* Custom scrollbar for light theme */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f0f0f0; }
+        ::-webkit-scrollbar-thumb { background: #ccc; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #dc2626; }
         
-        /* Button hover effects */
-        .btn-hover:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-        }
-        
-        /* Gradient background */
-        .bg-gradient {
-            background: linear-gradient(135deg, #fafafa 0%, #f0f0f0 100%);
-        }
-        
-        /* Password strength indicator styles */
-        .password-hint {
-            font-size: 0.75rem;
-            color: #737373;
-            margin-top: 0.25rem;
+        /* Input autofill light mode fix */
+        input:-webkit-autofill,
+        input:-webkit-autofill:hover, 
+        input:-webkit-autofill:focus, 
+        input:-webkit-autofill:active{
+            -webkit-box-shadow: 0 0 0 30px #f9fafb inset !important; /* light gray for autofill */
+            -webkit-text-fill-color: #171717 !important; /* dark text for autofill */
+            transition: background-color 5000s ease-in-out 0s;
         }
     </style>
 </head>
-<body class="bg-gradient min-h-screen font-inter">
-    <!-- Main Container -->
-    <div class="min-h-screen flex items-center justify-center p-4 py-8">
-        <div class="w-full max-w-lg">
-            <!-- Logo Section -->
-            <div class="text-center mb-8 animate-fade-in">
-                <div class="inline-flex items-center justify-center w-16 h-16 bg-black rounded-2xl mb-4">
-                    <img src="{% static 'brand/images/skatezo.jpeg'%}" alt="Skatezo" class="w-10 h-10 rounded-xl">
-                </div>
-                <h1 class="text-2xl font-bold text-gray-900 mb-2">Join Skatezo</h1>
-                <p class="text-gray-500 text-sm">Create your account to get started</p>
+<body class="min-h-screen bg-white text-gray-900 flex items-center justify-center p-4 lg:p-8">
+
+    <div class="w-full max-w-[520px] animate-fade-in-up">
+        <div class="text-center mb-8">
+            <div class="inline-flex items-center justify-center w-20 h-20 bg-brand-red rounded-3xl mb-6 shadow-[0_0_50px_-15px_rgba(220,38,38,0.3)] transform hover:scale-105 transition-transform duration-300">
+                <img src="{% static 'brand/images/thinknshop.png' %}" alt="ThinknShop" class="w-12 h-12 object-contain brightness-0 invert">
             </div>
+            <h1 class="text-4xl font-bold tracking-tight mb-3 text-gray-900">
+                Join the Revolution
+            </h1>
+            <p class="text-gray-600 text-lg">Create your ThinknShop account today</p>
+        </div>
 
-            <!-- Registration Card -->
-            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 animate-slide-up">
-                <!-- Messages -->
-                {% if messages %}
-                    <div class="mb-6">
-                        {% for message in messages %}
-                            <div class="p-4 rounded-xl mb-3 text-sm {% if message.tags == 'error' %}bg-red-50 text-red-600 border border-red-100{% else %}bg-green-50 text-green-600 border border-green-100{% endif %}">
-                                {{ message }}
-                            </div>
-                        {% endfor %}
+        <div class="glass-card-light rounded-[32px] p-8 md:p-10 shadow-lg">
+            {% if messages %}
+                <div class="mb-8 space-y-3">
+                    {% for message in messages %}
+                        <div class="p-4 rounded-2xl text-sm font-medium flex items-center {% if message.tags == 'error' %}bg-red-50 text-red-600 border border-red-100{% else %}bg-green-50 text-green-600 border border-green-100{% endif %}">
+                            {% if message.tags == 'error' %}
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
+                            {% else %}
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                            {% endif %}
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <form method="post" class="space-y-6">
+                {% csrf_token %}
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                    <div class="space-y-2">
+                        <label for="first_name" class="text-sm font-semibold text-gray-700 ml-1">First Name</label>
+                        <input 
+                            type="text" id="first_name" name="first_name" placeholder="John"
+                            class="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-2xl focus:outline-none focus:border-brand-red focus:ring-4 focus:ring-brand-red/10 transition-all text-gray-900 placeholder-gray-400"
+                        >
                     </div>
-                {% endif %}
+                    <div class="space-y-2">
+                        <label for="last_name" class="text-sm font-semibold text-gray-700 ml-1">Last Name</label>
+                        <input 
+                            type="text" id="last_name" name="last_name" placeholder="Doe"
+                            class="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-2xl focus:outline-none focus:border-brand-red focus:ring-4 focus:ring-brand-red/10 transition-all text-gray-900 placeholder-gray-400"
+                        >
+                    </div>
+                </div>
 
-                <!-- Registration Form -->
-                <form method="post" class="space-y-5">
-                    {% csrf_token %}
-                    
-                    <!-- Name Fields Row -->
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div>
-                            <label for="first_name" class="block text-sm font-medium text-gray-700 mb-2">
-                                First Name
-                            </label>
+                <div class="space-y-5">
+                    <div class="space-y-2">
+                        <label for="username" class="text-sm font-semibold text-gray-700 ml-1">Username</label>
+                        <div class="relative">
+                            <span class="absolute left-5 top-1/2 -translate-y-1/2 text-gray-500 font-medium">@</span>
                             <input 
-                                type="text" 
-                                id="first_name" 
-                                name="first_name" 
-                                placeholder="Enter first name"
-                                class="form-input w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-0 focus:border-black transition-all duration-200 text-gray-900 placeholder-gray-400"
+                                type="text" id="username" name="username" placeholder="username" required
+                                class="w-full pl-10 pr-5 py-4 bg-gray-50 border border-gray-200 rounded-2xl focus:outline-none focus:border-brand-red focus:ring-4 focus:ring-brand-red/10 transition-all text-gray-900 placeholder-gray-400"
                             >
                         </div>
-                        
-                        <div>
-                            <label for="last_name" class="block text-sm font-medium text-gray-700 mb-2">
-                                Last Name
-                            </label>
-                            <input 
-                                type="text" 
-                                id="last_name" 
-                                name="last_name" 
-                                placeholder="Enter last name"
-                                class="form-input w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-0 focus:border-black transition-all duration-200 text-gray-900 placeholder-gray-400"
-                            >
+                    </div>
+                    <div class="space-y-2">
+                        <label for="email" class="text-sm font-semibold text-gray-700 ml-1">Email Address</label>
+                        <input 
+                            type="email" id="email" name="email" placeholder="john@example.com" required
+                            class="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-2xl focus:outline-none focus:border-brand-red focus:ring-4 focus:ring-brand-red/10 transition-all text-gray-900 placeholder-gray-400"
+                        >
+                    </div>
+                </div>
+
+                <div class="space-y-5 pt-2">
+                    <div class="space-y-2">
+                        <label for="password" class="text-sm font-semibold text-gray-700 ml-1">Password</label>
+                        <input 
+                            type="password" id="password" name="password" placeholder="••••••••" required
+                            class="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-2xl focus:outline-none focus:border-brand-red focus:ring-4 focus:ring-brand-red/10 transition-all text-gray-900 placeholder-gray-400"
+                        >
+                        <div class="h-1.5 w-full bg-gray-200 rounded-full overflow-hidden mt-3">
+                            <div id="strength-bar" class="h-full w-0 bg-brand-red transition-all duration-500 ease-out"></div>
                         </div>
+                        <p id="password-hint" class="text-xs text-gray-500 ml-1 mt-2">Minimum 8 characters</p>
                     </div>
-                    
-                    <!-- Username Field -->
-                    <div>
-                        <label for="username" class="block text-sm font-medium text-gray-700 mb-2">
-                            Username
-                        </label>
+                    <div class="space-y-2">
+                        <label for="confirm_password" class="text-sm font-semibold text-gray-700 ml-1">Confirm Password</label>
                         <input 
-                            type="text" 
-                            id="username" 
-                            name="username" 
-                            placeholder="Choose a username"
-                            required
-                            class="form-input w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-0 focus:border-black transition-all duration-200 text-gray-900 placeholder-gray-400"
+                            type="password" id="confirm_password" name="confirm_password" placeholder="••••••••" required
+                            class="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-2xl focus:outline-none focus:border-brand-red focus:ring-4 focus:ring-brand-red/10 transition-all text-gray-900 placeholder-gray-400"
                         >
                     </div>
-                    
-                    <!-- Email Field -->
-                    <div>
-                        <label for="email" class="block text-sm font-medium text-gray-700 mb-2">
-                            Email Address
-                        </label>
-                        <input 
-                            type="email" 
-                            id="email" 
-                            name="email" 
-                            placeholder="Enter your email"
-                            required
-                            class="form-input w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-0 focus:border-black transition-all duration-200 text-gray-900 placeholder-gray-400"
-                        >
-                    </div>
-                    
-                    <!-- Password Field -->
-                    <div>
-                        <label for="password" class="block text-sm font-medium text-gray-700 mb-2">
-                            Password
-                        </label>
-                        <input 
-                            type="password" 
-                            id="password" 
-                            name="password" 
-                            placeholder="Create a strong password"
-                            required
-                            class="form-input w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-0 focus:border-black transition-all duration-200 text-gray-900 placeholder-gray-400"
-                        >
-                        <div class="password-hint">
-                            Password must be at least 8 characters long
-                        </div>
-                    </div>
-                    
-                    <!-- Confirm Password Field -->
-                    <div>
-                        <label for="confirm_password" class="block text-sm font-medium text-gray-700 mb-2">
-                            Confirm Password
-                        </label>
-                        <input 
-                            type="password" 
-                            id="confirm_password" 
-                            name="confirm_password" 
-                            placeholder="Confirm your password"
-                            required
-                            class="form-input w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-0 focus:border-black transition-all duration-200 text-gray-900 placeholder-gray-400"
-                        >
-                    </div>
-                    
-                    <!-- Register Button -->
-                    <button 
-                        type="submit" 
-                        class="btn-hover w-full bg-black text-white py-3 px-4 rounded-xl font-medium transition-all duration-200 hover:bg-gray-800 mt-6"
-                    >
-                        Create Account
-                    </button>
-                </form>
-
-                <!-- Divider -->
-                <div class="flex items-center my-6">
-                    <div class="flex-1 border-t border-gray-200"></div>
-                    <span class="px-4 text-sm text-gray-400">or sign up with</span>
-                    <div class="flex-1 border-t border-gray-200"></div>
                 </div>
 
-                <!-- Social Registration -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <!-- Google Register -->
-                    <button class="btn-hover flex items-center justify-center py-3 px-4 border border-gray-200 rounded-xl hover:bg-gray-50 transition-all duration-200">
-                        <svg class="w-5 h-5 mr-2" viewBox="0 0 24 24">
-                            <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
-                            <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
-                            <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
-                            <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
-                        </svg>
-                        <span class="text-gray-700 font-medium text-sm">Google</span>
-                    </button>
-                    
-                    <!-- Facebook Register -->
-                    <button class="btn-hover flex items-center justify-center py-3 px-4 border border-gray-200 rounded-xl hover:bg-gray-50 transition-all duration-200">
-                        <svg class="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="#1877F2">
-                            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                        </svg>
-                        <span class="text-gray-700 font-medium text-sm">Facebook</span>
-                    </button>
-                </div>
+                <button 
+                    type="submit" 
+                    class="w-full bg-brand-red hover:bg-brand-redDark text-white py-4 px-6 rounded-2xl font-bold text-lg transition-all duration-300 hover:shadow-[0_0_30px_-5px_rgba(220,38,38,0.3)] active:scale-[0.98] mt-8"
+                >
+                    Create Account
+                </button>
+            </form>
 
-                <!-- Login Link -->
-                <div class="text-center mt-8 pt-6 border-t border-gray-100">
-                    <p class="text-gray-500 text-sm">
-                        Already have an account? 
-                        <a href="{% url 'login' %}" class="text-black font-medium hover:underline">
-                            Sign in here
-                        </a>
-                    </p>
-                </div>
+            <div class="flex items-center my-8">
+                <div class="flex-1 border-t border-gray-200"></div>
+                <span class="px-4 text-sm text-gray-400 font-medium uppercase tracking-wider">Or sign up with</span>
+                <div class="flex-1 border-t border-gray-200"></div>
             </div>
 
-            <!-- Footer Stats -->
-            <div class="mt-8 grid grid-cols-3 gap-4 text-center animate-fade-in">
-                <div class="bg-white/50 backdrop-blur-sm rounded-xl p-4 border border-gray-100">
-                    <div class="text-lg font-bold text-gray-900">₹300Cr</div>
-                    <div class="text-xs text-gray-500 mt-1">Valuation</div>
-                </div>
-                <div class="bg-white/50 backdrop-blur-sm rounded-xl p-4 border border-gray-100">
-                    <div class="text-lg font-bold text-gray-900">3M+</div>
-                    <div class="text-xs text-gray-500 mt-1">Daily Users</div>
-                </div>
-                <div class="bg-white/50 backdrop-blur-sm rounded-xl p-4 border border-gray-100">
-                    <div class="text-lg font-bold text-gray-900">Mumbai</div>
-                    <div class="text-xs text-gray-500 mt-1">Store</div>
-                </div>
+            <div class="grid grid-cols-2 gap-4">
+                <button class="flex items-center justify-center py-3.5 px-4 bg-white hover:bg-gray-50 border border-gray-200 rounded-2xl transition-all duration-200 hover:border-gray-300 group shadow-sm">
+                    <svg class="w-5 h-5 mr-3 transition-transform group-hover:scale-110" viewBox="0 0 24 24">
+                        <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+                        <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                        <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+                        <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+                    </svg>
+                    <span class="text-gray-700 font-medium">Google</span>
+                </button>
+                <button class="flex items-center justify-center py-3.5 px-4 bg-white hover:bg-gray-50 border border-gray-200 rounded-2xl transition-all duration-200 hover:border-gray-300 group shadow-sm">
+                    <svg class="w-5 h-5 mr-3 transition-transform group-hover:scale-110" viewBox="0 0 24 24" fill="#1877F2">
+                        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                    </svg>
+                    <span class="text-gray-700 font-medium">Facebook</span>
+                </button>
             </div>
 
-            <!-- Additional Information -->
-            <div class="mt-6 text-center">
-                <p class="text-xs text-gray-400">
-                    By creating an account, you agree to our 
-                    <a href="#" class="text-gray-600 hover:text-black">Terms of Service</a> 
-                    and 
-                    <a href="#" class="text-gray-600 hover:text-black">Privacy Policy</a>
+            <div class="text-center mt-8 pt-6 border-t border-gray-100">
+                <p class="text-gray-500">
+                    Already have an account? 
+                    <a href="{% url 'login' %}" class="text-brand-red font-semibold hover:text-brand-redDark transition-colors ml-1">
+                        Sign in here
+                    </a>
                 </p>
             </div>
+        </div>
+
+        <div class="mt-10 text-center space-y-8 animate-fade-in-up [animation-delay:200ms]">
+            <div class="grid grid-cols-3 gap-4 opacity-80 hover:opacity-100 transition-opacity duration-500">
+                <div class="px-4 py-2 border-r border-gray-200 last:border-0">
+                    <div class="text-xl font-bold text-gray-900">₹300Cr</div>
+                    <div class="text-[11px] uppercase tracking-widest text-gray-500 font-semibold mt-1">Valuation</div>
+                </div>
+                <div class="px-4 py-2 border-r border-gray-200 last:border-0">
+                    <div class="text-xl font-bold text-gray-900">3M+</div>
+                    <div class="text-[11px] uppercase tracking-widest text-gray-500 font-semibold mt-1">Users</div>
+                </div>
+                <div class="px-4 py-2">
+                    <div class="text-xl font-bold text-gray-900">Mumbai</div>
+                    <div class="text-[11px] uppercase tracking-widest text-gray-500 font-semibold mt-1">HQ</div>
+                </div>
+            </div>
+
+            <p class="text-xs text-gray-500 max-w-xs mx-auto leading-relaxed">
+                By creating an account, you agree to our 
+                <a href="#" class="text-gray-600 hover:text-gray-900 underline decoration-gray-400 underline-offset-2 transition-colors">Terms of Service</a> 
+                and 
+                <a href="#" class="text-gray-600 hover:text-gray-900 underline decoration-gray-400 underline-offset-2 transition-colors">Privacy Policy</a>.
+            </p>
         </div>
     </div>
 
     <script>
-        // Add some client-side validation feedback
         document.addEventListener('DOMContentLoaded', function() {
             const password = document.getElementById('password');
             const confirmPassword = document.getElementById('confirm_password');
-            const passwordHint = document.querySelector('.password-hint');
+            const passwordHint = document.getElementById('password-hint');
+            const strengthBar = document.getElementById('strength-bar');
             
-            // Password strength indicator
+            // Enhanced password strength indicator
             password.addEventListener('input', function() {
-                const value = this.value;
-                if (value.length >= 8) {
-                    passwordHint.textContent = 'Password looks good!';
-                    passwordHint.className = 'password-hint text-green-600';
-                } else if (value.length > 0) {
-                    passwordHint.textContent = `${8 - value.length} more characters needed`;
-                    passwordHint.className = 'password-hint text-amber-600';
-                } else {
-                    passwordHint.textContent = 'Password must be at least 8 characters long';
-                    passwordHint.className = 'password-hint';
+                const val = this.value;
+                let strength = 0;
+                if (val.length > 0) strength += 1;
+                if (val.length >= 8) strength += 1;
+                if (/[A-Z]/.test(val) && /[0-9]/.test(val)) strength += 1;
+                if (/[^A-Za-z0-9]/.test(val)) strength += 1;
+
+                switch(strength) {
+                    case 0:
+                        strengthBar.style.width = '0%';
+                        strengthBar.className = 'h-full transition-all duration-500 ease-out bg-gray-200';
+                        passwordHint.textContent = 'Minimum 8 characters';
+                        passwordHint.className = 'text-xs text-gray-500 ml-1 mt-2';
+                        break;
+                    case 1:
+                        strengthBar.style.width = '25%';
+                        strengthBar.className = 'h-full transition-all duration-500 ease-out bg-red-500';
+                        passwordHint.textContent = 'Too weak';
+                        passwordHint.className = 'text-xs text-red-500 ml-1 mt-2';
+                        break;
+                    case 2:
+                        strengthBar.style.width = '50%';
+                        strengthBar.className = 'h-full transition-all duration-500 ease-out bg-orange-500';
+                        passwordHint.textContent = 'Keep going...';
+                        passwordHint.className = 'text-xs text-orange-500 ml-1 mt-2';
+                        break;
+                    case 3:
+                        strengthBar.style.width = '75%';
+                        strengthBar.className = 'h-full transition-all duration-500 ease-out bg-yellow-500';
+                        passwordHint.textContent = 'Almost there';
+                        passwordHint.className = 'text-xs text-yellow-500 ml-1 mt-2';
+                        break;
+                    case 4:
+                        strengthBar.style.width = '100%';
+                        strengthBar.className = 'h-full transition-all duration-500 ease-out bg-green-500';
+                        passwordHint.textContent = 'Strong password!';
+                        passwordHint.className = 'text-xs text-green-500 ml-1 mt-2';
+                        break;
                 }
             });
             
-            // Confirm password validation
+            // Real-time confirm password validation with visual feedback
             confirmPassword.addEventListener('input', function() {
                 if (this.value && this.value !== password.value) {
-                    this.classList.add('border-red-300');
-                    this.classList.remove('border-gray-200');
+                    this.classList.add('border-red-500/50', 'bg-red-50');
+                    this.classList.remove('border-gray-200', 'focus:border-brand-red');
                 } else {
-                    this.classList.remove('border-red-300');
-                    this.classList.add('border-gray-200');
+                    this.classList.remove('border-red-500/50', 'bg-red-50');
+                    this.classList.add('border-gray-200', 'focus:border-brand-red');
                 }
             });
         });
