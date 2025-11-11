@@ -212,6 +212,7 @@ class Product(TimestampedModel):
     # Analytics
     view_count = models.PositiveIntegerField(default=0)
     purchase_count = models.PositiveIntegerField(default=0)
+
     
     class Meta:
         ordering = ['-created_at']
@@ -303,6 +304,9 @@ class ProductVariant(TimestampedModel):
     
     # Variant image
     image = models.ImageField(upload_to='products/variants/', blank=True, null=True)
+    
+    leak_proof=models.BooleanField(default=False, help_text="Indicates if the product is leak proof", null=True, blank=True)
+    net_weight=models.CharField(max_length=100, help_text="Net weight of the product", null=True, blank=True)
     
     # Status
     is_active = models.BooleanField(default=True)
