@@ -1,17 +1,15 @@
 {% extends 'components/includes/base.html' %}
+{% load static %}
 
-{% block title %}{{ page_title }} - Your Store{% endblock %}
+{% block title %}Manage Addresses - ThinknShop{% endblock %}
 
 {% block head %}
-    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- Custom Tailwind Config -->
     <script>
         tailwind.config = {
             theme: {
@@ -20,17 +18,18 @@
                         'sans': ['Inter', 'system-ui', 'sans-serif'],
                     },
                     colors: {
+                        // This is your new primary "Red" theme
                         primary: {
-                            50: '#eff6ff',
-                            100: '#dbeafe',
-                            200: '#bfdbfe',
-                            300: '#93c5fd',
-                            400: '#60a5fa',
-                            500: '#3b82f6',
-                            600: '#2563eb',
-                            700: '#1d4ed8',
-                            800: '#1e40af',
-                            900: '#1e3a8a',
+                            50: '#fef2f2',
+                            100: '#fee2e2',
+                            200: '#fecaca',
+                            300: '#fca5a5',
+                            400: '#f87171',
+                            500: '#ef4444',
+                            600: '#dc2626',
+                            700: '#b91c1c',
+                            800: '#991b1b',
+                            900: '#7f1d1d',
                         }
                     },
                     animation: {
@@ -75,7 +74,8 @@
         }
         
         .form-input:focus {
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+            /* Updated focus shadow to match red theme */
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
         }
         
         /* Custom scrollbar */
@@ -96,7 +96,6 @@
 
 {% block content %}
 <div class="min-h-screen bg-gray-50">
-    <!-- Header -->
     <div class="bg-white border-b">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="py-6">
@@ -105,7 +104,7 @@
                         <h1 class="text-2xl font-semibold text-gray-900">Manage Addresses</h1>
                         <p class="mt-1 text-sm text-gray-600">Add and manage your delivery addresses</p>
                     </div>
-                    <button id="addAddressBtn" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                    <button id="addAddressBtn" class="inline-flex items-center px-4 py-2 bg-primary-600 text-white text-sm font-medium rounded-md hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2">
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
                         </svg>
@@ -116,250 +115,511 @@
         </div>
     </div>
 
-    <!-- Main Content -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <!-- Addresses Grid -->
         <div id="addressesContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {% for address in addresses %}
-            <div class="address-card bg-white border border-gray-200 rounded-lg p-4 relative" data-address-id="{{ address.id }}">
-                {% if address.is_default %}
+            
+            <div class="address-card bg-white border border-gray-200 rounded-lg p-4 relative" data-address-id="1">
                 <div class="absolute top-3 right-3">
                     <span class="inline-flex items-center px-2 py-1 text-xs font-medium bg-green-100 text-green-800 rounded">
                         DEFAULT
                     </span>
                 </div>
-                {% endif %}
-                
                 <div class="space-y-3">
-                    <!-- Address Header -->
                     <div>
-                        <h3 class="text-base font-medium text-gray-900">{{ address.label }}</h3>
-                        <p class="text-xs text-gray-500 uppercase tracking-wide mt-1">{{ address.address_type }}</p>
+                        <h3 class="text-base font-medium text-gray-900">Home</h3>
+                        <p class="text-xs text-gray-500 uppercase tracking-wide mt-1">HOME</p>
                     </div>
-                    
-                    <!-- Contact Info -->
                     <div class="space-y-1 text-sm">
-                        <p class="font-medium text-gray-900">{{ address.full_name }}</p>
-                        <p class="text-gray-600">{{ address.phone_number }}</p>
-                        <p class="text-gray-600 leading-relaxed">{{ address.get_full_address }}</p>
+                        <p class="font-medium text-gray-900">John Doe</p>
+                        <p class="text-gray-600">+91 98765 43210</p>
+                        <p class="text-gray-600 leading-relaxed">123, React Residency, Next to JS Park, Vue Vihar, Mumbai, Maharashtra - 400001</p>
                     </div>
                 </div>
-                
-                <!-- Action Buttons -->
                 <div class="flex gap-2 mt-4 pt-3 border-t border-gray-100">
-                    <button class="edit-address-btn flex-1 px-3 py-2 text-xs font-medium text-gray-700 bg-gray-50 border border-gray-200 rounded hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2" data-address-id="{{ address.id }}">
+                    <button class="edit-address-btn flex-1 px-3 py-2 text-xs font-medium text-gray-700 bg-gray-50 border border-gray-200 rounded hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2" data-address-id="1">
                         Edit
                     </button>
-                    {% if not address.is_default %}
-                    <button class="set-default-btn px-3 py-2 text-xs font-medium text-blue-700 bg-blue-50 border border-blue-200 rounded hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2" data-address-id="{{ address.id }}">
-                        Set Default
-                    </button>
-                    {% endif %}
-                    <button class="delete-address-btn px-3 py-2 text-xs font-medium text-red-700 bg-red-50 border border-red-200 rounded hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2" data-address-id="{{ address.id }}">
+                    <button class="delete-address-btn px-3 py-2 text-xs font-medium text-red-700 bg-red-50 border border-red-200 rounded hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2" data-address-id="1">
                         Delete
                     </button>
                 </div>
             </div>
-            {% empty %}
-            <!-- Empty State -->
-            <div class="col-span-full">
-                <div class="text-center py-12">
-                    <svg class="w-12 h-12 mx-auto text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                    </svg>
-                    <h3 class="text-lg font-medium text-gray-900 mb-2">No addresses found</h3>
-                    <p class="text-gray-600 mb-6">Add your first delivery address to get started</p>
-                    <button id="addFirstAddressBtn" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
-                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-                        </svg>
-                        Add Your First Address
+
+            <div class="address-card bg-white border border-gray-200 rounded-lg p-4 relative" data-address-id="2">
+                <div class="space-y-3">
+                    <div>
+                        <h3 class="text-base font-medium text-gray-900">Office</h3>
+                        <p class="text-xs text-gray-500 uppercase tracking-wide mt-1">OFFICE</p>
+                    </div>
+                    <div class="space-y-1 text-sm">
+                        <p class="font-medium text-gray-900">John Doe</p>
+                        <p class="text-gray-600">+91 98765 43210</p>
+                        <p class="text-gray-600 leading-relaxed">456, Biz Towers, Corporate Ave, Node Nagar, Bengaluru, Karnataka - 560001</p>
+                    </div>
+                </div>
+                <div class="flex gap-2 mt-4 pt-3 border-t border-gray-100">
+                    <button class="edit-address-btn flex-1 px-3 py-2 text-xs font-medium text-gray-700 bg-gray-50 border border-gray-200 rounded hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2" data-address-id="2">
+                        Edit
+                    </button>
+                    <button class="set-default-btn px-3 py-2 text-xs font-medium text-primary-700 bg-primary-50 border border-primary-200 rounded hover:bg-primary-100 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2" data-address-id="2">
+                        Set Default
+                    </button>
+                    <button class="delete-address-btn px-3 py-2 text-xs font-medium text-red-700 bg-red-50 border border-red-200 rounded hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2" data-address-id="2">
+                        Delete
                     </button>
                 </div>
             </div>
-            {% endfor %}
-        </div>
-    </div>
 
-    <!-- Address Form Modal -->
-    <div id="addressModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 modal-backdrop z-50 hidden">
-        <div class="flex items-center justify-center min-h-screen p-4">
-            <div class="bg-white rounded-lg w-full max-w-4xl max-h-[90vh] overflow-hidden shadow-xl transform animate-slide-up" id="modalContent">
-                <!-- Modal Header -->
-                <div class="px-6 py-4 border-b border-gray-200">
-                    <div class="flex items-center justify-between">
-                        <h2 id="modalTitle" class="text-lg font-semibold text-gray-900">Add New Address</h2>
-                        <button id="closeModalBtn" class="text-gray-400 hover:text-gray-500 focus:outline-none">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                            </svg>
-                        </button>
-                    </div>
+            </div>
+    </div>
+</div>
+
+<div id="addressModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 modal-backdrop z-50 hidden animate-fade-in">
+    <div class="flex items-center justify-center min-h-screen p-4">
+        <div class="bg-white rounded-lg w-full max-w-4xl max-h-[90vh] overflow-hidden shadow-xl transform animate-slide-up" id="modalContent">
+            <div class="px-6 py-4 border-b border-gray-200">
+                <div class="flex items-center justify-between">
+                    <h2 id="modalTitle" class="text-lg font-semibold text-gray-900">Add New Address</h2>
+                    <button id="closeModalBtn" class="text-gray-400 hover:text-gray-500 focus:outline-none">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
                 </div>
-                
-                <!-- Modal Content -->
-                <div class="overflow-y-auto modal-content" style="max-height: calc(90vh - 140px);">
-                    <div class="px-6 py-6">
-                        <form id="addressForm" class="space-y-6">
-                            <input type="hidden" id="addressId" name="address_id">
-                            
-                            <!-- Basic Information -->
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Address Label *</label>
-                                    <input type="text" id="label" name="label" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 form-input" placeholder="e.g., Home, Office">
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Address Type *</label>
-                                    <select id="addressType" name="address_type" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 form-input">
-                                        <option value="home">Home</option>
-                                        <option value="office">Office</option>
-                                        <option value="other">Other</option>
-                                    </select>
-                                </div>
+            </div>
+            
+            <div class="overflow-y-auto modal-content" style="max-height: calc(90vh - 140px);">
+                <div class="px-6 py-6">
+                    <form id="addressForm" class="space-y-6">
+                        {% csrf_token %}
+                        <input type="hidden" id="addressId" name="address_id">
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label for="label" class="block text-sm font-medium text-gray-700 mb-1">Address Label *</label>
+                                <input type="text" id="label" name="label" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm text-sm focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-primary-500 form-input" placeholder="e.g., Home, Office" required>
                             </div>
-                            
-                            <!-- Contact Details -->
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Full Name *</label>
-                                    <input type="text" id="fullName" name="full_name" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 form-input" placeholder="Enter full name">
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Phone Number *</label>
-                                    <input type="tel" id="phoneNumber" name="phone_number" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 form-input" placeholder="Enter phone number">
-                                </div>
+                            <div>
+                                <label for="addressType" class="block text-sm font-medium text-gray-700 mb-1">Address Type *</label>
+                                <select id="addressType" name="address_type" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm text-sm focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-primary-500 form-input" required>
+                                    <option value="home">Home</option>
+                                    <option value="office">Office</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label for="fullName" class="block text-sm font-medium text-gray-700 mb-1">Full Name *</label>
+                                <input type="text" id="fullName" name="full_name" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm text-sm focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-primary-500 form-input" placeholder="Enter full name" required>
+                            </div>
+                            <div>
+                                <label for="phoneNumber" class="block text-sm font-medium text-gray-700 mb-1">Phone Number *</LAbel>
+                                <input type="tel" id="phoneNumber" name="phone_number" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm text-sm focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-primary-500 form-input" placeholder="Enter phone number" required>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label for="alternatePhone" class="block text-sm font-medium text-gray-700 mb-1">Alternate Phone</label>
+                            <input type="tel" id="alternatePhone" name="alternate_phone" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm text-sm focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-primary-500 form-input" placeholder="Enter alternate phone (optional)">
+                        </div>
+                        
+                        <div class="space-y-4">
+                            <div>
+                                <label for="addressLine1" class="block text-sm font-medium text-gray-700 mb-1">Address Line 1 *</label>
+                                <input type="text" id="addressLine1" name="address_line_1" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm text-sm focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-primary-500 form-input" placeholder="House/Flat/Building name and number" required>
                             </div>
                             
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">Alternate Phone</label>
-                                <input type="tel" id="alternatePhone" name="alternate_phone" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 form-input" placeholder="Enter alternate phone (optional)">
+                                <label for="addressLine2" class="block text-sm font-medium text-gray-700 mb-1">Address Line 2</label>
+                                <input type="text" id="addressLine2" name="address_line_2" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm text-sm focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-primary-500 form-input" placeholder="Area, Street, Sector, Village (optional)">
                             </div>
                             
-                            <!-- Address Details -->
-                            <div class="space-y-4">
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Address Line 1 *</label>
-                                    <input type="text" id="addressLine1" name="address_line_1" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 form-input" placeholder="House/Flat/Building name and number">
-                                </div>
-                                
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Address Line 2</label>
-                                    <input type="text" id="addressLine2" name="address_line_2" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 form-input" placeholder="Area, Street, Sector, Village (optional)">
-                                </div>
-                                
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Landmark</label>
-                                    <input type="text" id="landmark" name="landmark" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 form-input" placeholder="Nearby landmark (optional)">
-                                </div>
+                            <div>
+                                <label for="landmark" class="block text-sm font-medium text-gray-700 mb-1">Landmark</label>
+                                <input type="text" id="landmark" name="landmark" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm text-sm focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-primary-500 form-input" placeholder="Nearby landmark (optional)">
                             </div>
-                            
-                            <!-- Location Details -->
-                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Pincode *</label>
-                                    <input type="text" id="pincode" name="pincode" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 form-input" placeholder="Enter pincode">
-                                    <div id="pincodeLoader" class="hidden mt-2">
-                                        <div class="flex items-center text-xs text-gray-600">
-                                            <div class="animate-spin rounded-full h-3 w-3 border border-gray-300 border-t-blue-600 mr-2"></div>
-                                            Fetching location details...
-                                        </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div>
+                                <label for="pincode" class="block text-sm font-medium text-gray-700 mb-1">Pincode *</label>
+                                <input type="text" id="pincode" name="pincode" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm text-sm focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-primary-500 form-input" placeholder="Enter pincode" required>
+                                <div id="pincodeLoader" class="hidden mt-2">
+                                    <div class="flex items-center text-xs text-gray-600">
+                                        <div class="animate-spin rounded-full h-3 w-3 border border-gray-300 border-t-primary-600 mr-2"></div>
+                                        Fetching location details...
                                     </div>
                                 </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">City *</label>
-                                    <input type="text" id="city" name="city" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 form-input" placeholder="Enter city">
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">State *</label>
-                                    <input type="text" id="state" name="state" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 form-input" placeholder="Enter state">
-                                </div>
+                            </div>
+                            <div>
+                                <label for="city" class="block text-sm font-medium text-gray-700 mb-1">City *</label>
+                                <input type="text" id="city" name="city" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm text-sm focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-primary-500 form-input" placeholder="Enter city" required>
+                            </div>
+                            <div>
+                                <label for="state" class="block text-sm font-medium text-gray-700 mb-1">State *</label>
+                                <input type="text" id="state" name="state" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm text-sm focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-primary-500 form-input" placeholder="Enter state" required>
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-4">
+                            <div class="flex items-start">
+                                <input type="checkbox" id="isApartment" name="is_apartment" class="mt-1 h-4 w-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500">
+                                <label for="isApartment" class="ml-3 text-sm text-gray-700">This is an apartment/building</label>
                             </div>
                             
-                            <!-- Additional Options -->
-                            <div class="space-y-4">
-                                <div class="flex items-start">
-                                    <input type="checkbox" id="isApartment" name="is_apartment" class="mt-1 h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
-                                    <label for="isApartment" class="ml-3 text-sm text-gray-700">This is an apartment/building</label>
-                                </div>
-                                
-                                <div id="floorSection" class="hidden">
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Floor Number</label>
-                                    <input type="text" id="floorNumber" name="floor_number" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 form-input" placeholder="Enter floor number">
-                                </div>
-                                
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Delivery Instructions</label>
-                                    <textarea id="deliveryInstructions" name="delivery_instructions" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 resize-none form-input" placeholder="Any special delivery instructions (optional)"></textarea>
-                                </div>
-                                
-                                <div class="flex items-start">
-                                    <input type="checkbox" id="isDefault" name="is_default" class="mt-1 h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
-                                    <label for="isDefault" class="ml-3 text-sm text-gray-700">Set as default address</label>
-                                </div>
+                            <div id="floorSection" class="hidden">
+                                <label for="floorNumber" class="block text-sm font-medium text-gray-700 mb-1">Floor Number</label>
+                                <input type="text" id="floorNumber" name="floor_number" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm text-sm focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-primary-500 form-input" placeholder="Enter floor number">
                             </div>
-                        </form>
-                    </div>
+                            
+                            <div>
+                                <label for="deliveryInstructions" class="block text-sm font-medium text-gray-700 mb-1">Delivery Instructions</label>
+                                <textarea id="deliveryInstructions" name="delivery_instructions" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm text-sm focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-primary-500 resize-none form-input" placeholder="Any special delivery instructions (optional)"></textarea>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <input type="checkbox" id="isDefault" name="is_default" class="mt-1 h-4 w-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500">
+                                <label for="isDefault" class="ml-3 text-sm text-gray-700">Set as default address</label>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-                
-                <!-- Modal Footer -->
-                <div class="px-6 py-4 border-t border-gray-200 bg-gray-50">
-                    <div class="flex gap-3 justify-end">
-                        <button type="button" id="cancelBtn" class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
-                            Cancel
-                        </button>
-                        <button type="submit" id="submitBtn" class="px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2" form="addressForm">
-                            <span id="submitBtnText">Save Address</span>
-                            <span id="submitLoader" class="hidden flex items-center">
-                                <div class="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent mr-2"></div>
-                                Saving...
-                            </span>
-                        </button>
-                    </div>
+            </div>
+            
+            <div class="px-6 py-4 border-t border-gray-200 bg-gray-50">
+                <div class="flex gap-3 justify-end">
+                    <button type="button" id="cancelBtn" class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
+                        Cancel
+                    </button>
+                    <button type="submit" id="submitBtn" class="px-4 py-2 text-sm font-medium text-white bg-primary-600 border border-transparent rounded-md hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2" form="addressForm">
+                        <span id="submitBtnText">Save Address</span>
+                        <span id="submitLoader" class="hidden items-center">
+                            <div class="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent mr-2"></div>
+                            Saving...
+                        </span>
+                    </button>
                 </div>
             </div>
         </div>
     </div>
-
-    <!-- Confirm Delete Modal -->
-    <div id="deleteModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 modal-backdrop z-50 hidden">
-        <div class="flex items-center justify-center min-h-screen p-4">
-            <div class="bg-white rounded-lg w-full max-w-md shadow-xl transform animate-slide-up" id="deleteModalContent">
-                <div class="p-6">
-                    <div class="flex items-center mb-4">
-                        <div class="flex-shrink-0">
-                            <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
-                            </svg>
-                        </div>
-                        <div class="ml-3">
-                            <h3 class="text-lg font-medium text-gray-900">Delete Address</h3>
-                        </div>
-                    </div>
-                    <p class="text-sm text-gray-600 mb-6">Are you sure you want to delete this address? This action cannot be undone.</p>
-                    
-                    <div class="flex gap-3 justify-end">
-                        <button id="cancelDeleteBtn" class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
-                            Cancel
-                        </button>
-                        <button id="confirmDeleteBtn" class="px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
-                            Delete
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Toast Notifications -->
-    <div id="toastContainer" class="fixed top-4 right-4 space-y-2 z-50"></div>
 </div>
 
+<div id="deleteModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 modal-backdrop z-50 hidden animate-fade-in">
+    <div class="flex items-center justify-center min-h-screen p-4">
+        <div class="bg-white rounded-lg w-full max-w-md shadow-xl transform animate-slide-up" id="deleteModalContent">
+            <div class="p-6">
+                <div class="flex items-center mb-4">
+                    <div class="flex-shrink-0">
+                        <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+                        </svg>
+                    </div>
+                    <div class="ml-3">
+                        <h3 class="text-lg font-medium text-gray-900">Delete Address</h3>
+                    </div>
+                </div>
+                <p class="text-sm text-gray-600 mb-6">Are you sure you want to delete this address? This action cannot be undone.</p>
+                
+                <div class="flex gap-3 justify-end">
+                    <button id="cancelDeleteBtn" class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
+                        Cancel
+                    </button>
+                    <button id="confirmDeleteBtn" class="px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2" data-address-id="">
+                        Delete
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="toastContainer" class="fixed top-4 right-4 space-y-2 z-50"></div>
+
 <script>
-// JavaScript functionality
 document.addEventListener('DOMContentLoaded', function() {
-    // Apartment checkbox functionality
+    
+    // --- UTILITY FUNCTIONS ---
+
+    /**
+     * Gets the CSRF token from cookies
+     */
+    function getCsrfToken() {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, 'csrftoken'.length + 1) === ('csrftoken' + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring('csrftoken'.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    /**
+     * Shows a toast notification
+     * @param {string} message - The message to display
+     * @param {'success' | 'error' | 'info'} type - The type of toast
+     */
+    function showToast(message, type = 'success') {
+        const toastContainer = document.getElementById('toastContainer');
+        const toast = document.createElement('div');
+        
+        let bgColor, textColor, icon;
+        
+        if (type === 'success') {
+            bgColor = 'bg-green-500';
+            textColor = 'text-white';
+            icon = `<svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>`;
+        } else if (type === 'error') {
+            bgColor = 'bg-red-500';
+            textColor = 'text-white';
+            icon = `<svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path></svg>`;
+        } else {
+            // Updated info toast to use the primary red color
+            bgColor = 'bg-primary-500'; 
+            textColor = 'text-white';
+            icon = `<svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>`;
+        }
+        
+        toast.className = `flex items-center p-4 rounded-md shadow-lg ${bgColor} ${textColor} animate-slide-up`;
+        toast.innerHTML = `${icon}<span>${message}</span>`;
+        
+        toastContainer.appendChild(toast);
+        
+        setTimeout(() => {
+            toast.remove();
+        }, 3000);
+    }
+
+    // --- ELEMENT SELECTORS ---
+    const addressModal = document.getElementById('addressModal');
+    const deleteModal = document.getElementById('deleteModal');
+    
+    // Address Modal Controls
+    const addAddressBtn = document.getElementById('addAddressBtn');
+    const addFirstAddressBtn = document.getElementById('addFirstAddressBtn');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+    const cancelBtn = document.getElementById('cancelBtn');
+    
+    // Delete Modal Controls
+    const cancelDeleteBtn = document.getElementById('cancelDeleteBtn');
+    const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+    
+    // Form & Content
+    const addressForm = document.getElementById('addressForm');
+    const modalTitle = document.getElementById('modalTitle');
+    const addressIdInput = document.getElementById('addressId');
+    const addressesContainer = document.getElementById('addressesContainer');
+    const submitBtn = document.getElementById('submitBtn');
+    const submitBtnText = document.getElementById('submitBtnText');
+    const submitLoader = document.getElementById('submitLoader');
+
+    // --- MODAL CONTROLS ---
+
+    function openModal(modal) {
+        if (modal) modal.classList.remove('hidden');
+    }
+
+    function closeModal(modal) {
+        if (modal) modal.classList.add('hidden');
+    }
+
+    function openAddAddressModal() {
+        addressForm.reset();
+        addressIdInput.value = '';
+        modalTitle.textContent = 'Add New Address';
+        floorSection.classList.add('hidden'); // Ensure floor section is hidden
+        openModal(addressModal);
+    }
+    
+    // Open "Add" Modal
+    if (addAddressBtn) addAddressBtn.addEventListener('click', openAddAddressModal);
+    if (addFirstAddressBtn) addFirstAddressBtn.addEventListener('click', openAddAddressModal);
+
+    // Close Modals
+    if (closeModalBtn) closeModalBtn.addEventListener('click', () => closeModal(addressModal));
+    if (cancelBtn) cancelBtn.addEventListener('click', () => closeModal(addressModal));
+    if (cancelDeleteBtn) cancelDeleteBtn.addEventListener('click', () => closeModal(deleteModal));
+
+
+    // --- ADDRESS CARD ACTIONS (Event Delegation) ---
+
+    if (addressesContainer) {
+        addressesContainer.addEventListener('click', function(e) {
+            
+            // --- EDIT ADDRESS ---
+            if (e.target.closest('.edit-address-btn')) {
+                const button = e.target.closest('.edit-address-btn');
+                const addressId = button.dataset.addressId;
+                
+                showToast('Fetching address details...', 'info');
+                
+                // --- DUMMY API CALL: Replace with your actual API endpoint ---
+                // fetch(`/api/get-address-details/${addressId}/`)
+                // .then(response => response.json())
+                // .then(data => { ... })
+                
+                // --- Using dummy data for demonstration ---
+                // Remove this block when you implement the real fetch
+                const dummyData = {
+                    id: addressId,
+                    label: 'Home',
+                    address_type: 'home',
+                    full_name: 'John Doe',
+                    phone_number: '9876543210',
+                    alternate_phone: '0123456789',
+                    address_line_1: '123, React Residency',
+                    address_line_2: 'Next to JS Park, Vue Vihar',
+                    landmark: 'Near HTML Garden',
+                    pincode: '400001',
+                    city: 'Mumbai',
+                    state: 'Maharashtra',
+                    is_apartment: true,
+                    floor_number: '10',
+                    delivery_instructions: 'Call on arrival',
+                    is_default: addressId === '1' // Make first one default for demo
+                };
+                
+                modalTitle.textContent = 'Edit Address';
+                addressIdInput.value = dummyData.id;
+                document.getElementById('label').value = dummyData.label;
+                document.getElementById('addressType').value = dummyData.address_type;
+                document.getElementById('fullName').value = dummyData.full_name;
+                document.getElementById('phoneNumber').value = dummyData.phone_number;
+                document.getElementById('alternatePhone').value = dummyData.alternate_phone;
+                document.getElementById('addressLine1').value = dummyData.address_line_1;
+                document.getElementById('addressLine2').value = dummyData.address_line_2;
+                document.getElementById('landmark').value = dummyData.landmark;
+                document.getElementById('pincode').value = dummyData.pincode;
+                document.getElementById('city').value = dummyData.city;
+                document.getElementById('state').value = dummyData.state;
+                document.getElementById('isApartment').checked = dummyData.is_apartment;
+                document.getElementById('floorNumber').value = dummyData.floor_number;
+                document.getElementById('deliveryInstructions').value = dummyData.delivery_instructions;
+                document.getElementById('isDefault').checked = dummyData.is_default;
+
+                if (dummyData.is_apartment) {
+                    floorSection.classList.remove('hidden');
+                } else {
+                    floorSection.classList.add('hidden');
+                }
+                openModal(addressModal);
+                // --- End of dummy data block ---
+            }
+            
+            // --- DELETE ADDRESS ---
+            if (e.target.closest('.delete-address-btn')) {
+                const button = e.target.closest('.delete-address-btn');
+                const addressId = button.dataset.addressId;
+                confirmDeleteBtn.dataset.addressId = addressId;
+                openModal(deleteModal);
+            }
+            
+            // --- SET DEFAULT ADDRESS ---
+            if (e.target.closest('.set-default-btn')) {
+                const button = e.target.closest('.set-default-btn');
+                const addressId = button.dataset.addressId;
+                
+                // --- DUMMY API CALL: Replace with your actual API endpoint ---
+                // fetch(`/api/set-default-address/${addressId}/`, { ... })
+                
+                // --- Demo behavior ---
+                showToast('Default address updated!', 'success');
+                setTimeout(() => window.location.reload(), 1000); // Reload to show changes
+            }
+        });
+    }
+
+    // --- CONFIRM DELETE ---
+    if (confirmDeleteBtn) {
+        confirmDeleteBtn.addEventListener('click', function() {
+            const addressId = this.dataset.addressId;
+            
+            // --- DUMMY API CALL: Replace with your actual API endpoint ---
+            // fetch(`/api/delete-address/${addressId}/`, { ... })
+            
+            // --- Demo behavior ---
+            showToast('Address deleted successfully.', 'success');
+            const cardToRemove = document.querySelector(`.address-card[data-address-id="${addressId}"]`);
+            if (cardToRemove) cardToRemove.remove();
+            closeModal(deleteModal);
+        });
+    }
+
+    // --- FORM SUBMISSION (Add/Edit) ---
+    if (addressForm) {
+        addressForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Show loading state
+            submitBtnText.classList.add('hidden');
+            submitLoader.classList.remove('hidden');
+            submitBtn.disabled = true;
+            
+            const formData = new FormData(addressForm);
+            const addressId = addressIdInput.value;
+            
+            const url = addressId ? `/api/update-address/${addressId}/` : '/api/add-address/';
+            
+            // --- DUMMY API CALL: Replace with your actual API endpoint ---
+            // fetch(url, { ... })
+            
+            // --- Demo behavior ---
+            setTimeout(() => {
+                showToast('Address saved successfully!', 'success');
+                closeModal(addressModal);
+                submitBtnText.classList.remove('hidden');
+                submitLoader.classList.add('hidden');
+                submitBtn.disabled = false;
+                // In a real app, you'd reload or add the card dynamically
+                // window.location.reload(); 
+            }, 1500);
+        });
+    }
+
+    // --- PINCODE AUTOFILL ---
+    const pincodeInput = document.getElementById('pincode');
+    const pincodeLoader = document.getElementById('pincodeLoader');
+    const cityInput = document.getElementById('city');
+    const stateInput = document.getElementById('state');
+    
+    if (pincodeInput) {
+        pincodeInput.addEventListener('blur', function() {
+            const pincode = this.value;
+            
+            if (pincode.length === 6 && /^\d+$/.test(pincode)) {
+                pincodeLoader.classList.remove('hidden');
+                cityInput.value = '';
+                stateInput.value = '';
+                
+                fetch(`https://api.postalpincode.in/pincode/${pincode}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        pincodeLoader.classList.add('hidden');
+                        if (data[0].Status === 'Success' && data[0].PostOffice.length > 0) {
+                            const postOffice = data[0].PostOffice[0];
+                            cityInput.value = postOffice.District;
+                            stateInput.value = postOffice.State;
+                            showToast('City and State auto-filled.', 'info');
+                        } else {
+                            showToast('Pincode not found.', 'error');
+                        }
+                    })
+                    .catch(err => {
+                        pincodeLoader.classList.add('hidden');
+                        showToast('Error fetching pincode details.', 'error');
+                        console.error('Pincode API Error:', err);
+                    });
+            }
+        });
+    }
+    
+    // --- APARTMENT CHECKBOX ---
     const isApartmentCheckbox = document.getElementById('isApartment');
     const floorSection = document.getElementById('floorSection');
     
@@ -370,33 +630,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 floorSection.classList.add('animate-fade-in');
             } else {
                 floorSection.classList.add('hidden');
+                document.getElementById('floorNumber').value = ''; // Clear value when hidden
             }
-        });
-    }
-    
-    // Form submission handling
-    const form = document.getElementById('addressForm');
-    if (form) {
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const submitBtn = document.getElementById('submitBtn');
-            const submitBtnText = document.getElementById('submitBtnText');
-            const submitLoader = document.getElementById('submitLoader');
-            
-            // Show loading state
-            submitBtnText.classList.add('hidden');
-            submitLoader.classList.remove('hidden');
-            submitBtn.disabled = true;
-            
-            // Your form submission code here
-            
-            // Reset button state after submission
-            setTimeout(() => {
-                submitBtnText.classList.remove('hidden');
-                submitLoader.classList.add('hidden');
-                submitBtn.disabled = false;
-            }, 2000);
         });
     }
 });

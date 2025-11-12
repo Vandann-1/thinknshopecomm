@@ -8,12 +8,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Complete Your Payment - Skatezo</title>
+    <title>Complete Your Payment - ThinknShop</title>
     
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Custom Tailwind Config -->
     <script>
         tailwind.config = {
             theme: {
@@ -22,7 +20,21 @@
                         'inter': ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
                     },
                     colors: {
-                        'primary': '#000000',
+                        // === THINKNSHOP RED THEME ===
+                        'primary': {
+                            50: '#fef2f2',
+                            100: '#fee2e2',
+                            200: '#fecaca',
+                            300: '#fca5a5',
+                            400: '#f87171',
+                            500: '#ef4444',
+                            600: '#dc2626', // Main button color
+                            700: '#b91c1c',
+                            800: '#991b1b',
+                            900: '#7f1d1d',
+                        },
+                        // === THINKNSHOP BLACK THEME ===
+                        'dark': '#000000',
                         'secondary': '#6B7280',
                         'accent': '#F3F4F6',
                         'border': '#E5E7EB',
@@ -35,7 +47,6 @@
         }
     </script>
     
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -44,56 +55,49 @@
         body {
             font-family: 'Inter', system-ui, -apple-system, sans-serif;
         }
+        /* === UPDATED: Red-to-Black Gradient === */
         .logo-gradient {
-            background: linear-gradient(135deg, #000000 0%, #374151 100%);
+            background: linear-gradient(135deg, #dc2626 0%, #000000 100%);
         }
     </style>
 </head>
 <body class="bg-gray-50 font-inter">
-    <!-- Header with Logo -->
     <div class="bg-white border-b border-border">
         <div class="max-w-2xl mx-auto px-4 py-6">
             <div class="flex items-center justify-center">
                <div class="w-12 h-12 rounded-full logo-gradient flex items-center justify-center mr-3 overflow-hidden">
-                    <img src="{% static 'brand/images/skatezo.jpeg' %}" class="w-full h-full object-cover rounded-full">
-                </div>
+                   <img src="{% static 'brand/images/thinknshop_logo.png' %}" class="w-full h-full object-cover rounded-full">
+               </div>
 
-                <h1 class="text-2xl font-semibold text-primary">Skatezo</h1>
+                <h1 class="text-2xl font-semibold text-dark">ThinknShop</h1>
             </div>
         </div>
     </div>
 
-    <!-- Main Content -->
     <div class="min-h-screen bg-gray-50 py-8 px-4">
         <div class="max-w-lg mx-auto">
-            <!-- Progress Indicator -->
             
-            <!-- Payment Card -->
             <div class="bg-white rounded-2xl shadow-sm border border-border overflow-hidden">
-                <!-- Header -->
                 <div class="px-6 py-5 border-b border-border">
-                    <h2 class="text-xl font-semibold text-primary">Complete Payment</h2>
+                    <h2 class="text-xl font-semibold text-dark">Complete Payment</h2>
                     <p class="text-secondary text-sm mt-1">Review your order and complete the payment</p>
                 </div>
 
-                <!-- Order Summary -->
                 <div class="px-6 py-5 bg-accent/30">
-                    <h3 class="font-medium text-primary mb-4">Order Summary</h3>
+                    <h3 class="font-medium text-dark mb-4">Order Summary</h3>
                     <div class="space-y-3">
                         <div class="flex justify-between items-center">
                             <span class="text-secondary text-sm">Order ID</span>
-                            <span class="font-mono text-sm text-primary font-medium">{{ order.order_id }}</span>
+                            <span class="font-mono text-sm text-dark font-medium">{{ order.order_id }}</span>
                         </div>
                         <div class="flex justify-between items-center">
                             <span class="text-secondary text-sm">Total Amount</span>
-                            <span class="text-2xl font-semibold text-primary">₹{{ order.total_amount }}</span>
+                            <span class="text-2xl font-semibold text-dark">₹{{ order.total_amount }}</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Payment Section -->
                 <div class="px-6 py-6">
-                    <!-- Security Badge -->
                     <div class="flex items-center justify-center mb-6">
                         <div class="flex items-center bg-green-50 px-3 py-2 rounded-full">
                             <svg class="w-4 h-4 text-green-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
@@ -103,21 +107,18 @@
                         </div>
                     </div>
 
-                    <!-- Payment Button -->
-                    <button id="rzp-button" class="w-full bg-primary text-white py-4 rounded-xl font-medium text-lg hover:bg-gray-800 transition-colors duration-200 focus:outline-none focus:ring-4 focus:ring-primary/20 active:scale-98 transform">
+                    <button id="rzp-button" class="w-full bg-primary-600 text-white py-4 rounded-xl font-medium text-lg hover:bg-primary-700 transition-colors duration-200 focus:outline-none focus:ring-4 focus:ring-primary-500/20 active:scale-98 transform">
                         Pay ₹{{ order.total_amount }} Now
                     </button>
 
-                    <!-- Processing State -->
                     <div id="payment-processing" class="hidden">
                         <div class="flex flex-col items-center justify-center py-8">
-                            <div class="w-12 h-12 border-4 border-primary/20 border-t-primary rounded-full animate-spin-slow mb-4"></div>
-                            <h3 class="font-medium text-primary mb-2">Processing Payment</h3>
+                            <div class="w-12 h-12 border-4 border-primary-500/20 border-t-primary-600 rounded-full animate-spin-slow mb-4"></div>
+                            <h3 class="font-medium text-dark mb-2">Processing Payment</h3>
                             <p class="text-secondary text-sm text-center">Please don't close this window. We're securely processing your payment...</p>
                         </div>
                     </div>
 
-                    <!-- Payment Methods -->
                     <div class="mt-6 pt-6 border-t border-border">
                         <p class="text-center text-xs text-secondary mb-4">We accept</p>
                         <div class="flex items-center justify-center space-x-4 opacity-60">
@@ -130,21 +131,18 @@
                 </div>
             </div>
 
-            <!-- Footer -->
             <div class="mt-6 text-center">
                 <p class="text-xs text-secondary">
                     By proceeding, you agree to our 
-                    <a href="#" class="text-primary hover:underline">Terms of Service</a> and 
-                    <a href="#" class="text-primary hover:underline">Privacy Policy</a>
+                    <a href="#" class="text-primary-600 hover:underline">Terms of Service</a> and 
+                    <a href="#" class="text-primary-600 hover:underline">Privacy Policy</a>
                 </p>
             </div>
         </div>
     </div>
 
-    <!-- Razorpay SDK -->
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
-    <!-- Your existing JavaScript (unchanged) -->
     <script>
     // Helper function to get CSRF token
     function getCookie(name) {
@@ -197,7 +195,8 @@
                 "key": keyId,
                 "amount": amount, // Amount in paise
                 "currency": "{{ currency }}",
-                "name": "Skatezo",
+                // === UPDATED: Brand Name ===
+                "name": "ThinknShop",
                 "description": "Order {{ order.order_id }}",
                 "order_id": orderId,
                 "handler": function (response) {
@@ -206,7 +205,7 @@
                     payButton.classList.add('hidden');
 
                     // Send payment verification request to backend
-                    fetch('/orders/verify-payment/', {
+                    fetch('/orders/verify-payment/', { // !!! MAKE SURE THIS URL IS CORRECT !!!
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -238,8 +237,9 @@
                     "email": "{{ request.user.email }}",
                     "contact": "{{ user_phone }}"
                 },
+                // === UPDATED: Theme Color (Red) ===
                 "theme": {
-                    "color": "#000000"
+                    "color": "#dc2626" // Hex code for primary-600
                 },
                 "modal": {
                     "ondismiss": function() {

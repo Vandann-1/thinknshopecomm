@@ -8,7 +8,8 @@
     <title>ThinknShop - Premium Hydration</title>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        /* --- CSS Reset and Variables --- */
+        /* --- All your CSS styles remain unchanged --- */
+        /* ... */
         :root {
             /* THEME: Red & Black Professional */
             --primary-color: #d32f2f; /* Bold, professional red */
@@ -21,7 +22,7 @@
             
             --bg-white: #ffffff;
             --bg-off-white: #f9f9f9;
-            --bg-dark: #0a0a0a;       /* Deep black for footer/banners */
+            --bg-dark: #0a0a0a;      /* Deep black for footer/banners */
             
             --container-width: 1240px;
             --font-family: 'Manrope', sans-serif; /* Switched to Manrope for a more modern, technical feel suited to red/black */
@@ -275,6 +276,7 @@
             background: var(--bg-off-white);
             position: relative;
             overflow: hidden;
+            display: block; /* Make it an anchor block */
         }
         .product-image {
             width: 100%;
@@ -316,6 +318,7 @@
             text-transform: uppercase;
             font-size: 0.8em;
             letter-spacing: 1px;
+            z-index: 3; /* Above product image link */
         }
         .product-card:hover .quick-add { transform: translateX(-50%) translateY(0); opacity: 1; }
         .quick-add:hover { background: var(--primary-color); }
@@ -537,13 +540,12 @@
                     <input type="text" placeholder="Search..." style="border: none; background: var(--bg-off-white); padding: 10px 15px; border-radius: 4px; width: 200px;">
                 </div>
 
-                <a href="#" class="logo">Thinkn<span>Shop.</span></a>
-
-                <div class="nav-actions" style="flex: 1; justify-content: flex-end;">
+                <a href="#" class="logo">Thinkn<span>Shop.</span></a> <div class="nav-actions" style="flex: 1; justify-content: flex-end;">
                     <a href="{% url 'login' %}" class="profile-icon" title="Account">
                         👤 </a>
                     <a href="#" class="nav-icon-link" style="display: flex; align-items: center;">
-                        Cart <span class="cart-count">2</span>
+                        Cart 
+                        <span class="cart-count">{{ cart_item_count|default:0 }}</span>
                     </a>
                 </div>
             </div>
@@ -551,13 +553,14 @@
         <div class="nav-categories-wrapper">
             <div class="container">
                  <nav class="nav-categories">
-                    <a href="#">New Arrivals</a>
-                    <a href="#">Best Sellers</a>
-                    <a href="#">Insulated Series</a>
-                    <a href="#">Activewear</a>
-                    <a href="#">Accessories</a>
-                    <a href="#" class="sale">Sale</a>
-                </nav>
+                    {% for category in featured_categories %}
+                        <a href="{{ category.get_absolute_url }}">{{ category.name }}</a>
+                    {% endfor %}
+                    
+                    {% if sale_products.count > 0 %}
+                        <a href="#" class="sale">Sale</a>
+                    {% endif %}
+                 </nav>
             </div>
         </div>
     </header>
@@ -604,74 +607,69 @@
                 <h2>Current Favorites</h2>
                 <a href="#" class="view-all-link">VIEW ALL</a>
             </div>
+            
             <div class="product-grid">
+                {% for product in featured_products %}
                 <div class="product-card">
-                    <span class="badge hot">Bestseller</span>
-                    <div class="product-image-wrapper">
-                        <div class="product-image" style="background-image: url('{% static 'im/bottle-1.png' %}');"></div>
-                         <div class="quick-add">Add to Cart - $34.99</div>
-                    </div>
+                    
+                    {% if product.discounted_price and product.discounted_price < product.base_price %}
+                        <span class="badge sale">SALE</span>
+                    {% elif product.is_bestseller %}
+                        <span class="badge hot">Bestseller</span>
+                    {% elif product.is_new_arrival %}
+                         <span class="badge new">New</span>
+                    {% endif %}
+
+                    <a href="{{ product.get_absolute_url }}" class="product-image-wrapper">
+                        
+                        {% if product.gallery.first.image %}
+                            <div class="product-image" style="background-image: url('{{ product.gallery.first.image.url }}');"></div>
+                        {% else %}
+                             <div class="product-image" style="background-image: url('{% static 'im/placeholder.png' %}');"></div>
+                        {% endif %}
+                    </a>
+                    
+                    <a href="{% url 'add_to_cart' product.id %}" class="quick-add"> Add to Cart - ${{ product.get_effective_price|floatformat:2 }}
+                    </a>
+
                     <div class="product-info">
-                        <div class="rating">★★★★★ (342)</div>
-                        <h3 class="product-title">Titanium Red - 32oz</h3>
-                        <div class="product-price">$34.99</div>
+                        
+                        <div class="rating">
+                            {% if product.reviews.count > 0 %}
+                                ★★★★★ ({{ product.reviews.count }})
+                            {% else %}
+                                No reviews yet
+                            {% endif %}
+                        </div>
+                        
+                        <h3 class="product-title">{{ product.name }}</h3>
+                        
+                        <div class="product-price">
+                            ${{ product.get_effective_price|floatformat:2 }}
+                            {% if product.discounted_price and product.discounted_price < product.base_price %}
+                                <span class="old-price">${{ product.base_price|floatformat:2 }}</span>
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
-                <div class="product-card">
-                    <span class="badge new">New</span>
-                    <div class="product-image-wrapper">
-                        <div class="product-image" style="background-image: url('{% static 'im/bottle-2.png' %}');"></div>
-                        <div class="quick-add">Add to Cart - $45.00</div>
-                    </div>
-                    <div class="product-info">
-                        <div class="rating">★★★★☆ (89)</div>
-                        <h3 class="product-title">Matte Black Tumbler</h3>
-                        <div class="product-price">$45.00</div>
-                    </div>
-                </div>
-                 <div class="product-card">
-                    <span class="badge sale">-25% OFF</span>
-                    <div class="product-image-wrapper">
-                        <div class="product-image" style="background-image: url('{% static 'im/bottle-3.png' %}');"></div>
-                        <div class="quick-add">Add to Cart - $29.99</div>
-                    </div>
-                    <div class="product-info">
-                        <div class="rating">★★★★★ (512)</div>
-                        <h3 class="product-title">Sport Grip Series</h3>
-                        <div class="product-price">$29.99 <span class="old-price">$40.00</span></div>
-                    </div>
-                </div>
-                 <div class="product-card">
-                    <div class="product-image-wrapper">
-                        <div class="product-image" style="background-image: url('{% static 'im/bottle-4.png' %}');"></div>
-                        <div class="quick-add">Add to Cart - $24.99</div>
-                    </div>
-                    <div class="product-info">
-                        <div class="rating">★★★★★ (105)</div>
-                        <h3 class="product-title">Everyday Commuter</h3>
-                        <div class="product-price">$24.99</div>
-                    </div>
-                </div>
+                {% empty %}
+                    <p>No featured products are available at this time.</p>
+                {% endfor %}
             </div>
         </section>
 
         <section class="collections-grid">
+            {% for collection in featured_collections %}
             <div class="collection-item">
-                <div class="collection-bg" style="background-image: url('{% static 'im/collection-insulated.jpg' %}');"></div>
+                <div class="collection-bg" style="background-image: url('{% if collection.image %}{{ collection.image.url }}{% else %}{% static 'im/collection-insulated.jpg' %}{% endif %}');"></div>
                 <div class="collection-overlay"></div>
                 <div class="collection-content">
-                    <h3>Insulated<br>Performance</h3>
-                     <a href="#" class="btn btn-collection">Shop Thermal</a>
+                    <h3>{{ collection.name|safe }}</h3> <a href="{{ collection.get_absolute_url }}" class="btn btn-collection">Shop Now</a>
                 </div>
             </div>
-            <div class="collection-item">
-                <div class="collection-bg" style="background-image: url('{% static 'im/collection-sports.jpg' %}');"></div>
-                <div class="collection-overlay"></div>
-                <div class="collection-content">
-                    <h3>The Matte<br>Black Series</h3>
-                     <a href="#" class="btn btn-collection">Shop The Look</a>
-                </div>
-            </div>
+            {% empty %}
+                <p>No featured collections to display.</p>
+            {% endfor %}
         </section>
 
         <section class="testimonials-section section-padding">
@@ -679,28 +677,28 @@
                 <div class="section-header" style="border: none; margin-bottom: 0; justify-content: center;">
                     <h2>Customer verified.</h2>
                 </div>
+                
                 <div class="testimonial-grid">
+                    {% for review in recent_reviews %}
                     <div class="testimonial-card">
-                        <div class="rating">★★★★★</div>
-                        <p class="testimonial-text">"The matte finish is stunning and incredibly grippy. It actually keeps my coffee piping hot until 3PM. Worth every penny."</p>
+                        
+                        <div class="rating">
+                            {% for i in "12345" %}
+                                {% if i|add:0 <= review.rating %}★{% else %}☆{% endif %}
+                            {% endfor %}
+                        </div>
+                        
+                        <p class="testimonial-text">"{{ review.comment|truncatewords:30 }}"</p>
+                        
                         <div class="testimonial-user">
-                            <strong>— MARCUS T.</strong>
+                            <strong>— {{ review.user.get_full_name|default:review.user.username|upper }}.</strong>
                         </div>
                     </div>
-                    <div class="testimonial-card">
-                         <div class="rating">★★★★★</div>
-                        <p class="testimonial-text">"I own three of the Red Titanium bottles now. They take a beating at the crossfit gym and still look brand new."</p>
-                        <div class="testimonial-user">
-                            <strong>— SARAH J.</strong>
+                    {% empty %}
+                        <div class="testimonial-card">
+                            <p class="testimonial-text">Be the first to leave a review!</p>
                         </div>
-                    </div>
-                    <div class="testimonial-card">
-                         <div class="rating">★★★★★</div>
-                        <p class="testimonial-text">"Finally a bottle that doesn't leak in my work bag. The industrial design fits perfectly with my setup."</p>
-                        <div class="testimonial-user">
-                            <strong>— DAVID K.</strong>
-                        </div>
-                    </div>
+                    {% endfor %}
                 </div>
             </div>
         </section>
@@ -720,7 +718,7 @@
         <div class="container">
             <div class="footer-grid">
                 <div>
-                    <a href="#" class="footer-logo">Thinkn<span>Shop.</span></a>
+                    <a href="" class="footer-logo">Thinkn<span>Shop.</span></a>
                     <p class="footer-desc">
                         Redefining hydration with premium materials and industrial aesthetics. Designed for those who demand performance and style in equal measure.
                     </p>

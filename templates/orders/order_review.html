@@ -1,9 +1,8 @@
 {% extends 'components/includes/base.html' %}
 
-{% block title %}Order Review - Complete Your Purchase{% endblock %}
+{% block title %}Order Review - ThinknShop{% endblock %}
 
 {% block extra_head %}
-<!-- Tailwind CSS -->
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
     tailwind.config = {
@@ -13,6 +12,20 @@
                     'inter': ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
                 },
                 colors: {
+                    // === THINKNSHOP RED THEME ===
+                    'primary': {
+                        50: '#fef2f2',
+                        100: '#fee2e2',
+                        200: '#fecaca',
+                        300: '#fca5a5',
+                        400: '#f87171',
+                        500: '#ef4444',
+                        600: '#dc2626',
+                        700: '#b91c1c',
+                        800: '#991b1b',
+                        900: '#7f1d1d',
+                    },
+                    // === THINKNSHOP BLACK/GRAY THEME ===
                     'gray': {
                         50: '#fafafa',
                         100: '#f5f5f5',
@@ -38,7 +51,6 @@
     }
 </script>
 
-<!-- Inter Font -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -55,10 +67,12 @@
         from { opacity: 0; transform: translateY(20px); }
         to { opacity: 1; transform: translateY(0); }
     }
+    
+    /* === UPDATED FOR THINKNSHOP RED THEME === */
     .payment-option input:checked + .payment-content {
-        border-color: #000000;
-        background-color: #f9fafb;
-        box-shadow: 0 0 0 1px #000000, 0 4px 12px rgba(0, 0, 0, 0.1);
+        border-color: #dc2626; /* primary-600 */
+        background-color: #fef2f2; /* primary-50 */
+        box-shadow: 0 0 0 1px #dc2626, 0 4px 12px rgba(0, 0, 0, 0.1);
         transform: translateY(-1px);
     }
     
@@ -84,7 +98,7 @@
     }
     
     .payment-option:hover .payment-content {
-        border-color: #374151;
+        border-color: #f87171; /* primary-400 */
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
         transform: translateY(-0.5px);
     }
@@ -114,29 +128,6 @@
             transform: translateY(0) scale(1);
         }
     }
-    
-    .selection-ripple {
-        position: relative;
-        overflow: hidden;
-    }
-    
-    .selection-ripple::after {
-        content: '';
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 0;
-        height: 0;
-        border-radius: 50%;
-        background: rgba(0, 0, 0, 0.1);
-        transform: translate(-50%, -50%);
-        transition: width 0.4s ease-out, height 0.4s ease-out;
-    }
-    
-    .selection-ripple.active::after {
-        width: 200%;
-        height: 200%;
-    }
 </style>
 {% endblock %}
 
@@ -144,10 +135,8 @@
 <div class="min-h-screen bg-gray-50 py-8">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        <!-- Progress Steps -->
         <div class="mb-8">
             <div class="flex items-center justify-between max-w-2xl mx-auto">
-                <!-- Step 1 - Completed -->
                 <div class="flex items-center">
                     <div class="flex items-center justify-center w-8 h-8 bg-gray-900 text-white rounded-full text-sm font-medium">
                         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
@@ -157,10 +146,8 @@
                     <span class="ml-2 text-sm font-medium text-gray-900 hidden sm:inline">Product</span>
                 </div>
                 
-                <!-- Connector -->
                 <div class="flex-1 h-0.5 bg-gray-900 mx-4"></div>
                 
-                <!-- Step 2 - Completed -->
                 <div class="flex items-center">
                     <div class="flex items-center justify-center w-8 h-8 bg-gray-900 text-white rounded-full text-sm font-medium">
                         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
@@ -170,10 +157,8 @@
                     <span class="ml-2 text-sm font-medium text-gray-900 hidden sm:inline">Address</span>
                 </div>
                 
-                <!-- Connector -->
                 <div class="flex-1 h-0.5 bg-gray-900 mx-4"></div>
                 
-                <!-- Step 3 - Current -->
                 <div class="flex items-center">
                     <div class="flex items-center justify-center w-8 h-8 bg-gray-900 text-white rounded-full text-sm font-medium">
                         3
@@ -181,10 +166,8 @@
                     <span class="ml-2 text-sm font-medium text-gray-900 hidden sm:inline">Review & Pay</span>
                 </div>
                 
-                <!-- Connector -->
                 <div class="flex-1 h-0.5 bg-gray-200 mx-4"></div>
                 
-                <!-- Step 4 - Pending -->
                 <div class="flex items-center">
                     <div class="flex items-center justify-center w-8 h-8 bg-gray-200 text-gray-600 rounded-full text-sm font-medium">
                         4
@@ -194,19 +177,15 @@
             </div>
         </div>
 
-        <!-- Header -->
         <div class="text-center mb-8">
             <h1 class="text-3xl font-semibold text-gray-900 mb-2">Review Your Order</h1>
             <p class="text-gray-600">Please review all details before placing your order</p>
         </div>
 
-        <!-- Main Content Grid -->
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
             
-            <!-- Left Column - Order Details -->
             <div class="lg:col-span-2 space-y-6">
                 
-                <!-- Product Details -->
                 <div class="bg-white rounded-lg border border-gray-200 p-6 animate-fade-in">
                     <h2 class="text-lg font-medium text-gray-900 mb-4">Product Details</h2>
                     
@@ -254,12 +233,11 @@
                     </div>
                 </div>
 
-                <!-- Delivery Address -->
                 <div class="bg-white rounded-lg border border-gray-200 p-6 animate-fade-in">
                     <div class="flex items-center justify-between mb-4">
                         <h2 class="text-lg font-medium text-gray-900">Delivery Address</h2>
                         {% if selected_address %}
-                            <button class="text-gray-900 text-sm font-medium hover:text-gray-700 underline transition-colors" id="changeAddressBtn">
+                            <button class="text-primary-600 text-sm font-medium hover:text-primary-700 underline transition-colors" id="changeAddressBtn">
                                 Change
                             </button>
                         {% endif %}
@@ -287,13 +265,12 @@
                                 <span class="text-gray-900 font-medium">No address selected</span>
                             </div>
                             <p class="text-gray-700 text-sm mt-1">
-                                Please <a href="#" class="font-medium underline hover:no-underline" id="selectAddressBtn">select an address</a> to continue.
+                                Please <a href="#" class="text-primary-600 font-medium underline hover:text-primary-700" id="selectAddressBtn">select an address</a> to continue.
                             </p>
                         </div>
                     {% endif %}
                 </div>
 
-                <!-- Payment Method -->
                 <div class="bg-white rounded-lg border border-gray-200 p-6 animate-fade-in">
                     <h2 class="text-lg font-medium text-gray-900 mb-4">Payment Method</h2>
                     
@@ -302,7 +279,7 @@
                         <div class="space-y-3">
                             <label class="payment-option cursor-pointer block">
                                 <input type="radio" id="razorpay" name="payment_method" value="razorpay" class="sr-only" checked>
-                                <div class="payment-content border-2 border-gray-200 rounded-lg p-4 transition-all duration-200 hover:border-gray-400">
+                                <div class="payment-content border-2 border-gray-200 rounded-lg p-4">
                                     <div class="flex items-center gap-3">
                                         <div class="text-2xl">💳</div>
                                         <div>
@@ -315,7 +292,7 @@
                             
                             <label class="payment-option cursor-pointer block">
                                 <input type="radio" id="cod" name="payment_method" value="cod" class="sr-only">
-                                <div class="payment-content border-2 border-gray-200 rounded-lg p-4 transition-all duration-200 hover:border-gray-400">
+                                <div class="payment-content border-2 border-gray-200 rounded-lg p-4">
                                     <div class="flex items-center gap-3">
                                         <div class="text-2xl">💰</div>
                                         <div>
@@ -338,18 +315,16 @@
                     </form>
                 </div>
 
-                <!-- Order Notes -->
                 <div class="bg-white rounded-lg border border-gray-200 p-6 animate-fade-in">
                     <h2 class="text-lg font-medium text-gray-900 mb-4">Order Notes (Optional)</h2>
                     <textarea name="order_notes" 
                               placeholder="Any special instructions for your order..." 
-                              class="w-full p-3 border border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-gray-400 focus:border-transparent transition-all duration-200"
+                              class="w-full p-3 border border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all duration-200"
                               rows="3"></textarea>
                 </div>
 
             </div>
 
-            <!-- Right Column - Order Summary -->
             <div class="lg:col-span-1">
                 <div class="bg-white rounded-lg border border-gray-200 p-6 sticky top-8 animate-fade-in">
                     <h2 class="text-lg font-medium text-gray-900 mb-4">Order Summary</h2>
@@ -361,15 +336,15 @@
                         </div>
                         
                         {% if discount_amount > 0 %}
-                            <div class="flex justify-between text-sm text-gray-900">
-                                <span>Discount ({{ coupon_code }})</span>
-                                <span class="font-medium">-₹{{ discount_amount }}</span>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-gray-600">Discount ({{ coupon_code }})</span>
+                                <span class="font-medium text-green-600">-₹{{ discount_amount }}</span>
                             </div>
                         {% endif %}
                         
                         <div class="flex justify-between text-sm">
                             <span class="text-gray-600">Shipping</span>
-                            <span class="font-medium">{% if shipping_cost == 0 %}<span class="text-gray-900 font-semibold">FREE</span>{% else %}₹{{ shipping_cost }}{% endif %}</span>
+                            <span class="font-medium">{% if shipping_cost == 0 %}<span class="text-green-600 font-semibold">FREE</span>{% else %}₹{{ shipping_cost }}{% endif %}</span>
                         </div>
                         
                         <div class="flex justify-between text-sm">
@@ -387,7 +362,7 @@
 
                     <div class="mt-4 p-3 bg-gray-50 border border-gray-200 rounded-lg">
                         <p class="text-xs text-gray-700">
-                            <svg class="w-4 h-4 inline mr-1" fill="currentColor" viewBox="0 0 20 20">
+                            <svg class="w-4 h-4 inline mr-1 text-green-600" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
                             </svg>
                             Free shipping on orders above ₹500
@@ -401,7 +376,7 @@
                             ← Back to Address
                         </button>
                         <button type="button" 
-                                class="w-full py-3 px-4 bg-black text-white font-medium rounded-lg hover:bg-gray-800 transition-colors duration-200 shadow-sm" 
+                                class="w-full py-3 px-4 bg-primary-600 text-white font-medium rounded-lg hover:bg-primary-700 transition-all duration-200 shadow-md hover:shadow-lg" 
                                 id="placeOrderBtn">
                             Place Order →
                         </button>
@@ -413,23 +388,6 @@
     </div>
 </div>
 
-<script>
-// Payment method selection
-document.querySelectorAll('input[name="payment_method"]').forEach(radio => {
-    radio.addEventListener('change', function() {
-        // Remove selected state from all options
-        document.querySelectorAll('.payment-option').forEach(option => {
-            option.classList.remove('selected');
-        });
-        // Add selected state to current option
-        this.closest('.payment-option').classList.add('selected');
-    });
-});
-
-// Initialize first option as selected
-document.querySelector('.payment-option').classList.add('selected');
-</script>
-<!--=================================================================================================================================================================================================  -->
 <script>
 // Define functions in global scope immediately
 window.placeOrder = null;
@@ -460,8 +418,16 @@ window.placeOrder = async function() {
 
     try {
         // Show loading state
-        placeOrderBtn.classList.add('loading');
         placeOrderBtn.disabled = true;
+        placeOrderBtn.innerHTML = `
+            <span class="flex items-center justify-center">
+                <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Processing...
+            </span>
+        `;
 
         // Prepare form data
         const formData = new FormData();
@@ -473,7 +439,7 @@ window.placeOrder = async function() {
         formData.append('coupon_code', window.orderDetails.coupon_code || '');
         formData.append('csrfmiddlewaretoken', getCSRFToken());
 
-        const response = await fetch('/orders/review/', {
+        const response = await fetch('/orders/review/', { // !!! MAKE SURE THIS URL IS CORRECT !!!
             method: 'POST',
             body: formData,
             headers: {
@@ -492,28 +458,28 @@ window.placeOrder = async function() {
                     showAlert('error', data.error || 'Failed to place order');
                 }
             }
-      } else if (selectedPaymentMethod === 'razorpay') {
-    if (response.ok) {
-        const data = await response.json();
-        if (data.redirect_url) {
-            // 🔥 Force actual browser redirect
-            window.location.href = data.redirect_url;
-        } else {
-            showAlert('error', 'Redirect URL not provided by server');
+        } else if (selectedPaymentMethod === 'razorpay') {
+            if (response.ok) {
+                const data = await response.json();
+                if (data.redirect_url) {
+                    // Force actual browser redirect
+                    window.location.href = data.redirect_url;
+                } else {
+                    showAlert('error', 'Redirect URL not provided by server');
+                }
+            } else {
+                const data = await response.json();
+                showAlert('error', data.error || 'Failed to initiate payment');
+            }
         }
-    } else {
-        const data = await response.json();
-        showAlert('error', data.error || 'Failed to initiate payment');
-    }
-}
 
     } catch (error) {
         console.error('Order placement error:', error);
         showAlert('error', 'Network error occurred. Please try again.');
     } finally {
-        // Reset button state
-        placeOrderBtn.classList.remove('loading');
+        // Reset button state (only if an error occurred, success will redirect)
         placeOrderBtn.disabled = false;
+        updatePlaceOrderButton(); // Resets text
     }
 };
 
@@ -523,14 +489,13 @@ window.goBack = function() {
         window.history.back();
     } else {
         // Fallback if no history
-        window.location.href = '/';
+        window.location.href = '/'; // Or back to cart
     }
 };
 
 // Global changeAddress function
 window.changeAddress = function() {
-    // You can implement this based on your address selection flow
-    // For now, going back to previous step
+    // Go back to the address selection step
     window.history.back();
 };
 
@@ -600,19 +565,20 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Prevent accidental page refresh
+    // Prevent accidental page refresh (This can be annoying, enable if you're sure)
+    /*
     window.addEventListener('beforeunload', function(e) {
         e.preventDefault();
         e.returnValue = '';
     });
+    */
 });
 
 function initializePaymentMethods() {
     const paymentOptions = document.querySelectorAll('.payment-option');
     paymentOptions.forEach(option => {
         option.addEventListener('click', function() {
-            paymentOptions.forEach(opt => opt.classList.remove('selected'));
-            this.classList.add('selected');
+            // This is just for visual selection, radio button is source of truth
             const radio = this.querySelector('input[type="radio"]');
             if (radio) {
                 radio.checked = true;
@@ -622,6 +588,11 @@ function initializePaymentMethods() {
     });
 }
 
+/**
+ * === FIXED JAVASCRIPT ===
+ * This function now only updates the button text,
+ * as the button's color is set in the HTML to match your red theme.
+ */
 function updatePlaceOrderButton() {
     const placeOrderBtn = document.getElementById('placeOrderBtn');
     const selectedMethod = document.querySelector('input[name="payment_method"]:checked')?.value;
@@ -630,37 +601,44 @@ function updatePlaceOrderButton() {
     
     if (selectedMethod === 'cod') {
         placeOrderBtn.innerHTML = 'Place Order →';
-        placeOrderBtn.className = 'btn btn-success';
     } else {
         placeOrderBtn.innerHTML = 'Proceed to Pay →';
-        placeOrderBtn.className = 'btn btn-primary';
     }
 }
 
+/**
+ * === FIXED JAVASCRIPT ===
+ * Replaced the broken showAlert function with a functional 
+ * Tailwind-based "toast" notification.
+ */
 function showAlert(type, message) {
-    const existingAlerts = document.querySelectorAll('.alert');
+    // Remove existing alerts
+    const existingAlerts = document.querySelectorAll('.thinknshop-alert');
     existingAlerts.forEach(alert => alert.remove());
 
     const alert = document.createElement('div');
-    alert.className = `alert alert-${type}`;
-    
-    const alertTypes = {
-        'success': '✓',
-        'error': '⚠',
-        'warning': '⚠',
-        'info': 'ℹ'
-    };
+    let bgColor, textColor, icon;
+
+    if (type === 'error') {
+        bgColor = 'bg-red-600'; // primary-600
+        textColor = 'text-white';
+        icon = `<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path></svg>`;
+    } else { // 'success' or 'info'
+        bgColor = 'bg-green-600';
+        textColor = 'text-white';
+        icon = `<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>`;
+    }
+
+    alert.className = `thinknshop-alert fixed top-5 right-5 z-50 flex items-center gap-3 p-4 rounded-lg shadow-lg ${bgColor} ${textColor} animate-fade-in`;
+    alert.style.maxWidth = '350px';
     
     alert.innerHTML = `
-        <span>${alertTypes[type] || 'ℹ'}</span>
-        <span>${message}</span>
-        <button onclick="this.parentElement.remove()" style="margin-left: auto; background: none; border: none; font-size: 18px; cursor: pointer;">&times;</button>
+        <div class="flex-shrink-0">${icon}</div>
+        <div class="flex-1 text-sm font-medium">${message}</div>
+        <button onclick="this.parentElement.remove()" class="ml-2 -mr-1 p-1 rounded-full hover:bg-black/20 transition-colors">&times;</button>
     `;
     
-    const container = document.querySelector('.container');
-    if (container) {
-        container.insertBefore(alert, container.firstChild);
-    }
+    document.body.appendChild(alert);
     
     setTimeout(() => {
         if (alert.parentElement) {
@@ -669,6 +647,4 @@ function showAlert(type, message) {
     }, 5000);
 }
 </script>
-</body>
-</html>
 {% endblock %}
