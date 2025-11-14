@@ -1,5 +1,4 @@
-
-<!-- Enhanced templates/products/list/category_detail.html--- -->
+<!-- Enhanced templates/products/list/category_detail.html with ThinknShop Red Theme -->
 {% extends 'components/includes/base.html' %}
 {% load static %}
 
@@ -12,43 +11,74 @@
   tailwind.config = {
     theme: {
       extend: {
+        fontFamily: {
+          'inter': ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+        },
         colors: {
-          primary: {
-            50: '#eff6ff',
-            100: '#dbeafe',
-            500: '#3b82f6',
-            600: '#2563eb',
-            700: '#1d4ed8',
-            900: '#1e3a8a'
+          // === THINKNSHOP RED THEME ===
+          'primary': {
+            50: '#fef2f2',
+            100: '#fee2e2',
+            200: '#fecaca',
+            300: '#fca5a5',
+            400: '#f87171',
+            500: '#ef4444',
+            600: '#dc2626',
+            700: '#b91c1c',
+            800: '#991b1b',
+            900: '#7f1d1d',
           },
-          gray: {
-            50: '#f9fafb',
-            100: '#f3f4f6',
-            200: '#e5e7eb',
-            300: '#d1d5db',
-            400: '#9ca3af',
-            500: '#6b7280',
-            600: '#4b5563',
-            700: '#374151',
-            800: '#1f2937',
-            900: '#111827'
+          // === THINKNSHOP BLACK/GRAY THEME ===
+          'gray': {
+            50: '#fafafa',
+            100: '#f5f5f5',
+            200: '#e5e5e5',
+            300: '#d4d4d4',
+            400: '#a3a3a3',
+            500: '#737373',
+            600: '#525252',
+            700: '#404040',
+            800: '#262626',
+            900: '#171717',
           }
         },
-        fontFamily: {
-          'sans': ['-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
-          'display': ['Inter', 'system-ui', 'sans-serif']
+        spacing: {
+          '18': '4.5rem',
         },
         boxShadow: {
           'card': '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)',
           'card-hover': '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)'
+        },
+        animation: {
+          'fade-in': 'fadeIn 0.5s ease-in-out',
+          'slide-up': 'slideUp 0.3s ease-out',
         }
       }
     }
   }
 </script>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
 <!-- ======================================================================================================================================================== -->
 <style>
+  /* GLOBAL BODY STYLING - THINKNSHOP RED THEME */
+  body { 
+    font-family: 'Inter', system-ui, -apple-system, sans-serif !important; 
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
   /* NUCLEAR OPTION: Maximum specificity override for base template body styles */
   
   /* Reset everything at the highest possible specificity */
@@ -71,7 +101,7 @@
     background-repeat: initial !important;
     background-size: initial !important;
     color: #111827 !important;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
     line-height: 1.5 !important;
     margin: 0 !important;
     padding: 0 !important;
@@ -107,7 +137,7 @@
     /* Re-apply our styles */
     display: block !important;
     box-sizing: border-box !important;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
     line-height: 1.5 !important;
     color: #111827 !important;
     background-color: #ffffff !important;
@@ -134,7 +164,7 @@
   .category-template h2,
   .category-template h3,
   .category-template h4 {
-    font-family: Inter, system-ui, sans-serif !important;
+    font-family: 'Inter', system-ui, sans-serif !important;
     font-weight: 600 !important;
     line-height: 1.25 !important;
     color: #111827 !important;
@@ -202,8 +232,8 @@
   .category-template .loading-spinner {
     width: 40px !important;
     height: 40px !important;
-    border: 3px solid #e5e7eb !important;
-    border-top: 3px solid #3b82f6 !important;
+    border: 3px solid #e5e5e5 !important;
+    border-top: 3px solid #dc2626 !important; /* primary-600 red */
     border-radius: 50% !important;
     animation: category-template-spin 1s linear infinite !important;
   }
@@ -247,18 +277,18 @@
 
   html body .category-template .filter-sidebar::-webkit-scrollbar-track,
   .category-template .filter-sidebar::-webkit-scrollbar-track {
-    background: #f3f4f6 !important;
+    background: #f5f5f5 !important;
   }
 
   html body .category-template .filter-sidebar::-webkit-scrollbar-thumb,
   .category-template .filter-sidebar::-webkit-scrollbar-thumb {
-    background: #d1d5db !important;
+    background: #d4d4d4 !important;
     border-radius: 3px !important;
   }
 
   html body .category-template .filter-sidebar::-webkit-scrollbar-thumb:hover,
   .category-template .filter-sidebar::-webkit-scrollbar-thumb:hover {
-    background: #9ca3af !important;
+    background: #a3a3a3 !important;
   }
 
   /* Mobile responsive with nuclear specificity */
@@ -346,7 +376,7 @@
       'background': '#ffffff',
       'background-image': 'none',
       'color': '#111827',
-      'font-family': '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+      'font-family': "'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
       'line-height': '1.5',
       'margin': '0',
       'padding': '0',
@@ -441,20 +471,20 @@
           {% endif %}
           <div class="flex flex-wrap gap-6 text-sm text-gray-600">
             <div class="flex items-center">
-              <svg class="w-4 h-4 mr-2 text-primary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg class="w-4 h-4 mr-2 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
               </svg>
               <span class="font-medium">{{ category_stats.total_products }}</span> Products
             </div>
             <div class="flex items-center">
-              <svg class="w-4 h-4 mr-2 text-primary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg class="w-4 h-4 mr-2 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
               </svg>
               <span class="font-medium">{{ category_stats.brands_count }}</span> Brands
             </div>
             {% if category_stats.avg_price %}
             <div class="flex items-center">
-              <svg class="w-4 h-4 mr-2 text-primary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg class="w-4 h-4 mr-2 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
               </svg>
               Avg. <span class="font-semibold">${{ category_stats.avg_price|floatformat:0 }}</span>
@@ -532,7 +562,7 @@
           {% endfor %}
         {% endfor %}
         <a href="{% url 'products:category-detail' category.slug %}" 
-           class="text-sm text-red-600 hover:text-red-800 font-medium">
+           class="text-sm text-primary-600 hover:text-primary-800 font-medium">
           Clear All Filters
         </a>
       </div>
@@ -589,7 +619,7 @@
             {% if available_brands %}
             <div class="border-b border-gray-200 pb-6">
               <h4 class="text-sm font-semibold text-gray-900 mb-4 flex items-center">
-                <svg class="w-4 h-4 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="w-4 h-4 mr-2 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
                 </svg>
                 Brands
@@ -875,7 +905,7 @@
               <span class="badge bg-blue-500 text-white text-xs font-semibold px-2 py-1 rounded-full">NEW</span>
               {% endif %}
               {% if product.get_discount_percent %}
-              <span class="badge bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded-full">{{ product.get_discount_percent }}% OFF</span>
+              <span class="badge bg-primary-600 text-white text-xs font-semibold px-2 py-1 rounded-full">{{ product.get_discount_percent }}% OFF</span>
               {% endif %}
               {% if product.is_bestseller %}
               <span class="badge bg-amber-500 text-white text-xs font-semibold px-2 py-1 rounded-full">BESTSELLER</span>
@@ -888,24 +918,24 @@
             <!-- Product Actions  Btns-->
             <div class="absolute top-3 right-3 z-10 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                <button onclick="grabWishList({{ product.id }})" 
-                                            class="bg-white hover:bg-gray-50 p-2 rounded-full shadow-lg border border-gray-200 text-gray-600 hover:text-red-500 transition-colors"
+                                            class="bg-white hover:bg-gray-50 p-2 rounded-full shadow-lg border border-gray-200 text-gray-600 hover:text-primary-600 transition-colors"
                                             title="Add to Wishlist">
-                                        <i class="far fa-heart text-gray-600 dark:text-gray-400 hover:text-red-500 transition-colors"></i>
+                                        <i class="far fa-heart text-gray-600 dark:text-gray-400 hover:text-primary-600 transition-colors"></i>
                                     </button>
                                     <button onclick="quickView({{ product.id }})" 
-                                            class="bg-white hover:bg-gray-50 p-2 rounded-full shadow-lg border border-gray-200 text-gray-600 hover:text-red-500 transition-colors"
+                                            class="bg-white hover:bg-gray-50 p-2 rounded-full shadow-lg border border-gray-200 text-gray-600 hover:text-primary-600 transition-colors"
                                             title="Quick View">
                                         <i class="far fa-eye text-gray-600 dark:text-gray-400 hover:text-primary-500 transition-colors"></i>
                                     </button>
                                     <!-- add to cart -->
                                     <button onclick="EcommerceCartModal.fillProductIntoCart({{ product.id }})" 
-                                            class="bg-white hover:bg-gray-50 p-2 rounded-full shadow-lg border border-gray-200 text-gray-600 hover:text-red-500 transition-colors"
+                                            class="bg-white hover:bg-gray-50 p-2 rounded-full shadow-lg border border-gray-200 text-gray-600 hover:text-primary-600 transition-colors"
                                             title="Add To Cart">
                                         <i class="fas fa-cart-plus text-gray-600 dark:text-gray-400 hover:text-primary-500 transition-colors"></i>
                                     </button>
                                     <!-- Schedule Purchase -->
                                     <button onclick="schedulePurchase({{ product.id }})" 
-                                            class="bg-white hover:bg-gray-50 p-2 rounded-full shadow-lg border border-gray-200 text-gray-600 hover:text-red-500 transition-colors"
+                                            class="bg-white hover:bg-gray-50 p-2 rounded-full shadow-lg border border-gray-200 text-gray-600 hover:text-primary-600 transition-colors"
                                             title="Future Purchase">
                                        <i class="fas fa-rocket text-gray-600 dark:text-gray-400 hover:text-primary-500 transition-colors"></i>
                                     </button>
@@ -958,7 +988,7 @@
                 <div class="flex items-center gap-2">
                   <span class="text-lg font-bold text-gray-900">${{ product.discounted_price }}</span>
                   <span class="text-sm text-gray-500 line-through">${{ product.base_price }}</span>
-                  <span class="text-xs font-semibold text-red-600 bg-red-50 px-2 py-1 rounded-full">{{ product.get_discount_percent }}% OFF</span>
+                  <span class="text-xs font-semibold text-primary-600 bg-primary-50 px-2 py-1 rounded-full">{{ product.get_discount_percent }}% OFF</span>
                 </div>
                 {% else %}
                 <span class="text-lg font-bold text-gray-900">${{ product.base_price }}</span>
@@ -1006,7 +1036,7 @@
                   In Stock ({{ product.get_total_stock }} items)
                 </div>
                 {% else %}
-                <div class="flex items-center text-sm text-red-600">
+                <div class="flex items-center text-sm text-primary-600">
                   <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                   </svg>
@@ -1135,6 +1165,7 @@
   </div>
   {% endif %}
 </div>
+
 <!-- ====================================================================================================================================== -->
 <script>
 // JavaScript functionality

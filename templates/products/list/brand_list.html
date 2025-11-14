@@ -1,7 +1,6 @@
-<!-- --- -->
 {% extends 'components/includes/base.html' %}
 
-{% block title %}Brands - Fashion Store{% endblock %}
+{% block title %}Brands - ThinknShop{% endblock %}
 
 {% block extra_head %}
 <script src="https://cdn.tailwindcss.com"></script>
@@ -10,27 +9,34 @@
         theme: {
             extend: {
                 fontFamily: {
-                    'sans': ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+                    'inter': ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
                 },
                 colors: {
-                    primary: {
-                        50: '#f8fafc',
-                        100: '#f1f5f9',
-                        500: '#64748b',
-                        600: '#475569',
-                        700: '#334155',
+                    // === THINKNSHOP RED THEME ===
+                    'primary': {
+                        50: '#fef2f2',
+                        100: '#fee2e2',
+                        200: '#fecaca',
+                        300: '#fca5a5',
+                        400: '#f87171',
+                        500: '#ef4444',
+                        600: '#dc2626',
+                        700: '#b91c1c',
+                        800: '#991b1b',
+                        900: '#7f1d1d',
                     },
-                    gray: {
-                        50: '#f8fafc',
-                        100: '#f1f5f9',
-                        200: '#e2e8f0',
-                        300: '#cbd5e1',
-                        400: '#94a3b8',
-                        500: '#64748b',
-                        600: '#475569',
-                        700: '#334155',
-                        800: '#1e293b',
-                        900: '#0f172a',
+                    // === THINKNSHOP BLACK/GRAY THEME ===
+                    'gray': {
+                        50: '#fafafa',
+                        100: '#f5f5f5',
+                        200: '#e5e5e5',
+                        300: '#d4d4d4',
+                        400: '#a3a3a3',
+                        500: '#737373',
+                        600: '#525252',
+                        700: '#404040',
+                        800: '#262626',
+                        900: '#171717',
                     }
                 },
                 spacing: {
@@ -45,48 +51,73 @@
         }
     }
 </script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
 <style>
+    body { 
+        font-family: 'Inter', system-ui, -apple-system, sans-serif; 
+    }
+
     @keyframes fadeIn {
         from { opacity: 0; }
         to { opacity: 1; }
     }
+    
     @keyframes slideUp {
         from { opacity: 0; transform: translateY(20px); }
         to { opacity: 1; transform: translateY(0); }
     }
+    
     .brand-card {
         transition: all 0.3s ease;
     }
+    
     .brand-card:hover {
         transform: translateY(-4px);
         box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
     }
+    
     .filter-chip {
         transition: all 0.2s ease;
     }
+    
     .filter-chip:hover {
         transform: translateY(-1px);
     }
+    
     .btn-dark {
-        background-color: #0f172a;
+        background-color: #dc2626;
         color: white;
         transition: all 0.2s ease;
     }
+    
     .btn-dark:hover {
-        background-color: #1e293b;
+        background-color: #b91c1c;
         transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
     }
+    
     .btn-light {
-        background-color: #f8fafc;
-        color: #0f172a;
-        border: 1px solid #e2e8f0;
+        background-color: #fafafa;
+        color: #262626;
+        border: 1px solid #e5e5e5;
         transition: all 0.2s ease;
     }
+    
     .btn-light:hover {
-        background-color: #f1f5f9;
-        border-color: #cbd5e1;
+        background-color: #f5f5f5;
+        border-color: #d4d4d4;
         transform: translateY(-1px);
+    }
+
+    /* Focus states with red theme */
+    input:focus, select:focus {
+        outline: none;
+        border-color: #dc2626;
+        box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
     }
 </style>
 {% endblock %}
@@ -95,7 +126,7 @@
 <div class="min-h-screen bg-white">
     <!-- Header Section -->
     <div class="bg-white border-b border-gray-200">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 animate-fadeIn">
             <div class="text-center">
                 <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">Our Brand Collection</h1>
                 <p class="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto">Discover premium fashion from the world's most trusted brands</p>
@@ -130,15 +161,15 @@
                         <p class="text-gray-600 mt-1">Premium brands handpicked for quality and style</p>
                     </div>
                     <div class="flex items-center space-x-2 mt-3 sm:mt-0">
-                        <div class="w-2 h-2 bg-gray-900 rounded-full"></div>
-                        <span class="text-sm font-medium text-gray-900">Featured</span>
+                        <div class="w-2 h-2 bg-primary-600 rounded-full"></div>
+                        <span class="text-sm font-medium text-primary-600">Featured</span>
                     </div>
                 </div>
                 
                 <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-3 sm:gap-6">
                     {% for brand in featured_brands %}
                     <a href="{% url 'products:brand-detail' brand.slug %}" class="group">
-                        <div class="bg-white rounded-xl p-4 sm:p-6 text-center hover:bg-gray-50 transition-all duration-200 border border-gray-100 hover:border-gray-200">
+                        <div class="bg-white rounded-xl p-4 sm:p-6 text-center hover:bg-gray-50 transition-all duration-200 border border-gray-100 hover:border-primary-200">
                             {% if brand.logo %}
                             <img src="{{ brand.logo.url }}" alt="{{ brand.name }}" class="h-12 sm:h-16 w-auto mx-auto mb-3 object-contain group-hover:scale-105 transition-transform duration-200">
                             {% else %}
@@ -146,7 +177,7 @@
                                 <span class="text-xs sm:text-sm font-semibold text-gray-700">{{ brand.name|truncatechars:6 }}</span>
                             </div>
                             {% endif %}
-                            <div class="font-semibold text-gray-900 text-xs sm:text-sm group-hover:text-gray-700 transition-colors">{{ brand.name }}</div>
+                            <div class="font-semibold text-gray-900 text-xs sm:text-sm group-hover:text-primary-600 transition-colors">{{ brand.name }}</div>
                             <div class="text-xs text-gray-500 mt-1">{{ brand.product_count }} products</div>
                         </div>
                     </a>
@@ -157,7 +188,7 @@
         {% endif %}
 
         <!-- Search and Filters Section -->
-        <div class="bg-gray-50 rounded-xl border border-gray-100 p-4 sm:p-6 mb-6 sm:mb-8">
+        <div class="bg-gray-50 rounded-xl border border-gray-100 p-4 sm:p-6 mb-6 sm:mb-8 animate-fadeIn">
             <form method="get" id="filterForm" class="space-y-4">
                 <!-- Search Bar -->
                 <div class="relative">
@@ -168,7 +199,7 @@
                     </div>
                     <input type="text" name="search" value="{{ search_query }}" 
                            placeholder="Search brands..." 
-                           class="w-full pl-12 pr-4 py-3 sm:py-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-gray-900 focus:border-gray-900 text-gray-900 placeholder-gray-500 transition-all duration-200 bg-white">
+                           class="w-full pl-12 pr-4 py-3 sm:py-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-gray-900 placeholder-gray-500 transition-all duration-200 bg-white">
                 </div>
 
                 <!-- Horizontal Filter Controls for Mobile & Desktop -->
@@ -177,7 +208,7 @@
                     <div class="grid grid-cols-2 gap-3">
                         <div>
                             <label for="country" class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Country</label>
-                            <select name="country" id="country" class="w-full px-3 py-2 sm:py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-gray-900 focus:border-gray-900 bg-white text-gray-900 transition-all duration-200 text-xs sm:text-sm">
+                            <select name="country" id="country" class="w-full px-3 py-2 sm:py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-white text-gray-900 transition-all duration-200 text-xs sm:text-sm">
                                 <option value="">All Countries</option>
                                 {% for country in countries %}
                                 <option value="{{ country }}" {% if country == selected_country %}selected{% endif %}>
@@ -189,7 +220,7 @@
 
                         <div>
                             <label for="featured" class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Featured</label>
-                            <select name="featured" id="featured" class="w-full px-3 py-2 sm:py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-gray-900 focus:border-gray-900 bg-white text-gray-900 transition-all duration-200 text-xs sm:text-sm">
+                            <select name="featured" id="featured" class="w-full px-3 py-2 sm:py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-white text-gray-900 transition-all duration-200 text-xs sm:text-sm">
                                 <option value="">All Brands</option>
                                 <option value="true" {% if selected_featured == 'true' %}selected{% endif %}>Featured Only</option>
                             </select>
@@ -202,12 +233,12 @@
                             <label for="min_products" class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Min Products</label>
                             <input type="number" name="min_products" id="min_products" value="{{ min_products }}" 
                                    placeholder="e.g., 5" min="0" 
-                                   class="w-full px-3 py-2 sm:py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-gray-900 focus:border-gray-900 bg-white text-gray-900 transition-all duration-200 text-xs sm:text-sm">
+                                   class="w-full px-3 py-2 sm:py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-white text-gray-900 transition-all duration-200 text-xs sm:text-sm">
                         </div>
 
                         <div>
                             <label for="sort" class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Sort by</label>
-                            <select name="sort" id="sort" class="w-full px-3 py-2 sm:py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-gray-900 focus:border-gray-900 bg-white text-gray-900 transition-all duration-200 text-xs sm:text-sm">
+                            <select name="sort" id="sort" class="w-full px-3 py-2 sm:py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-white text-gray-900 transition-all duration-200 text-xs sm:text-sm">
                                 <option value="name" {% if selected_sort == 'name' %}selected{% endif %}>Name A-Z</option>
                                 <option value="name_desc" {% if selected_sort == 'name_desc' %}selected{% endif %}>Name Z-A</option>
                                 <option value="products" {% if selected_sort == 'products' %}selected{% endif %}>Most Products</option>
@@ -221,7 +252,7 @@
 
                     <!-- Action Buttons Row (horizontal) -->
                     <div class="flex space-x-3">
-                        <button type="submit" class="flex-1 btn-dark font-semibold py-2.5 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2 text-sm">
+                        <button type="submit" class="flex-1 btn-dark font-semibold py-2.5 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 text-sm shadow-md hover:shadow-lg">
                             Apply Filters
                         </button>
                         {% if search_query or selected_country or selected_featured or min_products %}
@@ -254,7 +285,7 @@
             <div class="brand-card bg-white rounded-xl border border-gray-100 overflow-hidden hover:border-gray-200 transition-all duration-200">
                 <!-- Featured Badge -->
                 {% if brand.is_featured %}
-                <div class="bg-gray-900 text-white text-xs font-bold px-2 sm:px-3 py-1 text-center">
+                <div class="bg-primary-600 text-white text-xs font-bold px-2 sm:px-3 py-1 text-center">
                     ⭐ FEATURED
                 </div>
                 {% endif %}
@@ -282,7 +313,7 @@
                     <!-- Rating -->
                     {% if brand.avg_rating %}
                     <div class="flex items-center justify-center mb-2 sm:mb-4 space-x-1">
-                        <div class="flex text-gray-800 text-xs sm:text-sm">
+                        <div class="flex text-yellow-400 text-xs sm:text-sm">
                             {% for i in "12345" %}
                                 {% if brand.avg_rating >= forloop.counter %}★{% else %}☆{% endif %}
                             {% endfor %}
@@ -315,7 +346,7 @@
                     {% if brand.min_price and brand.max_price %}
                     <div class="text-center mb-4 hidden sm:block">
                         <span class="text-lg font-bold text-gray-900">
-                            ${{ brand.min_price|floatformat:0 }} - ${{ brand.max_price|floatformat:0 }}
+                            ₹{{ brand.min_price|floatformat:0 }} - ₹{{ brand.max_price|floatformat:0 }}
                         </span>
                     </div>
                     {% endif %}
@@ -323,12 +354,12 @@
                     <!-- Action Buttons -->
                     <div class="space-y-1.5 sm:space-y-2">
                         <a href="{% url 'products:brand-detail' brand.slug %}" 
-                           class="w-full btn-dark font-semibold py-2 sm:py-3 px-3 sm:px-4 rounded-lg text-center block text-xs sm:text-base">
+                           class="block w-full btn-dark font-semibold py-2 sm:py-3 px-3 sm:px-4 rounded-lg text-center text-xs sm:text-base">
                             View Products
                         </a>
                         {% if brand.website_url %}
                         <a href="{{ brand.website_url }}" target="_blank" 
-                           class="w-full btn-light font-medium py-1.5 sm:py-2.5 px-3 sm:px-4 rounded-lg text-center block text-xs">
+                           class="block w-full btn-light font-medium py-1.5 sm:py-2.5 px-3 sm:px-4 rounded-lg text-center text-xs">
                             Website
                         </a>
                         {% endif %}
@@ -340,7 +371,7 @@
 
         <!-- No Results -->
         {% if not brands %}
-        <div class="text-center py-12 sm:py-16">
+        <div class="text-center py-12 sm:py-16 animate-fadeIn">
             <div class="mx-auto w-16 sm:w-24 h-16 sm:h-24 bg-gray-100 rounded-full flex items-center justify-center mb-4 sm:mb-6">
                 <svg class="w-8 sm:w-12 h-8 sm:h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
@@ -348,7 +379,7 @@
             </div>
             <h3 class="text-xl sm:text-2xl font-bold text-gray-900 mb-3">No brands found</h3>
             <p class="text-gray-600 mb-4 sm:mb-6 max-w-md mx-auto text-sm sm:text-base">We couldn't find any brands matching your criteria. Try adjusting your search or filter settings.</p>
-            <a href="{% url 'products:brand-list' %}" class="btn-dark font-semibold py-2 sm:py-3 px-4 sm:px-6 rounded-lg transition-colors duration-200 text-sm sm:text-base">
+            <a href="{% url 'products:brand-list' %}" class="inline-block btn-dark font-semibold py-2 sm:py-3 px-4 sm:px-6 rounded-lg transition-colors duration-200 text-sm sm:text-base shadow-md hover:shadow-lg">
                 View All Brands
             </a>
         </div>

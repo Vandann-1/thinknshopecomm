@@ -1,120 +1,407 @@
+{% extends 'components/includes/base.html' %}
+{% load static %}
 
-{% extends 'base.html' %}
+{% block title %}{{ collection.name }} - ThinknShop{% endblock %}
 
-{% block title %}{{ collection.name }} - Fashion Store{% endblock %}
+{% block extra_css %}
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      fontFamily: {
+        'inter': ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+      },
+      colors: {
+        // === THINKNSHOP RED THEME ===
+        'primary': {
+          50: '#fef2f2',
+          100: '#fee2e2',
+          200: '#fecaca',
+          300: '#fca5a5',
+          400: '#f87171',
+          500: '#ef4444',
+          600: '#dc2626',
+          700: '#b91c1c',
+          800: '#991b1b',
+          900: '#7f1d1d',
+        },
+        // === THINKNSHOP BLACK/GRAY THEME ===
+        'gray': {
+          50: '#fafafa',
+          100: '#f5f5f5',
+          200: '#e5e5e5',
+          300: '#d4d4d4',
+          400: '#a3a3a3',
+          500: '#737373',
+          600: '#525252',
+          700: '#404040',
+          800: '#262626',
+          900: '#171717',
+        }
+      },
+      spacing: {
+        '18': '4.5rem',
+      },
+      boxShadow: {
+        'soft': '0 2px 15px -3px rgba(0, 0, 0, 0.07), 0 10px 20px -2px rgba(0, 0, 0, 0.04)',
+        'card': '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)',
+        'hover': '0 10px 25px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+      },
+      animation: {
+        'fade-in': 'fadeIn 0.5s ease-in-out',
+        'slide-up': 'slideUp 0.3s ease-out',
+      }
+    }
+  }
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* Complete reset for base template styles */
+body, html, main, .container, .content, #content, .main-content {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  color: #171717 !important;
+  font-family: 'Inter', sans-serif !important;
+}
+
+/* Force light theme overrides */
+* {
+  box-sizing: border-box !important;
+}
+
+body {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  color: #171717 !important;
+  font-family: 'Inter', sans-serif !important;
+  line-height: 1.5 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Animation keyframes */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Product card hover effects */
+.product-card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Badge animations */
+.badge {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.8; }
+}
+
+/* Stars styling */
+.stars {
+  color: #fbbf24;
+  font-size: 14px;
+}
+
+/* Mobile responsive */
+@media (max-width: 640px) {
+  .mobile-hero-title {
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+  }
+  
+  .mobile-hero-subtitle {
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+}
+</style>
+{% endblock %}
 
 {% block content %}
-<div class="container">
-    <div style="margin: 2rem 0;">
-        <!-- Breadcrumb -->
-        <nav style="margin-bottom: 1rem;">
-            <a href="{% url 'products:home' %}">Home</a> > 
-            <a href="#collections">Collections</a> > 
-            <span>{{ collection.name }}</span>
-        </nav>
+<div class="min-h-screen bg-white" style="background: #ffffff !important; background-color: #ffffff !important;">
+  
+  <!-- Breadcrumb -->
+  <div class="bg-gray-50 py-4">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <nav class="flex items-center space-x-2 text-sm">
+        <a href="{% url 'products:home' %}" class="text-gray-600 hover:text-primary-600 transition-colors">Home</a>
+        <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+        </svg>
+        <a href="#collections" class="text-gray-600 hover:text-primary-600 transition-colors">Collections</a>
+        <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+        </svg>
+        <span class="text-gray-900 font-medium">{{ collection.name }}</span>
+      </nav>
+    </div>
+  </div>
 
-        <!-- Collection Header -->
-        <div style="text-align: center; margin-bottom: 3rem; padding: 3rem; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 8px;">
-            {% if collection.image %}
-            <img src="{{ collection.image.url }}" alt="{{ collection.name }}" style="width: 200px; height: 200px; object-fit: cover; border-radius: 50%; margin-bottom: 1rem; border: 4px solid white;">
-            {% endif %}
-            <h1 style="margin-bottom: 1rem;">{{ collection.name }}</h1>
-            {% if collection.description %}
-            <p style="font-size: 1.2rem; max-width: 600px; margin: 0 auto; opacity: 0.9;">{{ collection.description }}</p>
-            {% endif %}
+  <!-- Collection Header -->
+  <div class="bg-gradient-to-br from-gray-900 via-primary-900 to-gray-900 py-12 sm:py-16 lg:py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center">
+        {% if collection.image %}
+        <div class="mb-6 flex justify-center">
+          <img src="{{ collection.image.url }}" 
+               alt="{{ collection.name }}" 
+               class="w-32 h-32 sm:w-48 sm:h-48 object-cover rounded-full border-4 border-white shadow-2xl">
+        </div>
+        {% endif %}
+        <h1 class="mobile-hero-title sm:text-4xl lg:text-5xl font-bold text-white mb-4 tracking-tight">
+          {{ collection.name }}
+        </h1>
+        {% if collection.description %}
+        <p class="mobile-hero-subtitle sm:text-xl lg:text-2xl text-gray-200 max-w-3xl mx-auto leading-relaxed opacity-90">
+          {{ collection.description }}
+        </p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <!-- Products Section -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+    
+    <!-- Header with Sort -->
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
+      <div>
+        <h2 class="text-2xl sm:text-3xl font-bold text-gray-900">Collection Products</h2>
+        <p class="text-gray-600 mt-1">{{ products|length }} item{{ products|length|pluralize }}</p>
+      </div>
+      
+      <div class="flex items-center gap-2 w-full sm:w-auto">
+        <label for="sortSelect" class="text-sm text-gray-600 whitespace-nowrap">Sort by:</label>
+        <select id="sortSelect" 
+                onchange="location = this.value;" 
+                class="flex-1 sm:flex-initial px-4 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-white">
+          <option value="?">Default</option>
+          <option value="?sort=name" {% if request.GET.sort == 'name' %}selected{% endif %}>Name A-Z</option>
+          <option value="?sort=-name" {% if request.GET.sort == '-name' %}selected{% endif %}>Name Z-A</option>
+          <option value="?sort=base_price" {% if request.GET.sort == 'base_price' %}selected{% endif %}>Price Low to High</option>
+          <option value="?sort=-base_price" {% if request.GET.sort == '-base_price' %}selected{% endif %}>Price High to Low</option>
+        </select>
+      </div>
+    </div>
+
+    {% if products %}
+    <!-- Products Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12">
+      {% for product in products %}
+      <div class="product-card bg-white rounded-xl border border-gray-200 overflow-hidden group relative">
+        <!-- Product Badges -->
+        <div class="absolute top-3 left-3 z-10 flex flex-col gap-1">
+          {% if product.is_new_arrival %}
+          <span class="badge bg-green-500 text-white text-xs font-semibold px-2 py-1 rounded-full">NEW</span>
+          {% endif %}
+          {% if product.get_discount_percent %}
+          <span class="badge bg-primary-600 text-white text-xs font-semibold px-2 py-1 rounded-full">{{ product.get_discount_percent }}% OFF</span>
+          {% endif %}
+          {% if product.is_bestseller %}
+          <span class="badge bg-amber-500 text-white text-xs font-semibold px-2 py-1 rounded-full">BESTSELLER</span>
+          {% endif %}
+          {% if product.is_featured %}
+          <span class="badge bg-blue-500 text-white text-xs font-semibold px-2 py-1 rounded-full">FEATURED</span>
+          {% endif %}
         </div>
 
-        <!-- Products -->
-        <section>
-            <div style="display: flex; justify-content: between; align-items: center; margin-bottom: 2rem;">
-                <h2>Collection Products ({{ products|length }} items)</h2>
-                <div>
-                    <span style="color: #666;">Sort by:</span>
-                    <select onchange="location = this.value;" style="margin-left: 0.5rem; padding: 0.25rem;">
-                        <option value="?">Default</option>
-                        <option value="?sort=name">Name A-Z</option>
-                        <option value="?sort=-name">Name Z-A</option>
-                        <option value="?sort=base_price">Price Low to High</option>
-                        <option value="?sort=-base_price">Price High to Low</option>
-                    </select>
-                </div>
-            </div>
-
-            {% if products %}
-            <div class="grid grid-4">
-                {% for product in products %}
-                <div class="card">
-                    <a href="{% url 'products:product-detail' product.slug %}">
-                        {% if product.gallery.first %}
-                        <img src="{{ product.gallery.first.image.url }}" alt="{{ product.name }}">
-                        {% else %}
-                        <div style="height: 200px; background: #f0f0f0; display: flex; align-items: center; justify-content: center;">
-                            <span>No Image</span>
-                        </div>
-                        {% endif %}
-                    </a>
-                    
-                    <h3><a href="{% url 'products:product-detail' product.slug %}" style="text-decoration: none; color: #333;">{{ product.name }}</a></h3>
-                    <p>{{ product.brand.name }} | {{ product.category.name }}</p>
-                    
-                    <div class="price">
-                        {% if product.discounted_price %}
-                        <span style="text-decoration: line-through; color: #999;">${{ product.base_price }}</span>
-                        <span>${{ product.discounted_price }}</span>
-                        <span style="background: #dc3545; color: white; padding: 0.1rem 0.3rem; font-size: 0.8rem; border-radius: 3px; margin-left: 0.5rem;">
-                            {{ product.get_discount_percent }}% OFF
-                        </span>
-                        {% else %}
-                        <span>${{ product.base_price }}</span>
-                        {% endif %}
-                    </div>
-                    
-                    <!-- Product badges -->
-                    <div style="margin: 0.5rem 0;">
-                        {% if product.is_new_arrival %}
-                        <span style="background: #28a745; color: white; padding: 0.1rem 0.3rem; font-size: 0.8rem; border-radius: 3px; margin-right: 0.25rem;">NEW</span>
-                        {% endif %}
-                        {% if product.is_bestseller %}
-                        <span style="background: #ffc107; color: black; padding: 0.1rem 0.3rem; font-size: 0.8rem; border-radius: 3px; margin-right: 0.25rem;">BESTSELLER</span>
-                        {% endif %}
-                        {% if product.is_featured %}
-                        <span style="background: #17a2b8; color: white; padding: 0.1rem 0.3rem; font-size: 0.8rem; border-radius: 3px;">FEATURED</span>
-                        {% endif %}
-                    </div>
-                    
-                    {% if product.is_in_stock %}
-                    <p style="color: #28a745; font-size: 0.9rem;">✓ In Stock</p>
-                    {% else %}
-                    <p style="color: #dc3545; font-size: 0.9rem;">✗ Out of Stock</p>
-                    {% endif %}
-                    
-                    <a href="{% url 'products:product-detail' product.slug %}" class="btn btn-primary">View Details</a>
-                </div>
-                {% endfor %}
-            </div>
-
-            <!-- Pagination -->
-            {% if is_paginated %}
-            <div class="pagination">
-                {% if page_obj.has_previous %}
-                <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
-                {% endif %}
-                
-                <span class="current">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
-                
-                {% if page_obj.has_next %}
-                <a href="?page={{ page_obj.next_page_number }}">Next</a>
-                {% endif %}
-            </div>
-            {% endif %}
-
+        <!-- Product Image -->
+        <div class="aspect-square bg-gray-100 overflow-hidden">
+          <a href="{% url 'products:product-detail' product.slug %}">
+            {% if product.gallery.first %}
+            <img src="{{ product.gallery.first.image.url }}" 
+                 alt="{{ product.name }}" 
+                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
             {% else %}
-            <div style="text-align: center; padding: 3rem;">
-                <h3>No products found in this collection</h3>
-                <a href="{% url 'products:product-list' %}" class="btn btn-primary">Browse All Products</a>
+            <div class="w-full h-full flex items-center justify-center text-gray-400">
+              <div class="text-center">
+                <svg class="w-16 h-16 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                </svg>
+                <span class="text-sm">No Image</span>
+              </div>
             </div>
             {% endif %}
-        </section>
+          </a>
+        </div>
+
+        <!-- Product Info -->
+        <div class="p-4">
+          <div class="flex items-start justify-between mb-2">
+            <h3 class="font-semibold text-gray-900 group-hover:text-primary-600 transition-colors line-clamp-2">
+              <a href="{% url 'products:product-detail' product.slug %}">{{ product.name }}</a>
+            </h3>
+          </div>
+
+          <div class="text-sm text-gray-500 mb-3">
+            {{ product.brand.name }} • {{ product.category.name }}
+          </div>
+
+          <!-- Product Price -->
+          <div class="mb-3">
+            {% if product.discounted_price %}
+            <div class="flex items-center gap-2 flex-wrap">
+              <span class="text-lg font-bold text-gray-900">${{ product.discounted_price }}</span>
+              <span class="text-sm text-gray-500 line-through">${{ product.base_price }}</span>
+              <span class="text-xs font-semibold text-primary-600 bg-primary-50 px-2 py-1 rounded-full">
+                {{ product.get_discount_percent }}% OFF
+              </span>
+            </div>
+            {% else %}
+            <span class="text-lg font-bold text-gray-900">${{ product.base_price }}</span>
+            {% endif %}
+          </div>
+
+          <!-- Stock Status -->
+          <div class="mb-4">
+            {% if product.is_in_stock %}
+            <div class="flex items-center text-sm text-green-600">
+              <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+              </svg>
+              In Stock
+            </div>
+            {% else %}
+            <div class="flex items-center text-sm text-primary-600">
+              <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+              </svg>
+              Out of Stock
+            </div>
+            {% endif %}
+          </div>
+
+          <!-- Action Button -->
+          <a href="{% url 'products:product-detail' product.slug %}" 
+             class="block w-full text-center bg-primary-600 hover:bg-primary-700 text-white font-medium py-2.5 px-4 rounded-lg transition-colors duration-200">
+            View Details
+          </a>
+        </div>
+      </div>
+      {% endfor %}
     </div>
+
+    <!-- Pagination -->
+    {% if is_paginated %}
+    <div class="flex justify-center mt-8">
+      <nav class="flex items-center space-x-2" aria-label="Pagination">
+        {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}{% if request.GET.sort %}&sort={{ request.GET.sort }}{% endif %}" 
+           class="px-4 py-2 text-sm font-medium text-gray-600 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors duration-200">
+          Previous
+        </a>
+        {% endif %}
+        
+        <span class="px-6 py-2 text-sm font-semibold text-white bg-primary-600 border border-primary-600 rounded-lg">
+          Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+        </span>
+        
+        {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}{% if request.GET.sort %}&sort={{ request.GET.sort }}{% endif %}" 
+           class="px-4 py-2 text-sm font-medium text-gray-600 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors duration-200">
+          Next
+        </a>
+        {% endif %}
+      </nav>
+    </div>
+    {% endif %}
+
+    {% else %}
+    <!-- No Products Found -->
+    <div class="text-center py-16 bg-gray-50 rounded-2xl">
+      <div class="max-w-md mx-auto px-4">
+        <svg class="w-16 h-16 text-gray-300 mx-auto mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 009.586 13H7"></path>
+        </svg>
+        <h3 class="text-xl font-semibold text-gray-600 mb-4">No products found in this collection</h3>
+        <a href="{% url 'products:product-list' %}" 
+           class="inline-flex items-center px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white font-semibold rounded-xl transition-colors duration-200">
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 009.586 13H7"></path>
+          </svg>
+          Browse All Products
+        </a>
+      </div>
+    </div>
+    {% endif %}
+  </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Add intersection observer for animation on scroll
+    const observerOptions = {
+        threshold: window.innerWidth < 640 ? 0.05 : 0.1,
+        rootMargin: '0px 0px -30px 0px'
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, observerOptions);
+    
+    // Observe product cards for scroll animation
+    document.querySelectorAll('.product-card').forEach((card, index) => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        const delay = window.innerWidth < 640 ? index * 0.05 : index * 0.1;
+        card.style.transition = `opacity 0.6s ease ${delay}s, transform 0.6s ease ${delay}s`;
+        observer.observe(card);
+    });
+    
+    // Touch-friendly interactions for mobile
+    if ('ontouchstart' in window) {
+        document.querySelectorAll('.product-card').forEach(card => {
+            card.addEventListener('touchstart', function() {
+                this.style.transform = 'scale(0.98)';
+            });
+            
+            card.addEventListener('touchend', function() {
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 150);
+            });
+        });
+    }
+    
+    // Optimize performance on mobile by reducing animation complexity
+    if (window.innerWidth < 640) {
+        const style = document.createElement('style');
+        style.textContent = `
+            .product-card:hover {
+                transform: translateY(-2px) !important;
+            }
+            
+            .group-hover\\:scale-105 {
+                transform: scale(1.02) !important;
+            }
+        `;
+        document.head.appendChild(style);
+    }
+});
+</script>
 {% endblock %}
