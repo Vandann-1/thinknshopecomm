@@ -5,7 +5,7 @@
     Products 
     {% if current_filters.search %}- Search: "{{ current_filters.search }}"{% endif %}
     {% if current_filters.category %}- {{ current_filters.category|title }}{% endif %}
-    - Fashion Store
+    - ThinknShop
 {% endblock %}
 
 {% block extra_css %}
@@ -16,24 +16,38 @@
 <script src="{% static 'javascript/product_list/product_list.js'%}"></script>
 <link rel="stylesheet" href="{% static 'css/products_list/products.css'%}">
 <script src="{% static 'javascript/user_cart/cart.js'%}"></script>
-<!-- Custom tailwind config -->
+<!-- Custom tailwind config with ThinknShop Red Theme -->
 <script>
     tailwind.config = {
         darkMode: 'class',
         theme: {
             extend: {
                 colors: {
+                    // === THINKNSHOP RED THEME ===
                     primary: {
-                        50: '#f0f9ff',
-                        100: '#e0f2fe',
-                        200: '#bae6fd',
-                        300: '#7dd3fc',
-                        400: '#38bdf8',
-                        500: '#0ea5e9',
-                        600: '#0284c7',
-                        700: '#0369a1',
-                        800: '#075985',
-                        900: '#0c4a6e',
+                        50: '#fef2f2',
+                        100: '#fee2e2',
+                        200: '#fecaca',
+                        300: '#fca5a5',
+                        400: '#f87171',
+                        500: '#ef4444',
+                        600: '#dc2626',
+                        700: '#b91c1c',
+                        800: '#991b1b',
+                        900: '#7f1d1d',
+                    },
+                    // === THINKNSHOP BLACK/GRAY THEME ===
+                    gray: {
+                        50: '#fafafa',
+                        100: '#f5f5f5',
+                        200: '#e5e5e5',
+                        300: '#d4d4d4',
+                        400: '#a3a3a3',
+                        500: '#737373',
+                        600: '#525252',
+                        700: '#404040',
+                        800: '#262626',
+                        900: '#171717',
                     },
                     light: {
                         50: '#ffffff',
@@ -49,7 +63,10 @@
                     }
                 },
                 fontFamily: {
-                    'sans': ['Inter', 'system-ui', 'sans-serif'],
+                    'inter': ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+                },
+                spacing: {
+                    '18': '4.5rem',
                 },
                 animation: {
                     'fade-in': 'fadeIn 0.5s ease-in-out',
@@ -63,12 +80,18 @@
 </script>
 
 <!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
 <!-- Font Awesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <style>
+    body {
+        font-family: 'Inter', system-ui, -apple-system, sans-serif !important;
+    }
+
     @keyframes fadeIn {
         from { opacity: 0; }
         to { opacity: 1; }
@@ -85,20 +108,39 @@
     }
     
     /* Custom scrollbar - Ultra Thin for Sidebar */
+    .custom-scrollbar::-webkit-scrollbar {
+        width: 4px;
+    }
     
+    .custom-scrollbar::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: #d4d4d4;
+        border-radius: 10px;
+    }
+    
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+        background: #a3a3a3;
+    }
     
     /* Main content scrollbar - Slightly thicker */
     .main-scrollbar::-webkit-scrollbar {
-        width: 1px;
+        width: 6px;
     }
     
     .main-scrollbar::-webkit-scrollbar-track {
-        @apply bg-transparent;
+        background: transparent;
     }
     
     .main-scrollbar::-webkit-scrollbar-thumb {
-        @apply bg-gray-200 hover:bg-gray-300;
+        background: #e5e5e5;
         border-radius: 10px;
+    }
+    
+    .main-scrollbar::-webkit-scrollbar-thumb:hover {
+        background: #d4d4d4;
     }
     
     .main-scrollbar {
@@ -122,15 +164,15 @@
         background-color: rgba(255, 255, 255, 0.85);
     }
     
-    /* Gradient text */
+    /* Gradient text - ThinknShop Red Theme */
     .gradient-text {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
     }
     
-    /* Custom checkbox styles */
+    /* Custom checkbox styles - Red Theme */
     .custom-checkbox {
         @apply w-4 h-4 text-primary-600 bg-white border-gray-300 rounded focus:ring-primary-500 focus:ring-2;
     }
@@ -154,16 +196,9 @@
         transition-duration: 300ms;
     }
 </style>
-{% endblock %}
 
-{% block content %}
-<!-- ================================================================================================================================================================================================================================================================== -->
-<!-- Toast Container -->
-<div class="toast-container" id="toastContainer"></div>
-
-<!-- Add mobile-first custom styles -->
+<!-- Mobile-First Responsive Enhancements -->
 <style>
-    /* Mobile-First Responsive Enhancements */
     .product-card-mobile {
         min-height: 300px;
     }
@@ -235,6 +270,11 @@
         }
     }
 </style>
+{% endblock %}
+
+{% block content %}
+<!-- Toast Container -->
+<div class="toast-container" id="toastContainer"></div>
 
 <div class="min-h-screen bg-gradient-to-br from-white via-gray-50 to-gray-100 transition-all duration-500">
     <!-- Theme Toggle -->
@@ -279,7 +319,7 @@
                             <!-- Search -->
                             <div class="space-y-3">
                                 <label class="flex items-center gap-2 text-sm font-semibold text-gray-900">
-                                    <i class="fas fa-search text-primary-500"></i>
+                                    <i class="fas fa-search text-primary-600"></i>
                                     Search Products
                                 </label>
                                 <div class="relative">
@@ -359,9 +399,7 @@
                                                         <stop offset="1" stop-color="#16a34a"/>
                                                     </linearGradient>
                                                 </defs>
-                                                <!-- Coin shape -->
                                                 <circle cx="10" cy="10" r="8" fill="url(#money-gradient)" stroke="#15803d" stroke-width="1.2"/>
-                                                <!-- Dollar sign -->
                                                 <text x="10" y="14" text-anchor="middle" font-size="10" font-family="Segoe UI, Arial, sans-serif" fill="#fff" font-weight="bold">$</text>
                                             </svg>
                                             Sale
@@ -373,7 +411,7 @@
                             <!-- Categories -->
                             <div class="space-y-3">
                                 <label class="flex items-center gap-2 text-sm font-semibold text-gray-900">
-                                    <i class="fas fa-folder text-blue-500"></i>
+                                    <i class="fas fa-folder text-primary-600"></i>
                                     Categories
                                 </label>
                                 <div class="space-y-2 max-h-48 overflow-y-auto custom-scrollbar">
@@ -542,10 +580,10 @@
                 <div class="p-3 sm:p-4 lg:p-6">
                     <!-- Active Filters -->
                     {% if applied_filters_count > 0 %}
-                    <div class="mb-4 sm:mb-6 p-3 sm:p-4 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl sm:rounded-2xl border border-blue-200">
+                    <div class="mb-4 sm:mb-6 p-3 sm:p-4 bg-gradient-to-r from-primary-50 to-primary-100 rounded-xl sm:rounded-2xl border border-primary-200">
                         <div class="flex items-center justify-between mb-2 sm:mb-3">
                             <h4 class="font-semibold text-gray-900 flex items-center gap-2 text-sm sm:text-base">
-                                <i class="fas fa-filter text-primary-500"></i>
+                                <i class="fas fa-filter text-primary-600"></i>
                                 Active Filters ({{ applied_filters_count }})
                             </h4>
                             <a href="{% url 'products:product-list' %}" class="text-xs sm:text-sm text-primary-600 hover:text-primary-800 font-medium">
@@ -556,7 +594,7 @@
                             {% if current_filters.search %}
                             <span class="inline-flex items-center gap-1 sm:gap-2 bg-white px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-medium text-gray-700 border border-gray-300">
                                 Search: "{{ current_filters.search }}"
-                                <button onclick="removeFilter('search')" class="hover:text-red-500 transition-colors">
+                                <button onclick="removeFilter('search')" class="hover:text-primary-600 transition-colors">
                                     <i class="fas fa-times text-xs"></i>
                                 </button>
                             </span>
@@ -564,7 +602,7 @@
                             {% for category in current_filters.categories %}
                             <span class="inline-flex items-center gap-1 sm:gap-2 bg-white px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-medium text-gray-700 border border-gray-300">
                                 Category: {{ category }}
-                                <button onclick="removeArrayFilter('categories', '{{ category }}')" class="hover:text-red-500 transition-colors">
+                                <button onclick="removeArrayFilter('categories', '{{ category }}')" class="hover:text-primary-600 transition-colors">
                                     <i class="fas fa-times text-xs"></i>
                                 </button>
                             </span>
@@ -663,7 +701,7 @@
                                     <!-- Product Badges - Mobile Optimized -->
                                     <div class="mobile-badges absolute top-1 sm:top-3 left-1 sm:left-3 flex flex-col gap-0.5 sm:gap-1">
                                         {% if product.get_discount_percent > 0 %}
-                                        <span class="bg-red-500 text-white px-1 sm:px-2 py-0.5 sm:py-1 rounded-full text-xs font-bold shadow-lg animate-pulse-slow">
+                                        <span class="bg-primary-600 text-white px-1 sm:px-2 py-0.5 sm:py-1 rounded-full text-xs font-bold shadow-lg animate-pulse-slow">
                                             -{{ product.get_discount_percent|floatformat:0 }}%
                                         </span>
                                         {% endif %}
@@ -689,31 +727,31 @@
                                         <button onclick="grabWishList({{ product.id }})" 
                                                 class="w-8 h-8 sm:w-10 sm:h-10 bg-white/95 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white hover:shadow-xl transition-all duration-300 hover:scale-110"
                                                 title="Add to Wishlist">
-                                            <i class="far fa-heart text-gray-600 hover:text-red-500 transition-colors text-xs sm:text-sm"></i>
+                                            <i class="far fa-heart text-gray-600 hover:text-primary-600 transition-colors text-xs sm:text-sm"></i>
                                         </button>
                                         <button onclick="quickView({{ product.id }})" 
                                                 class="w-8 h-8 sm:w-10 sm:h-10 bg-white/95 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white hover:shadow-xl transition-all duration-300 hover:scale-110"
                                                 title="Quick View">
-                                            <i class="far fa-eye text-gray-600 hover:text-primary-500 transition-colors text-xs sm:text-sm"></i>
+                                            <i class="far fa-eye text-gray-600 hover:text-primary-600 transition-colors text-xs sm:text-sm"></i>
                                         </button>
                                         <!-- add to cart -->
                                         <button onclick="EcommerceCartModal.fillProductIntoCart({{ product.id }})" 
                                                 class="w-8 h-8 sm:w-10 sm:h-10 bg-white/95 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white hover:shadow-xl transition-all duration-300 hover:scale-110"
                                                 title="Add To Cart">
-                                            <i class="fas fa-cart-plus text-gray-600 hover:text-primary-500 transition-colors text-xs sm:text-sm"></i>
+                                            <i class="fas fa-cart-plus text-gray-600 hover:text-primary-600 transition-colors text-xs sm:text-sm"></i>
                                         </button>
                                         <!-- Schedule Purchase -->
                                         <button onclick="schedulePurchase({{ product.id }})" 
                                                 class="w-8 h-8 sm:w-10 sm:h-10 bg-white/95 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white hover:shadow-xl transition-all duration-300 hover:scale-110"
                                                 title="Future Purchase">
-                                           <i class="fas fa-rocket text-gray-600 hover:text-primary-500 transition-colors text-xs sm:text-sm"></i>
+                                           <i class="fas fa-rocket text-gray-600 hover:text-primary-600 transition-colors text-xs sm:text-sm"></i>
                                         </button>
                                     </div>
 
                                     <!-- Stock Status Overlay -->
                                     {% if not product.is_in_stock %}
                                     <div class="absolute inset-0 bg-black/60 flex items-center justify-center">
-                                        <span class="bg-red-500 text-white px-2 sm:px-4 py-1 sm:py-2 rounded-lg font-bold text-xs sm:text-sm">OUT OF STOCK</span>
+                                        <span class="bg-primary-600 text-white px-2 sm:px-4 py-1 sm:py-2 rounded-lg font-bold text-xs sm:text-sm">OUT OF STOCK</span>
                                     </div>
                                     {% endif %}
                                 </div>
@@ -790,7 +828,7 @@
                                             <span class="text-xs font-medium">In Stock</span>
                                         </div>
                                         {% else %}
-                                        <div class="flex items-center gap-1 text-red-600">
+                                        <div class="flex items-center gap-1 text-primary-600">
                                             <i class="fas fa-times-circle text-xs"></i>
                                             <span class="text-xs font-medium">Out of Stock</span>
                                         </div>
@@ -900,7 +938,6 @@
         </div>
     </div>
 </div>
-
 <!-- JavaScript for responsive functionality -->
 <script>
     // Mobile responsive grid functions

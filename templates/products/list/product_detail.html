@@ -1,6 +1,6 @@
 {% extends 'components/includes/base.html' %}
 
-{% block title %}{{ product.name }} - Fashion Store{% endblock %}
+{% block title %}{{ product.name }} - ThinknShop{% endblock %}
 
 {% block extra_head %}
 <!-- Tailwind CSS -->
@@ -12,25 +12,279 @@
         theme: {
             extend: {
                 fontFamily: {
-                    'sans': ['-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
+                    'inter': ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
                 },
                 colors: {
+                    // === THINKNSHOP RED THEME ===
                     'primary': {
-                        50: '#eff6ff',
-                        100: '#dbeafe',
-                        500: '#3b82f6',
-                        600: '#2563eb',
-                        700: '#1d4ed8',
+                        50: '#fef2f2',
+                        100: '#fee2e2',
+                        200: '#fecaca',
+                        300: '#fca5a5',
+                        400: '#f87171',
+                        500: '#ef4444',
+                        600: '#dc2626',
+                        700: '#b91c1c',
+                        800: '#991b1b',
+                        900: '#7f1d1d',
+                    },
+                    // === THINKNSHOP BLACK/GRAY THEME ===
+                    'gray': {
+                        50: '#fafafa',
+                        100: '#f5f5f5',
+                        200: '#e5e5e5',
+                        300: '#d4d4d4',
+                        400: '#a3a3a3',
+                        500: '#737373',
+                        600: '#525252',
+                        700: '#404040',
+                        800: '#262626',
+                        900: '#171717',
                     }
+                },
+                spacing: {
+                    '18': '4.5rem',
+                },
+                animation: {
+                    'fade-in': 'fadeIn 0.5s ease-in-out',
+                    'slide-up': 'slideUp 0.3s ease-out',
                 }
             }
         }
     }
 </script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* Complete reset for base template styles */
+body, html, main, .container, .content, #content, .main-content {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  color: #171717 !important;
+  font-family: 'Inter', sans-serif !important;
+}
+
+* {
+  box-sizing: border-box !important;
+}
+
+body {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  color: #171717 !important;
+  font-family: 'Inter', sans-serif !important;
+  line-height: 1.5 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f5f5f5;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d4d4d4;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a3a3a3;
+}
+
+/* Image zoom effect */
+.image-zoom {
+  transition: transform 0.3s ease;
+}
+
+.image-zoom:hover {
+  transform: scale(1.05);
+}
+
+/* Tab transitions */
+.tab-content {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Product card hover */
+.product-card-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.product-card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Thumbnail active state */
+.thumbnail-active {
+  border-color: #dc2626 !important;
+  box-shadow: 0 0 0 1px #dc2626;
+}
+
+/* Color option selected */
+.color-option.selected {
+  border-color: #dc2626 !important;
+  box-shadow: 0 0 0 2px #dc2626;
+}
+
+/* Size option selected */
+.size-option.selected {
+  border-color: #dc2626 !important;
+  background-color: #dc2626 !important;
+  color: white !important;
+}
+
+/* Modal styles */
+.purchase-modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 50;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.purchase-modal-overlay.active {
+  display: flex;
+}
+
+.purchase-modal {
+  background: white;
+  border-radius: 0.75rem;
+  max-width: 32rem;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.purchase-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.purchase-modal-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #171717;
+}
+
+.purchase-modal-close {
+  font-size: 1.5rem;
+  color: #737373;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.375rem;
+  transition: all 0.2s;
+}
+
+.purchase-modal-close:hover {
+  background-color: #f5f5f5;
+  color: #171717;
+}
+
+.purchase-modal-body {
+  padding: 1.5rem;
+}
+
+.purchase-modal-footer {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid #e5e5e5;
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
+
+.purchase-input-field,
+.purchase-select-field {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #d4d4d4;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  transition: all 0.2s;
+}
+
+.purchase-input-field:focus,
+.purchase-select-field:focus {
+  outline: none;
+  border-color: #dc2626;
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+}
+
+.purchase-btn {
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  font-weight: 500;
+  font-size: 0.875rem;
+  transition: all 0.2s;
+  cursor: pointer;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.purchase-btn-primary {
+  background-color: #dc2626;
+  color: white;
+}
+
+.purchase-btn-primary:hover {
+  background-color: #b91c1c;
+}
+
+.purchase-btn-secondary {
+  background-color: #f5f5f5;
+  color: #404040;
+}
+
+.purchase-btn-secondary:hover {
+  background-color: #e5e5e5;
+}
+
+/* Mobile responsive */
+@media (max-width: 640px) {
+  .purchase-modal {
+    max-width: 95vw;
+  }
+}
+</style>
 {% endblock %}
 
 {% block content %}
-<div class="min-h-screen bg-white">
+<div class="min-h-screen bg-white" style="background: #ffffff !important;">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
         <!-- Product Collections -->
         {% if product_collections %}
@@ -52,7 +306,7 @@
                 <div id="mainImage" class="relative aspect-square bg-gray-50 rounded-lg overflow-hidden">
                     {% if product.gallery.first %}
                     <img src="{{ product.gallery.first.image.url }}" alt="{{ product.name }}" 
-                         class="w-full h-full object-cover">
+                         class="w-full h-full object-cover image-zoom">
                     {% else %}
                     <div class="w-full h-full flex items-center justify-center text-gray-400">
                         <span>No Image Available</span>
@@ -70,7 +324,7 @@
                             Low Stock
                         </span>
                         {% else %}
-                        <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                        <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-primary-100 text-primary-800">
                             Out of Stock
                         </span>
                         {% endif %}
@@ -159,10 +413,10 @@
                     <p class="text-sm text-gray-600 mt-1">Price varies by variant</p>
                     {% else %}
                         {% if product.discounted_price %}
-                        <div class="flex items-center space-x-3">
+                        <div class="flex items-center space-x-3 flex-wrap">
                             <span class="text-2xl font-bold text-gray-900">₹{{ product.discounted_price }}</span>
                             <span class="text-lg text-gray-500 line-through">₹{{ product.base_price }}</span>
-                            <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                            <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-primary-100 text-primary-800">
                                 {{ product.get_discount_percent }}% OFF
                             </span>
                         </div>
@@ -276,16 +530,16 @@
                         </div>
                         {% endif %}
                     {% else %}
-                    <div class="p-4 bg-red-50 border border-red-200 rounded-lg">
+                    <div class="p-4 bg-primary-50 border border-primary-200 rounded-lg">
                         <div class="flex items-center">
                             <div class="flex-shrink-0">
-                                <svg class="w-5 h-5 text-red-400" fill="currentColor" viewBox="0 0 20 20">
+                                <svg class="w-5 h-5 text-primary-400" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path>
                                 </svg>
                             </div>
                             <div class="ml-3">
-                                <h3 class="text-sm font-medium text-red-800">Currently Out of Stock</h3>
-                                <p class="text-sm text-red-700">
+                                <h3 class="text-sm font-medium text-primary-800">Currently Out of Stock</h3>
+                                <p class="text-sm text-primary-700">
                                     <a href="#" class="underline hover:no-underline">Get notified when available</a>
                                 </p>
                             </div>
@@ -336,17 +590,17 @@
 
                 <!-- User-specific Information -->
                 {% if is_in_wishlist or has_purchased %}
-                <div class="p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                <div class="p-4 bg-primary-50 border border-primary-200 rounded-lg">
                     {% if is_in_wishlist %}
-                    <p class="text-sm text-blue-800 flex items-center">
-                        <svg class="w-4 h-4 mr-2 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+                    <p class="text-sm text-primary-800 flex items-center">
+                        <svg class="w-4 h-4 mr-2 text-primary-600" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"></path>
                         </svg>
                         This item is in your wishlist
                     </p>
                     {% endif %}
                     {% if has_purchased %}
-                    <p class="text-sm text-blue-800 flex items-center {% if is_in_wishlist %}mt-1{% endif %}">
+                    <p class="text-sm text-primary-800 flex items-center {% if is_in_wishlist %}mt-1{% endif %}">
                         <svg class="w-4 h-4 mr-2 text-green-500" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
                         </svg>
@@ -365,7 +619,7 @@
                         <button class="btn btn-secondary py-3 px-4 border border-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-50 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
                             {% if is_in_wishlist %}Remove from Wishlist{% else %}Add to Wishlist{% endif %}
                         </button>
-                        <button class="purchase-btn purchase-btn-secondary py-3 px-4 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-primary-600 focus:ring-offset-2" 
+                        <button class="purchase-btn purchase-btn-primary py-3 px-4 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-primary-600 focus:ring-offset-2" 
                                 data-product-id="{{product.id}}">
                             Buy Now
                         </button>
@@ -379,7 +633,7 @@
             <!-- Tab Navigation -->
             <div class="border-b border-gray-200 mb-8">
                 <nav class="-mb-px flex space-x-8 overflow-x-auto">
-                    <button class="tab-button py-4 px-1 border-b-2 border-gray-900 font-medium text-sm text-gray-900 whitespace-nowrap" 
+                    <button class="tab-button py-4 px-1 border-b-2 border-primary-600 font-medium text-sm text-primary-600 whitespace-nowrap" 
                             onclick="showTab('description')">
                         Description
                     </button>
@@ -507,7 +761,7 @@
                                 </a>
                                 {% endif %}
                                 
-                                <span class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-white bg-gray-900">
+                                <span class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-white bg-primary-600">
                                     {{ reviews.number }} of {{ reviews.paginator.num_pages }}
                                 </span>
                                 
@@ -592,8 +846,8 @@
                 </div>
                 <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                     {% for product in similar_products %}
-                    <div class="group relative bg-white border border-gray-200 rounded-lg hover:shadow-lg transition-shadow duration-200">
-                        <div class="aspect-square bg-gray-50 rounded-t-lg overflow-hidden">
+                    <div class="product-card-hover group relative bg-white border border-gray-200 rounded-lg overflow-hidden">
+                        <div class="aspect-square bg-gray-50 overflow-hidden">
                             {% if product.gallery.first %}
                             <img src="{{ product.gallery.first.image.url }}" alt="{{ product.name }}" 
                                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200">
@@ -604,7 +858,7 @@
                             {% endif %}
                             {% if product.discounted_price %}
                             <div class="absolute top-2 right-2">
-                                <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                                <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-primary-100 text-primary-800">
                                     SALE
                                 </span>
                             </div>
@@ -650,8 +904,8 @@
                 </div>
                 <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
                     {% for brand_product in brand_products %}
-                    <div class="group relative bg-white border border-gray-200 rounded-lg hover:shadow-md transition-shadow duration-200">
-                        <div class="aspect-square bg-gray-50 rounded-t-lg overflow-hidden">
+                    <div class="product-card-hover group relative bg-white border border-gray-200 rounded-lg overflow-hidden">
+                        <div class="aspect-square bg-gray-50 overflow-hidden">
                             {% if brand_product.gallery.first %}
                             <img src="{{ brand_product.gallery.first.image.url }}" alt="{{ brand_product.name }}" 
                                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200">
@@ -749,7 +1003,7 @@
     </div>
 </div>
 
-<!-- All existing modals remain unchanged -->
+<!-- Modals -->
 <div id="purchaseProductModal" class="purchase-modal-overlay">
     <div class="purchase-modal">
         <div class="purchase-modal-header">
@@ -757,9 +1011,7 @@
             <button class="purchase-modal-close" onclick="closePurchaseModal('purchaseProductModal')">&times;</button>
         </div>
         <div class="purchase-modal-body">
-            <div id="purchaseProductModalContent">
-                <!-- Dynamic content will be loaded here -->
-            </div>
+            <div id="purchaseProductModalContent"></div>
         </div>
     </div>
 </div>
@@ -771,9 +1023,7 @@
             <button class="purchase-modal-close" onclick="closePurchaseModal('purchaseAddressModal')">&times;</button>
         </div>
         <div class="purchase-modal-body">
-            <div id="purchaseAddressModalContent">
-                <!-- Dynamic content will be loaded here -->
-            </div>
+            <div id="purchaseAddressModalContent"></div>
         </div>
     </div>
 </div>
@@ -790,55 +1040,55 @@
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Full Name *</label>
                         <input type="text" name="full_name" required 
-                               class="purchase-input-field w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
+                               class="purchase-input-field">
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Phone Number *</label>
                         <input type="tel" name="phone_number" required 
-                               class="purchase-input-field w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
+                               class="purchase-input-field">
                     </div>
                 </div>
                 
                 <div class="mb-4">
                     <label class="block text-sm font-medium text-gray-700 mb-1">Address Line 1 *</label>
                     <input type="text" name="address_line_1" required 
-                           class="purchase-input-field w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
+                           class="purchase-input-field">
                 </div>
                 
                 <div class="mb-4">
                     <label class="block text-sm font-medium text-gray-700 mb-1">Address Line 2 (Optional)</label>
                     <input type="text" name="address_line_2" 
-                           class="purchase-input-field w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
+                           class="purchase-input-field">
                 </div>
                 
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">City *</label>
                         <input type="text" name="city" required 
-                               class="purchase-input-field w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
+                               class="purchase-input-field">
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">State *</label>
                         <input type="text" name="state" required 
-                               class="purchase-input-field w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
+                               class="purchase-input-field">
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Pincode *</label>
                         <input type="text" name="pincode" required 
-                               class="purchase-input-field w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
+                               class="purchase-input-field">
                     </div>
                 </div>
                 
                 <div class="mb-4">
                     <label class="block text-sm font-medium text-gray-700 mb-1">Landmark (Optional)</label>
                     <input type="text" name="landmark" 
-                           class="purchase-input-field w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
+                           class="purchase-input-field">
                 </div>
                 
                 <div class="mb-4">
                     <label class="block text-sm font-medium text-gray-700 mb-1">Address Label</label>
                     <select name="label" 
-                            class="purchase-select-field w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
+                            class="purchase-select-field">
                         <option value="Home">Home</option>
                         <option value="Work">Work</option>
                         <option value="Other">Other</option>
@@ -846,21 +1096,20 @@
                 </div>
             </form>
         </div>
-        <div class="purchase-modal-footer flex justify-end space-x-3 px-6 py-4 border-t border-gray-200">
+        <div class="purchase-modal-footer">
             <button type="button" 
-                    class="purchase-btn purchase-btn-secondary px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50" 
+                    class="purchase-btn purchase-btn-secondary" 
                     onclick="closePurchaseModal('purchaseAddAddressModal')">
                 Cancel
             </button>
             <button type="button" 
-                    class="purchase-btn purchase-btn-primary px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700" 
+                    class="purchase-btn purchase-btn-primary" 
                     onclick="savePurchaseAddress()">
                 Save Address
             </button>
         </div>
     </div>
 </div>
-
 <script>
 // Enhanced image gallery functionality
 function changeMainImage(imageUrl, thumbnail) {
