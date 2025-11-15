@@ -209,14 +209,6 @@ class SizeAdmin(admin.ModelAdmin):
     )
 
 
-@admin.register(Material)
-class MaterialAdmin(admin.ModelAdmin):
-    """
-    Admin interface for managing materials.
-    """
-    list_display = ('name', 'is_eco_friendly')
-    search_fields = ('name', 'description')
-    list_filter = ('is_eco_friendly',)
 
 
 @admin.register(Product)

@@ -12,7 +12,7 @@ urlpatterns=[
     # Parent - Product List
     path('products/', views.ProductListView.as_view(), name='product-list'),
     path('product/<slug:slug>/', views.ProductDetailView.as_view(), name='product-detail'),
-    
+#     product-detail
     # Categories
     path('categories/', views.CategoryListView.as_view(), name='category-list'),
     path('category/<slug:slug>/', views.CategoryDetailView.as_view(), name='category-detail'),
@@ -22,7 +22,7 @@ urlpatterns=[
     path('brand/<slug:slug>/', views.BrandDetailView.as_view(), name='brand-detail'),
     
     # Collections
-    path('collection/<slug:slug>/', views.CollectionDetailView.as_view(), name='collection-detail'),
+    path('collection/<slug:slug>/', views.CollectionDetailView.as_view(), name='collection_details'),
     
     # AJAX endpoints
     path('ajax/variants/<int:product_id>/', views.ajax_product_variants, name='ajax-variants'),
@@ -48,7 +48,7 @@ urlpatterns=[
     path('search-suggestions/', views.search_suggestions, name='search-suggestions'),
     
     # Product detail
-    path('<slug:slug>/', views.ProductDetailView.as_view(), name='product-detail'),
+    path('<slug:slug>/', views.ProductDetailView.as_view(), name='info_product'),
     
     # Category-specific listings
     path('category/<slug:category_slug>/', views.CategoryProductListView.as_view(), name='category-products'),

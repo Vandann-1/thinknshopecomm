@@ -533,7 +533,7 @@ class ProductListView(ListView):
     Enhanced product listing page with advanced filtering, sorting, search and pagination
     """
     model = Product
-    template_name = 'products/list/product_list.html'
+    template_name = 'products/list/product_detail.html'
     context_object_name = 'products'
     paginate_by = 20
     

@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'orders',
     'discount',
     'user_orders',
+    'customize',
     
   
 ]

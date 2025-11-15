@@ -1,2024 +1,293 @@
-{% load static%}
-
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Skatezo - Premium Navbar</title>
-   
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #ffffff;
-            min-height: 100vh;
-            padding-top: 140px;
-        }
-
-        .skatezo-navbar-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 9999;
-            background: #0f0f0f;
-            color: #ffffff;
-            border-bottom: 1px solid #1f1f1f;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(10px);
-        }
-
-        /* Top Bar */
-        .skatezo-top-bar {
-            background: linear-gradient(90deg, #1a1a1a 0%, #1f1f1f 100%);
-            padding: 10px 0;
-            border-bottom: 1px solid #2a2a2a;
-        }
-
-        .skatezo-top-content {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 24px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 12px;
-        }
-
-        .skatezo-top-links {
-            display: flex;
-            gap: 24px;
-        }
-
-        .skatezo-top-links a {
-            color: #9ca3af;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .skatezo-top-links a:hover {
-            color: #6366f1;
-            transform: translateY(-1px);
-        }
-
-        .skatezo-top-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 0;
-            width: 0;
-            height: 1px;
-            background: #6366f1;
-            transition: width 0.3s ease;
-        }
-
-        .skatezo-top-links a:hover::after {
-            width: 100%;
-        }
-
-        /* Main Navigation */
-        .skatezo-main-nav {
-            padding: 0;
-            background: rgba(15, 15, 15, 0.95);
-        }
-
-        .skatezo-nav-content {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 24px;
-            display: flex;
-            align-items: center;
-            height: 85px;
-            gap: 32px;
-        }
-
-        /* Enhanced Logo */
-        .skatezoo-logo {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, #6366f1, #8b5cf6, #ec4899);
-            border-radius: 16px;
-            font-weight: 900;
-            font-size: 20px;
-            color: white;
-            text-decoration: none;
-            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .skatezo-logo::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: left 0.5s ease;
-        }
-
-        .skatezo-logo:hover::before {
-            left: 100%;
-        }
-
-        .skatezo-logo:hover {
-            transform: scale(1.08) rotate(2deg);
-            box-shadow: 0 12px 35px rgba(99, 102, 241, 0.6);
-        }
-
-        /* Enhanced Categories Dropdown */
-        .skatezo-categories {
-            position: relative;
-        }
-
-        .skatezo-categories-btn {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            background: linear-gradient(135deg, #1f1f1f, #2a2a2a);
-            border: 1px solid rgba(99, 102, 241, 0.3);
-            padding: 14px 20px;
-            border-radius: 12px;
-            color: #ffffff;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 14px;
-            font-weight: 500;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .skatezo-categories-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.1), transparent);
-            transition: left 0.5s ease;
-        }
-
-        .skatezo-categories-btn:hover::before {
-            left: 100%;
-        }
-
-        .skatezo-categories-btn:hover {
-            background: linear-gradient(135deg, #2a2a2a, #3a3a3a);
-            border-color: #6366f1;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.2);
-        }
-
-        /* Enhanced Search Container */
-        .skatezo-search-container {
-            flex: 1;
-            max-width: 650px;
-            position: relative;
-        }
-
-        .skatezo-search-wrapper {
-            position: relative;
-            display: flex;
-            background: linear-gradient(135deg, #1a1a1a, #1f1f1f);
-            border: 2px solid #2a2a2a;
-            border-radius: 16px;
-            overflow: hidden;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        .skatezo-search-wrapper:focus-within {
-            border-color: #6366f1;
-            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
-            transform: translateY(-1px);
-        }
-
-        .skatezo-search-input {
-            flex: 1;
-            background: transparent;
-            border: none;
-            padding: 18px 24px;
-            color: #ffffff;
-            font-size: 15px;
-            outline: none;
-        }
-
-        .skatezo-search-input::placeholder {
-            color: #6b7280;
-        }
-
-        .skatezo-search-btn {
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
-            border: none;
-            padding: 18px 28px;
-            color: white;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 16px;
-        }
-
-        .skatezo-search-btn:hover {
-            background: linear-gradient(135deg, #5856eb, #7c3aed);
-            transform: scale(1.05);
-        }
-
-        /* Enhanced Navigation Actions */
-        .skatezo-nav-actions {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .skatezo-action-btn {
-            position: relative;
-            background: transparent;
-            border: none;
-            padding: 14px;
-            border-radius: 12px;
-            color: #9ca3af;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-        }
-
-        .skatezo-action-btn:hover {
-            background: linear-gradient(135deg, #1f1f1f, #2a2a2a);
-            color: #ffffff;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-        }
-
-        .skatezo-cart-badge {
-            position: absolute;
-            top: 6px;
-            right: 6px;
-            background: linear-gradient(135deg, #ef4444, #dc2626);
-            color: white;
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            font-size: 11px;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-
-        /* Enhanced Profile Button */
-        .skatezo-profile-btn {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            background: linear-gradient(135deg, #1f1f1f, #2a2a2a);
-            border: 1px solid rgba(99, 102, 241, 0.3);
-            padding: 10px 16px;
-            border-radius: 12px;
-            color: #ffffff;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .skatezo-profile-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.1), transparent);
-            transition: left 0.5s ease;
-        }
-
-        .skatezo-profile-btn:hover::before {
-            left: 100%;
-        }
-
-        .skatezo-profile-btn:hover {
-            background: linear-gradient(135deg, #2a2a2a, #3a3a3a);
-            border-color: #6366f1;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.2);
-        }
-
-        .skatezo-avatar {
-            width: 36px;
-            height: 36px;
-            background: linear-gradient(135deg, #10b981, #059669);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 15px;
-            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
-        }
-
-        /* Enhanced Dropdowns */
-        .skatezo-dropdown {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            background: linear-gradient(135deg, #1a1a1a, #1f1f1f);
-            border: 1px solid #2a2a2a;
-            border-radius: 16px;
-            min-width: 320px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(-15px);
-            transition: all 0.3s ease;
-            z-index: 1000;
-            margin-top: 12px;
-            backdrop-filter: blur(10px);
-        }
-
-        .skatezo-dropdown.active {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
-
-        .skatezo-dropdown-content {
-            padding: 20px;
-            max-height: 400px;
-            overflow-y: auto;
-        }
-
-        .skatezo-dropdown-section {
-            margin-bottom: 28px;
-        }
-
-        .skatezo-dropdown-section:last-child {
-            margin-bottom: 0;
-        }
-
-        .skatezo-dropdown-title {
-            font-size: 15px;
-            font-weight: 700;
-            color: #ffffff;
-            margin-bottom: 16px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #2a2a2a;
-            background: linear-gradient(90deg, #6366f1, #8b5cf6);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .skatezo-dropdown-links {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        .skatezo-dropdown-link {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            padding: 12px 16px;
-            border-radius: 10px;
-            color: #9ca3af;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            font-size: 14px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .skatezo-dropdown-link::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.1), transparent);
-            transition: left 0.5s ease;
-        }
-
-        .skatezo-dropdown-link:hover::before {
-            left: 100%;
-        }
-
-        .skatezo-dropdown-link:hover {
-            background: linear-gradient(135deg, #2a2a2a, #333333);
-            color: #ffffff;
-            transform: translateX(8px);
-            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.2);
-        }
-
-        .skatezo-dropdown-link i {
-            font-size: 16px;
-            width: 20px;
-            color: #6366f1;
-        }
-
-/* Mobile Menu====================================================================== =====================*/
-        .skatezo-mobile-menu {
-    display: none;
-}
-
-/* Mobile Menu Overlay */
-.skatezo-mobile-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 9998;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.3s ease;
-}
-
-.skatezo-mobile-overlay.active {
-    opacity: 1;
-    visibility: visible;
-}
-
-.skatezo-mobile-menu-panel {
-    position: fixed;
-    top: 0;
-    left: -100%;
-    width: 85%;
-    max-width: 320px;
-    height: 100vh;
-    background: #ffffff;
-    z-index: 9999;
-    transition: left 0.3s ease;
-    overflow-y: auto;
-    border-right: 1px solid #e5e7eb;
-    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.08);
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-}
-
-.skatezo-mobile-menu-panel.active {
-    left: 0;
-}
-
-.skatezo-mobile-menu-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 20px;
-    border-bottom: 1px solid #f1f3f4;
-    background-color: #ffffff;
-    position: sticky;
-    top: 0;
-    z-index: 10;
-}
-
-.skatezo-mobile-menu-close {
-    background: transparent;
-    border: none;
-    color: #6b7280;
-    font-size: 20px;
-    cursor: pointer;
-    padding: 8px;
-    border-radius: 8px;
-    transition: all 0.2s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.skatezo-mobile-menu-close:hover {
-    background: #f9fafb;
-    color: #374151;
-    transform: none;
-}
-
-.skatezo-mobile-menu-content {
-    padding: 20px;
-}
-
-.skatezo-mobile-search {
-    margin-bottom: 30px;
-}
-
-.skatezo-mobile-search-wrapper {
-    display: flex;
-    background: #f9fafb;
-    border: 1px solid #e5e7eb;
-    border-radius: 8px;
-    overflow: hidden;
-    transition: all 0.2s ease;
-}
-
-.skatezo-mobile-search-wrapper:focus-within {
-    border-color: #3b82f6;
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-}
-
-.skatezo-mobile-search-input {
-    flex: 1;
-    background: transparent;
-    border: none;
-    padding: 12px 16px;
-    color: #374151;
-    font-size: 14px;
-    outline: none;
-    font-family: inherit;
-}
-
-.skatezo-mobile-search-input::placeholder {
-    color: #9ca3af;
-}
-
-.skatezo-mobile-search-btn {
-    background: #f3f4f6;
-    border: none;
-    padding: 12px 16px;
-    color: #6b7280;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 14px;
-    transition: all 0.2s ease;
-}
-
-.skatezo-mobile-search-btn:hover {
-    background: #e5e7eb;
-    color: #374151;
-}
-
-.skatezo-mobile-menu-section {
-    margin-bottom: 24px;
-}
-
-.skatezo-mobile-menu-title {
-    font-size: 12px;
-    font-weight: 600;
-    color: #6b7280;
-    margin-bottom: 12px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid #f1f3f4;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    background: none;
-    -webkit-background-clip: unset;
-    -webkit-text-fill-color: unset;
-    background-clip: unset;
-}
-
-.skatezo-mobile-menu-links {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-}
-
-.skatezo-mobile-menu-link {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 12px;
-    border-radius: 8px;
-    color: #374151;
-    text-decoration: none;
-    transition: all 0.2s ease;
-    font-size: 14px;
-    font-weight: 400;
-    background: transparent;
-    border: none;
-}
-
-.skatezo-mobile-menu-link:hover {
-    background: #f9fafb;
-    color: #111827;
-    transform: none;
-    border-color: transparent;
-    box-shadow: none;
-}
-
-.skatezo-mobile-menu-link i {
-    font-size: 16px;
-    width: 20px;
-    color: #9ca3af;
-    text-align: center;
-    transition: color 0.2s ease;
-}
-
-.skatezo-mobile-menu-link:hover i {
-    color: #6b7280;
-}
-
-/* Quick Actions Section */
-.skatezo-quick-actions {
-    display: flex;
-    gap: 8px;
-    padding: 16px 0;
-    background: transparent;
-    border-radius: 0;
-    margin-top: 16px;
-    border-top: 1px solid #f1f3f4;
-    padding-top: 20px;
-}
-
-.skatezo-quick-action {
-    flex: 1;
-    padding: 12px 8px;
-    background: #f9fafb;
-    border: 1px solid #e5e7eb;
-    border-radius: 8px;
-    color: #6b7280;
-    text-align: center;
-    text-decoration: none;
-    font-size: 11px;
-    font-weight: 500;
-    transition: all 0.2s ease;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-}
-
-.skatezo-quick-action:hover {
-    background: #f3f4f6;
-    color: #374151;
-    transform: none;
-    border-color: #d1d5db;
-}
-
-.skatezo-quick-action i {
-    font-size: 16px;
-}
-
-/* Responsive Design */
-@media (max-width: 1200px) {
-    .skatezo-nav-content {
-        gap: 24px;
-    }
+    <title>{% block title %}ThinknShop{% endblock %}</title>
     
-    .skatezo-search-container {
-        max-width: 400px;
-    }
-
-    .skatezo-dropdown {
-        min-width: 280px;
-    }
-}
-
-@media (max-width: 1024px) {
-    .skatezo-nav-content {
-        gap: 20px;
-    }
+    <script src="https://cdn.tailwindcss.com"></script>
     
-    .skatezo-search-container {
-        max-width: 350px;
-    }
-
-    .skatezo-dropdown {
-        min-width: 260px;
-    }
-
-    .skatezo-categories-btn {
-        padding: 12px 16px;
-        font-size: 13px;
-    }
-
-    .skatezo-profile-btn {
-        padding: 8px 12px;
-    }
-
-    .skatezo-profile-btn span {
-        display: none;
-    }
-}
-
-@media (max-width: 768px) {
-    body {
-        padding-top: 70px;
-    }
-
-    .skatezo-top-bar {
-        display: none;
-    }
-    
-    .skatezo-nav-content {
-        height: 70px;
-        padding: 0 16px;
-        gap: 12px;
-    }
-    
-    .skatezo-categories {
-        display: none;
-    }
-    
-    .skatezo-search-container {
-        display: none;
-    }
-    
-    .skatezo-mobile-menu {
-        display: block;
-    }
-    
-    .skatezo-nav-actions {
-        gap: 8px;
-    }
-
-    .skatezoo-logo {
-        width: 50px;
-        height: 50px;
-        font-size: 18px;
-    }
-
-    .skatezo-action-btn {
-        padding: 12px;
-        font-size: 16px;
-    }
-
-    .skatezo-profile-btn {
-        gap: 8px;
-        padding: 8px;
-    }
-
-    .skatezo-profile-btn span {
-        display: none;
-    }
-
-    .skatezo-profile-btn i {
-        display: none;
-    }
-
-    .skatezo-avatar {
-        width: 32px;
-        height: 32px;
-        font-size: 13px;
-    }
-
-    .skatezo-dropdown {
-        position: fixed;
-        top: 70px !important;
-        left: 0 !important;
-        right: 0 !important;
-        width: 100% !important;
-        min-width: 100% !important;
-        max-width: 100% !important;
-        border-radius: 0;
-        margin-top: 0;
-        max-height: calc(100vh - 70px);
-    }
-
-    .skatezo-dropdown-content {
-        max-height: calc(100vh - 110px);
-    }
-}
-
-@media (max-width: 480px) {
-    .skatezo-nav-content {
-        padding: 0 12px;
-        gap: 8px;
-    }
-
-    .skatezoo-logo {
-        width: 45px;
-        height: 45px;
-        font-size: 16px;
-    }
-
-    .skatezo-action-btn {
-        padding: 10px;
-        font-size: 15px;
-    }
-
-    .skatezo-nav-actions {
-        gap: 6px;
-    }
-
-    .skatezo-cart-badge {
-        width: 18px;
-        height: 18px;
-        font-size: 10px;
-        top: 4px;
-        right: 4px;
-    }
-
-    .skatezo-mobile-menu-panel {
-        width: 90%;
-    }
-
-    .skatezo-mobile-menu-content {
-        padding: 16px;
-    }
-}
-
-@media (max-width: 360px) {
-    .skatezo-nav-content {
-        padding: 0 10px;
-    }
-
-    .skatezo-nav-actions {
-        gap: 4px;
-    }
-
-    .skatezo-action-btn {
-        padding: 8px;
-    }
-
-    .skatezoo-logo {
-        width: 40px;
-        height: 40px;
-        font-size: 14px;
-    }
-}
-
-/* Custom Scrollbar - Light Theme */
-.skatezo-dropdown-content::-webkit-scrollbar,
-.skatezo-mobile-menu-panel::-webkit-scrollbar {
-    width: 4px;
-}
-
-.skatezo-dropdown-content::-webkit-scrollbar-track,
-.skatezo-mobile-menu-panel::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-.skatezo-dropdown-content::-webkit-scrollbar-thumb,
-.skatezo-mobile-menu-panel::-webkit-scrollbar-thumb {
-    background: #e5e7eb;
-    border-radius: 2px;
-}
-
-.skatezo-dropdown-content::-webkit-scrollbar-thumb:hover,
-.skatezo-mobile-menu-panel::-webkit-scrollbar-thumb:hover {
-    background: #d1d5db;
-}
-
-/* Animation for mobile menu */
-@keyframes slideIn {
-    from {
-        transform: translateX(-100%);
-        opacity: 0;
-    }
-    to {
-        transform: translateX(0);
-        opacity: 1;
-    }
-}
-
-.slide-in {
-    animation: slideIn 0.3s ease-out;
-}
-
-/* Touch-friendly improvements */
-@media (hover: none) {
-    .skatezo-action-btn:hover,
-    .skatezo-categories-btn:hover,
-    .skatezo-profile-btn:hover,
-    .skatezo-dropdown-link:hover,
-    .skatezo-mobile-menu-link:hover {
-        transform: none;
-    }
-}
-
-/* Landscape mode adjustments */
-@media (max-height: 500px) and (orientation: landscape) {
-    .skatezo-dropdown-content {
-        max-height: 300px;
-    }
-    
-    .skatezo-mobile-menu-panel {
-        width: 60%;
-        max-width: 280px;
-    }
-}
-
-/* Focus states for accessibility */
-.skatezo-mobile-menu-link:focus-visible,
-.skatezo-quick-action:focus-visible,
-.skatezo-mobile-menu-close:focus-visible,
-.skatezo-mobile-search-btn:focus-visible {
-    outline: 2px solid #3b82f6;
-    outline-offset: 2px;
-}
-    </style>
-</head>
-<body>
-    
-    <header class="skatezo-navbar-container">
-        <!-- Top Bar -->
-        <div class="skatezo-top-bar">
-            <div class="skatezo-top-content">
-                <div class="skatezo-top-links">
-                    <a href="#customer-care"><i class="fas fa-headset"></i> 24/7 Customer Care</a>
-                    <a href="#shipping"><i class="fas fa-shipping-fast"></i> Free Shipping on ₹999+</a>
-                    <a href="#returns"><i class="fas fa-undo"></i> Easy Returns & Exchange</a>
-                </div>
-                <div class="skatezo-top-links">
-                    <a href="#find-store"><i class="fas fa-map-marker-alt"></i> Find a Store</a>
-                    <a href="#size-guide"><i class="fas fa-ruler"></i> Size Guide</a>
-                    <a href="#gift-cards"><i class="fas fa-gift"></i> Gift Cards</a>
-                </div>
-            </div>
-        </div>
-        <!-- Main Navigation -->
-        <nav class="skatezo-main-nav">
-            <div class="skatezo-nav-content">
-                <!-- Logo -->
-                <a href="#" class="skatezoo-logo">
-                    <img src="{% static 'brand/images/skatezo.jpeg'%}" class="skatezoo-logo">
-                </a>
-
-                <!-- Categories Dropdown -->
-                <div class="skatezo-categories">
-                    <button class="skatezo-categories-btn" onclick="toggleDropdown('categories')">
-                        <i class="fas fa-bars"></i>
-                        <span>All Categories</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </button>
-                    <div class="skatezo-dropdown" id="categories-dropdown">
-                        <div class="skatezo-dropdown-content">
-                            <div class="skatezo-dropdown-section">
-                                <div class="skatezo-dropdown-title">Men's Collection</div>
-                                <div class="skatezo-dropdown-links">
-                                    <a href="#" class="skatezo-dropdown-link">
-                                        <i class="fas fa-tshirt"></i>
-                                        <span>T-Shirts & Tops</span>
-                                    </a>
-                                    <a href="#" class="skatezo-dropdown-link">
-                                        <i class="fas fa-hoodie"></i>
-                                        <span>Hoodies & Sweatshirts</span>
-                                    </a>
-                                    <a href="#" class="skatezo-dropdown-link">
-                                        <i class="fas fa-jacket"></i>
-                                        <span>Jackets & Outerwear</span>
-                                    </a>
-                                    <a href="#" class="skatezo-dropdown-link">
-                                        <i class="fas fa-pants"></i>
-                                        <span>Pants & Joggers</span>
-                                    </a>
-                                    <a href="#" class="skatezo-dropdown-link">
-                                        <i class="fas fa-shoe-prints"></i>
-                                        <span>Sneakers & Footwear</span>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="skatezo-dropdown-section">
-                                <div class="skatezo-dropdown-title">Women's Collection</div>
-                                <div class="skatezo-dropdown-links">
-                                    <a href="#" class="skatezo-dropdown-link">
-                                        <i class="fas fa-crop"></i>
-                                        <span>Crop Tops & Tees</span>
-                                    </a>
-                                    <a href="#" class="skatezo-dropdown-link">
-                                        <i class="fas fa-dress"></i>
-                                        <span>Dresses & Skirts</span>
-                                    </a>
-                                    <a href="#" class="skatezo-dropdown-link">
-                                        <i class="fas fa-dumbbell"></i>
-                                        <span>Activewear</span>
-                                    </a>
-                                    <a href="#" class="skatezo-dropdown-link">
-                                        <i class="fas fa-high-heel"></i>
-                                        <span>Footwear</span>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="skatezo-dropdown-section">
-                                <div class="skatezo-dropdown-title">Accessories</div>
-                                <div class="skatezo-dropdown-links">
-                                    <a href="#" class="skatezo-dropdown-link">
-                                        <i class="fas fa-hat-cowboy"></i>
-                                        <span>Caps & Beanies</span>
-                                    </a>
-                                    <a href="#" class="skatezo-dropdown-link">
-                                        <i class="fas fa-backpack"></i>
-                                        <span>Bags & Backpacks</span>
-                                    </a>
-                                    <a href="#" class="skatezo-dropdown-link">
-                                        <i class="fas fa-watch"></i>
-                                        <span>Watches & Jewelry</span>
-                                    </a>
-                                    <a href="#" class="skatezo-dropdown-link">
-                                        <i class="fas fa-sunglasses"></i>
-                                        <span>Sunglasses</span>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="skatezo-quick-actions">
-                                <a href="#" class="skatezo-quick-action">
-                                    <i class="fas fa-fire"></i><br>New Arrivals
-                                </a>
-                                <a href="#" class="skatezo-quick-action">
-                                    <i class="fas fa-tags"></i><br>Sale
-                                </a>
-                                <a href="#" class="skatezo-quick-action">
-                                    <i class="fas fa-star"></i><br>Trending
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Search Bar -->
-                <div class="skatezo-search-container">
-                   
-                    <form class="search-form skatezo-search-wrapper" method="GET" action="{% url 'products:product-list' %}">
-                        <input type="text" name="search" class="skatezo-search-input" placeholder="Search products..." value="{{ request.GET.search }}">
-                        <button type="submit" class="skatezo-search-btn">Search</button>
-                    </form>
-                </div>
-
-                <!-- Mobile Menu Button -->
-                <button class="skatezo-action-btn skatezo-mobile-menu" onclick="toggleMobileMenu()">
-                    <i class="fas fa-bars"></i>
-                </button>
-
-                <!-- Action Buttons -->
-                <div class="skatezo-nav-actions">
-                    <!-- Wishlist -->
-                    <button class="skatezo-action-btn" title="Wishlist" onclick="toggleDropdown('wishlist')">
-                        <i class="fas fa-heart"></i>
-                    </button>
-                    <div class="skatezo-categories">
-                        <div class="skatezo-dropdown" id="wishlist-dropdown" style="right: 0; left: auto; min-width: 280px;">
-                            <div class="skatezo-dropdown-content">
-                                <div class="skatezo-dropdown-section">
-                                    <div class="skatezo-dropdown-title">Your Wishlist</div>
-                                    <div class="skatezo-dropdown-links">
-                                        <a href="#" class="skatezo-dropdown-link">
-                                            <i class="fas fa-tshirt"></i>
-                                            <span>Urban Graphic Tee - ₹899</span>
-                                        </a>
-                                        <a href="#" class="skatezo-dropdown-link">
-                                            <i class="fas fa-hoodie"></i>
-                                            <span>Street Hoodie - ₹1299</span>
-                                        </a>
-                                        <a href="#" class="skatezo-dropdown-link">
-                                            <i class="fas fa-shoe-prints"></i>
-                                            <span>Skate Sneakers - ₹2499</span>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Notifications -->
-                    <button class="skatezo-action-btn" title="Notifications" onclick="toggleDropdown('notifications')">
-                        <i class="fas fa-bell"></i>
-                    </button>
-                    <div class="skatezo-categories">
-                        <div class="skatezo-dropdown" id="notifications-dropdown" style="right: 0; left: auto; min-width: 300px;">
-                            <div class="skatezo-dropdown-content">
-                                <div class="skatezo-dropdown-section">
-                                    <div class="skatezo-dropdown-title">Recent Notifications</div>
-                                    <div class="skatezo-dropdown-links">
-                                        <a href="#" class="skatezo-dropdown-link">
-                                            <i class="fas fa-truck"></i>
-                                            <span>Your order #SK1234 has been shipped</span>
-                                        </a>
-                                        <a href="#" class="skatezo-dropdown-link">
-                                            <i class="fas fa-percentage"></i>
-                                            <span>New 30% off sale started!</span>
-                                        </a>
-                                        <a href="#" class="skatezo-dropdown-link">
-                                            <i class="fas fa-star"></i>
-                                            <span>Don't forget to rate your purchase</span>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Cart -->
-                    <button class="skatezo-action-btn" title="Shopping Cart" onclick="toggleDropdown('cart')">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span class="skatezo-cart-badge">3</span>
-                    </button>
-                    <div class="skatezo-categories">
-                        <div class="skatezo-dropdown" id="cart-dropdown" style="right: 0; left: auto; min-width: 320px;">
-                            <div class="skatezo-dropdown-content">
-                                <div class="skatezo-dropdown-section">
-                                    <div class="skatezo-dropdown-title">Shopping Cart (3 items)</div>
-                                    <div class="skatezo-dropdown-links">
-                                        <a href="#" class="skatezo-dropdown-link">
-                                            <i class="fas fa-tshirt"></i>
-                                            <span>Black Graphic Tee x1 - ₹899</span>
-                                        </a>
-                                        <a href="#" class="skatezo-dropdown-link">
-                                            <i class="fas fa-hoodie"></i>  
-                                            <span>Purple Hoodie x1 - ₹1299</span>
-                                        </a>
-                                        <a href="#" class="skatezo-dropdown-link">
-                                            <i class="fas fa-hat-cowboy"></i>
-                                            <span>Snapback Cap x1 - ₹599</span>
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="skatezo-quick-actions">
-                                    <a href="#" class="skatezo-quick-action">
-                                        <i class="fas fa-eye"></i><br>View Cart
-                                    </a>
-                                    <a href="#" class="skatezo-quick-action">
-                                        <i class="fas fa-credit-card"></i><br>Checkout
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Profile -->
-                    <div class="skatezo-categories">
-                        <button class="skatezo-profile-btn" onclick="toggleDropdown('profile')">
-                           <div class="skatezo-avatar">
-                                {{ request.user.username|slice:":1"|upper }}
-                            </div>
-                            <span>{{ request.user.username }}</span>
-
-                            <i class="fas fa-chevron-down"></i>
-                        </button>
-                        <div class="skatezo-dropdown" id="profile-dropdown" style="right: 0; left: auto; min-width: 280px;">
-                            <div class="skatezo-dropdown-content">
-                                <div class="skatezo-dropdown-section">
-                                    <div class="skatezo-dropdown-title">Account</div>
-                                    <div class="skatezo-dropdown-links">
-                                        <a href="#" class="skatezo-dropdown-link">
-                                            <i class="fas fa-user"></i>
-                                            <span>My Profile</span>
-                                        </a>
-                                        <a href="{% url 'my_orders'%}" class="skatezo-dropdown-link">
-                                            <i class="fas fa-box"></i>
-                                            <span>My Orders</span>
-                                        </a>
-                                        <a href="#" class="skatezo-dropdown-link">
-                                            <i class="fas fa-heart"></i>
-                                            <span>Wishlist</span>
-                                        </a>
-                                        <a href="#" class="skatezo-dropdown-link">
-                                            <i class="fas fa-credit-card"></i>
-                                            <span>Payment Methods</span>
-                                        </a>
-                                        <a href="{% url 'manage_address' %}" class="skatezo-dropdown-link">
-                                            <i class="fas fa-map-marker-alt"></i>
-                                            <span>Addresses</span>
-                                        </a>
-                                        <a href="{% url 'future_purchase_dashboard'%}" class="skatezo-dropdown-link">
-                                            <i class="fas fa-box"></i>
-                                            <span>Future Purchases</span>
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="skatezo-dropdown-section">
-                                    <div class="skatezo-dropdown-title">Support</div>
-                                    <div class="skatezo-dropdown-links">
-                                        <a href="#" class="skatezo-dropdown-link">
-                                            <i class="fas fa-question-circle"></i>
-                                            <span>Help Center</span>
-                                        </a>
-                                        <a href="#" class="skatezo-dropdown-link">
-                                            <i class="fas fa-headset"></i>
-                                            <span>Contact Support</span>
-                                        </a>
-                                        <a href="#" class="skatezo-dropdown-link">
-                                            <i class="fas fa-cog"></i>
-                                            <span>Settings</span>
-                                        </a>
-                                        <a href="#" class="skatezo-dropdown-link">
-                                            <i class="fas fa-sign-out-alt"></i>
-                                            <span>Sign Out</span>
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="skatezo-quick-actions">
-                                    <a href="#" class="skatezo-quick-action">
-                                        <i class="fas fa-crown"></i><br>Premium
-                                    </a>
-                                    <a href="#" class="skatezo-quick-action">
-                                        <i class="fas fa-coins"></i><br>Rewards
-                                    </a>
-                                    <a href="#" class="skatezo-quick-action">
-                                        <i class="fas fa-share-alt"></i><br>Refer
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </nav>
-    </header>
-<!-- =======================================MOBILE MENU ==================================================================================================================================================== -->
-    <!-- Mobile Menu Overlay -->
-    <div class="skatezo-mobile-overlay" id="mobile-overlay" onclick="closeMobileMenu()"></div>
-    
-    <!-- Mobile Menu Panel -->
-    <div class="skatezo-mobile-menu-panel" id="mobile-menu-panel">
-        <div class="skatezo-mobile-menu-header">
-            <div class="skatezoo-logo" style="width: 40px; height: 40px; font-size: 16px;">
-                <img src="{% static 'brand/images/skatezo.jpeg'%}" alt="Skatezo" style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px;">
-            </div>
-            <button class="skatezo-mobile-menu-close" onclick="closeMobileMenu()">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-        
-        <div class="skatezo-mobile-menu-content">
-            <!-- Mobile Search -->
-            <div class="skatezo-mobile-search">
-                <form class="skatezo-mobile-search-wrapper" method="GET" action="{% url 'products:product-list' %}">
-                    <input type="text" name="search" class="skatezo-mobile-search-input" placeholder="Search products..." value="{{ request.GET.search }}">
-                    <button type="submit" class="skatezo-mobile-search-btn">
-                        <i class="fas fa-search"></i>
-                    </button>
-                </form>
-            </div>
-
-            <!-- Main Navigation -->
-            <div class="skatezo-mobile-menu-section">
-                <div class="skatezo-mobile-menu-title">Main Navigation</div>
-                <div class="skatezo-mobile-menu-links">
-                    <a href="{% url 'products:home' %}" class="skatezo-mobile-menu-link">
-                        <i class="fas fa-home"></i>
-                        <span>Home</span>
-                    </a>
-                    <a href="{% url 'products:product-list' %}" class="skatezo-mobile-menu-link">
-                        <i class="fas fa-th-large"></i>
-                        <span>All Products</span>
-                    </a>
-                    <a href="{% url 'products:category-list' %}" class="skatezo-mobile-menu-link">
-                        <i class="fas fa-list"></i>
-                        <span>Categories</span>
-                    </a>
-                    <a href="{% url 'products:brand-list' %}" class="skatezo-mobile-menu-link">
-                        <i class="fas fa-tags"></i>
-                        <span>Brands</span>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Gender Categories -->
-            <div class="skatezo-mobile-menu-section">
-                <div class="skatezo-mobile-menu-title">Shop by Gender</div>
-                <div class="skatezo-mobile-menu-links">
-                    <a href="{% url 'products:product-list' %}?gender=men" class="skatezo-mobile-menu-link">
-                        <i class="fas fa-male"></i>
-                        <span>Men</span>
-                    </a>
-                    <a href="{% url 'products:product-list' %}?gender=women" class="skatezo-mobile-menu-link">
-                        <i class="fas fa-female"></i>
-                        <span>Women</span>
-                    </a>
-                    <a href="{% url 'products:product-list' %}?gender=kids" class="skatezo-mobile-menu-link">
-                        <i class="fas fa-child"></i>
-                        <span>Kids</span>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Product Categories -->
-            <div class="skatezo-mobile-menu-section">
-                <div class="skatezo-mobile-menu-title">Product Categories</div>
-                <div class="skatezo-mobile-menu-links">
-                    <a href="#" class="skatezo-mobile-menu-link">
-                        <i class="fas fa-tshirt"></i>
-                        <span>T-Shirts & Tops</span>
-                    </a>
-                    <a href="#" class="skatezo-mobile-menu-link">
-                        <i class="fas fa-hoodie"></i>
-                        <span>Hoodies & Sweatshirts</span>
-                    </a>
-                    <a href="#" class="skatezo-mobile-menu-link">
-                        <i class="fas fa-shoe-prints"></i>
-                        <span>Footwear</span>
-                    </a>
-                    <a href="#" class="skatezo-mobile-menu-link">
-                        <i class="fas fa-backpack"></i>
-                        <span>Accessories</span>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Account Section -->
-            <div class="skatezo-mobile-menu-section">
-                <div class="skatezo-mobile-menu-title">Your Account</div>
-                <div class="skatezo-mobile-menu-links">
-                    <a href="#" class="skatezo-mobile-menu-link">
-                        <i class="fas fa-user"></i>
-                        <span>My Profile</span>
-                    </a>
-                    <a href="{% url 'my_orders'%}" class="skatezo-mobile-menu-link">
-                        <i class="fas fa-box"></i>
-                        <span>My Orders</span>
-                    </a>
-                    <a href="#" class="skatezo-mobile-menu-link">
-                        <i class="fas fa-heart"></i>
-                        <span>Wishlist</span>
-                    </a>
-                    <a href="{% url 'manage_address' %}" class="skatezo-mobile-menu-link">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <span>Addresses</span>
-                    </a>
-                    <a href="{% url 'future_purchase_dashboard'%}" class="skatezo-mobile-menu-link">
-                        <i class="fas fa-calendar"></i>
-                        <span>Future Purchases</span>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Customer Support -->
-            <div class="skatezo-mobile-menu-section">
-                <div class="skatezo-mobile-menu-title">Support</div>
-                <div class="skatezo-mobile-menu-links">
-                    <a href="#customer-care" class="skatezo-mobile-menu-link">
-                        <i class="fas fa-headset"></i>
-                        <span>24/7 Customer Care</span>
-                    </a>
-                    <a href="#size-guide" class="skatezo-mobile-menu-link">
-                        <i class="fas fa-ruler"></i>
-                        <span>Size Guide</span>
-                    </a>
-                    <a href="#returns" class="skatezo-mobile-menu-link">
-                        <i class="fas fa-undo"></i>
-                        <span>Returns & Exchange</span>
-                    </a>
-                    <a href="#find-store" class="skatezo-mobile-menu-link">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <span>Find a Store</span>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Quick Actions -->
-            <div class="skatezo-quick-actions">
-                <a href="#" class="skatezo-quick-action">
-                    <i class="fas fa-fire"></i><br>New
-                </a>
-                <a href="#" class="skatezo-quick-action">
-                    <i class="fas fa-tags"></i><br>Sale
-                </a>
-                <a href="#" class="skatezo-quick-action">
-                    <i class="fas fa-star"></i><br>Trending
-                </a>
-                <a href="#" class="skatezo-quick-action">
-                    <i class="fas fa-gift"></i><br>Gifts
-                </a>
-            </div>
-        </div>
-    </div>
-<!-- ============================================================================================================================================================================================================== -->
-<!-- Navigation Bar (Bottom Section) -->
-<nav class="bg-white border-b border-gray-200 sticky top-0 z-50">
-    <div class="container mx-auto px-4 lg:px-6">
-        <!-- Mobile Menu Button -->
-        <div class="flex justify-between items-center py-4 md:hidden">
-            <div class="text-base font-medium text-gray-900 tracking-tight">Menu</div>
-            <button id="mobile-menu-btn" class="p-2 -m-2 rounded-sm hover:bg-gray-50 focus:outline-none focus:ring-1 focus:ring-gray-300 transition-colors">
-                <svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"></path>
-                </svg>
-            </button>
-        </div>
-
-        <!-- Navigation Links -->
-        <ul id="nav-links" class="nav-links hidden md:flex flex-col md:flex-row md:items-center md:justify-center md:space-x-8 lg:space-x-10 xl:space-x-12 pb-4 md:pb-0">
-            <li class="w-full md:w-auto">
-                <a href="{% url 'products:home' %}" class="block px-4 py-3 md:px-0 md:py-4 text-sm md:text-sm lg:text-base text-gray-900 hover:text-black hover:bg-gray-50 md:hover:bg-transparent border-b-2 border-transparent hover:border-gray-900 md:hover:border-black transition-all duration-200 font-normal tracking-wide">
-                    Home
-                </a>
-            </li>
-            <li class="w-full md:w-auto">
-                <a href="{% url 'products:product-list' %}" class="block px-4 py-3 md:px-0 md:py-4 text-sm md:text-sm lg:text-base text-gray-900 hover:text-black hover:bg-gray-50 md:hover:bg-transparent border-b-2 border-transparent hover:border-gray-900 md:hover:border-black transition-all duration-200 font-normal tracking-wide">
-                    All Products
-                </a>
-            </li>
-            <li class="w-full md:w-auto">
-                <a href="{% url 'products:category-list' %}" class="block px-4 py-3 md:px-0 md:py-4 text-sm md:text-sm lg:text-base text-gray-900 hover:text-black hover:bg-gray-50 md:hover:bg-transparent border-b-2 border-transparent hover:border-gray-900 md:hover:border-black transition-all duration-200 font-normal tracking-wide">
-                    Categories
-                </a>
-            </li>
-            <li class="w-full md:w-auto">
-                <a href="{% url 'products:brand-list' %}" class="block px-4 py-3 md:px-0 md:py-4 text-sm md:text-sm lg:text-base text-gray-900 hover:text-black hover:bg-gray-50 md:hover:bg-transparent border-b-2 border-transparent hover:border-gray-900 md:hover:border-black transition-all duration-200 font-normal tracking-wide">
-                    Brands
-                </a>
-            </li>
-            <li class="w-full md:w-auto">
-                <a href="{% url 'products:product-list' %}?gender=men" class="block px-4 py-3 md:px-0 md:py-4 text-sm md:text-sm lg:text-base text-gray-900 hover:text-black hover:bg-gray-50 md:hover:bg-transparent border-b-2 border-transparent hover:border-gray-900 md:hover:border-black transition-all duration-200 font-normal tracking-wide">
-                    Men
-                </a>
-            </li>
-            <li class="w-full md:w-auto">
-                <a href="{% url 'products:product-list' %}?gender=women" class="block px-4 py-3 md:px-0 md:py-4 text-sm md:text-sm lg:text-base text-gray-900 hover:text-black hover:bg-gray-50 md:hover:bg-transparent border-b-2 border-transparent hover:border-gray-900 md:hover:border-black transition-all duration-200 font-normal tracking-wide">
-                    Women
-                </a>
-            </li>
-            <li class="w-full md:w-auto">
-                <a href="{% url 'products:product-list' %}?gender=kids" class="block px-4 py-3 md:px-0 md:py-4 text-sm md:text-sm lg:text-base text-gray-900 hover:text-black hover:bg-gray-50 md:hover:bg-transparent border-b-2 border-transparent hover:border-gray-900 md:hover:border-black transition-all duration-200 font-normal tracking-wide">
-                    Kids
-                </a>
-            </li>
-        </ul>
-    </div>
-</nav>
-
-<style>
-    /* Premium font stack similar to major ecommerce sites */
-    .nav-links a {
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-        letter-spacing: 0.01em;
-    }
-    
-    /* Subtle shadow on scroll */
-    nav.scrolled {
-        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-    }
-</style>
-
-<script>
-    // Mobile menu toggle functionality
-    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-    const navLinks = document.getElementById('nav-links');
-    const nav = document.querySelector('nav');
-    
-    if (mobileMenuBtn && navLinks) {
-        mobileMenuBtn.addEventListener('click', function() {
-            navLinks.classList.toggle('hidden');
-            
-            // Toggle hamburger icon with refined animation
-            const icon = mobileMenuBtn.querySelector('svg path');
-            if (navLinks.classList.contains('hidden')) {
-                icon.setAttribute('d', 'M4 6h16M4 12h16M4 18h16');
-                icon.setAttribute('stroke-width', '1.5');
-            } else {
-                icon.setAttribute('d', 'M6 18L18 6M6 6l12 12');
-                icon.setAttribute('stroke-width', '2');
-            }
-        });
-
-        // Close mobile menu when clicking on a link
-        const navLinkElements = navLinks.querySelectorAll('a');
-        navLinkElements.forEach(link => {
-            link.addEventListener('click', () => {
-                if (window.innerWidth < 768) {
-                    navLinks.classList.add('hidden');
-                    const icon = mobileMenuBtn.querySelector('svg path');
-                    icon.setAttribute('d', 'M4 6h16M4 12h16M4 18h16');
-                    icon.setAttribute('stroke-width', '1.5');
-                }
-            });
-        });
-
-        // Handle window resize
-        window.addEventListener('resize', function() {
-            if (window.innerWidth >= 768) {
-                navLinks.classList.remove('hidden');
-            } else {
-                navLinks.classList.add('hidden');
-            }
-        });
-    }
-
-    // Add subtle shadow on scroll (premium touch)
-    window.addEventListener('scroll', function() {
-        if (window.scrollY > 10) {
-            nav.classList.add('scrolled');
-        } else {
-            nav.classList.remove('scrolled');
-        }
-    });
-</script>
-<!-- =============================================================================================================================================================== -->
     <script>
-        // Dropdown functionality
-        let activeDropdown = null;
-
-        function toggleDropdown(dropdownId) {
-            const dropdown = document.getElementById(dropdownId + '-dropdown');
-            const isActive = dropdown && dropdown.classList.contains('active');
-            
-            // Close all dropdowns first
-            document.querySelectorAll('.skatezo-dropdown').forEach(d => {
-                d.classList.remove('active');
-            });
-            
-            // Toggle current dropdown
-            if (!isActive && dropdown) {
-                dropdown.classList.add('active');
-                activeDropdown = dropdownId;
-            } else {
-                activeDropdown = null;
+        tailwind.config = {
+          theme: {
+            extend: {
+              fontFamily: {
+                sans: ['Manrope', 'sans-serif'], 
+              },
+              colors: {
+                'primary': {
+                  DEFAULT: '#d32f2f',
+                  'dark': '#b71c1c',
+                },
+                'accent': '#ffc107',
+                'dark': {
+                  'text': '#111111',
+                  'medium': '#424242',
+                  'light': '#9e9e9e',
+                  'bg': '#0a0a0a'
+                },
+                'off-white': '#f9f9f9',
+              },
+              container: {
+                center: true,
+                padding: '25px',
+                screens: {
+                  'lg': '1240px',
+                },
+              },
+              boxShadow: {
+                'sm': '0 2px 4px rgba(0,0,0,0.08)',
+                'md': '0 6px 12px rgba(0,0,0,0.12)',
+                'lg': '0 15px 30px rgba(0,0,0,0.15)',
+              }
             }
+          }
         }
-
-        // Close dropdowns when clicking outside
-        document.addEventListener('click', function(event) {
-            if (!event.target.closest('.skatezo-categories') && 
-                !event.target.closest('.skatezo-action-btn')) {
-                document.querySelectorAll('.skatezo-dropdown').forEach(dropdown => {
-                    dropdown.classList.remove('active');
-                });
-                activeDropdown = null;
-            }
-        });
-
-        // Search functionality
-        function performSearch() {
-            const searchInput = document.getElementById('search-input');
-            const query = searchInput.value.trim();
-            if (query) {
-                console.log(`Searching for: "${query}"`);
-                // Add your search logic here
-                showNotification(`Searching for "${query}"...`);
-            }
-        }
-
-        // Handle Enter key in search
-        const searchInput = document.querySelector('.skatezo-search-input');
-        if (searchInput) {
-            searchInput.addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    performSearch();
-                }
-            });
-        }
-
-        // Mobile menu functionality
-        function toggleMobileMenu() {
-            const overlay = document.getElementById('mobile-overlay');
-            const panel = document.getElementById('mobile-menu-panel');
-            
-            if (overlay && panel) {
-                overlay.classList.add('active');
-                panel.classList.add('active');
-                document.body.style.overflow = 'hidden'; // Prevent background scrolling
-            }
-        }
-
-        function closeMobileMenu() {
-            const overlay = document.getElementById('mobile-overlay');
-            const panel = document.getElementById('mobile-menu-panel');
-            
-            if (overlay && panel) {
-                overlay.classList.remove('active');
-                panel.classList.remove('active');
-                document.body.style.overflow = ''; // Restore scrolling
-            }
-        }
-
-        // Notification system
-        function showNotification(message) {
-            // Create notification element
-            const notification = document.createElement('div');
-            notification.style.cssText = `
-                position: fixed;
-                top: 160px;
-                right: 24px;
-                background: linear-gradient(135deg, #1f1f1f, #2a2a2a);
-                color: white;
-                padding: 16px 24px;
-                border-radius: 12px;
-                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-                z-index: 10000;
-                font-size: 14px;
-                border: 1px solid #3a3a3a;
-                transform: translateX(100%);
-                transition: transform 0.3s ease;
-                max-width: calc(100vw - 48px);
-            `;
-            notification.textContent = message;
-            
-            document.body.appendChild(notification);
-            
-            // Slide in
-            setTimeout(() => {
-                notification.style.transform = 'translateX(0)';
-            }, 100);
-            
-            // Remove after 3 seconds
-            setTimeout(() => {
-                notification.style.transform = 'translateX(100%)';
-                setTimeout(() => {
-                    if (notification.parentNode) {
-                        document.body.removeChild(notification);
-                    }
-                }, 300);
-            }, 3000);
-        }
-
-        // Add smooth scrolling
-        document.documentElement.style.scrollBehavior = 'smooth';
-
-        // Keyboard navigation
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                if (activeDropdown) {
-                    document.querySelectorAll('.skatezo-dropdown').forEach(dropdown => {
-                        dropdown.classList.remove('active');
-                    });
-                    activeDropdown = null;
-                }
-                // Close mobile menu with Escape key
-                closeMobileMenu();
-            }
-        });
-
-        // Search suggestions (demo)
-        const allSearchInputs = document.querySelectorAll('.skatezo-search-input, .skatezo-mobile-search-input');
-        const searchSuggestions = [
-            'Urban hoodies',
-            'Graphic t-shirts', 
-            'Streetwear joggers',
-            'Skateboard sneakers',
-            'Vintage caps',
-            'Oversized sweatshirts'
-        ];
-
-        allSearchInputs.forEach(input => {
-            input.addEventListener('input', function(e) {
-                const value = e.target.value.toLowerCase();
-                if (value.length > 2) {
-                    const matches = searchSuggestions.filter(suggestion => 
-                        suggestion.toLowerCase().includes(value)
-                    );
-                    
-                    if (matches.length > 0) {
-                        // You can implement search suggestions dropdown here
-                        console.log('Search suggestions:', matches);
-                    }
-                }
-            });
-        });
-
-        // Add loading states to buttons
-        function addLoadingState(button) {
-            const originalContent = button.innerHTML;
-            button.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
-            button.disabled = true;
-            
-            setTimeout(() => {
-                button.innerHTML = originalContent;
-                button.disabled = false;
-            }, 1000);
-        }
-
-        // Add click handlers for action buttons
-        document.querySelectorAll('.skatezo-action-btn').forEach(btn => {
-            btn.addEventListener('click', function(e) {
-                if (!this.getAttribute('onclick') && !this.classList.contains('skatezo-mobile-menu')) {
-                    addLoadingState(this);
-                }
-            });
-        });
-
-        // Handle window resize
-        window.addEventListener('resize', function() {
-            // Close mobile menu on resize to desktop
-            if (window.innerWidth > 768) {
-                closeMobileMenu();
-            }
-            
-            // Close dropdowns on resize
-            if (activeDropdown) {
-                document.querySelectorAll('.skatezo-dropdown').forEach(dropdown => {
-                    dropdown.classList.remove('active');
-                });
-                activeDropdown = null;
-            }
-        });
-
-        // Touch handling for mobile
-        let touchStartX = 0;
-        let touchStartY = 0;
-
-        document.addEventListener('touchstart', function(e) {
-            touchStartX = e.touches[0].clientX;
-            touchStartY = e.touches[0].clientY;
-        }, { passive: true });
-
-        document.addEventListener('touchmove', function(e) {
-            if (!touchStartX || !touchStartY) {
-                return;
-            }
-
-            const touchEndX = e.touches[0].clientX;
-            const touchEndY = e.touches[0].clientY;
-
-            const diffX = touchStartX - touchEndX;
-            const diffY = touchStartY - touchEndY;
-
-            // Swipe right to open mobile menu
-            if (Math.abs(diffX) > Math.abs(diffY)) {
-                if (diffX < -50 && touchStartX < 50) {
-                    toggleMobileMenu();
-                }
-                // Swipe left to close mobile menu
-                else if (diffX > 50) {
-                    const panel = document.getElementById('mobile-menu-panel');
-                    if (panel && panel.classList.contains('active')) {
-                        closeMobileMenu();
-                    }
-                }
-            }
-
-            touchStartX = null;
-            touchStartY = null;
-        }, { passive: true });
-
-        // Prevent body scroll when mobile menu is open
-        document.addEventListener('touchmove', function(e) {
-            const panel = document.getElementById('mobile-menu-panel');
-            if (panel && panel.classList.contains('active')) {
-                const isScrollingInPanel = e.target.closest('.skatezo-mobile-menu-panel');
-                if (!isScrollingInPanel) {
-                    e.preventDefault();
-                }
-            }
-        }, { passive: false });
-
-        // Initialize dropdown positioning for mobile
-        function adjustDropdownPosition() {
-            if (window.innerWidth <= 768) {
-                document.querySelectorAll('.skatezo-dropdown').forEach(dropdown => {
-                    dropdown.style.position = 'fixed';
-                    dropdown.style.top = '70px';
-                    dropdown.style.left = '0';
-                    dropdown.style.right = '0';
-                    dropdown.style.width = '100%';
-                    dropdown.style.minWidth = '100%';
-                    dropdown.style.maxWidth = '100%';
-                    dropdown.style.borderRadius = '0';
-                    dropdown.style.marginTop = '0';
-                    dropdown.style.maxHeight = 'calc(100vh - 70px)';
-                });
-            } else {
-                document.querySelectorAll('.skatezo-dropdown').forEach(dropdown => {
-                    dropdown.style.position = '';
-                    dropdown.style.top = '';
-                    dropdown.style.left = '';
-                    dropdown.style.right = '';
-                    dropdown.style.width = '';
-                    dropdown.style.minWidth = '';
-                    dropdown.style.maxWidth = '';
-                    dropdown.style.borderRadius = '';
-                    dropdown.style.marginTop = '';
-                    dropdown.style.maxHeight = '';
-                });
-            }
-        }
-
-        // Call on load and resize
-        window.addEventListener('load', adjustDropdownPosition);
-        window.addEventListener('resize', adjustDropdownPosition);
-
-        // Add intersection observer for navbar visibility
-        const navbar = document.querySelector('.skatezo-navbar-container');
-        let lastScrollY = window.scrollY;
-
-        window.addEventListener('scroll', function() {
-            const currentScrollY = window.scrollY;
-            
-            if (currentScrollY > lastScrollY && currentScrollY > 100) {
-                // Scrolling down
-                navbar.style.transform = 'translateY(-100%)';
-            } else {
-                // Scrolling up
-                navbar.style.transform = 'translateY(0)';
-            }
-            
-            lastScrollY = currentScrollY;
-        }, { passive: true });
-
-        // Add transition for navbar hide/show
-        navbar.style.transition = 'transform 0.3s ease';
-
-        // Focus management for accessibility
-        function trapFocus(element) {
-            const focusableElements = element.querySelectorAll(
-                'a[href], button, textarea, input[type="text"], input[type="radio"], input[type="checkbox"], select'
-            );
-            const firstFocusableElement = focusableElements[0];
-            const lastFocusableElement = focusableElements[focusableElements.length - 1];
-
-            element.addEventListener('keydown', function(e) {
-                if (e.key === 'Tab') {
-                    if (e.shiftKey) {
-                        if (document.activeElement === firstFocusableElement) {
-                            lastFocusableElement.focus();
-                            e.preventDefault();
-                        }
-                    } else {
-                        if (document.activeElement === lastFocusableElement) {
-                            firstFocusableElement.focus();
-                            e.preventDefault();
-                        }
-                    }
-                }
-            });
-        }
-
-        // Apply focus trap to mobile menu
-        const mobileMenuPanel = document.getElementById('mobile-menu-panel');
-        if (mobileMenuPanel) {
-            trapFocus(mobileMenuPanel);
-        }
-
-        // Enhanced click outside handler for better mobile experience
-        document.addEventListener('touchstart', function(event) {
-            if (!event.target.closest('.skatezo-categories') && 
-                !event.target.closest('.skatezo-action-btn') &&
-                !event.target.closest('.skatezo-dropdown')) {
-                document.querySelectorAll('.skatezo-dropdown').forEach(dropdown => {
-                    dropdown.classList.remove('active');
-                });
-                activeDropdown = null;
-            }
-        }, { passive: true });
-
-        // Performance optimization: debounced resize handler
-        function debounce(func, wait) {
-            let timeout;
-            return function executedFunction(...args) {
-                const later = () => {
-                    clearTimeout(timeout);
-                    func(...args);
-                };
-                clearTimeout(timeout);
-                timeout = setTimeout(later, wait);
-            };
-        }
-
-        const debouncedResize = debounce(function() {
-            adjustDropdownPosition();
-            if (window.innerWidth > 768) {
-                closeMobileMenu();
-            }
-            if (activeDropdown) {
-                document.querySelectorAll('.skatezo-dropdown').forEach(dropdown => {
-                    dropdown.classList.remove('active');
-                });
-                activeDropdown = null;
-            }
-        }, 250);
-
-        window.addEventListener('resize', debouncedResize);
-
-        // Add loading animation to logo
-        const logo = document.querySelector('.skatezoo-logo');
-        if (logo) {
-            logo.addEventListener('click', function(e) {
-                e.preventDefault();
-                this.style.transform = 'scale(0.9) rotate(360deg)';
-                setTimeout(() => {
-                    this.style.transform = '';
-                    // Add your navigation logic here
-                    window.location.href = '#'; // Replace with actual home URL
-                }, 500);
-            });
-        }
-
-        // Initialize with welcome message (delayed for better UX)
-        setTimeout(() => {
-            if (window.innerWidth > 768) {
-                showNotification('Welcome to Skatezo! 🛹');
-            }
-        }, 1000);
-
-        // Add service worker for offline functionality (optional)
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', function() {
-                // Uncomment if you have a service worker
-                // navigator.serviceWorker.register('/sw.js')
-                //     .then(function(registration) {
-                //         console.log('SW registered: ', registration);
-                //     })
-                //     .catch(function(registrationError) {
-                //         console.log('SW registration failed: ', registrationError);
-                //     });
-            });
-        }
-
-        // Add error handling for images
-        document.querySelectorAll('img').forEach(img => {
-            img.addEventListener('error', function() {
-                this.style.display = 'none';
-                console.warn('Failed to load image:', this.src);
-            });
-        });
-
-        // Initialize tooltips for action buttons
-        document.querySelectorAll('.skatezo-action-btn[title]').forEach(btn => {
-            btn.addEventListener('mouseenter', function() {
-                if (window.innerWidth > 768) {
-                    const tooltip = document.createElement('div');
-                    tooltip.className = 'skatezo-tooltip';
-                    tooltip.textContent = this.getAttribute('title');
-                    tooltip.style.cssText = `
-                        position: absolute;
-                        bottom: 100%;
-                        left: 50%;
-                        transform: translateX(-50%);
-                        background: #1f1f1f;
-                        color: white;
-                        padding: 8px 12px;
-                        border-radius: 8px;
-                        font-size: 12px;
-                        white-space: nowrap;
-                        z-index: 1000;
-                        margin-bottom: 8px;
-                        pointer-events: none;
-                        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-                    `;
-                    this.style.position = 'relative';
-                    this.appendChild(tooltip);
-                }
-            });
-
-            btn.addEventListener('mouseleave', function() {
-                const tooltip = this.querySelector('.skatezo-tooltip');
-                if (tooltip) {
-                    tooltip.remove();
-                }
-            });
-        });
-
-        // Add ripple effect to buttons
-        function createRipple(event) {
-            const button = event.currentTarget;
-            const circle = document.createElement('span');
-            const diameter = Math.max(button.clientWidth, button.clientHeight);
-            const radius = diameter / 2;
-
-            circle.style.width = circle.style.height = `${diameter}px`;
-            circle.style.left = `${event.clientX - button.offsetLeft - radius}px`;
-            circle.style.top = `${event.clientY - button.offsetTop - radius}px`;
-            circle.classList.add('ripple');
-
-            const rippleStyle = document.createElement('style');
-            rippleStyle.textContent = `
-                .ripple {
-                    position: absolute;
-                    border-radius: 50%;
-                    transform: scale(0);
-                    animation: ripple 600ms linear;
-                    background-color: rgba(255, 255, 255, 0.1);
-                    pointer-events: none;
-                }
-                @keyframes ripple {
-                    to {
-                        transform: scale(4);
-                        opacity: 0;
-                    }
-                }
-            `;
-            
-            if (!document.querySelector('.ripple-style')) {
-                rippleStyle.className = 'ripple-style';
-                document.head.appendChild(rippleStyle);
-            }
-
-            const ripples = button.getElementsByClassName('ripple');
-            if (ripples.length > 0) {
-                ripples[0].remove();
-            }
-
-            button.appendChild(circle);
-            
-            setTimeout(() => {
-                circle.remove();
-            }, 600);
-        }
-
-        // Apply ripple effect to buttons
-        document.querySelectorAll('.skatezo-action-btn, .skatezo-categories-btn, .skatezo-profile-btn, .skatezo-search-btn').forEach(btn => {
-            btn.style.position = 'relative';
-            btn.style.overflow = 'hidden';
-            btn.addEventListener('click', createRipple);
-        });
-
-        console.log('Skatezo Mobile Responsive Navbar initialized successfully! 🚀');
     </script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Manrope', sans-serif;
+            color: #424242; /* --text-medium */
+            overflow-x: hidden;
+        }
+        .sidebar-scroll::-webkit-scrollbar {
+            width: 4px;
+        }
+        .sidebar-scroll::-webkit-scrollbar-track {
+            background: #e5e7eb;
+        }
+        .sidebar-scroll::-webkit-scrollbar-thumb {
+            background: #9ca3af;
+            border-radius: 4px;
+        }
+        .sidebar-scroll::-webkit-scrollbar-thumb:hover {
+            background: #d32f2f;
+        }
+        .sidebar-scroll {
+            scrollbar-width: thin;
+            scrollbar-color: #9ca3af #e5e7eb;
+        }
+    </style>
+    
+    {% block head %}{% endblock %}
+</head>
+<body class="bg-white">
+
+    <div>
+        <aside id="sidebar" class="sidebar-scroll fixed top-0 left-0 z-40 w-64 h-screen bg-white text-gray-900 flex flex-col transition-transform duration-300 ease-in-out 
+                                    -translate-x-full border-r border-gray-200">
+            
+            <div class="flex items-center justify-between p-4 border-b border-gray-200">
+                <a href="{% url 'products:home' %}" class="text-2xl font-bold text-black">
+                    ThinknShop
+                </a>
+                <button id="sidebar-close-btn" class="lg:hidden text-gray-500 hover:text-red-600 text-2xl p-2">&times;</button>
+            </div>
+            
+            <nav class="flex-1 p-4 space-y-2 overflow-y-auto">
+                <h3 class="px-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Menu</h3>
+                <a href="{% url 'products:home' %}" class="flex items-center px-3 py-2.5 rounded-lg text-gray-700 hover:bg-red-50 hover:text-red-600 transition-colors">
+                    <i class="fas fa-home fa-fw w-6 text-center"></i>
+                    <span class="ml-3 text-sm font-medium">Home</span>
+                </a>
+                <a href="{% url 'products:product-list' %}" class="flex items-center px-3 py-2.5 rounded-lg text-gray-700 hover:bg-red-50 hover:text-red-600 transition-colors">
+                    <i class="fas fa-th-large fa-fw w-6 text-center"></i>
+                    <span class="ml-3 text-sm font-medium">All Products</span>
+                </a>
+                <a href="{% url 'products:category-list' %}" class="flex items-center px-3 py-2.5 rounded-lg text-gray-700 hover:bg-red-50 hover:text-red-600 transition-colors">
+                    <i class="fas fa-list fa-fw w-6 text-center"></i>
+                    <span class="ml-3 text-sm font-medium">Categories</span>
+                </a>
+                <h3 class="px-3 pt-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Account</h3>
+                <a href="#" class="flex items-center px-3 py-2.5 rounded-lg text-gray-700 hover:bg-red-50 hover:text-red-600 transition-colors">
+                    <i class="fas fa-user fa-fw w-6 text-center"></i>
+                    <span class="ml-3 text-sm font-medium">My Profile</span>
+                </a>
+                <a href="{% url 'my_orders' %}" class="flex items-center px-3 py-2.5 rounded-lg text-gray-700 hover:bg-red-50 hover:text-red-600 transition-colors">
+                    <i class="fas fa-box fa-fw w-6 text-center"></i>
+                    <span class="ml-3 text-sm font-medium">My Orders</span>
+                </a>
+                <a href="#" class="flex items-center px-3 py-2.5 rounded-lg text-gray-700 hover:bg-red-50 hover:text-red-600 transition-colors">
+                    <i class="fas fa-heart fa-fw w-6 text-center"></i>
+                    <span class="ml-3 text-sm font-medium">Wishlist</span>
+                </a>
+                 <a href="{% url 'manage_address' %}" class="flex items-center px-3 py-2.5 rounded-lg text-gray-700 hover:bg-red-50 hover:text-red-600 transition-colors">
+                    <i class="fas fa-map-marker-alt fa-fw w-6 text-center"></i>
+                    <span class="ml-3 text-sm font-medium">Addresses</span>
+                </a>
+            </nav>
+            <div class="p-4 border-t border-gray-200">
+                {% if user.is_authenticated %}
+                <a href="#" class="flex items-center w-full p-2 rounded-lg hover:bg-red-50">
+                    <div class="flex-shrink-0 w-10 h-10 rounded-full bg-red-600 text-white flex items-center justify-center font-bold">
+                        {{ request.user.username|slice:":1"|upper }}
+                    </div>
+                    <div class="ml-3">
+                        <div class="text-sm font-medium text-gray-900">{{ user.username }}</div>
+                        <div class="text-xs text-gray-500">View profile</div>
+                    </div>
+                </a>
+                <a href="#" class="block w-full text-left mt-2 px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700 hover:bg-red-50 hover:text-red-600 transition-colors">
+                       <i class="fas fa-sign-out-alt fa-fw w-6 text-center"></i>
+                       <span class="ml-3">Sign Out</span>
+                </a>
+                {% else %}
+                <a href="#" class="block w-full text-left mt-2 px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700 hover:bg-red-50 hover:text-red-600 transition-colors">
+                       <i class="fas fa-sign-in-alt fa-fw w-6 text-center"></i>
+                       <span class="ml-3">Sign In</span>
+                </a>
+                {% endif %}
+            </div>
+        </aside>
+
+        <div id="sidebar-overlay" class="fixed inset-0 bg-black/60 z-30 hidden"></div>
+
+        <div id="main-content" class="relative min-h-screen transition-all duration-300 ease-in-out">
+            
+            <div class="bg-primary text-white text-center py-2.5 text-sm font-bold tracking-wide uppercase">
+                Free Express Shipping on Orders Over $50 + Free Returns
+            </div>
+            
+            <header class="bg-white sticky top-0 z-50 shadow-sm">
+                <div class="max-w-7xl mx-auto px-6">
+                    <div class="flex justify-between items-center py-5">
+                        
+                        <div class="flex-1 flex items-center">
+                            
+                            <button id="sidebar-open-btn" class="p-2 text-gray-700 rounded-md hover:bg-gray-100 hover:text-red-600 mr-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
+                                  <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                                </svg>
+                            </button>
+
+                            <div class="relative">
+                                <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                                    </svg>
+                                </span>
+                                <input type="text" 
+                                       placeholder="Search..." 
+                                       class="w-52 rounded border border-gray-200 bg-gray-50 py-2.5 px-4 pl-10 
+                                              text-sm text-gray-900
+                                              focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent">
+                            </div>
+                        </div>
+
+                        <div class="absolute left-1/2 -translate-x-1/2">
+                            <a href="#" class="text-3xl font-black text-gray-900 tracking-tighter">
+                                Thinkn<span class="text-red-600">Shop.</span>
+                            </a>
+                        </div>
+
+                        <div class="flex-1 flex justify-end items-center gap-6">
+                            
+                            <a href="{% url 'login' %}" 
+                               title="Account" 
+                               class="flex items-center justify-center w-9 h-9 rounded-full bg-gray-100 text-gray-700 
+                                      border border-gray-200 transition-all duration-300 
+                                      hover:bg-red-600 hover:text-white hover:border-red-600">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                                </svg>
+                            </a>
+                            
+                            <a href="#" class="relative flex items-center gap-1.5 font-semibold text-gray-900 uppercase text-sm tracking-wide">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                                </svg>
+                                
+                                <span class="hidden md:inline">Cart</span> 
+                                
+                                <span class="absolute -top-2 -right-3 w-5 h-5 flex items-center justify-center 
+                                             rounded-full bg-red-600 text-white text-xs font-bold">
+                                    {{ cart_item_count|default:0 }}
+                                </span>
+                            </a>
+                        </div>
+                        
+                    </div>
+                </div>
+                
+                <div class="border-y border-gray-100">
+                    <div class="max-w-7xl mx-auto px-6">
+                        <nav class="flex justify-center gap-10 py-4">
+                            
+                            {% for category in featured_categories %}
+                            <a href="{{ category.get_absolute_url }}" 
+                               class="font-semibold text-sm text-gray-600 uppercase tracking-wide 
+                                      transition-colors duration-300 hover:text-red-600">
+                                {{ category.name }}
+                            </a>
+                            {% endfor %}
+                            
+                            {% if sale_products.count > 0 %}
+                            <a href="#" 
+                               class="font-extrabold text-sm text-red-600 uppercase tracking-wide 
+                                      transition-colors duration-300 hover:text-red-700">
+                                Sale
+                            </a>
+                            {% endif %}
+                            
+                        </nav>
+                    </div>
+                </div>
+                
+            </header>
+            
+            <main>
+                {% block content %}
+                {% endblock %}
+            </main>
+
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const openBtn = document.getElementById('sidebar-open-btn');
+            const closeBtn = document.getElementById('sidebar-close-btn');
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+            const mainContent = document.getElementById('main-content'); 
+
+            function openSidebar() {
+                if (sidebar && overlay && mainContent) { 
+                    sidebar.classList.remove('-translate-x-full');
+                    overlay.classList.remove('hidden');
+                    mainContent.classList.add('lg:ml-64');    
+                    document.body.style.overflow = 'hidden'; 
+                }
+            }
+
+            function closeSidebar() {
+                if (sidebar && overlay && mainContent) { 
+                    sidebar.classList.add('-translate-x-full');
+                    overlay.classList.add('hidden');
+                    mainContent.classList.remove('lg:ml-64');   
+                    document.body.style.overflow = ''; 
+                }
+            }
+
+            if (openBtn) {
+                openBtn.addEventListener('click', openSidebar);
+            }
+            if (closeBtn) {
+                closeBtn.addEventListener('click', closeSidebar);
+            }
+            if (overlay) {
+                overlay.addEventListener('click', closeSidebar);
+            }
+        });
+    </script>
+
+    {% block scripts %}{% endblock %}
 
 </body>
 </html>
-<!--  -->
