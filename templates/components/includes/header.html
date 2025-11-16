@@ -5,15 +5,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}ThinknShop{% endblock %}</title>
-    
+
     <script src="https://cdn.tailwindcss.com"></script>
-    
+
     <script>
         tailwind.config = {
           theme: {
             extend: {
               fontFamily: {
-                sans: ['Manrope', 'sans-serif'], 
+                sans: ['Manrope', 'sans-serif'],
               },
               colors: {
                 'primary': {
@@ -28,266 +28,250 @@
                   'bg': '#0a0a0a'
                 },
                 'off-white': '#f9f9f9',
-              },
-              container: {
-                center: true,
-                padding: '25px',
-                screens: {
-                  'lg': '1240px',
-                },
-              },
-              boxShadow: {
-                'sm': '0 2px 4px rgba(0,0,0,0.08)',
-                'md': '0 6px 12px rgba(0,0,0,0.12)',
-                'lg': '0 15px 30px rgba(0,0,0,0.15)',
               }
             }
           }
         }
     </script>
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
     <style>
         body {
             font-family: 'Manrope', sans-serif;
-            color: #424242; /* --text-medium */
+            color: #424242;
             overflow-x: hidden;
         }
-        .sidebar-scroll::-webkit-scrollbar {
-            width: 4px;
-        }
-        .sidebar-scroll::-webkit-scrollbar-track {
-            background: #e5e7eb;
-        }
+
+        .sidebar-scroll::-webkit-scrollbar { width: 4px; }
+        .sidebar-scroll::-webkit-scrollbar-track { background: #e5e7eb; }
         .sidebar-scroll::-webkit-scrollbar-thumb {
             background: #9ca3af;
             border-radius: 4px;
         }
-        .sidebar-scroll::-webkit-scrollbar-thumb:hover {
-            background: #d32f2f;
-        }
-        .sidebar-scroll {
-            scrollbar-width: thin;
-            scrollbar-color: #9ca3af #e5e7eb;
-        }
+
+        .sidebar-scroll::-webkit-scrollbar-thumb:hover { background: #d32f2f; }
+
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
-    
+
     {% block head %}{% endblock %}
 </head>
+
 <body class="bg-white">
 
-    <div>
-        <aside id="sidebar" class="sidebar-scroll fixed top-0 left-0 z-40 w-64 h-screen bg-white text-gray-900 flex flex-col transition-transform duration-300 ease-in-out 
-                                    -translate-x-full border-r border-gray-200">
-            
-            <div class="flex items-center justify-between p-4 border-b border-gray-200">
-                <a href="{% url 'products:home' %}" class="text-2xl font-bold text-black">
-                    ThinknShop
-                </a>
-                <button id="sidebar-close-btn" class="lg:hidden text-gray-500 hover:text-red-600 text-2xl p-2">&times;</button>
-            </div>
-            
-            <nav class="flex-1 p-4 space-y-2 overflow-y-auto">
-                <h3 class="px-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Menu</h3>
-                <a href="{% url 'products:home' %}" class="flex items-center px-3 py-2.5 rounded-lg text-gray-700 hover:bg-red-50 hover:text-red-600 transition-colors">
-                    <i class="fas fa-home fa-fw w-6 text-center"></i>
-                    <span class="ml-3 text-sm font-medium">Home</span>
-                </a>
-                <a href="{% url 'products:product-list' %}" class="flex items-center px-3 py-2.5 rounded-lg text-gray-700 hover:bg-red-50 hover:text-red-600 transition-colors">
-                    <i class="fas fa-th-large fa-fw w-6 text-center"></i>
-                    <span class="ml-3 text-sm font-medium">All Products</span>
-                </a>
-                <a href="{% url 'products:category-list' %}" class="flex items-center px-3 py-2.5 rounded-lg text-gray-700 hover:bg-red-50 hover:text-red-600 transition-colors">
-                    <i class="fas fa-list fa-fw w-6 text-center"></i>
-                    <span class="ml-3 text-sm font-medium">Categories</span>
-                </a>
-                <h3 class="px-3 pt-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Account</h3>
-                <a href="#" class="flex items-center px-3 py-2.5 rounded-lg text-gray-700 hover:bg-red-50 hover:text-red-600 transition-colors">
-                    <i class="fas fa-user fa-fw w-6 text-center"></i>
-                    <span class="ml-3 text-sm font-medium">My Profile</span>
-                </a>
-                <a href="{% url 'my_orders' %}" class="flex items-center px-3 py-2.5 rounded-lg text-gray-700 hover:bg-red-50 hover:text-red-600 transition-colors">
-                    <i class="fas fa-box fa-fw w-6 text-center"></i>
-                    <span class="ml-3 text-sm font-medium">My Orders</span>
-                </a>
-                <a href="#" class="flex items-center px-3 py-2.5 rounded-lg text-gray-700 hover:bg-red-50 hover:text-red-600 transition-colors">
-                    <i class="fas fa-heart fa-fw w-6 text-center"></i>
-                    <span class="ml-3 text-sm font-medium">Wishlist</span>
-                </a>
-                 <a href="{% url 'manage_address' %}" class="flex items-center px-3 py-2.5 rounded-lg text-gray-700 hover:bg-red-50 hover:text-red-600 transition-colors">
-                    <i class="fas fa-map-marker-alt fa-fw w-6 text-center"></i>
-                    <span class="ml-3 text-sm font-medium">Addresses</span>
-                </a>
-            </nav>
-            <div class="p-4 border-t border-gray-200">
-                {% if user.is_authenticated %}
-                <a href="#" class="flex items-center w-full p-2 rounded-lg hover:bg-red-50">
-                    <div class="flex-shrink-0 w-10 h-10 rounded-full bg-red-600 text-white flex items-center justify-center font-bold">
-                        {{ request.user.username|slice:":1"|upper }}
-                    </div>
-                    <div class="ml-3">
-                        <div class="text-sm font-medium text-gray-900">{{ user.username }}</div>
-                        <div class="text-xs text-gray-500">View profile</div>
-                    </div>
-                </a>
-                <a href="#" class="block w-full text-left mt-2 px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700 hover:bg-red-50 hover:text-red-600 transition-colors">
-                       <i class="fas fa-sign-out-alt fa-fw w-6 text-center"></i>
-                       <span class="ml-3">Sign Out</span>
-                </a>
-                {% else %}
-                <a href="#" class="block w-full text-left mt-2 px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700 hover:bg-red-50 hover:text-red-600 transition-colors">
-                       <i class="fas fa-sign-in-alt fa-fw w-6 text-center"></i>
-                       <span class="ml-3">Sign In</span>
-                </a>
-                {% endif %}
-            </div>
-        </aside>
+<div>
 
-        <div id="sidebar-overlay" class="fixed inset-0 bg-black/60 z-30 hidden"></div>
+    <!-- SIDEBAR -->
+    <aside id="sidebar"
+           class="sidebar-scroll fixed top-0 left-0 z-40 w-64 h-screen bg-white text-gray-900 flex flex-col 
+                  transition-transform duration-300 ease-in-out -translate-x-full lg:translate-x-0 border-r border-gray-200">
 
-        <div id="main-content" class="relative min-h-screen transition-all duration-300 ease-in-out">
-            
-            <div class="bg-primary text-white text-center py-2.5 text-sm font-bold tracking-wide uppercase">
-                Free Express Shipping on Orders Over $50 + Free Returns
-            </div>
-            
-            <header class="bg-white sticky top-0 z-50 shadow-sm">
-                <div class="max-w-7xl mx-auto px-6">
-                    <div class="flex justify-between items-center py-5">
-                        
-                        <div class="flex-1 flex items-center">
-                            
-                            <button id="sidebar-open-btn" class="p-2 text-gray-700 rounded-md hover:bg-gray-100 hover:text-red-600 mr-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
-                                  <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-                                </svg>
-                            </button>
+        <div class="flex items-center justify-between p-4 border-b border-gray-200">
+            <a href="{% url 'products:home' %}" class="text-2xl font-bold">ThinknShop</a>
+            <button id="sidebar-close-btn"
+                    class="lg:hidden text-gray-500 hover:text-red-600 text-2xl p-2">&times;</button>
+        </div>
 
-                            <div class="relative">
-                                <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-                                    </svg>
-                                </span>
-                                <input type="text" 
-                                       placeholder="Search..." 
-                                       class="w-52 rounded border border-gray-200 bg-gray-50 py-2.5 px-4 pl-10 
-                                              text-sm text-gray-900
-                                              focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent">
-                            </div>
-                        </div>
+        <nav class="flex-1 p-4 space-y-2 overflow-y-auto">
+            <h3 class="px-3 text-xs font-semibold text-gray-500 uppercase">Menu</h3>
 
-                        <div class="absolute left-1/2 -translate-x-1/2">
-                            <a href="#" class="text-3xl font-black text-gray-900 tracking-tighter">
-                                Thinkn<span class="text-red-600">Shop.</span>
-                            </a>
-                        </div>
+            <a href="{% url 'products:home' %}"
+               class="flex items-center px-3 py-2.5 rounded-lg hover:bg-red-50 hover:text-red-600">
+                <i class="fas fa-home w-6"></i><span class="ml-3 text-sm">Home</span>
+            </a>
 
-                        <div class="flex-1 flex justify-end items-center gap-6">
-                            
-                            <a href="{% url 'login' %}" 
-                               title="Account" 
-                               class="flex items-center justify-center w-9 h-9 rounded-full bg-gray-100 text-gray-700 
-                                      border border-gray-200 transition-all duration-300 
-                                      hover:bg-red-600 hover:text-white hover:border-red-600">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
-                                </svg>
-                            </a>
-                            
-                            <a href="#" class="relative flex items-center gap-1.5 font-semibold text-gray-900 uppercase text-sm tracking-wide">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
-                                </svg>
-                                
-                                <span class="hidden md:inline">Cart</span> 
-                                
-                                <span class="absolute -top-2 -right-3 w-5 h-5 flex items-center justify-center 
-                                             rounded-full bg-red-600 text-white text-xs font-bold">
-                                    {{ cart_item_count|default:0 }}
-                                </span>
-                            </a>
-                        </div>
-                        
+            <a href="{% url 'products:product-list' %}"
+               class="flex items-center px-3 py-2.5 rounded-lg hover:bg-red-50 hover:text-red-600">
+                <i class="fas fa-th-large w-6"></i><span class="ml-3 text-sm">All Products</span>
+            </a>
+
+            <a href="{% url 'products:category-list' %}"
+               class="flex items-center px-3 py-2.5 rounded-lg hover:bg-red-50 hover:text-red-600">
+                <i class="fas fa-list w-6"></i><span class="ml-3 text-sm">Categories</span>
+            </a>
+
+            <h3 class="px-3 pt-4 text-xs font-semibold text-gray-500 uppercase">Account</h3>
+
+            <a href="#" class="flex items-center px-3 py-2.5 rounded-lg hover:bg-red-50 hover:text-red-600">
+                <i class="fas fa-user w-6"></i><span class="ml-3 text-sm">My Profile</span>
+            </a>
+
+            <a href="{% url 'my_orders' %}"
+               class="flex items-center px-3 py-2.5 rounded-lg hover:bg-red-50 hover:text-red-600">
+                <i class="fas fa-box w-6"></i><span class="ml-3 text-sm">My Orders</span>
+            </a>
+
+            <a href="#"
+               class="flex items-center px-3 py-2.5 rounded-lg hover:bg-red-50 hover:text-red-600">
+                <i class="fas fa-heart w-6"></i><span class="ml-3 text-sm">Wishlist</span>
+            </a>
+
+            <a href="{% url 'manage_address' %}"
+               class="flex items-center px-3 py-2.5 rounded-lg hover:bg-red-50 hover:text-red-600">
+                <i class="fas fa-map-marker-alt w-6"></i><span class="ml-3 text-sm">Addresses</span>
+            </a>
+        </nav>
+
+        <div class="p-4 border-t border-gray-200">
+            {% if user.is_authenticated %}
+            <a href="#" class="flex items-center p-2 rounded-lg hover:bg-red-50">
+                <div class="w-10 h-10 rounded-full bg-red-600 text-white flex items-center justify-center">
+                    {{ request.user.username|slice:":1"|upper }}
+                </div>
+                <div class="ml-3">
+                    <div class="text-sm font-medium">{{ user.username }}</div>
+                    <div class="text-xs text-gray-500">View profile</div>
+                </div>
+            </a>
+
+            <a href="#"
+               class="block mt-2 px-3 py-2.5 rounded-lg text-sm hover:bg-red-50 hover:text-red-600">
+                <i class="fas fa-sign-out-alt w-6"></i><span class="ml-3">Sign Out</span>
+            </a>
+            {% else %}
+            <a href="#"
+               class="block mt-2 px-3 py-2.5 rounded-lg text-sm hover:bg-red-50 hover:text-red-600">
+                <i class="fas fa-sign-in-alt w-6"></i><span class="ml-3">Sign In</span>
+            </a>
+            {% endif %}
+        </div>
+
+    </aside>
+
+    <div id="sidebar-overlay" class="fixed inset-0 bg-black/60 z-30 hidden"></div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main-content" class="relative min-h-screen transition-all lg:ml-64">
+
+        <!-- TOP BAR -->
+        <div class="bg-primary text-white text-center py-2 text-xs font-semibold uppercase">
+            Free Express Shipping on Orders Over $50 + Free Returns
+        </div>
+
+        <!-- HEADER -->
+        <header class="bg-white sticky top-0 z-50 shadow-sm">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6">
+
+                <!-- ROW 1 -->
+                <div class="flex justify-between items-center py-3 lg:py-5">
+
+                    <!-- MENU -->
+                    <button id="sidebar-open-btn"
+                            class="p-2 text-gray-700 rounded-md hover:bg-gray-100 hover:text-red-600 lg:hidden">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                             viewBox="0 0 24 24" stroke-width="2"
+                             stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                  d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/>
+                        </svg>
+                    </button>
+
+                    <!-- LOGO -->
+                    <a href="{% url 'products:home' %}"
+                       class="text-2xl sm:text-3xl font-black text-gray-900 tracking-tight">
+                        Thinkn<span class="text-red-600">Shop.</span>
+                    </a>
+
+                    <!-- ICONS -->
+                    <div class="flex items-center gap-4">
+
+                        <!-- ACCOUNT -->
+                        <a href="{% url 'login' %}"
+                           class="w-9 h-9 rounded-full bg-gray-100 flex justify-center items-center">
+                            <i class="fa fa-user text-gray-700"></i>
+                        </a>
+
+                        <!-- CART -->
+                        <a href="#" class="relative">
+                            <i class="fa fa-shopping-bag text-2xl text-gray-800"></i>
+                            <span class="absolute -top-1 -right-2 bg-red-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                                {{ cart_item_count|default:0 }}
+                            </span>
+                        </a>
+
                     </div>
                 </div>
-                
-                <div class="border-y border-gray-100">
-                    <div class="max-w-7xl mx-auto px-6">
-                        <nav class="flex justify-center gap-10 py-4">
-                            
-                            {% for category in featured_categories %}
-                            <a href="{{ category.get_absolute_url }}" 
-                               class="font-semibold text-sm text-gray-600 uppercase tracking-wide 
-                                      transition-colors duration-300 hover:text-red-600">
-                                {{ category.name }}
-                            </a>
-                            {% endfor %}
-                            
-                            {% if sale_products.count > 0 %}
-                            <a href="#" 
-                               class="font-extrabold text-sm text-red-600 uppercase tracking-wide 
-                                      transition-colors duration-300 hover:text-red-700">
-                                Sale
-                            </a>
-                            {% endif %}
-                            
-                        </nav>
+
+                <!-- SEARCH MOBILE -->
+                <div class="block lg:hidden pb-3">
+                    <div class="relative">
+                        <i class="fa fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                        <input type="text" placeholder="Search..."
+                               class="w-full rounded border border-gray-200 bg-gray-50 py-2.5 pl-10">
                     </div>
                 </div>
-                
-            </header>
-            
-            <main>
-                {% block content %}
-                {% endblock %}
-            </main>
 
+                <!-- SEARCH DESKTOP -->
+                <div class="hidden lg:block pb-4">
+                    <div class="relative max-w-xl mx-auto">
+                        <i class="fa fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                        <input type="text" placeholder="Search products..."
+                               class="w-full rounded-full border border-gray-200 bg-gray-50 py-3 pl-12">
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- CATEGORY NAV -->
+            <div class="border-y border-gray-100">
+                <div class="max-w-7xl mx-auto px-4">
+                    <nav class="flex gap-6 py-3 overflow-x-auto whitespace-nowrap no-scrollbar lg:justify-center">
+
+                        {% for category in featured_categories %}
+                        <a href="{{ category.get_absolute_url }}"
+                           class="font-semibold text-sm text-gray-600 uppercase hover:text-red-600">
+                            {{ category.name }}
+                        </a>
+                        {% endfor %}
+
+                        {% if sale_products.count > 0 %}
+                        <a href="#" class="font-bold text-sm text-red-600 uppercase">Sale</a>
+                        {% endif %}
+                    </nav>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            {% block content %}{% endblock %}
+        </main>
 
     </div>
+</div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const openBtn = document.getElementById('sidebar-open-btn');
-            const closeBtn = document.getElementById('sidebar-close-btn');
-            const sidebar = document.getElementById('sidebar');
-            const overlay = document.getElementById('sidebar-overlay');
-            const mainContent = document.getElementById('main-content'); 
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
 
-            function openSidebar() {
-                if (sidebar && overlay && mainContent) { 
-                    sidebar.classList.remove('-translate-x-full');
-                    overlay.classList.remove('hidden');
-                    mainContent.classList.add('lg:ml-64');    
-                    document.body.style.overflow = 'hidden'; 
-                }
-            }
+        const openBtn = document.getElementById('sidebar-open-btn');
+        const closeBtn = document.getElementById('sidebar-close-btn');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('sidebar-overlay');
 
-            function closeSidebar() {
-                if (sidebar && overlay && mainContent) { 
-                    sidebar.classList.add('-translate-x-full');
-                    overlay.classList.add('hidden');
-                    mainContent.classList.remove('lg:ml-64');   
-                    document.body.style.overflow = ''; 
-                }
-            }
+        function openSidebar() {
+            sidebar.classList.remove('-translate-x-full');
+            overlay.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
 
-            if (openBtn) {
-                openBtn.addEventListener('click', openSidebar);
-            }
-            if (closeBtn) {
-                closeBtn.addEventListener('click', closeSidebar);
-            }
-            if (overlay) {
-                overlay.addEventListener('click', closeSidebar);
-            }
-        });
-    </script>
+        function closeSidebar() {
+            sidebar.classList.add('-translate-x-full');
+            overlay.classList.add('hidden');
+            document.body.style.overflow = '';
+        }
 
-    {% block scripts %}{% endblock %}
+        openBtn?.addEventListener('click', openSidebar);
+        closeBtn?.addEventListener('click', closeSidebar);
+        overlay?.addEventListener('click', closeSidebar);
+    });
+</script>
+
+{% block scripts %}{% endblock %}
 
 </body>
 </html>

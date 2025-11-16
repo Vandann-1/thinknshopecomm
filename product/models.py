@@ -24,7 +24,7 @@ class Category(TimestampedModel):
     Supports nested categories (parent-child relationships) for better organization.
     Used for navigation, filtering, and SEO purposes.
     """
-    name = models.CharField(max_length=100, unique=True)
+    name = models.CharField(max_length=100)
     slug = models.SlugField(unique=True, help_text="URL-friendly name")
     description = models.TextField(blank=True, help_text="Category description for SEO")
     parent = models.ForeignKey(
