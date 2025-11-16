@@ -36,6 +36,7 @@ urlpatterns = [
     # path('orders/',include('orders.urls')),
     path('user_orders/',include('user_orders.urls')),
     path('customize/', customize_bottle_view, name='customize-bottle'),
+    path('aboutus/',abhout,name='aboutus'),
 ]
 
 if settings.DEBUG:

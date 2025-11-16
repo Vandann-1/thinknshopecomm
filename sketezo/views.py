@@ -4,3 +4,6 @@ from django.shortcuts import render
 # new branch 
 def home(request):
     return render(request,'home/skatezo_development.html')
+
+def abhout(request):
+    return render(request,'about.html')
