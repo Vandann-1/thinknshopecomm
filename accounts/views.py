@@ -82,12 +82,15 @@ def login_view(request):
     
     return render(request, 'accounts/authentication/login.html')
 
+
 def logout_view(request):
     if request.user.is_authenticated:
         username = request.user.first_name or request.user.username
         logout(request)
         messages.success(request, f'Goodbye {username}! You have been logged out.')
     return redirect('/')
+
+
 
 # Optional: Profile view to show user info
 @login_required
@@ -125,7 +128,7 @@ def send_otp_view(request):
             send_otp(phone, otp)          
             return JsonResponse({"success": True, "message": "OTP sent!"})
         except Exception as e:
-            return JsonResponse({"success": False, "error": "Failed to send OTP"}, status=500)
+            return JsonResponse({"success": False, "error" :"Failed to send OTP"}, status=500)
     
     return JsonResponse({"success": False, "error": "Invalid request"}, status=400)   
 
@@ -158,4 +161,4 @@ def verify_otp_view(request):
             "redirect_url": "/"         
         })      
     
-    return JsonResponse({"success": False, "error": "Invalid request"}, status=400)
+    return JsonResponse({"success" : False, "error": "Invalid request"}, status=400)

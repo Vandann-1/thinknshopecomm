@@ -42,7 +42,7 @@
 
     <style>
         body {
-            font-family: 'Manrope', sans-serif;
+            font-family: 'Manrope', 'sans-serif';
             color: #424242;
             overflow-x: hidden;
         }
@@ -67,15 +67,14 @@
 
 <div>
 
-    <!-- SIDEBAR -->
     <aside id="sidebar"
-           class="sidebar-scroll fixed top-0 left-0 z-40 w-64 h-screen bg-white text-gray-900 flex flex-col 
-                  transition-transform duration-300 ease-in-out -translate-x-full lg:translate-x-0 border-r border-gray-200">
+           class="sidebar-scroll fixed top-0 left-0 z-60 w-64 h-screen bg-white text-gray-900 flex flex-col 
+                  transition-transform duration-300 ease-in-out -translate-x-full border-r border-gray-200">
 
         <div class="flex items-center justify-between p-4 border-b border-gray-200">
             <a href="{% url 'products:home' %}" class="text-2xl font-bold">ThinknShop</a>
             <button id="sidebar-close-btn"
-                    class="lg:hidden text-gray-500 hover:text-red-600 text-2xl p-2">&times;</button>
+                    class="text-gray-500 hover:text-red-600 text-2xl p-2">&times;</button>
         </div>
 
         <nav class="flex-1 p-4 space-y-2 overflow-y-auto">
@@ -120,7 +119,7 @@
 
         <div class="p-4 border-t border-gray-200">
             {% if user.is_authenticated %}
-            <a href="#" class="flex items-center p-2 rounded-lg hover:bg-red-50">
+            <a href="{% url 'profile'%}" class="flex items-center p-2 rounded-lg hover:bg-red-50">
                 <div class="w-10 h-10 rounded-full bg-red-600 text-white flex items-center justify-center">
                     {{ request.user.username|slice:":1"|upper }}
                 </div>
@@ -144,26 +143,21 @@
 
     </aside>
 
-    <div id="sidebar-overlay" class="fixed inset-0 bg-black/60 z-30 hidden"></div>
+    <div id="sidebar-overlay" class="fixed inset-0 bg-black/60 z-55 hidden"></div>
 
-    <!-- MAIN CONTENT -->
-    <div id="main-content" class="relative min-h-screen transition-all lg:ml-64">
+    <div id="main-content" class="relative min-h-screen transition-all">
 
-        <!-- TOP BAR -->
         <div class="bg-primary text-white text-center py-2 text-xs font-semibold uppercase">
             Free Express Shipping on Orders Over $50 + Free Returns
         </div>
 
-        <!-- HEADER -->
         <header class="bg-white sticky top-0 z-50 shadow-sm">
             <div class="max-w-7xl mx-auto px-4 sm:px-6">
 
-                <!-- ROW 1 -->
                 <div class="flex justify-between items-center py-3 lg:py-5">
 
-                    <!-- MENU -->
                     <button id="sidebar-open-btn"
-                            class="p-2 text-gray-700 rounded-md hover:bg-gray-100 hover:text-red-600 lg:hidden">
+                            class="p-2 text-gray-700 rounded-md hover:bg-gray-100 hover:text-red-600">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                              viewBox="0 0 24 24" stroke-width="2"
                              stroke="currentColor" class="w-6 h-6">
@@ -172,22 +166,18 @@
                         </svg>
                     </button>
 
-                    <!-- LOGO -->
                     <a href="{% url 'products:home' %}"
                        class="text-2xl sm:text-3xl font-black text-gray-900 tracking-tight">
                         Thinkn<span class="text-red-600">Shop.</span>
                     </a>
 
-                    <!-- ICONS -->
                     <div class="flex items-center gap-4">
 
-                        <!-- ACCOUNT -->
                         <a href="{% url 'login' %}"
                            class="w-9 h-9 rounded-full bg-gray-100 flex justify-center items-center">
                             <i class="fa fa-user text-gray-700"></i>
                         </a>
 
-                        <!-- CART -->
                         <a href="#" class="relative">
                             <i class="fa fa-shopping-bag text-2xl text-gray-800"></i>
                             <span class="absolute -top-1 -right-2 bg-red-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
@@ -198,7 +188,6 @@
                     </div>
                 </div>
 
-                <!-- SEARCH MOBILE -->
                 <div class="block lg:hidden pb-3">
                     <div class="relative">
                         <i class="fa fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
@@ -207,7 +196,6 @@
                     </div>
                 </div>
 
-                <!-- SEARCH DESKTOP -->
                 <div class="hidden lg:block pb-4">
                     <div class="relative max-w-xl mx-auto">
                         <i class="fa fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
@@ -218,7 +206,6 @@
 
             </div>
 
-            <!-- CATEGORY NAV -->
             <div class="border-y border-gray-100">
                 <div class="max-w-7xl mx-auto px-4">
                     <nav class="flex gap-6 py-3 overflow-x-auto whitespace-nowrap no-scrollbar lg:justify-center">
@@ -241,10 +228,8 @@
         <main>
             {% block content %}{% endblock %}
         </main>
-
-    </div>
+        </div>
 </div>
-
 <script>
     document.addEventListener('DOMContentLoaded', function () {
 
@@ -256,13 +241,13 @@
         function openSidebar() {
             sidebar.classList.remove('-translate-x-full');
             overlay.classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
         }
 
         function closeSidebar() {
             sidebar.classList.add('-translate-x-full');
             overlay.classList.add('hidden');
-            document.body.style.overflow = '';
+            document.body.style.overflow = ''; // Allow background scrolling
         }
 
         openBtn?.addEventListener('click', openSidebar);
@@ -272,6 +257,6 @@
 </script>
 
 {% block scripts %}{% endblock %}
-
 </body>
+
 </html>
