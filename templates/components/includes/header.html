@@ -142,15 +142,28 @@
                         <i class="fas fa-bars"></i>
                     </button>
                     
-                    <!-- Profile Dropdown (Hidden on mobile) -->
+                    <!-- Profile Dropdown with Username -->
+                    {% if user.is_authenticated %}
                     <div class="skatezo-categories relative hidden md:block">
-                        <button class="skatezo-action-btn p-2 md:p-3 rounded-xl text-gray-600 cursor-pointer transition-all duration-300 flex items-center justify-center text-lg md:text-xl hover:bg-gray-100 hover:text-red-600" title="Profile" onclick="toggleDropdown('profile')">
-                            <i class="fas fa-user"></i>
+                        <button class="skatezo-action-btn p-2 md:p-3 rounded-xl text-gray-600 cursor-pointer transition-all duration-300 flex items-center justify-center space-x-2 hover:bg-gray-100 hover:text-red-600" title="Profile" onclick="toggleDropdown('profile')">
+                            <div class="w-8 h-8 rounded-full bg-red-600 text-white flex items-center justify-center text-sm font-bold">
+                                {{ user.username|slice:":1"|upper }}
+                            </div>
+                            <span class="text-sm font-medium hidden lg:block">{{ user.username }}</span>
+                            <i class="fas fa-chevron-down text-xs hidden lg:block"></i>
                         </button>
                         <div class="skatezo-dropdown absolute top-full right-0 bg-gradient-to-br from-gray-800 to-gray-800/90 border border-gray-700 rounded-2xl min-w-[280px] shadow-2xl transition-all duration-300 opacity-0 invisible translate-y-[-15px] z-50 mt-3 backdrop-blur-xl" id="profile-dropdown">
                              <div class="skatezo-dropdown-content p-5 max-h-[400px] overflow-y-auto custom-scrollbar">
                                 <div class="mb-7">
-                                    <div class="tns-text-gradient text-base font-bold mb-4 pb-2 border-b-2 border-gray-800">Account</div>
+                                    <div class="flex items-center space-x-3 mb-4 pb-4 border-b border-gray-700">
+                                        <div class="w-12 h-12 rounded-full bg-red-600 text-white flex items-center justify-center text-lg font-bold">
+                                            {{ user.username|slice:":1"|upper }}
+                                        </div>
+                                        <div>
+                                            <div class="text-white font-semibold text-sm">{{ user.username }}</div>
+                                            <div class="text-gray-400 text-xs">{{ user.email }}</div>
+                                        </div>
+                                    </div>
                                     <div class="flex flex-col space-y-1.5">
                                         <a href="{%url 'login' %}" class="skatezo-dropdown-link flex items-center space-x-3 p-3 rounded-lg text-gray-400 text-sm transition-all duration-300 relative overflow-hidden hover:bg-gray-700 hover:text-white hover:translate-x-2 hover:shadow-md hover:shadow-red-500/20">
                                             <i class="fas fa-user w-5 text-red-400"></i>
@@ -173,6 +186,14 @@
                             </div>
                         </div>
                     </div>
+                    {% else %}
+                    <div class="skatezo-categories relative hidden md:block">
+                        <a href="{%url 'login' %}" class="skatezo-action-btn p-2 md:p-3 rounded-xl text-gray-600 cursor-pointer transition-all duration-300 flex items-center justify-center space-x-2 hover:bg-gray-100 hover:text-red-600" title="Login">
+                            <i class="fas fa-user text-lg md:text-xl"></i>
+                            <span class="text-sm font-medium hidden lg:block">Login</span>
+                        </a>
+                    </div>
+                    {% endif %}
 
                     <!-- Cart Dropdown -->
                     <div class="skatezo-categories relative">
