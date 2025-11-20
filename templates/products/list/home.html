@@ -1,4 +1,3 @@
-
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -8,140 +7,161 @@
     <title>ThinknShop - Premium Hydration</title>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        /* --- All your CSS styles remain unchanged --- */
-        /* ... */
         :root {
-            /* THEME: Red & Black Professional */
-            --primary-color: #d32f2f; /* Bold, professional red */
-            --primary-dark: #b71c1c;  /* Darker red for hover states */
-            --accent-color: #ffc107;  /* Subtle gold for ratings only */
-            
-            --text-dark: #111111;     /* Near-black for strong contrast */
-            --text-medium: #424242;   /* softer black for paragraphs */
-            --text-light: #9e9e9e;    /* Light grey for secondary text */
-            
+            --primary-color: #d32f2f;
+            --primary-dark: #b71c1c;
+            --accent-color: #ffc107;
+            --text-dark: #111111;
+            --text-medium: #424242;
+            --text-light: #9e9e9e;
             --bg-white: #ffffff;
             --bg-off-white: #f9f9f9;
-            --bg-dark: #0a0a0a;      /* Deep black for footer/banners */
-            
+            --bg-dark: #0a0a0a;
             --container-width: 1240px;
-            --font-family: 'Manrope', sans-serif; /* Switched to Manrope for a more modern, technical feel suited to red/black */
-            
+            --font-family: 'Manrope', sans-serif;
             --shadow-sm: 0 2px 4px rgba(0,0,0,0.08);
             --shadow-md: 0 6px 12px rgba(0,0,0,0.12);
             --shadow-lg: 0 15px 30px rgba(0,0,0,0.15);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+        }
+        
+        html, body {
+            width: 100%;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
         body {
             font-family: var(--font-family);
             color: var(--text-medium);
             background-color: var(--bg-white);
             line-height: 1.6;
-            overflow-x: hidden;
         }
-        a { text-decoration: none; color: inherit; transition: all 0.3s ease; }
-        .container { max-width: var(--container-width); margin: 0 auto; padding: 0 25px; }
-        .section-padding { padding: 90px 0; }
+        
+        a { 
+            text-decoration: none; 
+            color: inherit; 
+            transition: all 0.3s ease; 
+        }
+        
+        .container { 
+            max-width: var(--container-width); 
+            margin: 0 auto; 
+            padding: 0 20px;
+            width: 100%;
+        }
 
-        /* --- Announcement Bar --- */
+        /* Announcement Bar */
         .announcement-bar {
             background-color: var(--primary-color);
             color: var(--bg-white);
             text-align: center;
-            padding: 10px 0;
-            font-size: 0.85em;
+            padding: 10px 15px;
+            font-size: 0.75em;
             font-weight: 700;
             letter-spacing: 0.5px;
             text-transform: uppercase;
+            width: 100%;
         }
 
-        /* --- Buttons & Global --- */
-        .btn {
-            display: inline-block;
-            padding: 14px 32px;
-            border-radius: 4px; /* Sharper corners fit red/black theme better than round pills */
-            font-weight: 700;
-            transition: all 0.3s ease;
+        /* Mobile Menu Button */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
             border: none;
+            font-size: 1.5em;
             cursor: pointer;
-            text-transform: uppercase;
-            font-size: 0.9em;
-            letter-spacing: 1px;
-        }
-        .btn-primary {
-            background-color: var(--primary-color);
-            color: var(--bg-white);
-        }
-        .btn-primary:hover {
-            background-color: var(--bg-dark); /* Hover to black for sleekness */
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
-        }
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            margin-bottom: 50px;
-            border-bottom: 2px solid var(--bg-off-white);
-            padding-bottom: 20px;
-        }
-        .section-header h2 {
-            font-size: 2.4em;
-            font-weight: 800;
             color: var(--text-dark);
-            letter-spacing: -0.5px;
         }
-        .view-all-link {
-            color: var(--text-dark);
-            font-weight: 700;
-            border-bottom: 2px solid var(--primary-color);
-            padding-bottom: 2px;
+
+        /* Header Styles */
+        header {
+            background: white;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            width: 100%;
         }
-        .view-all-link:hover { background: var(--text-dark); color: var(--bg-white); border-color: var(--text-dark); padding: 5px 10px; }
 
-        /* --- Header & Nav --- */
+        .header-top {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
 
-        .nav-top {
+        .header-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 20px 0;
-        }
-        .logo {
-            font-size: 2em;
-            font-weight: 900;
-            color: var(--text-dark);
-            letter-spacing: -1px;
-        }
-        .logo span { color: var(--primary-color); }
-        
-        .nav-actions { display: flex; gap: 30px; align-items: center; }
-        .nav-icon-link {
-            font-size: 1.1em;
-            font-weight: 600;
             position: relative;
-            color: var(--text-dark);
-            text-transform: uppercase;
-            font-size: 0.85em;
-        }
-        .cart-count {
-            position: absolute;
-            top: -10px;
-            right: -15px;
-            background: var(--primary-color);
-            color: white;
-            font-size: 0.75em;
-            width: 20px;
-            height: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            font-weight: 700;
         }
 
-        /* --- Profile Icon Styles --- */
+        .search-container {
+            flex: 1;
+            max-width: 200px;
+        }
+
+        .search-wrapper {
+            position: relative;
+            width: 100%;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #9ca3af;
+            width: 20px;
+            height: 20px;
+        }
+
+        .search-input {
+            width: 100%;
+            border-radius: 4px;
+            border: 1px solid #e5e7eb;
+            background: #f9fafb;
+            padding: 10px 16px 10px 40px;
+            font-size: 0.875rem;
+            color: #111827;
+        }
+
+        .search-input:focus {
+            outline: none;
+            ring: 2px;
+            ring-color: #ef4444;
+            border-color: transparent;
+        }
+
+        .logo-center {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.875rem;
+            font-weight: 900;
+            color: #111827;
+            letter-spacing: -0.05em;
+        }
+
+        .logo-center span {
+            color: #dc2626;
+        }
+
+        .header-actions {
+            flex: 1;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 24px;
+        }
+
         .profile-icon {
             display: flex;
             align-items: center;
@@ -149,49 +169,817 @@
             width: 36px;
             height: 36px;
             border-radius: 50%;
-            background-color: var(--bg-off-white);
-            color: var(--text-dark);
-            font-size: 1.2em; /* Adjust icon size */
-            transition: all 0.3s ease;
-             /* Optional: Add a border for better definition on white bg */
-            border: 1px solid #e0e0e0;
+            background-color: #f3f4f6;
+            color: #374151;
+            border: 1px solid #e5e7eb;
+            transition: all 0.3s;
         }
 
         .profile-icon:hover {
-            background-color: var(--primary-color);
-            color: var(--bg-white);
-            border-color: var(--primary-color);
+            background-color: #dc2626;
+            color: white;
+            border-color: #dc2626;
         }
 
+        .profile-icon svg {
+            width: 24px;
+            height: 24px;
+        }
 
-        .nav-categories-wrapper { border-top: 1px solid var(--bg-off-white); border-bottom: 1px solid var(--bg-off-white); }
+        .cart-link {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 600;
+            color: #111827;
+            text-transform: uppercase;
+            font-size: 0.875rem;
+            letter-spacing: 0.05em;
+        }
+
+        .cart-icon {
+            width: 24px;
+            height: 24px;
+        }
+
+        .cart-text {
+            display: none;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -12px;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: #dc2626;
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .nav-categories-wrapper {
+            border-top: 1px solid #f3f4f6;
+            border-bottom: 1px solid #f3f4f6;
+            width: 100%;
+        }
+
+        .nav-categories-inner {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
         .nav-categories {
             display: flex;
             justify-content: center;
             gap: 40px;
-            padding: 15px 0;
+            padding: 16px 0;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
         }
+
+        .nav-categories::-webkit-scrollbar {
+            display: none;
+        }
+
         .nav-categories a {
             font-weight: 600;
-            font-size: 0.9em;
-            color: var(--text-medium);
+            font-size: 0.875rem;
+            color: #6b7280;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.05em;
+            white-space: nowrap;
+            transition: color 0.3s;
         }
-        .nav-categories a:hover { color: var(--primary-color); }
-        .nav-categories a.sale { color: var(--primary-color); font-weight: 800; }
 
-        
-        /* --- Responsive Tweak --- */
+        .nav-categories a:hover {
+            color: #dc2626;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(to bottom right, #f3f4f6, #e5e7eb);
+            padding: 80px 0;
+            overflow: hidden;
+            position: relative;
+            margin-bottom: 64px;
+            width: 100%;
+        }
+
+        .hero-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 42rem;
+            width: 100%;
+            z-index: 10;
+            padding-right: 0;
+            text-align: center;
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            font-weight: 800;
+            line-height: 1.2;
+            color: #111827;
+            margin-bottom: 24px;
+        }
+
+        .hero-title-highlight {
+            position: relative;
+            color: #dc2626;
+            display: inline-block;
+        }
+
+        .hero-title-underline {
+            position: absolute;
+            bottom: 4px;
+            left: 0;
+            width: 100%;
+            height: 16px;
+            background: rgba(220, 38, 38, 0.1);
+            z-index: -10;
+        }
+
+        .hero-description {
+            font-size: 1.125rem;
+            color: #4b5563;
+            max-width: 90%;
+            margin: 0 auto 40px;
+        }
+
+        .hero-cta {
+            display: inline-block;
+            background: #dc2626;
+            color: white;
+            font-weight: 600;
+            padding: 12px 24px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+
+        .hero-cta:hover {
+            background: #b91c1c;
+            transform: scale(1.05);
+        }
+
+        .hero-image-wrapper {
+            width: 100%;
+            margin-top: 64px;
+            display: flex;
+            justify-content: center;
+            z-index: 0;
+        }
+
+        .hero-image {
+            width: 75%;
+            max-width: 350px;
+            height: auto;
+            object-fit: cover;
+            border-radius: 12px;
+            transform: rotate(6deg);
+            filter: drop-shadow(0 25px 25px rgba(0, 0, 0, 0.2));
+        }
+
+        /* Products Section */
+        .products-section {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 20px 96px;
+            width: 100%;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 48px;
+            border-bottom: 2px solid #f3f4f6;
+            padding-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .section-title {
+            font-size: 2.25rem;
+            font-weight: 800;
+            color: #111827;
+            letter-spacing: -0.025em;
+        }
+
+        .view-all-link {
+            color: #111827;
+            font-weight: 700;
+            border-bottom: 2px solid #dc2626;
+            padding-bottom: 2px;
+            transition: all 0.3s;
+            font-size: 0.875rem;
+        }
+
+        .view-all-link:hover {
+            background: #111827;
+            color: white;
+            border-color: #111827;
+            padding: 8px 16px;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 40px;
+        }
+
+        .product-card {
+            background: white;
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-6px);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 0;
+            left: 0;
+            padding: 8px 16px;
+            font-size: 0.7em;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            z-index: 10;
+        }
+
+        .badge-sale {
+            background: #dc2626;
+            color: white;
+        }
+
+        .badge-bestseller {
+            background: #111827;
+            color: white;
+        }
+
+        .badge-new {
+            background: white;
+            color: #111827;
+            border: 2px solid #111827;
+        }
+
+        .product-image-wrapper {
+            display: block;
+            height: 340px;
+            background: #f9fafb;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-image {
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            transition: transform 0.7s;
+        }
+
+        .product-card:hover .product-image {
+            transform: scale(1.05);
+        }
+
+        .add-to-cart-btn {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            width: 85%;
+            padding: 12px;
+            background: #111827;
+            color: white;
+            text-align: center;
+            font-weight: 700;
+            opacity: 0;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            font-size: 0.8em;
+            letter-spacing: 1px;
+            z-index: 20;
+        }
+
+        .product-card:hover .add-to-cart-btn {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .add-to-cart-btn:hover {
+            background: #dc2626;
+        }
+
+        .product-info {
+            padding: 24px 0;
+            text-align: center;
+        }
+
+        .product-rating {
+            color: #f59e0b;
+            font-size: 0.875rem;
+            margin-bottom: 10px;
+        }
+
+        .product-name {
+            font-weight: 700;
+            font-size: 1.125rem;
+            color: #111827;
+            margin-bottom: 10px;
+        }
+
+        .product-price {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: #dc2626;
+        }
+
+        .product-price-old {
+            text-decoration: line-through;
+            color: #9ca3af;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-left: 8px;
+        }
+
+        /* Collections Grid */
+        .collections-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2px;
+            background: #f3f4f6;
+            border: 2px solid #f3f4f6;
+            width: 100%;
+        }
+
+        .collection-item {
+            position: relative;
+            height: 400px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .collection-bg {
+            position: absolute;
+            inset: 0;
+            background-size: cover;
+            background-position: center;
+            transition: transform 0.5s;
+        }
+
+        .collection-item:hover .collection-bg {
+            transform: scale(1.05);
+        }
+
+        .collection-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.3);
+            transition: background 0.3s;
+        }
+
+        .collection-item:hover .collection-overlay {
+            background: rgba(0,0,0,0.5);
+        }
+
+        .collection-content {
+            position: relative;
+            z-index: 10;
+            color: white;
+            padding: 40px;
+            border: 1px solid rgba(255,255,255,0.5);
+        }
+
+        .collection-title {
+            font-size: 2.25rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: -0.05em;
+        }
+
+        .collection-btn {
+            display: inline-block;
+            padding: 12px 32px;
+            background: white;
+            color: #111827;
+            font-weight: 800;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            border-radius: 6px;
+            transition: all 0.3s;
+        }
+
+        .collection-btn:hover {
+            background: #dc2626;
+            color: white;
+        }
+
+        /* Newsletter Section */
+        .newsletter-section {
+            background: #111827;
+            background-image: radial-gradient(circle at 100% 0%, #4a0404 0%, #0a0a0a 50%);
+            color: white;
+            text-align: center;
+            padding: 80px 20px;
+            width: 100%;
+        }
+
+        .newsletter-title {
+            font-size: 2.25rem;
+            font-weight: 900;
+            margin-bottom: 16px;
+            letter-spacing: -0.025em;
+        }
+
+        .newsletter-description {
+            opacity: 0.8;
+            max-width: 42rem;
+            margin: 0 auto;
+        }
+
+        .newsletter-form {
+            display: flex;
+            flex-direction: column;
+            max-width: 32rem;
+            margin: 32px auto 0;
+            gap: 10px;
+        }
+
+        .newsletter-input {
+            flex: 1;
+            padding: 16px 24px;
+            border: none;
+            font-size: 1rem;
+            width: 100%;
+            border-radius: 6px;
+            color: #111827;
+        }
+
+        .newsletter-input:focus {
+            outline: none;
+            ring: 2px;
+            ring-color: #dc2626;
+        }
+
+        .newsletter-submit {
+            width: 100%;
+            padding: 16px 40px;
+            border-radius: 6px;
+            font-weight: 700;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            font-size: 0.875rem;
+            letter-spacing: 0.1em;
+            background: #dc2626;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .newsletter-submit:hover {
+            background: #111827;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        /* Footer */
+        footer {
+            background: #0d0d0d;
+            color: #d1d1d1;
+            padding: 64px 0;
+            width: 100%;
+        }
+
+        .footer-container {
+            max-width: 1152px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+        }
+
+        .footer-brand {
+            font-size: 1.875rem;
+            font-weight: 800;
+            color: white;
+            letter-spacing: -0.025em;
+        }
+
+        .footer-brand span {
+            color: #ef4444;
+        }
+
+        .footer-description {
+            color: #9ca3af;
+            margin-top: 16px;
+            line-height: 1.6;
+        }
+
+        .footer-social {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-top: 20px;
+        }
+
+        .footer-social a {
+            color: #d1d1d1;
+            transition: color 0.3s;
+        }
+
+        .footer-social a:hover {
+            color: #ef4444;
+        }
+
+        .footer-heading {
+            color: white;
+            font-weight: 600;
+            margin-bottom: 16px;
+            font-size: 1.125rem;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            color: #9ca3af;
+        }
+
+        .footer-links a:hover {
+            color: #ef4444;
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #374151;
+            margin-top: 48px;
+            padding-top: 24px;
+            flex-wrap: wrap;
+            color: #6b7280;
+            font-size: 0.875rem;
+            gap: 16px;
+        }
+
+        .footer-bottom-links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .footer-bottom-links a:hover {
+            color: #ef4444;
+        }
+
+        .footer-credit {
+            text-align: center;
+            color: #6b7280;
+            border-top: 1px solid #374151;
+            margin-top: 32px;
+            padding-top: 16px;
+            font-size: 0.875rem;
+        }
+
+        .footer-credit span {
+            color: #ef4444;
+            font-weight: 600;
+        }
+
+        /* Mobile Responsive Styles */
         @media (max-width: 768px) {
-            .hero h1 { font-size: 2.8em; }
-            .features-bar { flex-direction: column; align-items: flex-start; gap: 25px; margin-top: 0; }
-            .collections-grid { grid-template-columns: 1fr; }
-            .collection-item { height: 300px; }
-            .footer-grid { grid-template-columns: 1fr; gap: 40px; }
-            .newsletter-form { flex-direction: column; }
-            .newsletter-form input, .newsletter-form button { width: 100%; border-radius: 4px; }
-            .newsletter-form button { margin-top: 10px; padding: 15px 0; }
+            .announcement-bar {
+                font-size: 0.65em;
+                padding: 8px 10px;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .search-container {
+                display: none;
+            }
+
+            .logo-center {
+                position: static;
+                transform: none;
+                font-size: 1.5rem;
+            }
+
+            .cart-text {
+                display: none;
+            }
+
+            .header-actions {
+                gap: 16px;
+            }
+
+            .nav-categories {
+                justify-content: flex-start;
+                gap: 20px;
+                padding: 12px 0;
+            }
+
+            .nav-categories a {
+                font-size: 0.75rem;
+            }
+
+            .hero-section {
+                padding: 40px 0;
+                margin-bottom: 40px;
+            }
+
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .hero-description {
+                font-size: 1rem;
+                margin-bottom: 32px;
+            }
+
+            .hero-image-wrapper {
+                margin-top: 40px;
+            }
+
+            .hero-image {
+                width: 85%;
+                max-width: 280px;
+            }
+
+            .products-section {
+                padding: 0 20px 64px;
+            }
+
+            .section-title {
+                font-size: 1.75rem;
+            }
+
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 20px;
+            }
+
+            .product-image-wrapper {
+                height: 220px;
+            }
+
+            .product-info {
+                padding: 16px 0;
+            }
+
+            .product-name {
+                font-size: 0.95rem;
+            }
+
+            .product-price {
+                font-size: 1.1rem;
+            }
+
+            .collections-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .collection-item {
+                height: 300px;
+            }
+
+            .collection-title {
+                font-size: 1.75rem;
+            }
+
+            .newsletter-section {
+                padding: 60px 20px;
+            }
+
+            .newsletter-title {
+                font-size: 1.75rem;
+            }
+
+            .newsletter-form {
+                gap: 12px;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .footer-bottom-links {
+                justify-content: center;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .hero-content {
+                width: 66.666667%;
+                text-align: left;
+                padding-right: 40px;
+            }
+
+            .hero-container {
+                flex-direction: row;
+            }
+
+            .hero-image-wrapper {
+                position: absolute;
+                right: 0;
+                top: 50%;
+                transform: translateY(-50%);
+                width: auto;
+                margin-top: 0;
+            }
+
+            .hero-image {
+                width: 350px;
+                max-width: 450px;
+                transform: rotate(12deg);
+            }
+
+            .hero-description {
+                margin-left: 0;
+                margin-right: auto;
+            }
+
+            .cart-text {
+                display: inline;
+            }
+
+            .newsletter-form {
+                flex-direction: row;
+                gap: 0;
+            }
+
+            .newsletter-input {
+                border-radius: 6px 0 0 6px;
+            }
+
+            .newsletter-submit {
+                width: auto;
+                padding: 14px 40px;
+                border-radius: 0 6px 6px 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 1.75rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .product-card:hover {
+                transform: none;
+            }
+
+            .add-to-cart-btn {
+                position: static;
+                transform: none;
+                opacity: 1;
+                width: 100%;
+                margin-top: 12px;
+            }
         }
     </style>
 </head>
@@ -201,422 +989,245 @@
         Free Express Shipping on Orders Over $50 + Free Returns
     </div>
 
-<header class="bg-white sticky top-0 z-50 shadow-sm">
-    
-    <div class="max-w-7xl mx-auto px-6">
-        <div class="flex justify-between items-center py-5">
-            
-            <div class="flex-1 flex items-center">
-                <div class="relative">
-                    <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+    <header>
+        <div class="header-top">
+            <div class="header-content">
+                
+                <button class="mobile-menu-btn">☰</button>
+                
+                <div class="search-container">
+                    <div class="search-wrapper">
+                        <span class="search-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                            </svg>
+                        </span>
+                        <input type="text" placeholder="Search..." class="search-input">
+                    </div>
+                </div>
+
+                <a href="#" class="logo-center">
+                    Thinkn<span>Shop.</span>
+                </a>
+
+                <div class="header-actions">
+                    <a href="{% url 'login' %}" title="Account" class="profile-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
                         </svg>
-                    </span>
-                    <input type="text" 
-                           placeholder="Search..." 
-                           class="w-52 rounded border border-gray-200 bg-gray-50 py-2.5 px-4 pl-10 
-                                  text-sm text-gray-900
-                                  focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent">
+                    </a>
+                    
+                    <a href="#" class="cart-link">
+                        <svg class="cart-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                        </svg>
+                        <span class="cart-text">Cart</span>
+                        <span class="cart-count">{{ cart_item_count|default:0 }}</span>
+                    </a>
                 </div>
             </div>
-
-            <div class="absolute left-1/2 -translate-x-1/2">
-                <a href="#" class="text-3xl font-black text-gray-900 tracking-tighter">
-                    Thinkn<span class="text-red-600">Shop.</span>
-                </a>
-            </div>
-
-            <div class="flex-1 flex justify-end items-center gap-6">
-                
-                <a href="{% url 'login' %}" 
-                   title="Account" 
-                   class="flex items-center justify-center w-9 h-9 rounded-full bg-gray-100 text-gray-700 
-                          border border-gray-200 transition-all duration-300 
-                          hover:bg-red-600 hover:text-white hover:border-red-600">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
-                    </svg>
-                </a>
-                
-                <a href="#" class="relative flex items-center gap-1.5 font-semibold text-gray-900 uppercase text-sm tracking-wide">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
-                    </svg>
-                    
-                    <span class="hidden md:inline">Cart</span> 
-                    
-                    <span class="absolute -top-2 -right-3 w-5 h-5 flex items-center justify-center 
-                                 rounded-full bg-red-600 text-white text-xs font-bold">
-                        {{ cart_item_count|default:0 }}
-                    </span>
-                </a>
-            </div>
-            
         </div>
-    </div>
-    
-    <div class="border-y border-gray-100">
-        <div class="max-w-7xl mx-auto px-6">
-            <nav class="flex justify-center gap-10 py-4">
-                
-                {% for category in featured_categories %}
-                <a href="{{ category.get_absolute_url }}" 
-                   class="font-semibold text-sm text-gray-600 uppercase tracking-wide 
-                          transition-colors duration-300 hover:text-red-600">
-                    {{ category.name }}
-                </a>
-                {% endfor %}
-                
-                {% if sale_products.count > 0 %}
-                <a href="#" 
-                   class="font-extrabold text-sm text-red-600 uppercase tracking-wide 
-                          transition-colors duration-300 hover:text-red-700">
-                    Sale
-                </a>
-                {% endif %}
-                
-            </nav>
+        
+        <div class="nav-categories-wrapper">
+            <div class="nav-categories-inner">
+                <nav class="nav-categories">
+                    {% for category in featured_categories %}
+                    <a href="{{ category.get_absolute_url }}">{{ category.name }}</a>
+                    {% endfor %}
+                </nav>
+            </div>
         </div>
-    </div>
-    
-</header>
-
-
-
+    </header>
 
     <main>
-<section class="bg-gradient-to-br from-gray-100 to-gray-200 py-20 overflow-hidden relative mb-16">
-    <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-center relative">
-
-        <div class="max-w-xl md:w-2/3 lg:w-1/2 z-10 pr-0 md:pr-10">
-            <h1 class="text-5xl md:text-6xl font-extrabold leading-tight text-gray-900 mb-6">
-                Precision Engineered.<br>
-                Unapologetically 
-                <span class="relative text-red-600 inline-block">
-                    Bold.
-                    <span class="absolute bottom-1 left-0 w-full h-4 bg-red-600/10 -z-10"></span>
-                </span>
-            </h1>
-
-            <p class="text-lg text-gray-600 max-w-[90%] mb-10">
-                Experience hydration evolved. Superior thermal performance meets striking industrial design.
-            </p>
-
-            <a href="#shop"
-               class="inline-block bg-red-600 hover:bg-red-700 text-white font-semibold px-6 py-3 rounded-xl shadow-md transition-all duration-300 transform hover:scale-105">
-                Explore The Series
-            </a>
-        </div>
-        
-        <div class="md:absolute md:right-0 md:top-1/2 md:-translate-y-1/2 w-full md:w-auto mt-16 md:mt-0 flex justify-center md:justify-start z-0">
-            <img src="https://placehold.co/400x600/333333/ef4444?text=YOUR+BOTTLE" 
-                 alt="Sleek Red and Black Water Bottle"
-                 class="w-3/4 md:w-[350px] lg:w-[450px] h-auto object-cover rounded-xl transform rotate-6 md:rotate-12"
-                 style="filter: drop-shadow(0 25px 25px rgb(0 0 0 / 0.2));">
-        </div>
-        
-    </div>
-</section>
-
-<section class="max-w-7xl mx-auto px-6 py-24" id="shop">
-    
-    <div class="flex justify-between items-end mb-12 border-b-2 border-gray-100 pb-5">
-        <h2 class="text-4xl font-extrabold text-gray-900 tracking-tight">Current Favorites</h2>
-        <a href="#" class="text-gray-900 font-bold border-b-2 border-red-600 pb-0.5 transition-all duration-300 hover:bg-gray-900 hover:text-white hover:border-gray-900 hover:px-2.5 hover:py-1.5">
-            VIEW ALL
-        </a>
-    </div>
-    
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10">
-
-        {% for product in featured_products %}
-        <div class="group bg-white relative transition-all duration-300 ease-in-out hover:-translate-y-1.5">
-            
-            {% if product.discounted_price and product.discounted_price < product.base_price %}
-                <span class="absolute top-0 left-0 py-2 px-4 text-[0.7em] font-extrabold uppercase tracking-[1px] z-10 bg-red-600 text-white">SALE</span>
-            {% elif product.is_bestseller %}
-                <span class="absolute top-0 left-0 py-2 px-4 text-[0.7em] font-extrabold uppercase tracking-[1px] z-10 bg-gray-900 text-white">Bestseller</span>
-            {% elif product.is_new_arrival %}
-                 <span class="absolute top-0 left-0 py-2 px-4 text-[0.7em] font-extrabold uppercase tracking-[1px] z-10 bg-white text-gray-900 border-2 border-gray-900">New</span>
-            {% endif %}
-
-            <a href="{{ product.get_absolute_url }}" class="block h-[340px] bg-gray-50 relative overflow-hidden">
-                
-                {% if product.gallery.first.image %}
-                <div class="w-full h-full bg-cover bg-center transition-transform duration-700 ease-in-out group-hover:scale-105" 
-                     style="background-image: url('{{ product.gallery.first.image.url }}');">
-                </div>
-                {% else %}
-                <div class="w-full h-full bg-cover bg-center transition-transform duration-700 ease-in-out group-hover:scale-105" 
-                     style="background-image: url('{% static 'im/placeholder.png' %}');">
-                </div>
-                {% endif %}
-            </a>
-            
-            <a href"#" 
-               class="absolute bottom-5 left-1/2 -translate-x-1/2 translate-y-5 w-[85%] p-3 
-                      bg-gray-900 text-white text-center font-bold 
-                      opacity-0 group-hover:opacity-100 group-hover:translate-y-0 
-                      transition-all duration-300 ease-in-out 
-                      uppercase text-[0.8em] tracking-[1px] z-20 
-                      hover:bg-red-600">
-                Add to Cart - ${{ product.get_effective_price|floatformat:2 }}
-            </a>
-
-            <div class="py-6 text-center">
-                
-                <div class="text-amber-500 text-sm mb-2.5">
-                    {% if product.reviews.count > 0 %}
-                        ★★★★★ ({{ product.reviews.count }})
-                    {% else %}
-                        No reviews yet
-                    {% endif %}
-                </div>
-                
-                <h3 class="font-bold text-lg text-gray-900 mb-2.5">{{ product.name }}</h3>
-                
-                <div class="text-xl font-extrabold text-red-600">
-                    ${{ product.get_effective_price|floatformat:2 }}
-                    
-                    {% if product.discounted_price and product.discounted_price < product.base_price %}
-                        <span class="line-through text-gray-400 text-sm font-medium ml-2">
-                            ${{ product.base_price|floatformat:2 }}
+        <section class="hero-section">
+            <div class="hero-container">
+                <div class="hero-content">
+                    <h1 class="hero-title">
+                        Precision Engineered.<br>
+                        Unapologetically 
+                        <span class="hero-title-highlight">
+                            Bold.
+                            <span class="hero-title-underline"></span>
                         </span>
-                    {% endif %}
-                </div>
-            </div>
-        </div>
-        {% empty %}
-            <p class="col-span-full text-center text-gray-500">No featured products are available at this time.</p>
-        {% endfor %}
-        
-    </div>
-</section>
+                    </h1>
 
+                    <p class="hero-description">
+                        Experience hydration evolved. Superior thermal performance meets striking industrial design.
+                    </p>
 
-
-
-<section class="grid grid-cols-1 md:grid-cols-2 gap-[2px] bg-gray-100 border-2 border-gray-100">
-
-    {% for collection in featured_collections %}
-
-    <div class="group relative h-[400px] overflow-hidden flex items-center justify-center text-center">
-        <div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 ease-in-out group-hover:scale-105" 
-             style="background-image: url('{% if collection.image %}{{ collection.image.url }}{% else %}{% static 'im/collection-insulated.jpg' %}{% endif %}');">
-        </div>
-        
-        <div class="absolute inset-0 bg-black/30 transition-colors duration-300 ease-in-out group-hover:bg-black/50"></div>
-        
-
-        <div class="relative z-10 text-white p-10 border border-white/50">
-            
-            <!-- Title -->
-            <h3 class="text-4xl font-extrabold mb-5 uppercase tracking-tighter">{{ collection.name|safe }}</h3>
-            
-            <!-- Button -->
-            <a href="{{ collection.get_absolute_url }}" 
-               class="inline-block py-3 px-8 bg-white text-gray-900 font-extrabold uppercase text-xs tracking-[2px] rounded-md 
-                      transition-all duration-300 ease-in-out 
-                      hover:bg-red-600 hover:text-white">
-                Shop Now
-            </a>
-        </div>
-    </div>
-    {% empty %}
-    <p class="p-10 text-center text-gray-500 col-span-full">No featured collections to display.</p>
-    {% endfor %}
-
-</section>
-
-
-
-
-            <!-- <div class="container"> -->
-                <div class="section-header" style="border: none; margin-bottom: 0; justify-content: center;">
-                    <h2>Customer verified.</h2>
+                    <a href="#shop" class="hero-cta">
+                        Explore The Series
+                    </a>
                 </div>
                 
-                <div class="testimonial-grid">
-                    {% for review in recent_reviews %}
-                    <div class="testimonial-card">
-                        
-                        <div class="rating">
-                            {% for i in "12345" %}
-                                {% if i|add:0 <= review.rating %}★{% else %}☆{% endif %}
-                            {% endfor %}
-                        </div>
-                        
-                        <p class="testimonial-text">"{{ review.comment|truncatewords:30 }}"</p>
-                        
-                        <div class="testimonial-user">
-                            <strong>— {{ review.user.get_full_name|default:review.user.username|upper }}.</strong>
-                        </div>
-                    </div>
-                    {% empty %}
-                        <div class="testimonial-card">
-                            <p class="testimonial-text">Be the first to leave a review!</p>
-                        </div>
-                    {% endfor %}
+                <div class="hero-image-wrapper">
+                    <img src="https://placehold.co/400x600/333333/ef4444?text=YOUR+BOTTLE" 
+                         alt="Sleek Red and Black Water Bottle"
+                         class="hero-image">
                 </div>
             </div>
         </section>
 
+        <section class="products-section" id="shop">
+            <div class="section-header">
+                <h2 class="section-title">Current Favorites</h2>
+                <a href="#" class="view-all-link">VIEW ALL</a>
+            </div>
+            
+            <div class="products-grid">
+                {% for product in featured_products %}
+                <div class="product-card">
+                    {% if product.discounted_price and product.discounted_price < product.base_price %}
+                        <span class="product-badge badge-sale">SALE</span>
+                    {% elif product.is_bestseller %}
+                        <span class="product-badge badge-bestseller">Bestseller</span>
+                    {% elif product.is_new_arrival %}
+                        <span class="product-badge badge-new">New</span>
+                    {% endif %}
 
-<section class="bg-gray-900 text-white text-center p-10 md:p-20 mx-auto" 
-         style="background-image: radial-gradient(circle at 100% 0%, #4a0404 0%, #0a0a0a 50%)">
-    
-    <h2 class="text-4xl md:text-5xl font-black mb-4 tracking-tight">Join The Inner Circle.</h2>
-    
-    <p class="opacity-80 max-w-xl mx-auto">
-        Sign up for early access to limited edition color drops and 15% off your first order.
-    </p>
-    
-    <form class="flex flex-col md:flex-row max-w-lg mt-8 mx-auto">
-        
-        <input type="email" placeholder="Enter your email address" 
-               class="flex-1 py-4 px-6 border-none text-base w-full md:w-auto rounded-md md:rounded-l-md md:rounded-r-none text-gray-900 focus:outline-none focus:ring-2 focus:ring-red-600">
-        
-        <button type="submit" 
-                class="w-full md:w-auto mt-2.5 md:mt-0 
-                       py-4 md:py-3.5 px-10 rounded-md md:rounded-r-md md:rounded-l-none 
-                       font-bold transition-all duration-300 uppercase text-sm tracking-wider 
-                       bg-red-600 text-white 
-                       hover:bg-gray-900 hover:-translate-y-0.5 hover:shadow-md">
-            SUBSCRIBE
-        </button>
-    </form>
-</section>
+                    <a href="{{ product.get_absolute_url }}" class="product-image-wrapper">
+                        {% if product.gallery.first.image %}
+                        <div class="product-image" style="background-image: url('{{ product.gallery.first.image.url }}');"></div>
+                        {% else %}
+                        <div class="product-image" style="background-image: url('{% static 'im/placeholder.png' %}');"></div>
+                        {% endif %}
+                    </a>
+                    
+                    <a href="#" class="add-to-cart-btn">
+                        Add to Cart - ${{ product.get_effective_price|floatformat:2 }}
+                    </a>
 
+                    <div class="product-info">
+                        <div class="product-rating">
+                            {% if product.reviews.count > 0 %}
+                                ★★★★★ ({{ product.reviews.count }})
+                            {% else %}
+                                No reviews yet
+                            {% endif %}
+                        </div>
+                        
+                        <h3 class="product-name">{{ product.name }}</h3>
+                        
+                        <div class="product-price">
+                            ${{ product.get_effective_price|floatformat:2 }}
+                            {% if product.discounted_price and product.discounted_price < product.base_price %}
+                                <span class="product-price-old">
+                                    ${{ product.base_price|floatformat:2 }}
+                                </span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                    <p style="grid-column: 1/-1; text-align: center; color: #6b7280;">No featured products are available at this time.</p>
+                {% endfor %}
+            </div>
+        </section>
+
+        <section class="collections-grid">
+            {% for collection in featured_collections %}
+            <div class="collection-item">
+                <div class="collection-bg" style="background-image: url('{% if collection.image %}{{ collection.image.url }}{% else %}{% static 'im/collection-insulated.jpg' %}{% endif %}');"></div>
+                <div class="collection-overlay"></div>
+                <div class="collection-content">
+                    <h3 class="collection-title">{{ collection.name|safe }}</h3>
+                    <a href="{{ collection.get_absolute_url }}" class="collection-btn">Shop Now</a>
+                </div>
+            </div>
+            {% empty %}
+            <p style="padding: 40px; text-align: center; color: #6b7280;">No featured collections to display.</p>
+            {% endfor %}
+        </section>
+
+        <section class="newsletter-section">
+            <h2 class="newsletter-title">Join The Inner Circle.</h2>
+            <p class="newsletter-description">
+                Sign up for early access to limited edition color drops and 15% off your first order.
+            </p>
+            
+            <form class="newsletter-form">
+                <input type="email" placeholder="Enter your email address" class="newsletter-input">
+                <button type="submit" class="newsletter-submit">SUBSCRIBE</button>
+            </form>
+        </section>
     </main>
-<script src="https://cdn.tailwindcss.com"></script>
 
-
-<footer class="bg-[#0d0d0d] text-[#d1d1d1] py-16">
-    <div class="max-w-6xl mx-auto px-5">
-
-        <!-- GRID -->
-        <div class="grid md:grid-cols-4 grid-cols-1 gap-10">
-
-            <!-- BRAND -->
-            <div>
-                <a href="#" class="text-3xl font-extrabold text-white tracking-tight">
-                    Thinkn<span class="text-red-500">Shop.</span>
-                </a>
-
-                <p class="text-gray-400 mt-4 leading-relaxed">
-                    Redefining hydration with premium materials and industrial aesthetics — 
-                    created for those who demand performance and style in equal measure.
-                </p>
-
-                <!-- SOCIAL ICONS -->
-                <div class="flex items-center gap-4 mt-5">
-
-                    <!-- Instagram -->
-                    <a href="#" class="hover:text-red-500 transition">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M7 2C4.2 2 2 4.2 2 7v10c0 2.8 2.2 5 
-                                     5 5h10c2.8 0 5-2.2 5-5V7c0-2.8-2.2-5-5-5H7zm10 
-                                     2c1.7 0 3 1.3 3 3v10c0 1.7-1.3 3-3 
-                                     3H7c-1.7 0-3-1.3-3-3V7c0-1.7 1.3-3 
-                                     3-3h10zm-5 3.5A5.5 5.5 0 1 0 17.5 
-                                     13 5.51 5.51 0 0 0 12 7.5zm0 
-                                     9A3.5 3.5 0 1 1 15.5 13 3.5 3.5 
-                                     0 0 1 12 16.5zm4.8-10.9a1.1 1.1 
-                                     0 1 1-1.1 1.1 1.1 1.1 0 0 1 
-                                     1.1-1.1z"/>
-                        </svg>
+    <footer>
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div>
+                    <a href="#" class="footer-brand">
+                        Thinkn<span>Shop.</span>
                     </a>
+                    <p class="footer-description">
+                        Redefining hydration with premium materials and industrial aesthetics — 
+                        created for those who demand performance and style in equal measure.
+                    </p>
+                    <div class="footer-social">
+                        <a href="#">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M7 2C4.2 2 2 4.2 2 7v10c0 2.8 2.2 5 5 5h10c2.8 0 5-2.2 5-5V7c0-2.8-2.2-5-5-5H7zm10 2c1.7 0 3 1.3 3 3v10c0 1.7-1.3 3-3 3H7c-1.7 0-3-1.3-3-3V7c0-1.7 1.3-3 3-3h10zm-5 3.5A5.5 5.5 0 1 0 17.5 13 5.51 5.51 0 0 0 12 7.5zm0 9A3.5 3.5 0 1 1 15.5 13 3.5 3.5 0 0 1 12 16.5zm4.8-10.9a1.1 1.1 0 1 1-1.1 1.1 1.1 1.1 0 0 1 1.1-1.1z"/>
+                            </svg>
+                        </a>
+                        <a href="#">
+                            <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M4.98 3.5C4.98 4.88 3.88 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM.5 8.5h4V24h-4V8.5zm7 0h3.8v2.1h.1c.5-.9 1.7-2.1 3.8-2.1 4.1 0 4.9 2.7 4.9 6.3V24h-4v-7.9c0-1.9-.1-4.3-2.6-4.3s-3 1.9-3 4.1V24h-4V8.5z"/>
+                            </svg>
+                        </a>
+                        <a href="#">
+                            <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M24 4.6c-.9.4-1.8.6-2.8.8 1-.6 1.8-1.6 2.1-2.7-.9.6-2 1-3.1 1.2C19.1 2.7 17.9 2 16.6 2c-2.6 0-4.7 2.1-4.7 4.7 0 .4 0 .8.1 1.1-4.1-.2-7.8-2.2-10.3-5.2-.5.8-.7 1.7-.7 2.7 0 1.8.9 3.4 2.3 4.3-.8 0-1.6-.3-2.2-.6v.1c0 2.5 1.8 4.6 4.2 5.1-.4.1-.9.2-1.4.2-.3 0-.6 0-.9-.1.6 2 2.5 3.5 4.7 3.5-1.7 1.3-3.9 2-6.2 2-.4 0-.8 0-1.1-.1C2.2 20.6 4.8 21.3 7.6 21.3c9.1 0 14.1-7.5 14.1-14v-.6c1-.7 1.8-1.6 2.3-2.6z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
 
-                    <!-- LinkedIn -->
-                    <a href="#" class="hover:text-red-500 transition">
-                        <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M4.98 3.5C4.98 4.88 3.88 6 
-                                     2.5 6S0 4.88 0 3.5 1.12 1 
-                                     2.5 1 4.98 2.12 4.98 3.5zM.5 
-                                     8.5h4V24h-4V8.5zm7 
-                                     0h3.8v2.1h.1c.5-.9 1.7-2.1 
-                                     3.8-2.1 4.1 0 4.9 2.7 4.9 
-                                     6.3V24h-4v-7.9c0-1.9-.1-4.3-2.6-4.3s-3 
-                                     1.9-3 4.1V24h-4V8.5z"/>
-                        </svg>
-                    </a>
+                <div>
+                    <h4 class="footer-heading">Collection</h4>
+                    <div class="footer-links">
+                        <a href="#">All Bottles</a>
+                        <a href="#">New Arrivals</a>
+                        <a href="#">Best Sellers</a>
+                        <a href="#">Accessories</a>
+                    </div>
+                </div>
 
-                    <!-- Twitter/X -->
-                    <a href="#" class="hover:text-red-500 transition">
-                        <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M24 4.6c-.9.4-1.8.6-2.8.8 
-                                     1-.6 1.8-1.6 2.1-2.7-.9.6-2 
-                                     1-3.1 1.2C19.1 2.7 17.9 2 
-                                     16.6 2c-2.6 0-4.7 2.1-4.7 
-                                     4.7 0 .4 0 .8.1 1.1-4.1-.2-7.8-2.2-10.3-5.2-.5.8-.7 
-                                     1.7-.7 2.7 0 1.8.9 3.4 
-                                     2.3 4.3-.8 0-1.6-.3-2.2-.6v.1c0 
-                                     2.5 1.8 4.6 4.2 5.1-.4.1-.9.2-1.4.2-.3 
-                                     0-.6 0-.9-.1.6 2 2.5 3.5 
-                                     4.7 3.5-1.7 1.3-3.9 
-                                     2-6.2 2-.4 0-.8 0-1.1-.1C2.2 
-                                     20.6 4.8 21.3 7.6 21.3c9.1 
-                                     0 14.1-7.5 14.1-14v-.6c1-.7 
-                                     1.8-1.6 2.3-2.6z"/>
-                        </svg>
-                    </a>
+                <div>
+                    <h4 class="footer-heading">Support</h4>
+                    <div class="footer-links">
+                        <a href="#">Track Order</a>
+                        <a href="#">Shipping Policy</a>
+                        <a href="#">Returns & Exchanges</a>
+                        <a href="#">Warranty Claims</a>
+                    </div>
+                </div>
 
+                <div>
+                    <h4 class="footer-heading">Company</h4>
+                    <div class="footer-links">
+                        <a href="{% url 'aboutus' %}">About Us</a>
+                        <a href="#">Sustainability</a>
+                        <a href="#">Careers</a>
+                        <a href="#">Contact</a>
+                    </div>
                 </div>
             </div>
 
-            <!-- LINKS -->
-            <div>
-                <h4 class="text-white font-semibold mb-4 text-lg">Collection</h4>
-                <div class="flex flex-col gap-2 text-gray-400">
-                    <a href="#" class="hover:text-red-500">All Bottles</a>
-                    <a href="#" class="hover:text-red-500">New Arrivals</a>
-                    <a href="#" class="hover:text-red-500">Best Sellers</a>
-                    <a href="#" class="hover:text-red-500">Accessories</a>
+            <div class="footer-bottom">
+                <p>© 2025 ThinknShop. All rights reserved.</p>
+                <div class="footer-bottom-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Accessibility</a>
                 </div>
             </div>
 
-            <div>
-                <h4 class="text-white font-semibold mb-4 text-lg">Support</h4>
-                <div class="flex flex-col gap-2 text-gray-400">
-                    <a href="#" class="hover:text-red-500">Track Order</a>
-                    <a href="#" class="hover:text-red-500">Shipping Policy</a>
-                    <a href="#" class="hover:text-red-500">Returns & Exchanges</a>
-                    <a href="#" class="hover:text-red-500">Warranty Claims</a>
-                </div>
-            </div>
-
-            <div>
-                <h4 class="text-white font-semibold mb-4 text-lg">Company</h4>
-                <div class="flex flex-col gap-2 text-gray-400">
-                    <a href="{%url 'aboutus' %}" class="hover:text-red-500">About Us</a>
-                    <a href="#" class="hover:text-red-500">Sustainability</a>
-                    <a href="#" class="hover:text-red-500">Careers</a>
-                    <a href="#" class="hover:text-red-500">Contact</a>
-                </div>
-            </div>
-
-        </div>
-
-        <!-- BOTTOM -->
-        <div class="flex justify-between items-center border-t border-gray-800 mt-12 pt-6 flex-wrap text-gray-500 text-sm">
-            <p>© 2025 ThinknShop. All rights reserved.</p>
-
-            <div class="flex gap-5 mt-2 md:mt-0">
-                <a href="#" class="hover:text-red-500">Privacy Policy</a>
-                <a href="#" class="hover:text-red-500">Terms of Service</a>
-                <a href="#" class="hover:text-red-500">Accessibility</a>
+            <div class="footer-credit">
+                Engineered by <span>TechSpire</span>
             </div>
         </div>
-
-        <!-- ENGINEERED BY -->
-        <div class="text-center text-gray-500 border-t border-gray-800 mt-8 pt-4 text-sm">
-            Engineered by <span class="text-red-500 font-semibold">TechSpire</span>
-        </div>
-
-    </div>
-</footer>
-
+    </footer>
 
 </body>
 </html>
