@@ -130,7 +130,7 @@
                 </div>
                 
                 <!-- Logo -->
-                <a href="#" class="skatezoo-logo flex items-center text-2xl sm:text-3xl md:text-4xl font-black text-red-600 transition-colors duration-300 hover:text-red-700 mx-2 sm:mx-4 md:mx-10 flex-shrink-0">
+                <a href="{% url 'products:home' %}" class="skatezoo-logo flex items-center text-2xl sm:text-3xl md:text-4xl font-black text-red-600 transition-colors duration-300 hover:text-red-700 mx-2 sm:mx-4 md:mx-10 flex-shrink-0">
                     Thinkn<span class="text-gray-900">Shop.</span>
                 </a>
                 
@@ -142,7 +142,7 @@
                         <i class="fas fa-bars"></i>
                     </button>
                     
-                    <!-- Profile Dropdown with Username -->
+                    <!-- Profile Dropdown with Username (Desktop Only) -->
                     {% if user.is_authenticated %}
                     <div class="skatezo-categories relative hidden md:block">
                         <button class="skatezo-action-btn p-2 md:p-3 rounded-xl text-gray-600 cursor-pointer transition-all duration-300 flex items-center justify-center space-x-2 hover:bg-gray-100 hover:text-red-600" title="Profile" onclick="toggleDropdown('profile')">
@@ -165,11 +165,11 @@
                                         </div>
                                     </div>
                                     <div class="flex flex-col space-y-1.5">
-                                        <a href="{%url 'login' %}" class="skatezo-dropdown-link flex items-center space-x-3 p-3 rounded-lg text-gray-400 text-sm transition-all duration-300 relative overflow-hidden hover:bg-gray-700 hover:text-white hover:translate-x-2 hover:shadow-md hover:shadow-red-500/20">
+                                        <a href="{% url 'login' %}" class="skatezo-dropdown-link flex items-center space-x-3 p-3 rounded-lg text-gray-400 text-sm transition-all duration-300 relative overflow-hidden hover:bg-gray-700 hover:text-white hover:translate-x-2 hover:shadow-md hover:shadow-red-500/20">
                                             <i class="fas fa-user w-5 text-red-400"></i>
                                             <span>My Profile</span>
                                         </a>
-                                        <a href="{% url 'my_orders'%}" class="skatezo-dropdown-link flex items-center space-x-3 p-3 rounded-lg text-gray-400 text-sm transition-all duration-300 relative overflow-hidden hover:bg-gray-700 hover:text-white hover:translate-x-2 hover:shadow-md hover:shadow-red-500/20">
+                                        <a href="{% url 'my_orders' %}" class="skatezo-dropdown-link flex items-center space-x-3 p-3 rounded-lg text-gray-400 text-sm transition-all duration-300 relative overflow-hidden hover:bg-gray-700 hover:text-white hover:translate-x-2 hover:shadow-md hover:shadow-red-500/20">
                                             <i class="fas fa-box w-5 text-red-400"></i>
                                             <span>My Orders</span>
                                         </a>
@@ -177,7 +177,7 @@
                                             <i class="fas fa-map-marker-alt w-5 text-red-400"></i>
                                             <span>Addresses</span>
                                         </a>
-                                        <a href="#" class="skatezo-dropdown-link flex items-center space-x-3 p-3 rounded-lg text-gray-400 text-sm transition-all duration-300 relative overflow-hidden hover:bg-gray-700 hover:text-white hover:translate-x-2 hover:shadow-md hover:shadow-red-500/20">
+                                        <a href="{% url 'logout' %}" class="skatezo-dropdown-link flex items-center space-x-3 p-3 rounded-lg text-gray-400 text-sm transition-all duration-300 relative overflow-hidden hover:bg-gray-700 hover:text-white hover:translate-x-2 hover:shadow-md hover:shadow-red-500/20">
                                             <i class="fas fa-sign-out-alt w-5 text-red-500"></i>
                                             <span>Sign Out</span>
                                         </a>
@@ -188,7 +188,7 @@
                     </div>
                     {% else %}
                     <div class="skatezo-categories relative hidden md:block">
-                        <a href="{%url 'login' %}" class="skatezo-action-btn p-2 md:p-3 rounded-xl text-gray-600 cursor-pointer transition-all duration-300 flex items-center justify-center space-x-2 hover:bg-gray-100 hover:text-red-600" title="Login">
+                        <a href="{% url 'login' %}" class="skatezo-action-btn p-2 md:p-3 rounded-xl text-gray-600 cursor-pointer transition-all duration-300 flex items-center justify-center space-x-2 hover:bg-gray-100 hover:text-red-600" title="Login">
                             <i class="fas fa-user text-lg md:text-xl"></i>
                             <span class="text-sm font-medium hidden lg:block">Login</span>
                         </a>
@@ -237,10 +237,23 @@
     
     <!-- Mobile Menu Panel -->
     <div class="skatezo-mobile-menu-panel fixed top-0 left-[-85%] w-[85%] max-w-[320px] h-screen bg-white z-[9999] transition-all duration-300 overflow-y-auto border-r border-gray-200 shadow-2xl" id="mobile-menu-panel">
+        <!-- Mobile Menu Header -->
         <div class="skatezo-mobile-menu-header flex items-center justify-between p-5 border-b border-gray-100 bg-white sticky top-0 z-10">
+            {% if user.is_authenticated %}
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-full bg-red-600 text-white flex items-center justify-center text-sm font-bold flex-shrink-0">
+                    {{ user.username|slice:":1"|upper }}
+                </div>
+                <div>
+                    <div class="text-gray-900 font-semibold text-sm">{{ user.username }}</div>
+                    <div class="text-gray-500 text-xs">{{ user.email }}</div>
+                </div>
+            </div>
+            {% else %}
             <div class="skatezoo-logo text-2xl font-black text-red-600">
                 Thinkn<span class="text-gray-900">Shop.</span>
             </div>
+            {% endif %}
             <button class="skatezo-mobile-menu-close bg-transparent border-none text-gray-500 text-xl cursor-pointer p-2 rounded-lg transition-colors duration-200 hover:bg-gray-50 hover:text-red-600" onclick="closeMobileMenu()">
                 <i class="fas fa-times"></i>
             </button>
@@ -300,14 +313,15 @@
             </div>
 
             <!-- Your Account -->
+            {% if user.is_authenticated %}
             <div class="skatezo-mobile-menu-section mb-6">
                 <div class="skatezo-mobile-menu-title text-xs font-semibold text-gray-500 mb-3 pb-2 border-b border-gray-200 uppercase tracking-wider">Your Account</div>
                 <div class="skatezo-mobile-menu-links flex flex-col space-y-0.5">
-                    <a href="#" class="skatezo-mobile-menu-link flex items-center space-x-3 p-3 rounded-lg text-gray-700 text-sm font-normal transition-colors duration-200 hover:bg-red-50 hover:text-red-700">
+                    <a href="{% url 'login' %}" class="skatezo-mobile-menu-link flex items-center space-x-3 p-3 rounded-lg text-gray-700 text-sm font-normal transition-colors duration-200 hover:bg-red-50 hover:text-red-700">
                         <i class="fas fa-user w-5 text-center text-gray-400 transition-colors duration-200 hover:text-red-500"></i>
                         <span>My Profile</span>
                     </a>
-                    <a href="{% url 'my_orders'%}" class="skatezo-mobile-menu-link flex items-center space-x-3 p-3 rounded-lg text-gray-700 text-sm font-normal transition-colors duration-200 hover:bg-red-50 hover:text-red-700">
+                    <a href="{% url 'my_orders' %}" class="skatezo-mobile-menu-link flex items-center space-x-3 p-3 rounded-lg text-gray-700 text-sm font-normal transition-colors duration-200 hover:bg-red-50 hover:text-red-700">
                         <i class="fas fa-box w-5 text-center text-gray-400 transition-colors duration-200 hover:text-red-500"></i>
                         <span>My Orders</span>
                     </a>
@@ -315,8 +329,23 @@
                         <i class="fas fa-map-marker-alt w-5 text-center text-gray-400 transition-colors duration-200 hover:text-red-500"></i>
                         <span>Addresses</span>
                     </a>
+                    <a href="{% url 'logout' %}" class="skatezo-mobile-menu-link flex items-center space-x-3 p-3 rounded-lg text-gray-700 text-sm font-normal transition-colors duration-200 hover:bg-red-50 hover:text-red-700">
+                        <i class="fas fa-sign-out-alt w-5 text-center text-red-500 transition-colors duration-200"></i>
+                        <span>Sign Out</span>
+                    </a>
                 </div>
             </div>
+            {% else %}
+            <div class="skatezo-mobile-menu-section mb-6">
+                <div class="skatezo-mobile-menu-title text-xs font-semibold text-gray-500 mb-3 pb-2 border-b border-gray-200 uppercase tracking-wider">Account</div>
+                <div class="skatezo-mobile-menu-links flex flex-col space-y-0.5">
+                    <a href="{% url 'login' %}" class="skatezo-mobile-menu-link flex items-center space-x-3 p-3 rounded-lg text-gray-700 text-sm font-normal transition-colors duration-200 hover:bg-red-50 hover:text-red-700">
+                        <i class="fas fa-sign-in-alt w-5 text-center text-gray-400 transition-colors duration-200 hover:text-red-500"></i>
+                        <span>Login / Register</span>
+                    </a>
+                </div>
+            </div>
+            {% endif %}
 
             <!-- Quick Actions -->
             <div class="skatezo-quick-actions flex space-x-2 pt-5 border-t border-gray-200 mt-4">
@@ -332,7 +361,6 @@
             </div>
         </div>
     </div>
-
 
 <script>
     // Dropdown functionality
