@@ -14,6 +14,8 @@ urlpatterns = [
          views.calculate_order_total, 
          name='calculate-total'),
     
+#     path('products/<int:product_id>/details/', views.product_details_json, name='product_details_json'),
+
     path('review/', 
          views.order_review, 
          name='order-review'),

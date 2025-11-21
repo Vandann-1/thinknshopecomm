@@ -65,20 +65,41 @@ async function initiatePurchase(productId) {
             }
         });
 
+        // Check if response is OK
+        if (!response.ok) {
+            hidePurchaseLoading();
+            if (response.status === 404) {
+                showPurchaseAlert('error', 'Product not found. Please check if the product exists.');
+            } else {
+                showPurchaseAlert('error', `Server error: ${response.status} ${response.statusText}`);
+            }
+            console.error('Response status:', response.status);
+            return;
+        }
+
+        // Check content type before parsing
+        const contentType = response.headers.get('content-type');
+        if (!contentType || !contentType.includes('application/json')) {
+            hidePurchaseLoading();
+            showPurchaseAlert('error', 'Invalid response format from server');
+            console.error('Expected JSON but got:', contentType);
+            return;
+        }
+
         const data = await response.json();
         hidePurchaseLoading();
 
         if (data.success) {
             currentProduct = data;
-            variantData = data.variants;
+            variantData = data.variants || {};
             displayProductSelection(data);
         } else {
             showPurchaseAlert('error', data.error || 'Failed to load product details');
         }
     } catch (error) {
         hidePurchaseLoading();
-        showPurchaseAlert('error', 'Network error occurred');
-        console.error('Error:', error);
+        showPurchaseAlert('error', 'Network error occurred. Please check your connection.');
+        console.error('Error details:', error);
     }
 }
 
@@ -98,7 +119,7 @@ function displayProductSelection(productData) {
             <div class="purchase-stock-status" id="purchaseStockStatus">${product.total_stock} items available</div>
         </div>
 
-        ${colors.length > 0 ? `
+        ${colors && colors.length > 0 ? `
         <div class="purchase-selection-group">
             <label>Color:</label>
             <div class="purchase-color-options" id="purchaseColorOptions">
@@ -111,7 +132,7 @@ function displayProductSelection(productData) {
             </div>
         </div>` : ''}
 
-        ${sizes.length > 0 ? `
+        ${sizes && sizes.length > 0 ? `
         <div class="purchase-selection-group">
             <label>Size:</label>
             <div class="purchase-size-options" id="purchaseSizeOptions">
@@ -145,13 +166,13 @@ function displayProductSelection(productData) {
     document.getElementById('purchaseProductModalContent').innerHTML = modalContent;
     
     // Add event listeners after content is inserted
-    addProductModalEventListeners(colors, sizes);
+    addProductModalEventListeners(colors || [], sizes || []);
     
     openPurchaseModal('purchaseProductModal');
 
     // Auto-select if only one option
-    if (colors.length === 1) selectPurchaseColor(colors[0].id);
-    if (sizes.length === 1) selectPurchaseSize(sizes[0].id);
+    if (colors && colors.length === 1) selectPurchaseColor(colors[0].id);
+    if (sizes && sizes.length === 1) selectPurchaseSize(sizes[0].id);
 }
 
 // Add event listeners to dynamically created elements
@@ -377,6 +398,17 @@ async function calculatePurchasePrice() {
             })
         });
 
+        if (!response.ok) {
+            console.error('Price calculation failed:', response.status);
+            return;
+        }
+
+        const contentType = response.headers.get('content-type');
+        if (!contentType || !contentType.includes('application/json')) {
+            console.error('Invalid response format for price calculation');
+            return;
+        }
+
         const data = await response.json();
         
         if (data.success) {
@@ -439,6 +471,19 @@ async function proceedToReview() {
             }
         });
 
+        if (!response.ok) {
+            hidePurchaseLoading();
+            showPurchaseAlert('error', `Failed to load addresses: ${response.status}`);
+            return;
+        }
+
+        const contentType = response.headers.get('content-type');
+        if (!contentType || !contentType.includes('application/json')) {
+            hidePurchaseLoading();
+            showPurchaseAlert('error', 'Invalid response format from server');
+            return;
+        }
+
         const data = await response.json();
         hidePurchaseLoading();
 
@@ -451,6 +496,7 @@ async function proceedToReview() {
     } catch (error) {
         hidePurchaseLoading();
         showPurchaseAlert('error', 'Network error occurred');
+        console.error('Error:', error);
     }
 }
 
@@ -540,7 +586,6 @@ async function applyPurchaseCoupon() {
     try {
         showPurchaseLoading('Applying coupon...');
         
-        // Recalculate with coupon
         const response = await fetch('/orders/calculate-total/', {
             method: 'POST',
             headers: {
@@ -554,6 +599,12 @@ async function applyPurchaseCoupon() {
                 coupon_code: couponCode
             })
         });
+
+        if (!response.ok) {
+            hidePurchaseLoading();
+            showPurchaseAlert('error', 'Failed to apply coupon');
+            return;
+        }
 
         const data = await response.json();
         hidePurchaseLoading();
@@ -573,6 +624,7 @@ async function applyPurchaseCoupon() {
     } catch (error) {
         hidePurchaseLoading();
         showPurchaseAlert('error', 'Network error occurred');
+        console.error('Error:', error);
     }
 }
 
@@ -628,6 +680,12 @@ async function savePurchaseAddress() {
             body: JSON.stringify(addressData)
         });
 
+        if (!response.ok) {
+            hidePurchaseLoading();
+            showPurchaseAlert('error', 'Failed to save address');
+            return;
+        }
+
         const data = await response.json();
         hidePurchaseLoading();
 
@@ -642,6 +700,7 @@ async function savePurchaseAddress() {
     } catch (error) {
         hidePurchaseLoading();
         showPurchaseAlert('error', 'Network error occurred');
+        console.error('Error:', error);
     }
 }
 

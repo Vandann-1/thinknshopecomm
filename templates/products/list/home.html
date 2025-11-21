@@ -985,59 +985,564 @@
 </head>
 <body>
 
-    <div class="announcement-bar">
-        Free Express Shipping on Orders Over $50 + Free Returns
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<style>
+    /* Base Styles (for font and body padding) */
+    body {
+        font-family: 'Inter', sans-serif;
+        background: #f7f7f7;
+        min-height: 100vh;
+        padding-top: 130px;
+    }
+    
+    @media (min-width: 768px) {
+        body {
+            /* Adjusted padding to accommodate the new second nav bar (approx 40px) */
+            padding-top: 175px; 
+        }
+    }
+    
+    /* Custom Tailwind Configuration: RED THEME */
+    .tns-gradient-red {
+        background-image: linear-gradient(135deg, #ef4444, #dc2626);
+    }
+    .tns-text-gradient {
+        background-image: linear-gradient(90deg, #ef4444, #b91c1c);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    
+    /* Custom scrollbar for dark dropdowns */
+    .custom-scrollbar::-webkit-scrollbar {
+        width: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: #4b5563;
+        border-radius: 2px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+        background: #6b7280;
+    }
+    
+    /* Transition for transform in main nav */
+    .skatezo-navbar-container {
+        transition: transform 0.3s ease;
+    }
+    
+    /* General Nav Link Styling for bottom nav */
+    .nav-links a {
+        font-family: 'Inter', sans-serif;
+        letter-spacing: 0.01em;
+    }
+
+    /* Styling for the new category bar */
+    .nav-categories-wrapper {
+        background-color: #ffffff; /* White background */
+        border-top: 1px solid #e5e7eb; /* Subtle separator */
+        border-bottom: 1px solid #e5e7eb;
+        display: none; /* Hide on mobile by default */
+    }
+    @media (min-width: 768px) {
+        .nav-categories-wrapper {
+            display: block; /* Show on desktop (md+) */
+        }
+    }
+    .nav-categories-inner {
+        max-width: 1280px; /* max-w-7xl */
+        margin-left: auto;
+        margin-right: auto;
+        padding-left: 1.5rem; /* px-6 */
+        padding-right: 1.5rem; /* px-6 */
+    }
+    .nav-categories {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem; /* space-x-6 */
+        height: 40px; /* fixed height for the bar */
+    }
+    .nav-categories a {
+        text-decoration: none;
+        color: #4b5563; /* text-gray-600 */
+        font-size: 0.875rem; /* text-sm */
+        font-weight: 500; /* font-medium */
+        transition: color 0.2s;
+    }
+    .nav-categories a:hover {
+        color: #ef4444; /* hover:text-red-500 */
+    }
+
+    /* Shadow for the floating bottom bar */
+    nav.scrolled {
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Ripple effect CSS for JavaScript */
+    .ripple {
+        position: absolute;
+        border-radius: 50%;
+        transform: scale(0);
+        animation: ripple 600ms linear;
+        background-color: rgba(0, 0, 0, 0.1);
+        pointer-events: none;
+    }
+    @keyframes ripple {
+        to {
+            transform: scale(4);
+            opacity: 0;
+        }
+    }
+    
+    /* Responsive Fixes */
+    @media (max-width: 767px) {
+        .skatezo-search-container {
+            max-width: 100%;
+        }
+        
+        .skatezoo-logo {
+            font-size: 1.5rem;
+        }
+        
+        nav > div {
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+    }
+    
+    @media (max-width: 640px) {
+        .skatezoo-logo {
+            font-size: 1.25rem;
+        }
+    }
+</style>
+</head>
+<body>
+    
+<header class="skatezo-navbar-container fixed top-0 left-0 right-0 z-[9999] bg-white border-b border-gray-200 shadow-lg">
+    <div class="bg-red-600 py-2">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 flex justify-center items-center text-[10px] sm:text-xs text-white font-medium uppercase tracking-wider text-center">
+            
+            <span class="hidden sm:inline">FREE SHIPPING OVER ₹500</span>
+        </div>
     </div>
 
-    <header>
-        <div class="header-top">
-            <div class="header-content">
+    <nav class="bg-white">
+        <div class="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 flex items-center h-[65px] md:h-[85px] space-x-2 sm:space-x-4 md:space-x-8 justify-between">
+            
+            <div class="skatezo-search-container hidden sm:flex flex-1 max-w-[150px] md:max-w-xs relative">
+                <form class="skatezo-search-wrapper flex bg-gray-100 border border-gray-300 rounded-lg overflow-hidden transition-all duration-300 shadow-sm focus-within:border-red-500 focus-within:shadow-md focus-within:shadow-red-500/10 w-full" method="GET" action="{% url 'products:product-list' %}">
+                    <input type="text" name="search" class="skatezo-search-input flex-1 bg-transparent border-none px-2 md:px-4 py-2 md:py-3 text-gray-700 text-sm md:text-base outline-none placeholder-gray-400" placeholder="Search..." value="{{ request.GET.search }}">
+                    <button type="submit" class="skatezo-search-btn bg-gray-100 text-gray-500 px-2 md:px-4 py-2 md:py-3 cursor-pointer transition-colors duration-200 hover:bg-gray-200 hover:text-red-500">
+                        <i class="fas fa-search text-sm"></i>
+                    </button>
+                </form>
+            </div>
+            
+            <a href="#" class="skatezoo-logo flex items-center text-2xl sm:text-3xl md:text-4xl font-black text-red-600 transition-colors duration-300 hover:text-red-700 mx-2 sm:mx-4 md:mx-10 flex-shrink-0">
+                Thinkn<span class="text-gray-900">Shop.</span>
+            </a>
+            
+            <div class="skatezo-nav-actions flex items-center space-x-1 sm:space-x-2">
                 
-                <button class="mobile-menu-btn">☰</button>
+                <button class="skatezo-action-btn skatezo-mobile-menu p-2 md:p-3 rounded-xl text-gray-600 cursor-pointer transition-all duration-300 flex items-center justify-center text-base md:text-lg hover:bg-gray-100 hover:text-red-600" onclick="toggleMobileMenu()">
+                    <i class="fas fa-bars"></i>
+                </button>
                 
-                <div class="search-container">
-                    <div class="search-wrapper">
-                        <span class="search-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-                            </svg>
-                        </span>
-                        <input type="text" placeholder="Search..." class="search-input">
+                {% if user.is_authenticated %}
+                <div class="skatezo-categories relative hidden md:block">
+                    <button class="skatezo-action-btn p-2 md:p-3 rounded-xl text-gray-600 cursor-pointer transition-all duration-300 flex items-center justify-center space-x-2 hover:bg-gray-100 hover:text-red-600" title="Profile" onclick="toggleDropdown('profile')">
+                        <div class="w-8 h-8 rounded-full bg-red-600 text-white flex items-center justify-center text-sm font-bold">
+                            {{ user.username|slice:":1"|upper }}
+                        </div>
+                        <span class="text-sm font-medium hidden lg:block">{{ user.username }}</span>
+                        <i class="fas fa-chevron-down text-xs hidden lg:block"></i>
+                    </button>
+                    <div class="skatezo-dropdown absolute top-full right-0 bg-gradient-to-br from-gray-800 to-gray-800/90 border border-gray-700 rounded-2xl min-w-[280px] shadow-2xl transition-all duration-300 opacity-0 invisible translate-y-[-15px] z-50 mt-3 backdrop-blur-xl" id="profile-dropdown">
+                         <div class="skatezo-dropdown-content p-5 max-h-[400px] overflow-y-auto custom-scrollbar">
+                            <div class="mb-7">
+                                <div class="flex items-center space-x-3 mb-4 pb-4 border-b border-gray-700">
+                                    <div class="w-12 h-12 rounded-full bg-red-600 text-white flex items-center justify-center text-lg font-bold">
+                                        {{ user.username|slice:":1"|upper }}
+                                    </div>
+                                    <div>
+                                        <div class="text-white font-semibold text-sm">{{ user.username }}</div>
+                                        <div class="text-gray-400 text-xs">{{ user.email }}</div>
+                                    </div>
+                                </div>
+                                <div class="flex flex-col space-y-1.5">
+                                    <a href="{%url 'login' %}" class="skatezo-dropdown-link flex items-center space-x-3 p-3 rounded-lg text-gray-400 text-sm transition-all duration-300 relative overflow-hidden hover:bg-gray-700 hover:text-white hover:translate-x-2 hover:shadow-md hover:shadow-red-500/20">
+                                        <i class="fas fa-user w-5 text-red-400"></i>
+                                        <span>My Profile</span>
+                                    </a>
+                                    <a href="{% url 'my_orders'%}" class="skatezo-dropdown-link flex items-center space-x-3 p-3 rounded-lg text-gray-400 text-sm transition-all duration-300 relative overflow-hidden hover:bg-gray-700 hover:text-white hover:translate-x-2 hover:shadow-md hover:shadow-red-500/20">
+                                        <i class="fas fa-box w-5 text-red-400"></i>
+                                        <span>My Orders</span>
+                                    </a>
+                                    <a href="{% url 'manage_address' %}" class="skatezo-dropdown-link flex items-center space-x-3 p-3 rounded-lg text-gray-400 text-sm transition-all duration-300 relative overflow-hidden hover:bg-gray-700 hover:text-white hover:translate-x-2 hover:shadow-md hover:shadow-red-500/20">
+                                        <i class="fas fa-map-marker-alt w-5 text-red-400"></i>
+                                        <span>Addresses</span>
+                                    </a>
+                                    <a href="#" class="skatezo-dropdown-link flex items-center space-x-3 p-3 rounded-lg text-gray-400 text-sm transition-all duration-300 relative overflow-hidden hover:bg-gray-700 hover:text-white hover:translate-x-2 hover:shadow-md hover:shadow-red-500/20">
+                                        <i class="fas fa-sign-out-alt w-5 text-red-500"></i>
+                                        <span>Sign Out</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-
-                <a href="#" class="logo-center">
-                    Thinkn<span>Shop.</span>
-                </a>
-
-                <div class="header-actions">
-                    <a href="{% url 'login' %}" title="Account" class="profile-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
-                        </svg>
+                {% else %}
+                <div class="skatezo-categories relative hidden md:block">
+                    <a href="{%url 'login' %}" class="skatezo-action-btn p-2 md:p-3 rounded-xl text-gray-600 cursor-pointer transition-all duration-300 flex items-center justify-center space-x-2 hover:bg-gray-100 hover:text-red-600" title="Login">
+                        <i class="fas fa-user text-lg md:text-xl"></i>
+                        <span class="text-sm font-medium hidden lg:block">Login</span>
                     </a>
-                    
-                    <a href="#" class="cart-link">
-                        <svg class="cart-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
-                        </svg>
-                        <span class="cart-text">Cart</span>
-                        <span class="cart-count">{{ cart_item_count|default:0 }}</span>
-                    </a>
+                </div>
+                {% endif %}
+
+                <div class="skatezo-categories relative">
+                    <button class="skatezo-action-btn p-2 md:p-3 rounded-xl text-gray-600 cursor-pointer transition-all duration-300 flex items-center justify-center text-lg md:text-xl hover:bg-gray-100 hover:text-red-600" title="Shopping Cart" onclick="toggleDropdown('cart')">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="skatezo-cart-badge absolute top-1 right-1 md:top-1.5 md:right-1.5 bg-red-600 text-white rounded-full w-4 h-4 md:w-5 md:h-5 text-[10px] md:text-xs font-bold flex items-center justify-center animate-pulse">2</span>
+                    </button>
+                    <div class="skatezo-dropdown absolute top-full right-0 bg-gradient-to-br from-gray-800 to-gray-800/90 border border-gray-700 rounded-2xl min-w-[280px] sm:min-w-[320px] shadow-2xl transition-all duration-300 opacity-0 invisible translate-y-[-15px] z-50 mt-3 backdrop-blur-xl" id="cart-dropdown">
+                         <div class="skatezo-dropdown-content p-4 sm:p-5 max-h-[400px] overflow-y-auto custom-scrollbar">
+                            <div class="mb-4">
+                                <div class="tns-text-gradient text-sm sm:text-base font-bold mb-3 pb-2 border-b-2 border-gray-800">Shopping Cart (2 items)</div>
+                                <div class="flex flex-col space-y-1.5">
+                                    <a href="#" class="skatezo-dropdown-link flex items-center space-x-3 p-3 rounded-lg text-gray-400 text-sm transition-all duration-300 relative overflow-hidden hover:bg-gray-700 hover:text-white hover:translate-x-2 hover:shadow-md hover:shadow-red-500/20">
+                                        <i class="fas fa-laptop w-5 text-red-400"></i>
+                                        <span class="truncate">Ultrabook Pro x1 - ₹79,999</span>
+                                    </a>
+                                    <a href="#" class="skatezo-dropdown-link flex items-center space-x-3 p-3 rounded-lg text-gray-400 text-sm transition-all duration-300 relative overflow-hidden hover:bg-gray-700 hover:text-white hover:translate-x-2 hover:shadow-md hover:shadow-red-500/20">
+                                        <i class="fas fa-headset w-5 text-red-400"></i>
+                                        <span class="truncate">ANC Headset x1 - ₹5,999</span>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="flex space-x-2 pt-5 border-t border-gray-800 mt-5">
+                                <a href="#" class="flex-1 px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg text-gray-400 text-center text-xs font-medium transition-colors duration-200 hover:bg-gray-700 hover:text-white flex flex-col items-center justify-center space-y-1">
+                                    <i class="fas fa-eye text-sm"></i>View Cart
+                                </a>
+                                <a href="#" class="flex-1 px-3 py-2 bg-gradient-to-br from-red-600 to-red-700 border border-red-500/50 rounded-lg text-white text-center text-xs font-medium transition-all duration-300 hover:from-red-700 hover:to-red-800 hover:shadow-lg hover:shadow-red-500/20 flex flex-col items-center justify-center space-y-1">
+                                    <i class="fas fa-credit-card text-sm"></i>Checkout
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+    </nav>
+
+    <div class="nav-categories-wrapper">
+        <div class="nav-categories-inner">
+            <nav class="nav-categories">
+                {% for category in featured_categories %}
+                <a href="{{ category.get_absolute_url }}">{{ category.name }}</a>
+                {% endfor %}
+            </nav>
+        </div>
+    </div>
+    
+</header>
+
+<div class="skatezo-mobile-overlay fixed top-0 left-0 right-0 bottom-0 bg-black/50 z-[9998] opacity-0 invisible transition-all duration-300" id="mobile-overlay" onclick="closeMobileMenu()"></div>
+
+<div class="skatezo-mobile-menu-panel fixed top-0 left-[-85%] w-[85%] max-w-[320px] h-screen bg-white z-[9999] transition-all duration-300 overflow-y-auto border-r border-gray-200 shadow-2xl" id="mobile-menu-panel">
+    <div class="skatezo-mobile-menu-header flex items-center justify-between p-5 border-b border-gray-100 bg-white sticky top-0 z-10">
         
-        <div class="nav-categories-wrapper">
-            <div class="nav-categories-inner">
-                <nav class="nav-categories">
-                    {% for category in featured_categories %}
-                    <a href="{{ category.get_absolute_url }}">{{ category.name }}</a>
-                    {% endfor %}
-                </nav>
+        {% if user.is_authenticated %}
+        <div class="flex items-center space-x-3">
+            <div class="w-10 h-10 rounded-full bg-red-600 text-white flex items-center justify-center text-sm font-bold flex-shrink-0">
+                {{ user.username|slice:":1"|upper }}
+            </div>
+            <div>
+                <div class="text-gray-900 font-semibold text-sm">{{ user.username }}</div>
+                <div class="text-gray-500 text-xs">{{ user.email }}</div>
             </div>
         </div>
-    </header>
+        {% else %}
+        <div class="skatezoo-logo text-2xl font-black text-red-600">
+            Thinkn<span class="text-gray-900">Shop.</span>
+        </div>
+        {% endif %}
+        <button class="skatezo-mobile-menu-close bg-transparent border-none text-gray-500 text-xl cursor-pointer p-2 rounded-lg transition-colors duration-200 hover:bg-gray-50 hover:text-red-600" onclick="closeMobileMenu()">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+    
+    <div class="skatezo-mobile-menu-content p-5">
+        <div class="skatezo-mobile-search mb-8">
+            <form class="skatezo-mobile-search-wrapper flex bg-gray-100 border border-gray-300 rounded-lg overflow-hidden transition-all duration-200 focus-within:border-red-500 focus-within:ring-2 focus-within:ring-red-500/10" method="GET" action="{% url 'products:product-list' %}">
+                <input type="text" name="search" class="skatezo-mobile-search-input flex-1 bg-transparent border-none px-4 py-3 text-gray-700 text-sm outline-none placeholder-gray-400" placeholder="Search products..." value="{{ request.GET.search }}">
+                <button type="submit" class="skatezo-mobile-search-btn bg-gray-100 border-none px-4 py-3 text-red-600 cursor-pointer flex items-center justify-center text-sm transition-colors duration-200 hover:bg-gray-200 hover:text-red-700">
+                    <i class="fas fa-search"></i>
+                </button>
+            </form>
+        </div>
+
+        <div class="skatezo-mobile-menu-section mb-6">
+            <div class="skatezo-mobile-menu-title text-xs font-semibold text-gray-500 mb-3 pb-2 border-b border-gray-200 uppercase tracking-wider">Featured Categories</div>
+            <div class="skatezo-mobile-menu-links flex flex-col space-y-0.5">
+                {% for category in featured_categories %}
+                <a href="{{ category.get_absolute_url }}" class="skatezo-mobile-menu-link flex items-center space-x-3 p-3 rounded-lg text-gray-700 text-sm font-normal transition-colors duration-200 hover:bg-red-50 hover:text-red-700">
+                    <i class="fas fa-tshirt w-5 text-center text-gray-400 transition-colors duration-200 hover:text-red-500"></i>
+                    <span>{{ category.name }}</span>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="skatezo-mobile-menu-section mb-6">
+            <div class="skatezo-mobile-menu-title text-xs font-semibold text-gray-500 mb-3 pb-2 border-b border-gray-200 uppercase tracking-wider">Main Navigation</div>
+            <div class="skatezo-mobile-menu-links flex flex-col space-y-0.5">
+                <a href="{% url 'products:home' %}" class="skatezo-mobile-menu-link flex items-center space-x-3 p-3 rounded-lg text-gray-700 text-sm font-normal transition-colors duration-200 hover:bg-red-50 hover:text-red-700">
+                    <i class="fas fa-home w-5 text-center text-gray-400 transition-colors duration-200 hover:text-red-500"></i>
+                    <span>Home</span>
+                </a>
+                <a href="{% url 'products:product-list' %}" class="skatezo-mobile-menu-link flex items-center space-x-3 p-3 rounded-lg text-gray-700 text-sm font-normal transition-colors duration-200 hover:bg-red-50 hover:text-red-700">
+                    <i class="fas fa-th-large w-5 text-center text-gray-400 transition-colors duration-200 hover:text-red-500"></i>
+                    <span>All Products</span>
+                </a>
+                <a href="{% url 'products:category-list' %}" class="skatezo-mobile-menu-link flex items-center space-x-3 p-3 rounded-lg text-gray-700 text-sm font-normal transition-colors duration-200 hover:bg-red-50 hover:text-red-700">
+                    <i class="fas fa-list w-5 text-center text-gray-400 transition-colors duration-200 hover:text-red-500"></i>
+                    <span>Categories</span>
+                </a>
+                <a href="{% url 'products:brand-list' %}" class="skatezo-mobile-menu-link flex items-center space-x-3 p-3 rounded-lg text-gray-700 text-sm font-normal transition-colors duration-200 hover:bg-red-50 hover:text-red-700">
+                    <i class="fas fa-tags w-5 text-center text-gray-400 transition-colors duration-200 hover:text-red-500"></i>
+                    <span>Brands</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="skatezo-mobile-menu-section mb-6">
+            <div class="skatezo-mobile-menu-title text-xs font-semibold text-gray-500 mb-3 pb-2 border-b border-gray-200 uppercase tracking-wider">Your Account</div>
+            <div class="skatezo-mobile-menu-links flex flex-col space-y-0.5">
+                {% if user.is_authenticated %}
+                <a href="#" class="skatezo-mobile-menu-link flex items-center space-x-3 p-3 rounded-lg text-gray-700 text-sm font-normal transition-colors duration-200 hover:bg-red-50 hover:text-red-700">
+                    <i class="fas fa-user w-5 text-center text-gray-400 transition-colors duration-200 hover:text-red-500"></i>
+                    <span>My Profile</span>
+                </a>
+                <a href="{% url 'my_orders'%}" class="skatezo-mobile-menu-link flex items-center space-x-3 p-3 rounded-lg text-gray-700 text-sm font-normal transition-colors duration-200 hover:bg-red-50 hover:text-red-700">
+                    <i class="fas fa-box w-5 text-center text-gray-400 transition-colors duration-200 hover:text-red-500"></i>
+                    <span>My Orders</span>
+                </a>
+                <a href="{% url 'manage_address' %}" class="skatezo-mobile-menu-link flex items-center space-x-3 p-3 rounded-lg text-gray-700 text-sm font-normal transition-colors duration-200 hover:bg-red-50 hover:text-red-700">
+                    <i class="fas fa-map-marker-alt w-5 text-center text-gray-400 transition-colors duration-200 hover:text-red-500"></i>
+                    <span>Addresses</span>
+                </a>
+                <a href="#" class="skatezo-mobile-menu-link flex items-center space-x-3 p-3 rounded-lg text-red-700 text-sm font-normal transition-colors duration-200 hover:bg-red-50">
+                    <i class="fas fa-sign-out-alt w-5 text-center text-red-500 transition-colors duration-200"></i>
+                    <span>Sign Out</span>
+                </a>
+                {% else %}
+                <a href="{%url 'login' %}" class="skatezo-mobile-menu-link flex items-center space-x-3 p-3 rounded-lg text-gray-700 text-sm font-normal transition-colors duration-200 hover:bg-red-50 hover:text-red-700">
+                    <i class="fas fa-sign-in-alt w-5 text-center text-gray-400 transition-colors duration-200 hover:text-red-500"></i>
+                    <span>Sign In / Register</span>
+                </a>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="skatezo-quick-actions flex space-x-2 pt-5 border-t border-gray-200 mt-4">
+            <a href="#" class="skatezo-quick-action flex-1 px-2 py-3 bg-red-50 border border-red-300 rounded-lg text-red-600 text-center text-xs font-medium transition-colors duration-200 hover:bg-red-100 hover:text-red-700 flex flex-col items-center justify-center space-y-1">
+                <i class="fas fa-fire text-base"></i>New
+            </a>
+            <a href="#" class="skatezo-quick-action flex-1 px-2 py-3 bg-red-50 border border-red-300 rounded-lg text-red-600 text-center text-xs font-medium transition-colors duration-200 hover:bg-red-100 hover:text-red-700 flex flex-col items-center justify-center space-y-1">
+                <i class="fas fa-tags text-base"></i>Sale
+            </a>
+            <a href="#" class="skatezo-quick-action flex-1 px-2 py-3 bg-red-50 border border-red-300 rounded-lg text-red-600 text-center text-xs font-medium transition-colors duration-200 hover:bg-red-100 hover:text-red-700 flex flex-col items-center justify-center space-y-1">
+                <i class="fas fa-star text-base"></i>Trending
+            </a>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script>
+    // Dropdown functionality
+    let activeDropdown = null;
+
+    function toggleDropdown(dropdownId) {
+        const dropdown = document.getElementById(dropdownId + '-dropdown');
+        const isActive = dropdown && dropdown.classList.contains('active');
+        
+        // Close all dropdowns first
+        document.querySelectorAll('.skatezo-dropdown').forEach(d => {
+            d.classList.remove('active');
+            d.classList.add('invisible', 'opacity-0', 'translate-y-[-15px]');
+        });
+        
+        // Toggle current dropdown
+        if (!isActive && dropdown) {
+            dropdown.classList.add('active');
+            dropdown.classList.remove('invisible', 'opacity-0', 'translate-y-[-15px]');
+            activeDropdown = dropdownId;
+        } else {
+            activeDropdown = null;
+        }
+    }
+
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', function(event) {
+        if (!event.target.closest('.skatezo-categories') && 
+            !event.target.closest('.skatezo-action-btn')) {
+            document.querySelectorAll('.skatezo-dropdown').forEach(dropdown => {
+                dropdown.classList.remove('active');
+                dropdown.classList.add('invisible', 'opacity-0', 'translate-y-[-15px]');
+            });
+            activeDropdown = null;
+        }
+    });
+
+    // Notification system
+    function showNotification(message) {
+        const notification = document.createElement('div');
+        notification.className = 'fixed top-40 right-6 bg-red-600 text-white p-4 rounded-xl shadow-xl z-[10000] text-sm border border-red-700 transition-transform duration-300 max-w-[calc(100vw-48px)]';
+        notification.style.transform = 'translateX(100%)';
+        notification.textContent = message;
+        
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+            notification.style.transform = 'translateX(0)';
+        }, 100);
+        
+        setTimeout(() => {
+            notification.style.transform = 'translateX(150%)';
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    document.body.removeChild(notification);
+                }
+            }, 300);
+        }, 3000);
+    }
+    
+    // Mobile menu toggle functionality
+    function toggleMobileMenu() {
+        const overlay = document.getElementById('mobile-overlay');
+        const panel = document.getElementById('mobile-menu-panel');
+        
+        if (overlay && panel) {
+            overlay.classList.add('active', 'opacity-100', 'visible');
+            overlay.classList.remove('opacity-0', 'invisible');
+
+            panel.classList.add('active', 'left-0');
+            panel.classList.remove('left-[-85%]');
+            document.body.style.overflow = 'hidden';
+        }
+    }
+
+    function closeMobileMenu() {
+        const overlay = document.getElementById('mobile-overlay');
+        const panel = document.getElementById('mobile-menu-panel');
+        
+        if (overlay && panel) {
+            overlay.classList.remove('active', 'opacity-100', 'visible');
+            overlay.classList.add('opacity-0', 'invisible');
+
+            panel.classList.remove('active', 'left-0');
+            panel.classList.add('left-[-85%]');
+            document.body.style.overflow = '';
+        }
+    }
+    
+    // Add smooth scrolling
+    document.documentElement.style.scrollBehavior = 'smooth';
+
+    // Performance optimization: debounced resize handler
+    function debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    }
+
+    const debouncedResize = debounce(function() {
+        if (window.innerWidth > 768) {
+            closeMobileMenu();
+        }
+        if (activeDropdown) {
+            document.querySelectorAll('.skatezo-dropdown').forEach(dropdown => {
+                dropdown.classList.remove('active');
+                dropdown.classList.add('invisible', 'opacity-0', 'translate-y-[-15px]');
+            });
+            activeDropdown = null;
+        }
+    }, 250);
+
+    window.addEventListener('resize', debouncedResize);
+
+    // Navbar hide/show on scroll
+    const navbarTop = document.querySelector('.skatezo-navbar-container');
+    let lastScrollY = window.scrollY;
+
+    window.addEventListener('scroll', function() {
+        const currentScrollY = window.scrollY;
+        
+        if (currentScrollY > lastScrollY && currentScrollY > 100) {
+            navbarTop.style.transform = 'translateY(-100%)';
+        } else {
+            navbarTop.style.transform = 'translateY(0)';
+        }
+        
+        lastScrollY = currentScrollY;
+    }, { passive: true });
+
+    // Add ripple effect to buttons
+    function createRipple(event) {
+        const button = event.currentTarget;
+        const circle = document.createElement('span');
+        const diameter = Math.max(button.clientWidth, button.clientHeight);
+        const radius = diameter / 2;
+
+        circle.style.width = circle.style.height = `${diameter}px`;
+        circle.style.left = `${event.clientX - button.getBoundingClientRect().left - radius}px`;
+        circle.style.top = `${event.clientY - button.getBoundingClientRect().top - radius}px`;
+        circle.classList.add('ripple');
+
+        const ripples = button.getElementsByClassName('ripple');
+        if (ripples.length > 0) {
+            ripples[0].remove();
+        }
+
+        button.appendChild(circle);
+        
+        setTimeout(() => {
+            circle.remove();
+        }, 600);
+    }
+
+    // Apply ripple effect to buttons
+    document.querySelectorAll('.skatezo-action-btn, .skatezo-categories-btn, .skatezo-profile-btn, .skatezo-search-btn').forEach(btn => {
+        btn.style.position = 'relative';
+        btn.style.overflow = 'hidden';
+        btn.addEventListener('click', createRipple);
+    });
+
+    // Initialize with welcome message (delayed for better UX)
+    setTimeout(() => {
+        if (window.innerWidth > 768) {
+            showNotification('Welcome to Thinknshop! 🛍️');
+        }
+    }, 1000);
+
+    console.log('Thinknshop Red/White Premium Navbar initialized successfully! 🚀');
+</script>
+
+
 
     <main>
         <section class="hero-section">
