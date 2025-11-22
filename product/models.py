@@ -70,7 +70,7 @@ class Brand(TimestampedModel):
     Includes brand information, logos, and metadata for SEO.
     """
     name = models.CharField(max_length=100, unique=True)
-    slug = models.SlugField(unique=True)
+    slug = models.SlugField(unique=True,blank=False)
     logo = models.ImageField(upload_to='brands/', blank=True, null=True)
     description = models.TextField(blank=True)
     website_url = models.URLField(blank=True, help_text="Brand's official website")
