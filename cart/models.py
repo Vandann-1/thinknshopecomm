@@ -1,6 +1,7 @@
 from django.db import models
 from product.models import *
 from django.contrib.auth.models import User
+# from django.core.validators import MinValueValidator
 
 # Create your models here.
 

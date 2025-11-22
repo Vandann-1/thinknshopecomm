@@ -172,7 +172,7 @@ def calculate_order_total(request):
         
         # Calculate tax (18% GST example)
         taxable_amount = subtotal - discount_amount + shipping_cost
-        tax_amount = taxable_amount * Decimal('0.05') # 5% tax
+        tax_amount = taxable_amount * Decimal('0.18')
         
         # Final total
         total_amount = subtotal - discount_amount + shipping_cost + tax_amount
@@ -291,7 +291,7 @@ def order_review(request):
             # Calculate tax and total
             try:
                 taxable_amount = subtotal - discount_amount + shipping_cost
-                tax_amount = taxable_amount * Decimal('0.05')  # 5% tax
+                tax_amount = taxable_amount * Decimal('0.18')  # 18% tax
                 total_amount = subtotal - discount_amount + shipping_cost + tax_amount
                 
                 logger.info(f"Final calculations - taxable_amount: {taxable_amount}, "
@@ -423,7 +423,7 @@ def create_order(request):
         
         # Calculate final amounts
         taxable_amount = subtotal - discount_amount + shipping_cost
-        tax_amount = taxable_amount * Decimal('0.05')  # 5% tax
+        tax_amount = taxable_amount * Decimal('0.18')
         total_amount = subtotal - discount_amount + shipping_cost + tax_amount
         
         # Create order

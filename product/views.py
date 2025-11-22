@@ -40,9 +40,6 @@ from django.conf import settings
 1 )  HomePage - Displays Initial Categories , Brands , New Arrivals ETC - No Login Required For Exploring
 The Products
 """
-
-# Display the products in home page.html 
-
 class HomePageView(ListView):
     """
     Enhanced homepage displaying featured categories, brands, collections and products
@@ -533,7 +530,7 @@ class ProductListView(ListView):
     Enhanced product listing page with advanced filtering, sorting, search and pagination
     """
     model = Product
-    template_name = 'products/list/product_detail.html'
+    template_name = 'products/list/product_list.html'
     context_object_name = 'products'
     paginate_by = 20
     

@@ -1,16 +1,20 @@
-/* Base Colors */
+Base Colors - NO CHANGE, they are perfect
 :root {
     --primary-color: #e30613; /* Thinknshop Red */
     --accent-color: #ff4d4d;
     --dark-bg: #1a1a1a;       /* Dark Grey/Black for main elements */
-    --light-bg: #2c2c2c;      /* Slightly lighter dark background */
+    --light-bg: #2c2c2c;      /* Slightly lighter dark background (Card/Inner BG) */
     --text-color: #f0f0f0;    /* Light text for dark backgrounds */
     --subtle-text: #999;
     --border-color: #444;
     --success-color: #00bf63; /* Keep success green/teal for positive feedback */
+
+    /* New/Refined Shadows for Dark Mode Depth */
+    --shadow-depth: 0 8px 30px rgba(0, 0, 0, 0.6), 0 0 0 1px var(--border-color);
+    --shadow-subtle: 0 2px 5px rgba(0, 0, 0, 0.4);
 }
 
-/* Global Reset and Body */
+/* Global Reset and Body - MINOR TWEAKS */
 * {
     margin: 0;
     padding: 0;
@@ -18,94 +22,107 @@
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    /* Main Background: Darker shade */
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; /* Added common fallbacks */
     background: var(--dark-bg);
-    /* Main Text Color: Light */
     color: var(--text-color);
     line-height: 1.6;
+    min-height: 100vh; /* Ensure body takes full height for consistent background */
 }
 
 .container {
-    max-width: 1200px;
+    max-width: 1280px; /* Slightly wider container for more breathing room */
     margin: 0 auto;
     padding: 20px;
 }
 
-/* Progress Steps */
+/* Progress Steps - REFINED STYLING */
 .progress-steps {
     display: flex;
     justify-content: center;
-    margin-bottom: 40px;
-    /* Background: Inner element background */
+    margin-bottom: 50px;
     background: var(--light-bg);
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    padding: 15px 20px;
+    border-radius: 12px;
+    /* Used new shadow variable */
+    box-shadow: var(--shadow-subtle); 
+    border: 1px solid var(--border-color);
 }
 
 .step {
     display: flex;
     align-items: center;
-    margin: 0 20px;
-    /* Default step color (Subtle grey) */
+    margin: 0 15px; /* Tighter spacing */
     color: var(--subtle-text);
+    transition: color 0.3s ease;
+    font-size: 0.95rem; /* Slightly smaller text */
 }
 
-.step.completed {
-    /* Completed step color (Success/Red) */
-    color: var(--primary-color);
+/* Added separation line */
+.step:not(:last-child)::after {
+    content: '';
+    width: 30px;
+    height: 2px;
+    background: var(--border-color);
+    margin-left: 15px;
+    transition: background 0.3s ease;
+}
+
+.step.completed::after {
+    background: var(--success-color);
 }
 
 .step.active {
-    /* Active step color (Primary Red) */
     color: var(--primary-color);
-    font-weight: 600;
+    font-weight: 700;
 }
 
 .step-number {
-    width: 32px;
-    height: 32px;
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
-    /* Default background (Darker subtle grey) */
     background: var(--border-color);
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-right: 8px;
+    margin-right: 10px;
     font-weight: bold;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    flex-shrink: 0; /* Prevent shrinking on small screens */
 }
 
 .step.completed .step-number {
-    /* Completed background (Success/Red) */
-    background: var(--success-color); /* Kept green for "completed" feel */
+    background: var(--success-color); 
     color: white;
+    /* Added checkmark icon placeholder */
+    /* content: '✓'; */ 
 }
 
 .step.active .step-number {
-    /* Active background (Primary Red) */
     background: var(--primary-color);
     color: white;
+    /* Added subtle pulsing effect for active step */
+    box-shadow: 0 0 0 4px rgba(227, 6, 19, 0.3); 
 }
 
-/* Header */
+/* Header - MINOR TWEAKS */
 .review-header {
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 40px;
 }
 
 .review-header h1 {
-    font-size: 2.5rem;
-    /* Header color (Light text) */
+    font-size: 2.8rem; /* Slightly larger */
     color: var(--text-color);
     margin-bottom: 10px;
+    font-weight: 800; /* Bolder header */
 }
 
-/* Layout */
+/* Layout - NO CHANGE */
 .review-content {
     display: grid;
     grid-template-columns: 1fr 400px;
-    gap: 30px;
+    gap: 40px; /* Increased gap for better separation */
 }
 
 @media (max-width: 768px) {
@@ -114,304 +131,342 @@ body {
     }
 }
 
-/* Cards */
+/* Cards - REFINED SHADOWS/BORDERS */
 .review-card {
-    /* Card Background: Inner element background */
     background: var(--light-bg);
     border-radius: 12px;
-    padding: 24px;
-    margin-bottom: 20px;
-    /* Stronger shadow for a lifted effect on dark mode */
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-    /* Subtle border */
+    padding: 30px; /* Increased padding */
+    margin-bottom: 25px;
+    /* Used new shadow variable for more depth */
+    box-shadow: var(--shadow-depth); 
     border: 1px solid var(--border-color);
 }
 
 .card-title {
-    font-size: 1.3rem;
-    /* Card Title Color: Light text */
+    font-size: 1.5rem; /* Larger title */
     color: var(--text-color);
-    margin-bottom: 20px;
-    font-weight: 600;
+    margin-bottom: 25px;
+    font-weight: 700;
+    border-bottom: 1px solid var(--border-color); /* Subtle separation */
+    padding-bottom: 15px;
 }
 
-/* Product Review */
+/* Product Review - MINOR TWEAKS */
 .product-review {
     display: flex;
     gap: 20px;
+    align-items: center; /* Vertically align items */
 }
 
 .product-image {
-    width: 120px;
-    height: 120px;
+    width: 100px; /* Slightly smaller image for summary context */
+    height: 100px;
     object-fit: cover;
     border-radius: 8px;
-    /* Subtle border */
     border: 1px solid var(--border-color);
+    flex-shrink: 0; /* Prevent image from shrinking */
 }
 
 .product-info h3 {
-    font-size: 1.4rem;
-    margin-bottom: 12px;
+    font-size: 1.5rem;
+    margin-bottom: 8px;
     color: var(--text-color);
 }
 
 .variant-details {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-    margin-bottom: 15px;
+    gap: 10px; /* Tighter gap */
+    margin-bottom: 10px;
 }
 
 .variant-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    /* Variant background: Even darker grey for contrast */
     background: var(--dark-bg);
-    padding: 8px 12px;
-    border-radius: 20px;
-    font-size: 0.9rem;
+    padding: 6px 10px; /* Smaller padding */
+    border-radius: 4px; /* Square edges for variants */
+    font-size: 0.85rem;
+    border: 1px solid var(--border-color); /* Added border for definition */
 }
 
 .color-swatch {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    border: 2px solid var(--light-bg); /* Border matches card background */
-    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.2);
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--light-bg); 
+    box-shadow: 0 0 0 1px var(--border-color); /* Refined box-shadow */
 }
 
 .price-info {
-    margin: 15px 0;
+    margin: 10px 0;
 }
 
 .current-price {
-    font-size: 1.3rem;
-    font-weight: bold;
-    /* Current Price: Success Color */
+    font-size: 1.4rem;
+    font-weight: 700; /* Bolder */
     color: var(--success-color); 
-    margin-right: 10px;
 }
 
-.original-price {
-    font-size: 1rem;
-    /* Original Price: Subtle grey */
-    color: var(--subtle-text);
-    text-decoration: line-through;
-}
-
-/* Address */
+/* Address - MINOR TWEAKS */
 .address-display {
     border: 1px solid var(--border-color);
-    border-radius: 8px;
+    border-radius: 10px;
     padding: 20px;
+    transition: all 0.3s ease;
+}
+
+.address-display:hover {
+    border-color: var(--primary-color); /* Red hover highlight */
 }
 
 .address-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 12px;
+    margin-bottom: 15px;
 }
 
 .address-name {
-    font-weight: 600;
-    font-size: 1.1rem;
-    color: var(--text-color);
+    font-weight: 700;
+    font-size: 1.2rem;
 }
 
 .change-address-btn {
+    /* Subtle button for address change */
     background: none;
-    /* Button border: Primary Red */
-    border: 1px solid var(--primary-color);
-    /* Button text: Primary Red */
+    border: none; 
     color: var(--primary-color);
-    padding: 6px 12px;
-    border-radius: 6px;
-    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 4px;
     font-size: 0.9rem;
-    transition: background 0.2s ease, color 0.2s ease;
+    font-weight: 600;
+    text-transform: uppercase;
 }
 
 .change-address-btn:hover {
-    /* Hover state: Solid Red background */
-    background: var(--primary-color);
-    color: white;
+    background: rgba(227, 6, 19, 0.1); /* Subtle red background on hover */
+    color: var(--primary-color);
 }
 
 .address-details {
-    /* Address text: Subtle grey */
     color: var(--subtle-text);
-    line-height: 1.6;
+    line-height: 1.5;
 }
 
-/* Payment Methods */
+/* Payment Methods - MAJOR REFINEMENT FOR RADIO SELECTION */
 .payment-methods {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+    gap: 10px; /* Tighter gap */
 }
 
 .payment-option {
-    display: flex;
-    align-items: center;
-    padding: 20px;
+    padding: 15px 20px;
     border: 2px solid var(--border-color);
-    border-radius: 12px;
-    cursor: pointer;
+    border-radius: 10px;
     transition: all 0.3s ease;
-    /* Text color for payment options */
-    color: var(--text-color);
+    position: relative;
+    user-select: none;
+    cursor: pointer;
+    background: var(--dark-bg); /* Darker BG for options within a card */
 }
 
 .payment-option:hover {
-    /* Hover border: Primary Red */
     border-color: var(--primary-color);
-    /* Hover background: Slightly lighter dark grey */
     background: var(--dark-bg);
 }
 
 .payment-option.selected {
-    /* Selected border: Primary Red */
     border-color: var(--primary-color);
-    /* Selected background: Slightly lighter dark grey */
-    background: var(--dark-bg);
+    background: rgba(227, 6, 19, 0.1); /* Very subtle red tint */
 }
 
+/* Hide default radio and use a custom one */
 .payment-option input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.payment-content {
+    display: flex;
+    align-items: center;
+}
+
+.radio-custom {
+    height: 20px;
+    width: 20px;
+    min-width: 20px;
+    background-color: transparent;
+    border-radius: 50%;
+    border: 2px solid var(--subtle-text);
     margin-right: 15px;
-    /* You would typically need a custom style here for dark mode radios */
+    position: relative;
+    transition: border-color 0.3s ease;
+}
+
+.payment-option.selected .radio-custom {
+    border-color: var(--primary-color);
+}
+
+.radio-custom::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.payment-option.selected .radio-custom::after {
+    opacity: 1;
 }
 
 .payment-icon {
-    font-size: 1.5rem;
+    font-size: 1.8rem; /* Larger icon */
     margin-right: 15px;
-    /* Icon color: Primary Red */
     color: var(--primary-color);
+    flex-shrink: 0;
+}
+
+.payment-text {
+    display: flex;
+    flex-direction: column;
 }
 
 .payment-title {
-    font-weight: 600;
-    margin-bottom: 4px;
+    font-weight: 700;
+    font-size: 1rem;
 }
 
 .payment-description {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     color: var(--subtle-text);
 }
 
 .security-badge {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-top: 20px;
-    padding: 12px;
-    /* Badge background: Darker subtle grey */
+    gap: 6px; /* Tighter gap */
+    padding: 10px;
     background: var(--dark-bg);
-    border-radius: 8px;
-    font-size: 0.9rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
     color: var(--subtle-text);
+    justify-content: center;
+    border: 1px solid var(--border-color);
 }
 
-/* Order Notes */
+/* Order Notes - REFINED INPUT STYLING */
 .order-notes textarea {
     width: 100%;
-    min-height: 100px;
+    min-height: 120px; /* Slightly taller */
     padding: 15px;
     border: 1px solid var(--border-color);
-    border-radius: 8px;
+    border-radius: 10px;
     font-family: inherit;
-    font-size: 0.95rem;
+    font-size: 1rem;
     resize: vertical;
-    /* Input colors */
     background: var(--dark-bg);
     color: var(--text-color);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.order-notes textarea::placeholder {
+    color: var(--subtle-text);
 }
 
 .order-notes textarea:focus {
     outline: none;
-    /* Focus border: Primary Red */
     border-color: var(--primary-color);
+    /* Subtle red glow on focus */
+    box-shadow: 0 0 0 3px rgba(227, 6, 19, 0.2); 
 }
 
-/* Order Summary */
+/* Order Summary - REFINED STRUCTURE */
 .order-summary {
     position: sticky;
-    top: 20px;
+    top: 30px; /* Adjusted sticky position */
 }
 
 .summary-item {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 15px;
+    margin-bottom: 12px;
     padding-bottom: 10px;
+    font-size: 1rem;
 }
 
 .summary-item:not(.total) {
-    /* Item separator: Subtle border */
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 1px dashed var(--border-color); /* Dashed separator for subtle look */
 }
 
 .summary-item.total {
-    font-size: 1.2rem;
-    font-weight: bold;
+    font-size: 1.5rem; /* Larger total */
+    font-weight: 800;
     color: var(--text-color);
-    /* Total line separator: Darker border */
     border-top: 2px solid var(--border-color);
-    padding-top: 15px;
+    padding-top: 20px;
     margin-top: 20px;
+}
+
+.summary-item span:first-child {
+    color: var(--subtle-text);
 }
 
 .discount-row {
-    /* Discount color: Success Green/Teal */
     color: var(--success-color);
+    font-weight: 600;
 }
 
 .shipping-info {
-    /* Shipping Info Box: Lighter, contrasting color */
-    background: #4d0309; /* Dark Red/Maroon */
-    padding: 10px;
-    border-radius: 6px;
-    margin: 20px 0;
+    /* Toned down the shipping info box for better dark mode aesthetics */
+    background: rgba(227, 6, 19, 0.1); /* Very subtle red background */
+    border: 1px solid var(--primary-color);
+    padding: 15px;
+    border-radius: 8px;
+    margin: 25px 0;
     text-align: center;
-    color: #ffd4d4; /* Light Red text */
+    color: var(--primary-color); /* Red text for notice */
+    font-weight: 600;
 }
 
-/* Buttons */
+/* Buttons - REFINED HOVER AND FOCUS STATES */
 .order-actions {
     display: flex;
-    gap: 10px;
-    margin-top: 20px;
+    flex-direction: column; /* Stack buttons */
+    gap: 15px; /* Increased gap */
+    margin-top: 30px;
 }
 
 .btn {
-    padding: 12px 24px;
+    padding: 15px 24px; /* Larger hit area */
     border: none;
-    border-radius: 8px;
-    font-size: 1rem;
+    border-radius: 10px; /* Slightly larger border-radius */
+    font-size: 1.1rem; /* Larger font */
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.3s ease, transform 0.1s ease;
     text-decoration: none;
-    display: inline-flex;
+    display: flex;
     align-items: center;
     justify-content: center;
-    font-weight: 500;
+    font-weight: 700;
     flex: 1;
 }
 
+.btn:focus {
+    outline: 3px solid rgba(255, 255, 255, 0.2); /* Accessibility focus ring */
+    outline-offset: 2px;
+}
+
+.btn:active {
+    transform: translateY(1px); /* Press down effect */
+}
+
 .btn-secondary {
-    /* Secondary Button: Subtle Dark Grey */
-    background: #666;
+    background: var(--border-color); /* Darker secondary */
     color: white;
 }
 
 .btn-secondary:hover {
-    background: #777;
+    background: #555;
 }
 
 .btn-success {
-    /* Success Button: Used for confirmation/positive actions */
     background: var(--success-color);
     color: white;
 }
@@ -421,59 +476,53 @@ body {
 }
 
 .btn-primary {
-    /* Primary Action Button (e.g., "Place Order"): Primary Red */
     background: var(--primary-color);
     color: white;
-    font-weight: 700;
+    font-weight: 800; /* Extra bold for primary action */
     text-transform: uppercase;
 }
 
 .btn-primary:hover {
-    background: #a3040e; /* Darker Red on hover */
+    background: #a3040e; 
+    box-shadow: 0 4px 15px rgba(227, 6, 19, 0.4); /* Red glow on hover */
 }
 
-.btn.loading {
-    opacity: 0.7;
-    cursor: not-allowed;
-}
-
-@keyframes dots {
-    0%, 20% { content: ""; }
-    40% { content: "."; }
-    60% { content: ".."; }
-    80%, 100% { content: "..."; }
-}
-
-/* Alert Messages */
+/* Alert Messages - REFINED CONTRAST */
 .alert {
-    display: flex;
-    align-items: center;
-    padding: 15px 20px;
-    margin-bottom: 20px;
-    border-radius: 8px;
-    font-weight: 500;
+    padding: 18px 25px; /* More padding */
+    margin-bottom: 25px;
+    border-radius: 10px;
+    font-weight: 600;
+    line-height: 1.4;
 }
 
+/* Ensure strong contrast for dark mode alerts */
 .alert-success {
-    background: #1f7a4a;
-    color: #e6ffec;
-    border: 1px solid #28a745;
+    background: #004d2e; /* Darker green background */
+    color: #ccffdd; /* Lighter text */
+    border: 1px solid var(--success-color);
 }
 
 .alert-error {
-    background: #8f1722;
-    color: #ffeaea;
+    background: #5c050c; /* Darker red background */
+    color: #fff0f1;
     border: 1px solid var(--primary-color);
 }
 
 .alert-warning {
-    background: #917c00;
-    color: #fff9e6;
-    border: 1px solid #ffd700;
+    background: #5e4d00;
+    color: #fffcdb;
+    border: 1px solid #ffcc00;
 }
 
 .alert-info {
-    background: #145963;
-    color: #e0f7fa;
-    border: 1px solid #00acc1;
+    background: #0d47a1;
+    color: #e3f2fd;
+    border: 1px solid #1e88e5;
+}
+
+/* Icon Placeholder Class (for use with Font Awesome or similar) */
+.icon {
+    margin-right: 8px;
+    line-height: 1;
 }
