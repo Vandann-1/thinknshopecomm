@@ -358,14 +358,14 @@
 
                 <!-- Action Buttons -->
                 <div class="space-y-3">
-                    <button class="btn btn-primary w-full bg-gray-900 hover:bg-gray-800 text-white font-medium py-4 px-6 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2">
+                    <button class="btn bg-black  w-full bg-gray-900 hover:bg-gray-800 text-white font-medium py-4 px-6 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2">
                         Add to Cart
                     </button>
                     <div class="grid grid-cols-2 gap-3">
                         <button class="btn btn-secondary py-3 px-4 border border-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-50 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
                             {% if is_in_wishlist %}Remove from Wishlist{% else %}Add to Wishlist{% endif %}
                         </button>
-                        <button class="purchase-btn purchase-btn-secondary py-3 px-4 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-primary-600 focus:ring-offset-2" 
+                        <button class="purchase-btn purchase-btn-success py-3 px-4 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-primary-600 focus:ring-offset-2" 
                                 data-product-id="{{product.id}}">
                             Buy Now
                         </button>

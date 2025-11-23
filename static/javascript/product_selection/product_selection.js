@@ -150,16 +150,16 @@ function displayProductSelection(productData) {
         <div class="purchase-selection-group">
             <label>Quantity:</label>
             <div class="purchase-quantity-selector">
-                <button type="button" id="purchaseDecreaseQty" style="padding: 8px 12px; border: 1px solid #ddd; background: white; cursor: pointer; border-radius: 4px;">-</button>
+                <button type="button" id="purchaseDecreaseQty" style="padding: 8px 12px; border: 1px solid #ddd; background: #f0f0f0; cursor: pointer; border-radius: 4px; color: #333;">-</button>
                 <input type="number" id="purchaseQuantityInput" value="1" min="1" max="1" readonly style="width: 60px; text-align: center; border: 1px solid #ddd; margin: 0 5px;">
-                <button type="button" id="purchaseIncreaseQty" style="padding: 8px 12px; border: 1px solid #ddd; background: white; cursor: pointer; border-radius: 4px;">+</button>
+                <button type="button" id="purchaseIncreaseQty" style="padding: 8px 12px; border: 1px solid #ddd; background: #f0f0f0; cursor: pointer; border-radius: 4px; color: #333;">+</button>
             </div>
         </div>
 
         <div class="purchase-price-summary" id="purchasePriceSummary" style="display: none; margin-top: 20px; padding: 15px; border: 1px solid #ddd; border-radius: 5px; background: #f8f9fa;"></div>
 
         <div style="margin-top: 20px;">
-            <button type="button" class="purchase-btn purchase-btn-primary" id="purchaseProceedBtn" disabled style="width: 100%; padding: 12px; border-radius: 4px;">
+            <button type="button" class="purchase-btn purchase-btn-primary" id="purchaseProceedBtn" disabled style="width: 100%; padding: 12px; border-radius: 4px; background: #FF5722; color: white; border: none; cursor: pointer; transition: background 0.3s;">
                 Proceed to Review
             </button>
         </div>
@@ -264,8 +264,8 @@ function selectPurchaseColor(colorId) {
     
     const selectedColorBtn = document.querySelector(`[data-color-id="${selectedColor}"]`);
     if (selectedColorBtn) {
-        selectedColorBtn.style.border = '3px solid #007bff';
-        selectedColorBtn.style.boxShadow = '0 0 0 2px rgba(0,123,255,0.25)';
+        selectedColorBtn.style.border = '3px solid #FF5722'; /* ThinknShop Primary */
+        selectedColorBtn.style.boxShadow = '0 0 0 2px rgba(255,87,34,0.25)'; /* ThinknShop Primary */
     }
     
     // Reset size selection UI
@@ -298,9 +298,9 @@ function selectPurchaseSize(sizeId) {
     
     const selectedSizeBtn = document.querySelector(`[data-size-id="${selectedSize}"]`);
     if (selectedSizeBtn) {
-        selectedSizeBtn.style.background = '#007bff';
+        selectedSizeBtn.style.background = '#FF5722'; /* ThinknShop Primary */
         selectedSizeBtn.style.color = 'white';
-        selectedSizeBtn.style.border = '1px solid #007bff';
+        selectedSizeBtn.style.border = '1px solid #FF5722'; /* ThinknShop Primary */
     }
     
     updatePurchaseVariantInfo();
@@ -433,9 +433,11 @@ function checkPurchaseSelectionComplete() {
     if (isComplete) {
         proceedBtn.style.opacity = '1';
         proceedBtn.style.cursor = 'pointer';
+        proceedBtn.style.background = '#FF5722'; /* ThinknShop Primary */
     } else {
         proceedBtn.style.opacity = '0.6';
         proceedBtn.style.cursor = 'not-allowed';
+        proceedBtn.style.background = '#FF5722'; /* Still set primary background, but faded */
     }
 }
 
@@ -510,7 +512,7 @@ function displayPurchasePricingSummary(pricing, discount) {
         <hr style="margin: 15px 0; border: none; border-top: 1px solid #ddd;">
         <div class="purchase-price-row purchase-total" style="display: flex; justify-content: space-between; font-size: 18px; font-weight: bold; color: #333;">
             <span>Total Amount:</span>
-            <span style="color: #007bff;">₹${pricing.total_amount || 0}</span>
+            <span style="color: #FF5722;">₹${pricing.total_amount || 0}</span>
         </div>
     `;
     
@@ -571,12 +573,12 @@ function displayPurchaseAddressSelection(addresses) {
         content = `
             <div class="purchase-no-addresses" style="text-align: center; padding: 40px;">
                 <h4 style="margin-bottom: 20px;">No addresses found</h4>
-                <button class="purchase-btn purchase-btn-primary" id="showAddAddressBtn" style="padding: 12px 24px;">Add Address</button>
+                <button class="purchase-btn purchase-btn-primary" id="showAddAddressBtn" style="padding: 12px 24px; background: #FF5722; color: white; border: none; border-radius: 4px; cursor: pointer; transition: background 0.3s;">Add Address</button>
             </div>
         `;
     } else {
         content = `
-            <button class="purchase-btn purchase-btn-secondary" id="showAddAddressBtn" style="margin-bottom: 20px; padding: 10px 20px;">Add New Address</button>
+            <button class="purchase-btn purchase-btn-secondary" id="showAddAddressBtn" style="margin-bottom: 20px; padding: 10px 20px; background: #607D8B; color: white; border: none; border-radius: 4px; cursor: pointer; transition: background 0.3s;">Add New Address</button>
             
             <div class="purchase-addresses-grid" id="purchaseAddressesGrid" style="display: grid; gap: 15px; margin-bottom: 20px;">
                 ${addresses.map((address, index) => `
@@ -586,7 +588,7 @@ function displayPurchaseAddressSelection(addresses) {
                             <h4 style="margin: 0 0 8px 0;">${escapeHtml(address.full_name || 'Name')}</h4>
                             <p style="margin: 4px 0; color: #666;">${escapeHtml(address.full_address || 'Address')}</p>
                             <p style="margin: 4px 0; color: #666;">Phone: ${escapeHtml(address.phone_number || 'N/A')}</p>
-                            ${address.is_default ? '<span class="purchase-default-badge" style="display: inline-block; background: #007bff; color: white; padding: 2px 8px; border-radius: 4px; font-size: 12px; margin-top: 8px;">Default</span>' : ''}
+                            ${address.is_default ? '<span class="purchase-default-badge" style="display: inline-block; background: #FF5722; color: white; padding: 2px 8px; border-radius: 4px; font-size: 12px; margin-top: 8px;">Default</span>' : ''}
                         </label>
                     </div>
                 `).join('')}
@@ -596,7 +598,7 @@ function displayPurchaseAddressSelection(addresses) {
                 <h4 style="margin-bottom: 10px;">Have a coupon code?</h4>
                 <div class="purchase-coupon-input-group" style="display: flex; gap: 10px;">
                     <input type="text" id="purchaseCouponInput" placeholder="Enter coupon code" style="flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
-                    <button id="applyCouponBtn" style="padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer;">Apply</button>
+                    <button id="applyCouponBtn" style="padding: 10px 20px; background: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer; transition: background 0.3s;">Apply</button>
                 </div>
                 <div id="purchaseCouponStatus" style="margin-top: 10px;"></div>
             </div>
@@ -609,8 +611,8 @@ function displayPurchaseAddressSelection(addresses) {
 
     content += `
         <div class="purchase-modal-actions" style="display: flex; gap: 10px; margin-top: 20px;">
-            <button class="purchase-btn purchase-btn-secondary" id="backToProductBtn" style="flex: 1; padding: 12px;">Back</button>
-            <button class="purchase-btn purchase-btn-success" id="purchasePlaceOrderBtn" disabled style="flex: 1; padding: 12px;">
+            <button class="purchase-btn purchase-btn-secondary" id="backToProductBtn" style="flex: 1; padding: 12px; background: #607D8B; color: white; border: none; border-radius: 4px; cursor: pointer; transition: background 0.3s;">Back</button>
+            <button class="purchase-btn purchase-btn-success" id="purchasePlaceOrderBtn" disabled style="flex: 1; padding: 12px; background: #FF5722; color: white; border: none; border-radius: 4px; cursor: pointer; transition: background 0.3s;">
                 Continue to Payment
             </button>
         </div>
@@ -696,8 +698,8 @@ function selectPurchaseAddress(addressId) {
     
     const selectedCard = document.querySelector(`[data-address-id="${selectedAddress}"]`);
     if (selectedCard) {
-        selectedCard.style.border = '2px solid #007bff';
-        selectedCard.style.background = '#f0f8ff';
+        selectedCard.style.border = '2px solid #FF5722'; /* ThinknShop Primary */
+        selectedCard.style.background = '#fff8e1'; /* Light background for selection */
         
         const radioInput = selectedCard.querySelector('input[type="radio"]');
         if (radioInput) {
@@ -710,6 +712,7 @@ function selectPurchaseAddress(addressId) {
         placeOrderBtn.disabled = false;
         placeOrderBtn.style.opacity = '1';
         placeOrderBtn.style.cursor = 'pointer';
+        placeOrderBtn.style.background = '#FF5722'; /* ThinknShop Primary */
     }
 }
 
@@ -808,7 +811,7 @@ function generatePurchasePricingHtml(pricing, discount = null) {
         <hr style="margin: 15px 0; border: none; border-top: 1px solid #ddd;">
         <div class="purchase-price-row purchase-total" style="display: flex; justify-content: space-between; font-size: 18px; font-weight: bold; color: #333;">
             <span>Total:</span>
-            <span style="color: #007bff;">₹${pricing.total_amount || 0}</span>
+            <span style="color: #FF5722;">₹${pricing.total_amount || 0}</span>
         </div>
     `;
 }
@@ -898,7 +901,7 @@ function showPurchaseLoading(message = 'Loading...') {
     }
     overlay.innerHTML = `
         <div style="background: white; padding: 30px; border-radius: 8px; text-align: center;">
-            <div class="purchase-spinner" style="border: 4px solid #f3f3f3; border-top: 4px solid #007bff; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 0 auto 15px;"></div>
+            <div class="purchase-spinner" style="border: 4px solid #f3f3f3; border-top: 4px solid #FF5722; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 0 auto 15px;"></div>
             <div style="color: #333; font-size: 16px;">${escapeHtml(message)}</div>
         </div>
     `;
