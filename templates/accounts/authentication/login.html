@@ -6,14 +6,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - ThinknShop</title>
-    
+
     <script src="https://cdn.tailwindcss.com"></script>
-    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
+
     <script>
         tailwind.config = {
             theme: {
@@ -22,11 +21,10 @@
                         'inter': ['Inter', 'sans-serif'],
                     },
                     colors: {
-                        // Custom Red & Black Theme Palette
                         brand: {
-                            red: '#dc2626',      // red-600
-                            redDark: '#b91c1c',  // red-700
-                            black: '#000000',    // Pure black for text/accents
+                            red: '#dc2626',
+                            redDark: '#b91c1c',
+                            black: '#000000',
                         }
                     },
                     animation: {
@@ -47,105 +45,106 @@
             }
         }
     </script>
-    
+
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #ffffff !important; /* Force pure white */
+            background-color: #ffffff !important;
         }
-
-        /* Clean White Modal */
         .modal-content {
             border: 1px solid #f3f4f6;
             border-radius: 16px;
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
         }
-        .modal-header { border-bottom: 1px solid #f3f4f6; }
-        .modal-footer { border-top: 1px solid #f3f4f6; }
-        
-        /* Input focus: Red ring */
         .form-input:focus {
             border-color: #dc2626 !important;
-            box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.1) !important;
+            box-shadow: 0 0 0 4px rgba(220,38,38,0.1) !important;
         }
     </style>
 </head>
+
 <body class="min-h-screen bg-white flex items-center justify-center p-4">
-    
+
     <div class="w-full max-w-[440px]">
+
+        <!-- Logo & Heading -->
         <div class="text-center mb-8 animate-fade-in">
             <div class="inline-flex items-center justify-center w-16 h-16 bg-brand-red rounded-2xl mb-4 shadow-lg shadow-red-600/20">
-                 <img src="{% static 'brand/images/thinknshop.png' %}" alt="ThinknShop" class="w-10 h-10 rounded-xl object-contain brightness-0 invert">
+                <img src="{% static 'brand/images/thinknshop.png' %}" class="w-10 h-10 rounded-xl object-contain brightness-0 invert">
             </div>
+
             <h1 class="text-2xl font-bold text-black mb-2">Welcome Back</h1>
             <p class="text-gray-500 text-sm">Login to your ThinknShop account</p>
         </div>
 
+        <!-- Login Card -->
         <div class="bg-white rounded-3xl shadow-xl border border-gray-100 p-8 animate-slide-up">
+
             {% if messages %}
                 <div class="mb-6 space-y-2">
                     {% for message in messages %}
-                        <div class="p-4 rounded-xl text-sm font-medium {% if message.tags == 'error' %}bg-red-50 text-red-600 border border-red-100{% else %}bg-green-50 text-green-600 border border-green-100{% endif %}">
+                        <div class="p-4 rounded-xl text-sm font-medium 
+                            {% if message.tags == 'error' %}
+                                bg-red-50 text-red-600 border border-red-100
+                            {% else %}
+                                bg-green-50 text-green-600 border border-green-100
+                            {% endif %}
+                        ">
                             {{ message }}
                         </div>
                     {% endfor %}
                 </div>
             {% endif %}
 
+            <!-- Login Form -->
             <form method="post" class="space-y-5">
                 {% csrf_token %}
                 {% if request.GET.next %}
-                    <input type="hidden" name="next" value="{{ request.GET.next }}">
+                <input type="hidden" name="next" value="{{ request.GET.next }}">
                 {% endif %}
-                
+
+                <!-- Username -->
                 <div class="space-y-2">
-                    <label for="username" class="text-sm font-semibold text-black ml-1">
-                        Username
-                    </label>
-                    <input 
-                        type="text" 
-                        id="username" 
-                        name="username" 
-                        placeholder="Enter your username"
-                        required
-                        class="form-input w-full px-4 py-3.5 bg-white border-2 border-gray-100 rounded-xl focus:outline-none transition-all duration-200 text-black placeholder-gray-400 font-medium"
-                    >
+                    <label for="username" class="text-sm font-semibold text-black ml-1">Username</label>
+                    <input type="text" id="username" name="username" 
+                        placeholder="Enter your username" required
+                        class="form-input w-full px-4 py-3.5 bg-white border-2 border-gray-100 rounded-xl focus:outline-none text-black placeholder-gray-400 font-medium">
                 </div>
-                
+
+                <!-- Password + Forgot -->
                 <div class="space-y-2">
                     <div class="flex justify-between items-center ml-1">
-                        <label for="password" class="text-sm font-semibold text-black">
-                            Password
-                        </label>
+                        <label for="password" class="text-sm font-semibold text-black">Password</label>
+
+                        <!-- FIXED: REAL FORGOT PASSWORD LINK -->
+                        <a href="{% url 'forgot_password' %}" 
+                           class="text-brand-red font-bold hover:text-brand-redDark transition">
                             Forgot Password?
                         </a>
                     </div>
-                    <input 
-                        type="password" 
-                        id="password" 
-                        name="password" 
-                        placeholder="Enter your password"
-                        required
-                        class="form-input w-full px-4 py-3.5 bg-white border-2 border-gray-100 rounded-xl focus:outline-none transition-all duration-200 text-black placeholder-gray-400 font-medium"
-                    >
+
+                    <input type="password" id="password" name="password"
+                        placeholder="Enter your password" required
+                        class="form-input w-full px-4 py-3.5 bg-white border-2 border-gray-100 rounded-xl focus:outline-none text-black placeholder-gray-400 font-medium">
                 </div>
-                
-                <button 
-                    type="submit" 
-                    class="w-full bg-brand-red hover:bg-brand-redDark text-white py-3.5 px-4 rounded-xl font-bold transition-all duration-200 shadow-md shadow-red-600/20 hover:shadow-lg hover:shadow-red-600/30 active:scale-[0.98]"
-                >
+
+                <!-- Submit -->
+                <button type="submit" 
+                    class="w-full bg-brand-red hover:bg-brand-redDark text-white py-3.5 px-4 rounded-xl font-bold transition shadow-md shadow-red-600/20">
                     Sign In
                 </button>
             </form>
 
+            <!-- Divider -->
             <div class="flex items-center my-6">
                 <div class="flex-1 border-t-2 border-gray-100"></div>
                 <span class="px-4 text-xs text-gray-400 font-bold uppercase tracking-wider">Or continue with</span>
                 <div class="flex-1 border-t-2 border-gray-100"></div>
             </div>
 
+            <!-- Google + Phone OTP -->
             <div class="space-y-3">
-                <button class="w-full flex items-center justify-center py-3.5 px-4 bg-white hover:bg-gray-50 border-2 border-gray-100 rounded-xl transition-all duration-200 font-semibold text-black">
+                <button class="w-full flex items-center justify-center py-3.5 px-4 bg-white hover:bg-gray-50 border-2 border-gray-100 rounded-xl transition font-semibold text-black">
                     <svg class="w-5 h-5 mr-3" viewBox="0 0 24 24">
                         <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
                         <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
@@ -154,13 +153,9 @@
                     </svg>
                     Google
                 </button>
-                
-                <button 
-                    type="button"
-                    data-bs-toggle="modal" 
-                    data-bs-target="#sendOtpModal"
-                    class="w-full flex items-center justify-center py-3.5 px-4 bg-white hover:bg-gray-50 border-2 border-gray-100 rounded-xl transition-all duration-200 font-semibold text-black"
-                >
+
+                <button type="button" data-bs-toggle="modal" data-bs-target="#sendOtpModal"
+                    class="w-full flex items-center justify-center py-3.5 px-4 bg-white hover:bg-gray-50 border-2 border-gray-100 rounded-xl transition font-semibold text-black">
                     <svg class="w-5 h-5 mr-3 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/>
                     </svg>
@@ -168,21 +163,20 @@
                 </button>
             </div>
 
+            <!-- Register Link -->
             <div class="text-center mt-8 text-sm font-medium text-gray-500">
                 Don't have an account? 
-                <a href="{% url 'register' %}" class="text-brand-red font-bold hover:text-brand-redDark ml-1 transition-colors">
+                <a href="{% url 'register' %}" class="text-brand-red font-bold hover:text-brand-redDark ml-1">
                     Sign up here
                 </a>
             </div>
+
         </div>
 
+        <!-- Footer Stats -->
         <div class="mt-8 grid grid-cols-3 gap-4 text-center animate-fade-in opacity-80">
             <div class="p-3">
-                <div class="text-lg font-black text-black">₹300Cr</div>
-                <div class="text-[10px] uppercase tracking-wider font-bold text-gray-400 mt-1">Valuation</div>
-            </div>
-            <div class="p-3">
-                <div class="text-lg font-black text-black">3M+</div>
+                <div class="text-lg font-black text-black">3k+</div>
                 <div class="text-[10px] uppercase tracking-wider font-bold text-gray-400 mt-1">Users</div>
             </div>
             <div class="p-3">
@@ -190,162 +184,8 @@
                 <div class="text-[10px] uppercase tracking-wider font-bold text-gray-400 mt-1">HQ</div>
             </div>
         </div>
+
     </div>
 
-    <div class="modal fade" id="sendOtpModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-sm">
-            <div class="modal-content bg-white">
-                <div class="modal-header p-6 pb-4">
-                    <h5 class="modal-title font-bold text-lg text-black">Login via OTP</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body p-6 pt-2">
-                    <p class="text-gray-500 text-sm mb-4 font-medium">Enter your phone number to receive a code.</p>
-                    <input 
-                        type="text" 
-                        id="phone_number" 
-                        class="form-input w-full px-4 py-3 bg-white border-2 border-gray-100 rounded-xl focus:outline-none transition-all text-black placeholder-gray-400 font-medium"
-                        placeholder="e.g., 9876543210"
-                    >
-                    <div id="sendOtpMsg" class="text-brand-red text-sm mt-3 font-bold"></div>
-                </div>
-                <div class="modal-footer p-4 bg-gray-50 rounded-b-[16px]">
-                    <button type="button" class="px-4 py-2 text-sm font-bold text-gray-500 hover:text-black transition-colors" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="px-6 py-2.5 bg-brand-red hover:bg-brand-redDark text-white text-sm font-bold rounded-xl transition-all shadow-md shadow-red-600/20" onclick="sendOtp()">Send Code</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="verifyOtpModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-sm">
-            <div class="modal-content bg-white">
-                <div class="modal-header p-6 pb-4">
-                    <h5 class="modal-title font-bold text-lg text-black">Verify Number</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body p-6 pt-2">
-                    <p class="text-gray-500 text-sm mb-4 font-medium">Enter the 6-digit code we sent you.</p>
-                    <input 
-                        type="text" 
-                        id="otp_code" 
-                        class="form-input w-full px-4 py-3 bg-white border-2 border-gray-100 rounded-xl focus:outline-none transition-all text-black placeholder-gray-300 text-center tracking-[0.5em] font-bold text-xl"
-                        placeholder="000000"
-                        maxlength="6"
-                    >
-                    <div id="verifyOtpMsg" class="text-brand-red text-sm mt-3 font-bold text-center"></div>
-                </div>
-                <div class="modal-footer p-4 bg-gray-50 rounded-b-[16px]">
-                    <button type="button" class="px-4 py-2 text-sm font-bold text-gray-500 hover:text-black transition-colors" data-bs-dismiss="modal">Back</button>
-                    <button type="button" class="px-6 py-2.5 bg-green-600 hover:bg-green-700 text-white text-sm font-bold rounded-xl transition-all w-full ml-2 shadow-md shadow-green-600/20" onclick="verifyOtp()">Verify</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-    function sendOtp() {
-        const phone = document.getElementById("phone_number").value;
-        const msgDiv = document.getElementById("sendOtpMsg");
-        const btn = document.querySelector('#sendOtpModal .modal-footer button:last-child');
-        const originalText = btn.innerText;
-
-        if (!phone) {
-            msgDiv.textContent = "Please enter your phone number.";
-            return;
-        }
-        
-        btn.innerText = "Sending...";
-        btn.disabled = true;
-
-        fetch("/accounts/send-otp/", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "X-CSRFToken": getCSRFToken()
-            },
-            body: JSON.stringify({ phone_number: phone })
-        })
-        .then(res => res.json())
-        .then(data => {
-            btn.innerText = originalText;
-            btn.disabled = false;
-            if (data.success) {
-                msgDiv.textContent = "";
-                var sendOtpModal = bootstrap.Modal.getOrCreateInstance(document.getElementById("sendOtpModal"));
-                sendOtpModal.hide();
-                var verifyOtpModal = bootstrap.Modal.getOrCreateInstance(document.getElementById("verifyOtpModal"));
-                verifyOtpModal.show();
-            } else {
-                msgDiv.textContent = data.error || "Failed to send OTP.";
-            }
-        })
-        .catch(err => {
-            btn.innerText = originalText;
-            btn.disabled = false;
-            msgDiv.textContent = "Something went wrong. Try again.";
-        });
-    }
-
-    function verifyOtp() {
-        const otp = document.getElementById("otp_code").value;
-        const phone = document.getElementById("phone_number").value;
-        const msgDiv = document.getElementById("verifyOtpMsg");
-        const btn = document.querySelector('#verifyOtpModal .modal-footer button:last-child');
-
-        if (!otp) {
-            msgDiv.className = "text-brand-red text-sm mt-3 font-bold text-center";
-            msgDiv.textContent = "Please enter the OTP.";
-            return;
-        }
-
-        btn.disabled = true;
-        btn.innerText = "Verifying...";
-
-        fetch("/accounts/verify-otp/", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "X-CSRFToken": getCSRFToken()
-            },
-            body: JSON.stringify({ phone_number: phone, otp: otp })
-        })
-        .then(res => res.json())
-        .then(data => {
-            if (data.success) {
-                msgDiv.className = "text-green-600 text-sm mt-3 font-bold text-center";
-                msgDiv.textContent = "Success! Redirecting...";
-                setTimeout(() => {
-                    window.location.href = data.redirect_url || "/";
-                }, 1000);
-            } else {
-                btn.disabled = false;
-                btn.innerText = "Verify";
-                msgDiv.className = "text-brand-red text-sm mt-3 font-bold text-center";
-                msgDiv.textContent = data.error || "Invalid OTP.";
-            }
-        })
-        .catch(err => {
-            btn.disabled = false;
-            btn.innerText = "Verify";
-            msgDiv.textContent = "Connection error.";
-        });
-    }
-
-    function getCSRFToken() {
-        let cookieValue = null;
-        if (document.cookie && document.cookie !== '') {
-            const cookies = document.cookie.split(';');
-            for (let i = 0; i < cookies.length; i++) {
-                const cookie = cookies[i].trim();
-                if (cookie.substring(0, 10) === ('csrftoken=')) {
-                    cookieValue = decodeURIComponent(cookie.substring(10));
-                    break;
-                }
-            }
-        }
-        return cookieValue;
-    }
-    </script>
 </body>
 </html>
