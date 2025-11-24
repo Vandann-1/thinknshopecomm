@@ -534,3 +534,191 @@ def update_cart_quantity(request, item_id):
             'success': False,
             'message': f'Failed to update quantity: {str(e)}'
         }, status=500)
+
+
+
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib import messages
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
+from django.contrib.auth.decorators import login_required
+from .models import Cart, CartItem, Product, ProductVariant
+
+
+def get_or_create_cart(request):
+    """Helper function to get or create cart for user/session"""
+    if request.user.is_authenticated:
+        cart, created = Cart.objects.get_or_create(
+            user=request.user,
+            is_active=True
+        )
+    else:
+        if not request.session.session_key:
+            request.session.create()
+        session_key = request.session.session_key
+        cart, created = Cart.objects.get_or_create(
+            session_key=session_key,
+            is_active=True
+        )
+    return cart
+
+
+def cart_view(request):
+    """Display cart contents"""
+    cart = get_or_create_cart(request)
+    cart_items = cart.items.select_related('product', 'variant').all()
+    
+    # Check for price changes
+    price_changes = []
+    for item in cart_items:
+        if item.has_price_changed():
+            price_changes.append({
+                'item': item,
+                'old_price': item.unit_price,
+                'new_price': item.get_current_price()
+            })
+    
+    context = {
+        'cart': cart,
+        'cart_items': cart_items,
+        'total_items': cart.get_total_items(),
+        'total_amount': cart.get_total_amount(),
+        'price_changes': price_changes,
+    }
+    
+    return render(request, 'cart/cart.html', context)
+
+
+@require_POST
+def add_to_cart(request, product_id):
+    """Add product to cart"""
+    product = get_object_or_404(Product, id=product_id, is_active=True)
+    cart = get_or_create_cart(request)
+    
+    # Get variant if specified
+    variant_id = request.POST.get('variant_id')
+    variant = None
+    if variant_id:
+        variant = get_object_or_404(ProductVariant, id=variant_id, product=product)
+    
+    # Get quantity
+    try:
+        quantity = int(request.POST.get('quantity', 1))
+        if quantity < 1:
+            quantity = 1
+    except ValueError:
+        quantity = 1
+    
+    # Check stock availability
+    if variant:
+        available_stock = variant.get_available_stock()
+        price = variant.get_effective_price()
+    else:
+        available_stock = product.get_total_stock()
+        price = product.get_effective_price()
+    
+    if quantity > available_stock:
+        messages.error(request, f"Only {available_stock} items available in stock.")
+        return redirect('product_detail', product_id=product.id)
+    
+    # Get or create cart item
+    cart_item, created = CartItem.objects.get_or_create(
+        cart=cart,
+        product=product,
+        variant=variant,
+        defaults={'unit_price': price, 'quantity': quantity}
+    )
+    
+    if not created:
+        # Update existing cart item
+        new_quantity = cart_item.quantity + quantity
+        if new_quantity > available_stock:
+            messages.error(request, f"Cannot add more. Only {available_stock} items available.")
+            return redirect('cart_view')
+        cart_item.quantity = new_quantity
+        cart_item.save()
+        messages.success(request, f"Updated quantity to {new_quantity}.")
+    else:
+        messages.success(request, f"{product.name} added to cart!")
+    
+    # Return JSON for AJAX requests
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        return JsonResponse({
+            'success': True,
+            'cart_items_count': cart.get_items_count(),
+            'total_items': cart.get_total_items(),
+            'total_amount': str(cart.get_total_amount())
+        })
+    
+    return redirect('cart_view')
+
+
+@require_POST
+def update_cart_item(request, item_id):
+    """Update cart item quantity"""
+    cart = get_or_create_cart(request)
+    cart_item = get_object_or_404(CartItem, id=item_id, cart=cart)
+    
+    try:
+        quantity = int(request.POST.get('quantity', 1))
+        if quantity < 1:
+            messages.error(request, "Quantity must be at least 1.")
+            return redirect('cart_view')
+        
+        cart_item.update_quantity(quantity)
+        messages.success(request, "Cart updated successfully.")
+        
+    except ValueError as e:
+        messages.error(request, str(e))
+    
+    # Return JSON for AJAX requests
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        return JsonResponse({
+            'success': True,
+            'item_total': str(cart_item.get_total_price()),
+            'cart_total': str(cart.get_total_amount()),
+            'total_items': cart.get_total_items()
+        })
+    
+    return redirect('cart_view')
+
+
+@require_POST
+def remove_from_cart(request, item_id):
+    """Remove item from cart"""
+    cart = get_or_create_cart(request)
+    cart_item = get_object_or_404(CartItem, id=item_id, cart=cart)
+    
+    product_name = cart_item.product.name
+    cart_item.delete()
+    messages.success(request, f"{product_name} removed from cart.")
+    
+    # Return JSON for AJAX requests
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        return JsonResponse({
+            'success': True,
+            'cart_items_count': cart.get_items_count(),
+            'total_items': cart.get_total_items(),
+            'cart_total': str(cart.get_total_amount())
+        })
+    
+    return redirect('cart_view')
+
+
+@require_POST
+def clear_cart(request):
+    """Clear all items from cart"""
+    cart = get_or_create_cart(request)
+    cart.clear_cart()
+    messages.success(request, "Cart cleared successfully.")
+    return redirect('cart_view')
+
+
+def get_cart_count(request):
+    """AJAX endpoint to get cart item count"""
+    cart = get_or_create_cart(request)
+    return JsonResponse({
+        'items_count': cart.get_items_count(),
+        'total_items': cart.get_total_items(),
+        'total_amount': str(cart.get_total_amount())
+    })
