@@ -1,290 +1,149 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile - ThinknShop</title>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+
     <style>
-        /* --- CSS Reset and Variables --- */
+        body { font-family: 'Manrope', sans-serif; }
         :root {
-            /* THEME: Red & Black Professional */
-            --primary-color: #d32f2f; /* Bold, professional red */
-            --primary-dark: #b71c1c;  /* Darker red for hover states */
-            
-            --text-dark: #111111;     /* Near-black for strong contrast */
-            --text-medium: #424242;   /* softer black for paragraphs */
-            --text-light: #9e9e9e;    /* Light grey for secondary text */
-            
-            --bg-white: #ffffff;
-            --bg-off-white: #f9f9f9;
-            --bg-dark: #0a0a0a;       /* Deep black for footer/banners */
-            
-            --container-width: 1240px;
-            --font-family: 'Manrope', sans-serif;
-            
-            --shadow-sm: 0 2px 4px rgba(0,0,0,0.08);
-            --shadow-md: 0 6px 12px rgba(0,0,0,0.12);
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: var(--font-family);
-            color: var(--text-medium);
-            background-color: var(--bg-white);
-            line-height: 1.6;
-            min-height: 100vh;
-        }
-        a { text-decoration: none; color: inherit; transition: all 0.3s ease; }
-        .container { max-width: var(--container-width); margin: 0 auto; padding: 0 25px; }
-
-        /* --- Header & Nav (Simplified for Profile) --- */
-        .main-header {
-            background: var(--bg-white);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: var(--shadow-sm);
-            border-bottom: 1px solid var(--bg-off-white);
-        }
-        .nav-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 0;
-        }
-        .logo {
-            font-size: 1.8em;
-            font-weight: 900;
-            color: var(--text-dark);
-            letter-spacing: -1px;
-        }
-        .logo span { color: var(--primary-color); }
-        
-        .nav-actions { display: flex; gap: 25px; align-items: center; }
-        .nav-link {
-            font-weight: 600;
-            font-size: 0.9em;
-            color: var(--text-dark);
-            text-transform: uppercase;
-        }
-        .nav-link:hover { color: var(--primary-color); }
-
-        .logout-btn {
-            background: transparent;
-            color: var(--text-dark);
-            padding: 8px 20px;
-            border: 2px solid var(--text-dark);
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: 700;
-            text-transform: uppercase;
-            font-size: 0.8em;
-            letter-spacing: 1px;
-            transition: all 0.3s ease;
-        }
-        .logout-btn:hover {
-            background: var(--primary-color);
-            border-color: var(--primary-color);
-            color: var(--bg-white);
-        }
-
-        /* --- Main Profile Area --- */
-        .main-container {
-            max-width: 900px;
-            margin: 60px auto;
-            padding: 0 25px;
-        }
-
-        .profile-card {
-            background: var(--bg-white);
-            border: 1px solid #eee;
-            box-shadow: var(--shadow-sm);
-            padding: 50px;
-            text-align: center; /* Default center for header part */
-        }
-
-        .profile-header {
-            margin-bottom: 50px;
-            padding-bottom: 40px;
-            border-bottom: 2px solid var(--bg-off-white);
-        }
-
-        .profile-avatar {
-            width: 120px;
-            height: 120px;
-            background-color: var(--text-dark);
-            color: var(--bg-white);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 25px;
-            font-size: 3em;
-            font-weight: 800;
-            border: 4px solid var(--bg-off-white);
-        }
-
-        .profile-name {
-            font-size: 2.2em;
-            font-weight: 800;
-            color: var(--text-dark);
-            margin-bottom: 5px;
-            letter-spacing: -0.5px;
-        }
-
-        .profile-email {
-            color: var(--text-light);
-            font-size: 1.1em;
-            font-weight: 500;
-        }
-
-        .profile-details-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            text-align: left; /* Align details to the left */
-        }
-
-        .detail-item {
-            padding: 25px;
-            background: var(--bg-off-white);
-            border-left: 4px solid var(--primary-color); /* ThinknShop red accent */
-        }
-
-        .detail-label {
-            font-size: 0.85em;
-            font-weight: 700;
-            text-transform: uppercase;
-            color: var(--text-light);
-            letter-spacing: 1px;
-            margin-bottom: 10px;
-        }
-
-        .detail-value {
-            font-size: 1.1em;
-            font-weight: 600;
-            color: var(--text-dark);
-        }
-        
-        /* Status badges */
-        .status-active { color: #2e7d32; }
-        .status-inactive { color: var(--primary-color); }
-
-        /* --- Messages --- */
-        .messages { margin-bottom: 30px; }
-        .alert {
-            padding: 15px 20px;
-            border-radius: 4px;
-            margin-bottom: 15px;
-            font-weight: 600;
-            font-size: 0.95em;
-        }
-        .alert-success {
-            background-color: #e8f5e9;
-            color: #2e7d32;
-            border-left: 4px solid #2e7d32;
-        }
-        .alert-error, .alert-danger {
-            background-color: #ffebee;
-            color: var(--primary-dark);
-            border-left: 4px solid var(--primary-color);
-        }
-        .alert-info {
-            background-color: #e3f2fd;
-            color: #1565c0;
-            border-left: 4px solid #1565c0;
-        }
-        .alert-warning {
-            background-color: #fff8e1;
-            color: #f57f17;
-            border-left: 4px solid #f57f17;
+            --primary: #d32f2f;
+            --primary-dark: #b71c1c;
         }
     </style>
 </head>
-<body>
-    <header class="main-header">
-        <div class="container">
-            <div class="nav-top">
-                <a href="{% url 'home' %}" class="logo">Thinkn<span>Shop.</span></a>
-                <div class="nav-actions">
-                    <a href="{% url 'home' %}" class="nav-link">Home</a>
-                    <a href="#" class="nav-link">Shop</a>
-                    <form method="post" action="{% url 'logout' %}" style="display: inline;">
-                        {% csrf_token %}
-                        <button type="submit" class="logout-btn">Sign Out</button>
-                    </form>
-                </div>
+
+<body class="bg-gray-100">
+
+<!-- HEADER -->
+<!-- TOP BAR -->
+<div class="w-full bg-red-600 text-white text-sm py-2 text-center tracking-wide">
+    FREE SHIPPING OVER ₹500
+</div>
+
+<!-- MAIN HEADER -->
+<header class="bg-white shadow-sm">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+
+        <!-- LEFT: MENU ICON -->
+        <button class="text-gray-700 text-2xl lg:hidden">
+            <i class="bi bi-list"></i>
+        </button>
+
+        <!-- CENTER LOGO -->
+        <a href="/" class="text-3xl font-extrabold mx-auto lg:mx-0">
+            Thinkn<span class="text-red-600">Shop.</span>
+        </a>
+
+        <!-- RIGHT SECTION -->
+        <div class="flex items-center gap-5">
+
+            <!-- HOME BUTTON -->
+            <a href="/" class="hidden md:block text-gray-700 font-semibold hover:text-red-600">
+                Home
+            </a>
+
+            <!-- SIGN OUT BUTTON -->
+            <form action="{% url 'logout' %}" method="POST" class="hidden md:block">
+                {% csrf_token %}
+                <button class="border border-gray-800 px-4 py-1 rounded-lg font-semibold hover:bg-red-600 hover:text-white hover:border-red-600 transition">
+                    Sign Out
+                </button>
+            </form>
+
+            <!-- PROFILE -->
+            <div class="relative">
+                <button class="w-10 h-10 bg-red-600 text-white rounded-full flex items-center justify-center font-bold">
+                    {{ user.first_name.0|upper|default:user.username.0|upper }}
+                </button>
             </div>
-        </div>
-    </header>
-    
-    <div class="main-container">
-        {% if messages %}
-            <div class="messages">
-                {% for message in messages %}
-                    <div class="alert alert-{{ message.tags }}">
-                        {{ message }}
-                    </div>
-                {% endfor %}
-            </div>
-        {% endif %}
-        
-        <div class="profile-card">
-            <div class="profile-header">
-                <div class="profile-avatar">
-                    {{ user.first_name.0|default:user.username.0|upper }}{{ user.last_name.0|upper|default:"" }}
-                </div>
-                <h1 class="profile-name">
-                    {% if user.first_name or user.last_name %}
-                        {{ user.first_name }} {{ user.last_name }}
-                    {% else %}
-                        {{ user.username }}
-                    {% endif %}
-                </h1>
-                <p class="profile-email">{{ user.email }}</p>
-            </div>
-            
-            <div class="profile-details-grid">
-                <div class="detail-item">
-                    <div class="detail-label">Username</div>
-                    <div class="detail-value">{{ user.username }}</div>
-                </div>
-                
-                <div class="detail-item">
-                    <div class="detail-label">Email Address</div>
-                    <div class="detail-value">{{ user.email }}</div>
-                </div>
-                
-                <div class="detail-item">
-                    <div class="detail-label">First Name</div>
-                    <div class="detail-value">{{ user.first_name|default:"—" }}</div>
-                </div>
-                
-                <div class="detail-item">
-                    <div class="detail-label">Last Name</div>
-                    <div class="detail-value">{{ user.last_name|default:"—" }}</div>
-                </div>
-                
-                <div class="detail-item">
-                    <div class="detail-label">Member Since</div>
-                    <div class="detail-value">{{ user.date_joined|date:"F d, Y" }}</div>
-                </div>
-                
-                <div class="detail-item">
-                    <div class="detail-label">Account Status</div>
-                    <div class="detail-value">
-                        {% if user.is_active %}
-                            <span class="status-active">Active Member</span>
-                        {% else %}
-                            <span class="status-inactive">Inactive</span>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
+
         </div>
     </div>
+</header>
+
+
+
+<!-- MAIN WRAPPER -->
+<div class="max-w-7xl mx-auto px-6 mt-10 mb-20 grid grid-cols-1 lg:grid-cols-4 gap-10">
+
+    <!-- SIDEBAR -->
+    <aside class="bg-white p-6 rounded-xl shadow">
+        <div class="flex flex-col items-center text-center">
+            <div class="w-28 h-28 rounded-full bg-gray-900 text-white flex items-center justify-center text-4xl font-bold mb-4">
+                {{ user.first_name.0|default:user.username.0|upper }}{{ user.last_name.0|upper|default:"" }}
+            </div>
+
+            <h2 class="text-xl font-bold text-gray-900">
+                {% if user.first_name %} {{ user.first_name }} {{ user.last_name }} {% else %} {{ user.username }} {% endif %}
+            </h2>
+            <p class="text-gray-500 text-sm">{{ user.email }}</p>
+        </div>
+
+        <hr class="my-6">
+
+        <ul class="space-y-4 font-semibold text-gray-700">
+            <li class="hover:text-red-600 cursor-pointer"> My Profile</li>
+          <a href=""><li class="hover:text-red-600 cursor-pointer"> Orders</li>
+        </a>  
+            <li class="hover:text-red-600 cursor-pointer"> Wishlist</li>
+            <li class="hover:text-red-600 cursor-pointer">⚙ Account Settings</li>
+        </ul>
+    </aside>
+
+    <!-- PROFILE CONTENT -->
+    <main class="lg:col-span-3 bg-white p-10 rounded-xl shadow">
+        
+        <!-- Page Title -->
+        <div class="mb-10">
+            <h1 class="text-3xl font-extrabold text-gray-900">Account Overview</h1>
+            <p class="text-gray-600 mt-2 text-lg">Here’s everything about your ThinknShop account.</p>
+        </div>
+
+
+
+        <!-- ACCOUNT INFO -->
+        <div class="space-y-8">
+
+            <div>
+                <h2 class="text-2xl font-bold text-gray-900 mb-4">Personal Details</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                    <div class="p-4 bg-gray-50 rounded-lg border">
+                        <p class="text-gray-500 text-sm uppercase font-bold">Username</p>
+                        <p class="text-lg font-semibold"> {{ user.username|slice:":1"|upper }}</p>
+                    </div>
+
+                    <div class="p-4 bg-gray-50 rounded-lg border">
+                        <p class="text-gray-500 text-sm uppercase font-bold">Email Address</p>
+                        <p class="text-lg font-semibold">{{ user.email }}</p>
+                    </div>
+
+                    <div class="p-4 bg-gray-50 rounded-lg border">
+                        <p class="text-gray-500 text-sm uppercase font-bold">Full Name</p>
+                        <p class="text-lg font-semibold">{{ user.first_name }} {{ user.last_name }}</p>
+            
+
+                    </div>
+
+                </div>
+            </div>
+
+            <div>
+                <h2 class="text-2xl font-bold text-gray-900 mb-4">Account Activity</h2>
+                <div class="p-4 bg-gray-50 rounded-lg border">
+                    <p class="text-gray-500 text-sm uppercase font-bold">Member Since</p>
+                    <p class="text-lg font-semibold">{{ user.date_joined|date:"F d, Y" }}</p>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+</div>
+
 </body>
 </html>

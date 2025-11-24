@@ -1,0 +1,143 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - ThinknShop</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 font-sans antialiased">
+
+    <!-- HERO SECTION -->
+    <div class="w-full bg-white py-14 shadow-sm">
+        <div class="max-w-7xl mx-auto px-5 sm:px-10 md:px-16 text-center">
+            <h1 class="text-4xl sm:text-5xl font-extrabold text-gray-900 mb-4">
+                Contact ThinknShop
+            </h1>
+            <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                We'd love to hear from you! Whether you have questions, feedback, or need help with an order — we're here.
+            </p>
+        </div>
+    </div>
+
+    <!-- TWO COLUMN SECTION -->
+    <div class="max-w-7xl mx-auto px-5 sm:px-10 md:px-16 py-16 grid grid-cols-1 lg:grid-cols-2 gap-14">
+
+        <!-- LEFT: CONTACT INFORMATION -->
+        <div>
+            <h2 class="text-3xl font-semibold text-gray-900 mb-8">Get in Touch</h2>
+
+            <ul class="space-y-10">
+
+                <!-- Email -->
+                <li class="flex items-start">
+                    <div class="bg-blue-600 text-white p-3 rounded-lg mr-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M2.75 5A2.75 2.75 0 0 1 5.5 2.25h13A2.75 2.75 0 0 1 21.25 5v14a2.75 2.75 0 0 1-2.75 2.75h-13A2.75 2.75 0 0 1 2.75 19V5zm2.75-.25a.25.25 0 0 0-.25.25v.44l7.25 4.64 7.25-4.64V5a.25.25 0 0 0-.25-.25h-13zm13.5 3.16-7.02 4.49a.75.75 0 0 1-.81 0L4.25 7.91V19c0 .14.11.25.25.25h13a.25.25 0 0 0 .25-.25V7.91z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-900">Email Us</h3>
+                        <p class="text-gray-700 text-lg">support@thinknshop.in</p>
+                    </div>
+                </li>
+
+                <!-- Phone -->
+                <li class="flex items-start">
+                    <div class="bg-blue-600 text-white p-3 rounded-lg mr-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h2.28a1 1 0 01.948.684l1.01 3.031a1 1 0 01-.272 1.04L7.44 9.44a12.042 12.042 0 005.117 5.117l1.685-1.537a1 1 0 011.041-.273l3.03 1.01a1 1 0 01.685.949V19a2 2 0 01-2 2h-1C8.268 21 3 15.732 3 9V5z" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-900">Call Us</h3>
+                        <p class="text-gray-700 text-lg">+91 98765 43210</p>
+                    </div>
+                </li>
+
+                <!-- Address -->
+                <li class="flex items-start">
+                    <div class="bg-blue-600 text-white p-3 rounded-lg mr-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11c1.657 0 3-1.343 3-3S13.657 5 12 5 9 6.343 9 8s1.343 3 3 3zm0 0c-4.418 0-8 3.134-8 7v1h16v-1c0-3.866-3.582-7-8-7z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-900">Visit Us</h3>
+                        <p class="text-gray-700 text-lg">Mumbai, Maharashtra, India</p>
+                    </div>
+                </li>
+
+            </ul>
+
+            <!-- SOCIAL LINKS -->
+            <div class="mt-12">
+                <h3 class="text-2xl font-semibold text-gray-900 mb-6">Follow Us</h3>
+                <div class="flex space-x-6">
+                    
+                    <a href="#" class="text-gray-700 hover:text-blue-600 text-3xl">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+
+                    <a href="#" class="text-gray-700 hover:text-blue-600 text-3xl">
+                        <i class="fab fa-facebook"></i>
+                    </a>
+
+                    <a href="#" class="text-gray-700 hover:text-blue-600 text-3xl">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+
+                </div>
+            </div>
+
+        </div>
+
+        <!-- RIGHT: CONTACT FORM -->
+        <div class="bg-white p-10 rounded-xl shadow-lg">
+            <h2 class="text-3xl font-semibold text-gray-900 mb-8">Send Us a Message</h2>
+
+            <form method="POST">
+                {% csrf_token %}
+
+                <div class="mb-6">
+                    <label class="block text-lg font-medium text-gray-800 mb-2">Your Name</label>
+                    <input type="text" name="name" required
+                           class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                </div>
+
+                <div class="mb-6">
+                    <label class="block text-lg font-medium text-gray-800 mb-2">Email Address</label>
+                    <input type="email" name="email" required
+                           class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                </div>
+
+                <div class="mb-6">
+                    <label class="block text-lg font-medium text-gray-800 mb-2">Message</label>
+                    <textarea name="message" rows="5" required
+                              class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"></textarea>
+                </div>
+
+                <button type="submit"
+                        class="w-full bg-blue-600 text-white py-3 rounded-lg text-lg font-semibold hover:bg-blue-700 transition">
+                    Submit Message
+                </button>
+
+            </form>
+        </div>
+
+    </div>
+
+    <!-- MAP SECTION -->
+    <div class="w-full bg-gray-200 py-12">
+        <div class="max-w-7xl mx-auto px-5 text-center">
+            <h2 class="text-3xl font-semibold text-gray-900 mb-6">Find Us on the Map</h2>
+            <div class="w-full h-72 bg-gray-400 rounded-xl flex items-center justify-center text-gray-700">
+                Map Placeholder (Google Maps)
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

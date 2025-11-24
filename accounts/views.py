@@ -87,7 +87,7 @@ def logout_view(request):
     if request.user.is_authenticated:
         username = request.user.first_name or request.user.username
         logout(request)
-        messages.success(request, f'Goodbye {username}! You have been logged out.')
+        messages.success(request, f' {username}! You have been logged out.')
     return redirect('/')
 
 
@@ -95,7 +95,7 @@ def logout_view(request):
 # Optional: Profile view to show user info
 @login_required
 def profile_view(request):
-    return render(request, 'profile.html', {'user': request.user})
+    return render(request, 'accounts/authentication/profile.html', {'user': request.user})
 
 
 
