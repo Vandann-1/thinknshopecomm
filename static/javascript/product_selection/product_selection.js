@@ -91,7 +91,7 @@ async function initiatePurchase(productId) {
     } catch (error) {
         hidePurchaseLoading();
         console.error('Error in initiatePurchase:', error);
-        showPurchaseAlert('error', error.message || 'Network error occurred');
+        showPurchaseAlert('error', error.message || 'please login to proceed with purchase');
     }
 }
 
@@ -506,7 +506,7 @@ function displayPurchasePricingSummary(pricing, discount) {
             </span>
         </div>
         <div class="purchase-price-row" style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 14px;">
-            <span>Tax (18% GST):</span>
+            <span>Tax (5% GST):</span>
             <span style="font-weight: 500;">₹${pricing.tax_amount || 0}</span>
         </div>
         <hr style="margin: 15px 0; border: none; border-top: 1px solid #ddd;">
