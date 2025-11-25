@@ -1167,7 +1167,7 @@
             <div class="mb-7">
                 <div class="flex items-center space-x-3 mb-4 pb-4 border-b border-gray-200">
                     <div class="w-12 h-12 rounded-full bg-red-600 text-white flex items-center justify-center text-lg font-bold">
-                        {{ user.username|slice:":1"|upper }}
+                        {{ user.username}}
                     </div>
                     <div>
                         <div class="text-gray-900 font-semibold text-sm">{{ user.username }}</div>
@@ -1551,7 +1551,6 @@
 </script>
 
 
-
     <main>
         <section class="hero-section">
             <div class="hero-container">
@@ -1584,67 +1583,37 @@
 
 <section class="products-section py-20 lg:py-32 bg-gray-50" id="shop">
     <div class="container mx-auto px-4">
+        
+        {# Section Header #}
         <div class="section-header flex justify-between items-end border-b-2 border-gray-200 pb-3 mb-10 lg:mb-16">
-            <h2 class="section-title text-3xl lg:text-4xl font-extrabold uppercase tracking-wide text-gray-900 font-oswald">Current Favorites</h2>
-            <a href="#" class="view-all-link text-lg font-semibold text-gray-700 hover:text-red-600 transition duration-300">VIEW ALL</a>
+            <h3 class="section-title text-3xl lg:text-4xl font-extrabold uppercase tracking-wide text-gray-900 font-oswald">Featured Collections</h3>
+            <a href="{% url 'products:product-list' %}" class="view-all-link text-lg font-semibold text-gray-700 hover:text-red-600 transition duration-300">VIEW ALL</a>
         </div>
         
-        <div class="products-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-            {% for product in featured_products %}
-            <div class="product-card bg-white rounded-xl shadow-lg transition duration-300 transform border border-gray-100 
-                        lg:hover:shadow-2xl lg:hover:-translate-y-2 relative group overflow-hidden">
-                
-                {% if product.discounted_price and product.discounted_price < product.base_price %}
-                    <span class="product-badge badge-sale absolute top-0 right-0 z-10 bg-red-600 text-white px-3 py-1 text-xs font-bold uppercase rounded-bl-xl shadow-md transform translate-y-0.5 -translate-x-0.5">SALE</span>
-                {% elif product.is_bestseller %}
-                    <span class="product-badge badge-bestseller absolute top-0 right-0 z-10 bg-amber-400 text-gray-900 px-3 py-1 text-xs font-bold uppercase rounded-bl-xl shadow-md transform translate-y-0.5 -translate-x-0.5">Bestseller</span>
-                {% elif product.is_new_arrival %}
-                    <span class="product-badge badge-new absolute top-0 right-0 z-10 bg-gray-900 text-white px-3 py-1 text-xs font-bold uppercase rounded-bl-xl shadow-md transform translate-y-0.5 -translate-x-0.5">New</span>
-                {% endif %}
-
-                <a href="{{ product.get_absolute_url }}" class="product-image-wrapper block h-64 sm:h-72 overflow-hidden">
-                    {% if product.gallery.first.image %}
-                    <div class="product-image w-full h-full bg-cover bg-center transition-transform duration-500 lg:group-hover:scale-108" style="background-image: url('{{ product.gallery.first.image.url }}');"></div>
-                    {% else %}
-                    <div class="product-image w-full h-full bg-cover bg-center transition-transform duration-500 lg:group-hover:scale-108 bg-gray-300" style="background-image: url('{% static 'im/placeholder.png' %}');"></div>
-                    {% endif %}
-                </a>
-                
-                <div class="product-info p-4 pt-6">
-                    <h3 class="product-name text-lg font-bold mb-1 text-gray-900 truncate">{{ product.name }}</h3>
-
-                    <div class="product-rating text-sm text-gray-500 mb-2 flex items-center">
-                        {% if product.reviews.count > 0 %}
-                            <span class="text-amber-500 mr-1">★★★★★</span> ({{ product.reviews.count }})
-                        {% else %}
-                            <span class="text-gray-400">No ratings</span>
-                        {% endif %}
-                    </div>
-                    
-                    <div class="product-price text-xl font-extrabold text-gray-900">
-                        ${{ product.get_effective_price|floatformat:2 }}
-                        {% if product.discounted_price and product.discounted_price < product.base_price %}
-                            <span class="product-price-old text-base font-normal text-gray-400 line-through ml-2">
-                                ${{ product.base_price|floatformat:2 }}
-                            </span>
-                        {% endif %}
-                    </div>
-                </div>
-
-                <a href="#" class="add-to-cart-btn block text-center font-semibold uppercase tracking-wider text-base transition duration-300 w-full 
-                                   
-                                   bg-red-600 text-white py-3.5 
-                                   
-                                   lg:group-hover:bg-red-700 lg:group-hover:shadow-lg lg:group-hover:shadow-red-700/50">
-                    Add to Cart - ${{ product.get_effective_price|floatformat:2 }}
-                </a>
-            </div>
-            {% empty %}
-            <p class="col-span-full text-center text-gray-500 py-10">No featured products are available at this time.</p>
-            {% endfor %}
+        {# This section is now flat, no card styling #}
+        <div class="shop-now-banner flex flex-col items-center justify-center py-16">
+            
+            <h3 class="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-4 text-center font-oswald uppercase tracking-widest">
+                Explore Our Entire Collection
+            </h3>
+            
+            <p class="text-lg text-gray-600 mb-8 text-center max-w-2xl">
+                Ready to find your next favorite item? Click below to browse all available products.
+            </p>
+            
+            {# The main call-to-action button #}
+            <a href="{% url 'products:product-list' %}" 
+               class="inline-block px-12 py-4 text-xl font-bold uppercase tracking-wider 
+                      bg-red-600 text-white rounded-lg 
+                      transition duration-300 transform 
+                      hover:bg-red-700 hover:scale-105">
+                Shop Now
+            </a>
+            
         </div>
     </div>
 </section>
+
 
         <section class="collections-grid">
             {% for collection in featured_collections %}
