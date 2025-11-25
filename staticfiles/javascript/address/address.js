@@ -178,7 +178,7 @@ class AddressManager {
         const modalTitle = document.getElementById('modalTitle');
         const submitBtnText = document.getElementById('submitBtnText');
         
-        if (modalTitle) modalTitle.textContent = 'Add New Address';
+        if (modalTitle) modalTitle.textContent = '';
         if (submitBtnText) submitBtnText.textContent = 'Save Address';
         
         this.resetForm();
