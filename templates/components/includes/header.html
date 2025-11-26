@@ -108,12 +108,12 @@
     
     <header class="skatezo-navbar-container fixed top-0 left-0 right-0 z-[9999] bg-white border-b border-gray-200 shadow-lg">
         <!-- Top Banner -->
-        <div class="bg-red-600 py-2">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 flex justify-center items-center text-[10px] sm:text-xs text-white font-medium uppercase tracking-wider text-center">
-                <span class="hidden sm:inline">FREE EXPRESS SHIPPING ON ORDERS OVER $50 + FREE RETURNS</span>
-                <span class="sm:hidden">FREE SHIPPING OVER 500RS</span>
-            </div>
-        </div>
+<div class="bg-black py-2">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 flex justify-center items-center text-[10px] sm:text-xs text-white font-medium uppercase tracking-wider text-center">
+        <span class="hidden sm:inline">FREE EXPRESS SHIPPING ON ORDERS OVER 500RS FREE RETURNS</span>
+        <span class="sm:hidden">FREE SHIPPING OVER 500RS</span>
+    </div>
+</div>
 
         <!-- Main Navigation -->
         <nav class="bg-white">
@@ -121,17 +121,17 @@
                 
                 <!-- Search Container - Hidden on smallest screens, shown on sm+ -->
                 <div class="skatezo-search-container hidden sm:flex flex-1 max-w-[150px] md:max-w-xs relative">
-                    <form class="skatezo-search-wrapper flex bg-gray-100 border border-gray-300 rounded-lg overflow-hidden transition-all duration-300 shadow-sm focus-within:border-red-500 focus-within:shadow-md focus-within:shadow-red-500/10 w-full" method="GET" action="{% url 'products:product-list' %}">
+                    <!-- <form class="skatezo-search-wrapper flex bg-gray-100 border border-gray-300 rounded-lg overflow-hidden transition-all duration-300 shadow-sm focus-within:border-red-500 focus-within:shadow-md focus-within:shadow-red-500/10 w-full" method="GET" action="{% url 'products:product-list' %}">
                         <input type="text" name="search" class="skatezo-search-input flex-1 bg-transparent border-none px-2 md:px-4 py-2 md:py-3 text-gray-700 text-sm md:text-base outline-none placeholder-gray-400" placeholder="Search..." value="{{ request.GET.search }}">
                         <button type="submit" class="skatezo-search-btn bg-gray-100 text-gray-500 px-2 md:px-4 py-2 md:py-3 cursor-pointer transition-colors duration-200 hover:bg-gray-200 hover:text-red-500">
                             <i class="fas fa-search text-sm"></i>
                         </button>
-                    </form>
+                    </form> -->
                 </div>
                 
                 <!-- Logo -->
                 <a href="{% url 'products:home' %}" class="skatezoo-logo flex items-center text-2xl sm:text-3xl md:text-4xl font-black text-red-600 transition-colors duration-300 hover:text-red-700 mx-2 sm:mx-4 md:mx-10 flex-shrink-0">
-                    Thinkn<span class="text-gray-900">Shop.</span>
+                    Thinkn<span class="text-gray-900">Shop</span>
                 </a>
                 
                 <!-- Action Buttons -->
@@ -240,7 +240,7 @@
             </div>
             {% else %}
             <div class="skatezoo-logo text-2xl font-black text-red-600">
-                Thinkn<span class="text-gray-900">Shop.</span>
+                Thinkn<span class="text-gray-900">Shop</span>
             </div>
             {% endif %}
             <button class="skatezo-mobile-menu-close bg-transparent border-none text-gray-500 text-xl cursor-pointer p-2 rounded-lg transition-colors duration-200 hover:bg-gray-50 hover:text-red-600" onclick="closeMobileMenu()">
@@ -251,12 +251,12 @@
         <div class="skatezo-mobile-menu-content p-5">
             <!-- Mobile Search -->
             <div class="skatezo-mobile-search mb-8">
-                <form class="skatezo-mobile-search-wrapper flex bg-gray-100 border border-gray-300 rounded-lg overflow-hidden transition-all duration-200 focus-within:border-red-500 focus-within:ring-2 focus-within:ring-red-500/10" method="GET" action="{% url 'products:product-list' %}">
+                <!-- <form class="skatezo-mobile-search-wrapper flex bg-gray-100 border border-gray-300 rounded-lg overflow-hidden transition-all duration-200 focus-within:border-red-500 focus-within:ring-2 focus-within:ring-red-500/10" method="GET" action="{% url 'products:product-list' %}">
                     <input type="text" name="search" class="skatezo-mobile-search-input flex-1 bg-transparent border-none px-4 py-3 text-gray-700 text-sm outline-none placeholder-gray-400" placeholder="Search products..." value="{{ request.GET.search }}">
                     <button type="submit" class="skatezo-mobile-search-btn bg-gray-100 border-none px-4 py-3 text-red-600 cursor-pointer flex items-center justify-center text-sm transition-colors duration-200 hover:bg-gray-200 hover:text-red-700">
                         <i class="fas fa-search"></i>
                     </button>
-                </form>
+                </form> -->
             </div>
 
             <!-- Main Navigation -->
