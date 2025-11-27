@@ -687,30 +687,30 @@
 </div>
 
 <!-- Cancel Modal -->
-<div id="cancelModal" class="fixed inset-0 bg-black bg-opacity-50 modal-backdrop overflow-y-auto h-full w-full hidden z-50" style="display: none;">
-    <div class="flex items-center justify-center min-h-screen p-4">
-        <div class="relative bg-white rounded-2xl shadow-2xl w-full max-w-md modal-content">
-            <div class="p-6">
-                <h3 class="text-xl font-semibold text-gray-900 mb-3">
-                    Cancel Order
-                </h3>
-                <p class="text-sm text-gray-600 mb-6">
+<div id="cancelModal" class="fixed inset-0 bg-black bg-opacity-50 overflow-y-auto h-full w-full hidden z-50">
+    <div class="relative top-20 mx-auto p-5 border w-full max-w-md shadow-2xl rounded-2xl bg-white m-4">
+        <div class="mt-3 text-center">
+            <h3 class="text-xl font-semibold text-black mb-4">Cancel Order</h3>
+            <div class="mb-6">
+                <p class="text-gray-600">
                     Are you sure you want to cancel order #{{ order.order_id }}? This action cannot be undone.
                 </p>
-                
-                <div class="flex flex-col-reverse sm:flex-row gap-3">
-                    <button onclick="closeCancelModal()" class="btn btn-secondary flex-1">
-                        Keep Order
-                    </button>
-                    <button id="cancelConfirm" class="btn btn-danger flex-1">
-                        Yes, Cancel Order
-                    </button>
-                </div>
+            </div>
+            <div class="flex flex-col sm:flex-row justify-center gap-3">
+                <button id="cancelConfirm" 
+                        class="bg-red-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-red-700 transition-colors">
+                    Yes, Cancel Order
+                </button>
+                <button onclick="closeCancelModal()" 
+                        class="bg-gray-200 text-black px-6 py-3 rounded-lg font-medium hover:bg-gray-300 transition-colors">
+                    Keep Order
+                </button>
             </div>
         </div>
     </div>
 </div>
 {% endblock %}
+
 
 {% block extra_js %}
 <script>
