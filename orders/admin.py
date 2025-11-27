@@ -108,9 +108,22 @@ class OrderItemAdmin(admin.ModelAdmin):
 
 
 # --- Order Status Update Admin ---
+
+from django.contrib import admin
+from .models import OrderStatusUpdate
+
 @admin.register(OrderStatusUpdate)
 class OrderStatusUpdateAdmin(admin.ModelAdmin):
-    list_display = ("order", "old_status", "new_status", "updated_by", "created_at")
-    list_filter = ("new_status", "created_at")
-    search_fields = ("order__order_id", "notes", "updated_by__username")
-    ordering = ("-created_at",)
+    list_display = ('order', 'old_status', 'new_status', 'created_at', 'updated_by')
+    list_filter = ('new_status', 'created_at')
+    search_fields = ('order__order_id', 'notes')
+    readonly_fields = ('created_at', 'updated_at', 'old_status')
+    
+    fields = ('order', 'old_status', 'new_status', 'notes', 'updated_by', 'created_at', 'updated_at')
+    
+    def save_model(self, request, obj, form, change):
+        # Automatically set updated_by to current admin user
+        if not obj.updated_by:
+            obj.updated_by = request.user
+        super().save_model(request, obj, form, change)
+
