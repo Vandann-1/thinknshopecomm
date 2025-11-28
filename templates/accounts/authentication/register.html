@@ -9,21 +9,28 @@
     
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     fontFamily: {
-                        'outfit': ['Outfit', 'sans-serif'],
+                        'sans': ['Inter', 'sans-serif'], 
                     },
                     colors: {
                         brand: {
-                            red: '#dc2626',      // Vibrant red
-                            redDark: '#b91c1c',  // Darker red for hover
-                            gray: '#737373',     // Muted text on light background
+                            red: '#dc2626', 
+                            redDark: '#b91c1c', 
+                            gray: '#737373',
+                            grayLighter: '#f9fafb',
                         }
+                    },
+                    borderRadius: {
+                        '4xl': '2rem',
+                    },
+                    boxShadow: {
+                        'red-glow': '0 10px 20px -5px rgba(220, 38, 38, 0.4)',
                     },
                     animation: {
                         'fade-in-up': 'fadeInUp 0.8s ease-out',
@@ -41,54 +48,56 @@
     
     <style>
         body {
-            font-family: 'Outfit', sans-serif;
-            background-color: #ffffff; /* Pure white background */
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
         }
         
-        /* Light glass-card effect */
-        .glass-card-light {
-            background: rgba(255, 255, 255, 0.7); /* Slightly translucent white */
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(0, 0, 0, 0.05); /* Very subtle light border */
-            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.1); /* Soft shadow */
+        /* Consistent card style */
+        .register-card {
+            background-color: #f9fafb;
+            border: 1px solid #f3f4f6;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15); 
         }
 
-        /* Custom scrollbar for light theme */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #f0f0f0; }
-        ::-webkit-scrollbar-thumb { background: #ccc; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #dc2626; }
-        
+        /* Consistent input focus styling */
+        .form-input:focus {
+            border-color: #dc2626 !important;
+            box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.4) !important;
+        }
+
         /* Input autofill light mode fix */
         input:-webkit-autofill,
         input:-webkit-autofill:hover, 
         input:-webkit-autofill:focus, 
         input:-webkit-autofill:active{
-            -webkit-box-shadow: 0 0 0 30px #f9fafb inset !important; /* light gray for autofill */
-            -webkit-text-fill-color: #171717 !important; /* dark text for autofill */
+            -webkit-box-shadow: 0 0 0 30px #f9fafb inset !important;
+            -webkit-text-fill-color: #171717 !important;
             transition: background-color 5000s ease-in-out 0s;
         }
     </style>
 </head>
 <body class="min-h-screen bg-white text-gray-900 flex items-center justify-center p-4 lg:p-8">
 
-    <div class="w-full max-w-[520px] animate-fade-in-up">
+    <div class="w-full max-w-[480px] animate-fade-in-up">
+        
         <div class="text-center mb-8">
-            <div class="inline-flex items-center justify-center w-20 h-20 bg-brand-red rounded-3xl mb-6 shadow-[0_0_50px_-15px_rgba(220,38,38,0.3)] transform hover:scale-105 transition-transform duration-300">
-                <img src="{% static 'brand/images/thinknshop.png' %}" alt="ThinknShop" class="w-12 h-12 object-contain brightness-0 invert">
+            <div class="inline-flex items-center justify-center w-16 h-16 bg-brand-red rounded-2xl mb-4 shadow-xl shadow-red-600/30 transform hover:scale-105 transition-transform duration-300">
+                <img src="{% static 'brand/images/thinknshop.png' %}" alt="ThinknShop" class="w-10 h-10 object-contain brightness-0 invert">
             </div>
-            <h1 class="text-4xl font-bold tracking-tight mb-3 text-gray-900">
-                Join the Revolution
+            <h1 class="text-3xl font-extrabold tracking-tight mb-2 text-gray-900">
+                Join ThinknShop
             </h1>
-            <p class="text-gray-600 text-lg">Create your ThinknShop account today</p>
+            <p class="text-gray-600 text-base font-medium">Create your secure shopping account</p>
         </div>
 
-        <div class="glass-card-light rounded-[32px] p-8 md:p-10 shadow-lg">
+        <div class="register-card rounded-4xl p-8 md:p-10">
             {% if messages %}
                 <div class="mb-8 space-y-3">
                     {% for message in messages %}
-                        <div class="p-4 rounded-2xl text-sm font-medium flex items-center {% if message.tags == 'error' %}bg-red-50 text-red-600 border border-red-100{% else %}bg-green-50 text-green-600 border border-green-100{% endif %}">
+                        <div class="p-4 rounded-xl text-sm font-medium flex items-center 
+                            {% if message.tags == 'error' %}bg-red-100 text-red-700 border border-red-200
+                            {% else %}bg-green-100 text-green-700 border border-green-200{% endif %}">
+                            
                             {% if message.tags == 'error' %}
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
                             {% else %}
@@ -107,15 +116,15 @@
                     <div class="space-y-2">
                         <label for="first_name" class="text-sm font-semibold text-gray-700 ml-1">First Name</label>
                         <input 
-                            type="text" id="first_name" name="first_name" placeholder="John"
-                            class="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-2xl focus:outline-none focus:border-brand-red focus:ring-4 focus:ring-brand-red/10 transition-all text-gray-900 placeholder-gray-400"
+                            type="text" id="first_name" name="first_name" placeholder="John" required
+                            class="form-input w-full px-5 py-3.5 bg-white border-2 border-gray-200 rounded-xl focus:outline-none text-gray-900 placeholder-gray-400 font-medium transition duration-200"
                         >
                     </div>
                     <div class="space-y-2">
                         <label for="last_name" class="text-sm font-semibold text-gray-700 ml-1">Last Name</label>
                         <input 
-                            type="text" id="last_name" name="last_name" placeholder="Doe"
-                            class="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-2xl focus:outline-none focus:border-brand-red focus:ring-4 focus:ring-brand-red/10 transition-all text-gray-900 placeholder-gray-400"
+                            type="text" id="last_name" name="last_name" placeholder="Doe" required
+                            class="form-input w-full px-5 py-3.5 bg-white border-2 border-gray-200 rounded-xl focus:outline-none text-gray-900 placeholder-gray-400 font-medium transition duration-200"
                         >
                     </div>
                 </div>
@@ -124,10 +133,10 @@
                     <div class="space-y-2">
                         <label for="username" class="text-sm font-semibold text-gray-700 ml-1">Username</label>
                         <div class="relative">
-                            <span class="absolute left-5 top-1/2 -translate-y-1/2 text-gray-500 font-medium">@</span>
+                            <span class="absolute left-5 top-1/2 -translate-y-1/2 text-gray-500 font-medium text-lg">@</span>
                             <input 
                                 type="text" id="username" name="username" placeholder="username" required
-                                class="w-full pl-10 pr-5 py-4 bg-gray-50 border border-gray-200 rounded-2xl focus:outline-none focus:border-brand-red focus:ring-4 focus:ring-brand-red/10 transition-all text-gray-900 placeholder-gray-400"
+                                class="form-input w-full pl-10 pr-5 py-3.5 bg-white border-2 border-gray-200 rounded-xl focus:outline-none text-gray-900 placeholder-gray-400 font-medium transition duration-200"
                             >
                         </div>
                     </div>
@@ -135,7 +144,7 @@
                         <label for="email" class="text-sm font-semibold text-gray-700 ml-1">Email Address</label>
                         <input 
                             type="email" id="email" name="email" placeholder="john@example.com" required
-                            class="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-2xl focus:outline-none focus:border-brand-red focus:ring-4 focus:ring-brand-red/10 transition-all text-gray-900 placeholder-gray-400"
+                            class="form-input w-full px-5 py-3.5 bg-white border-2 border-gray-200 rounded-xl focus:outline-none text-gray-900 placeholder-gray-400 font-medium transition duration-200"
                         >
                     </div>
                 </div>
@@ -145,7 +154,7 @@
                         <label for="password" class="text-sm font-semibold text-gray-700 ml-1">Password</label>
                         <input 
                             type="password" id="password" name="password" placeholder="••••••••" required
-                            class="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-2xl focus:outline-none focus:border-brand-red focus:ring-4 focus:ring-brand-red/10 transition-all text-gray-900 placeholder-gray-400"
+                            class="form-input w-full px-5 py-3.5 bg-white border-2 border-gray-200 rounded-xl focus:outline-none text-gray-900 placeholder-gray-400 font-medium transition duration-200"
                         >
                         <div class="h-1.5 w-full bg-gray-200 rounded-full overflow-hidden mt-3">
                             <div id="strength-bar" class="h-full w-0 bg-brand-red transition-all duration-500 ease-out"></div>
@@ -156,74 +165,52 @@
                         <label for="confirm_password" class="text-sm font-semibold text-gray-700 ml-1">Confirm Password</label>
                         <input 
                             type="password" id="confirm_password" name="confirm_password" placeholder="••••••••" required
-                            class="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-2xl focus:outline-none focus:border-brand-red focus:ring-4 focus:ring-brand-red/10 transition-all text-gray-900 placeholder-gray-400"
+                            class="form-input w-full px-5 py-3.5 bg-white border-2 border-gray-200 rounded-xl focus:outline-none text-gray-900 placeholder-gray-400 font-medium transition duration-200"
                         >
                     </div>
                 </div>
 
                 <button 
                     type="submit" 
-                    class="w-full bg-brand-red hover:bg-brand-redDark text-white py-4 px-6 rounded-2xl font-bold text-lg transition-all duration-300 hover:shadow-[0_0_30px_-5px_rgba(220,38,38,0.3)] active:scale-[0.98] mt-8"
+                    class="w-full bg-brand-red hover:bg-brand-redDark text-white py-4 px-6 rounded-xl font-extrabold text-lg transition duration-200 shadow-red-glow transform hover:scale-[1.01] active:scale-[0.99] mt-8"
                 >
                     Create Account
                 </button>
             </form>
 
-            <div class="flex items-center my-8">
-                <div class="flex-1 border-t border-gray-200"></div>
-                <span class="px-4 text-sm text-gray-400 font-medium uppercase tracking-wider">Or sign up with</span>
-                <div class="flex-1 border-t border-gray-200"></div>
-            </div>
-
-            <div class="grid grid-cols-2 gap-4">
-                <button class="flex items-center justify-center py-3.5 px-4 bg-white hover:bg-gray-50 border border-gray-200 rounded-2xl transition-all duration-200 hover:border-gray-300 group shadow-sm">
-                    <svg class="w-5 h-5 mr-3 transition-transform group-hover:scale-110" viewBox="0 0 24 24">
-                        <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
-                        <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
-                        <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
-                        <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
-                    </svg>
-                    <span class="text-gray-700 font-medium">Google</span>
-                </button>
-                <button class="flex items-center justify-center py-3.5 px-4 bg-white hover:bg-gray-50 border border-gray-200 rounded-2xl transition-all duration-200 hover:border-gray-300 group shadow-sm">
-                    <svg class="w-5 h-5 mr-3 transition-transform group-hover:scale-110" viewBox="0 0 24 24" fill="#1877F2">
-                        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                    </svg>
-                    <span class="text-gray-700 font-medium">Facebook</span>
-                </button>
-            </div>
-
-            <div class="text-center mt-8 pt-6 border-t border-gray-100">
-                <p class="text-gray-500">
+            <div class="text-center mt-8 pt-6 border-t border-gray-200">
+                <p class="text-gray-500 font-medium text-sm">
                     Already have an account? 
-                    <a href="{% url 'login' %}" class="text-brand-red font-semibold hover:text-brand-redDark transition-colors ml-1">
+                    <a href="{% url 'login' %}" class="text-brand-red font-extrabold hover:text-brand-redDark transition-colors ml-1">
                         Sign in here
                     </a>
                 </p>
             </div>
         </div>
-
-        <div class="mt-10 text-center space-y-8 animate-fade-in-up [animation-delay:200ms]">
-            <div class="grid grid-cols-3 gap-4 opacity-80 hover:opacity-100 transition-opacity duration-500">
-                <div class="px-4 py-2 border-r border-gray-200 last:border-0">
-                    <div class="text-xl font-bold text-gray-900">₹300Cr</div>
-                    <div class="text-[11px] uppercase tracking-widest text-gray-500 font-semibold mt-1">Valuation</div>
-                </div>
-                <div class="px-4 py-2 border-r border-gray-200 last:border-0">
-                    <div class="text-xl font-bold text-gray-900">3M+</div>
-                    <div class="text-[11px] uppercase tracking-widest text-gray-500 font-semibold mt-1">Users</div>
-                </div>
-                <div class="px-4 py-2">
-                    <div class="text-xl font-bold text-gray-900">Mumbai</div>
-                    <div class="text-[11px] uppercase tracking-widest text-gray-500 font-semibold mt-1">HQ</div>
-                </div>
+        
+        <div class="mt-10 flex justify-around space-x-6 text-center animate-fade-in-up [animation-delay:200ms]">
+            <div class="p-3">
+                <div class="text-xl font-black text-gray-900">1,800+</div>
+                <div class="text-[10px] uppercase tracking-wider font-bold text-gray-500 mt-1">Happy Customers</div>
             </div>
+            <div class="w-px bg-gray-200"></div>
+            <div class="p-3">
+                <div class="text-xl font-black text-gray-900">94%</div>
+                <div class="text-[10px] uppercase tracking-wider font-bold text-gray-500 mt-1">Positive Feedback</div>
+            </div>
+            <div class="w-px bg-gray-200"></div>
+            <div class="p-3">
+                <div class="text-xl font-black text-gray-900">10+</div>
+                <div class="text-[10px] uppercase tracking-wider font-bold text-gray-500 mt-1">Cities Served</div>
+            </div>
+        </div>
 
+        <div class="mt-8 text-center">
             <p class="text-xs text-gray-500 max-w-xs mx-auto leading-relaxed">
                 By creating an account, you agree to our 
-                <a href="#" class="text-gray-600 hover:text-gray-900 underline decoration-gray-400 underline-offset-2 transition-colors">Terms of Service</a> 
+                <a href="#" class="text-gray-600 hover:text-gray-900 font-medium underline-offset-2 transition-colors">Terms of Service</a> 
                 and 
-                <a href="#" class="text-gray-600 hover:text-gray-900 underline decoration-gray-400 underline-offset-2 transition-colors">Privacy Policy</a>.
+                <a href="#" class="text-gray-600 hover:text-gray-900 font-medium underline-offset-2 transition-colors">Privacy Policy</a>.
             </p>
         </div>
     </div>
@@ -235,59 +222,54 @@
             const passwordHint = document.getElementById('password-hint');
             const strengthBar = document.getElementById('strength-bar');
             
-            // Enhanced password strength indicator
-            password.addEventListener('input', function() {
-                const val = this.value;
+            function updatePasswordStrength() {
+                const val = password.value;
                 let strength = 0;
                 if (val.length > 0) strength += 1;
                 if (val.length >= 8) strength += 1;
                 if (/[A-Z]/.test(val) && /[0-9]/.test(val)) strength += 1;
                 if (/[^A-Za-z0-9]/.test(val)) strength += 1;
 
+                let width, color, hintText, hintColor;
+
                 switch(strength) {
                     case 0:
-                        strengthBar.style.width = '0%';
-                        strengthBar.className = 'h-full transition-all duration-500 ease-out bg-gray-200';
-                        passwordHint.textContent = 'Minimum 8 characters';
-                        passwordHint.className = 'text-xs text-gray-500 ml-1 mt-2';
+                        width = '0%'; color = 'bg-gray-200'; hintText = 'Minimum 8 characters'; hintColor = 'text-gray-500';
                         break;
                     case 1:
-                        strengthBar.style.width = '25%';
-                        strengthBar.className = 'h-full transition-all duration-500 ease-out bg-red-500';
-                        passwordHint.textContent = 'Too weak';
-                        passwordHint.className = 'text-xs text-red-500 ml-1 mt-2';
+                        width = '25%'; color = 'bg-red-500'; hintText = 'Too weak'; hintColor = 'text-red-500';
                         break;
                     case 2:
-                        strengthBar.style.width = '50%';
-                        strengthBar.className = 'h-full transition-all duration-500 ease-out bg-orange-500';
-                        passwordHint.textContent = 'Keep going...';
-                        passwordHint.className = 'text-xs text-orange-500 ml-1 mt-2';
+                        width = '50%'; color = 'bg-orange-500'; hintText = 'Needs uppercase and number'; hintColor = 'text-orange-500';
                         break;
                     case 3:
-                        strengthBar.style.width = '75%';
-                        strengthBar.className = 'h-full transition-all duration-500 ease-out bg-yellow-500';
-                        passwordHint.textContent = 'Almost there';
-                        passwordHint.className = 'text-xs text-yellow-500 ml-1 mt-2';
+                        width = '75%'; color = 'bg-yellow-500'; hintText = 'Good, consider a special character'; hintColor = 'text-yellow-500';
                         break;
                     case 4:
-                        strengthBar.style.width = '100%';
-                        strengthBar.className = 'h-full transition-all duration-500 ease-out bg-green-500';
-                        passwordHint.textContent = 'Strong password!';
-                        passwordHint.className = 'text-xs text-green-500 ml-1 mt-2';
+                        width = '100%'; color = 'bg-green-500'; hintText = 'Strong password!'; hintColor = 'text-green-500';
                         break;
                 }
-            });
-            
-            // Real-time confirm password validation with visual feedback
-            confirmPassword.addEventListener('input', function() {
-                if (this.value && this.value !== password.value) {
-                    this.classList.add('border-red-500/50', 'bg-red-50');
-                    this.classList.remove('border-gray-200', 'focus:border-brand-red');
+                
+                strengthBar.style.width = width;
+                strengthBar.className = `h-full transition-all duration-500 ease-out ${color}`;
+                passwordHint.textContent = hintText;
+                passwordHint.className = `text-xs ${hintColor} ml-1 mt-2`;
+
+                checkConfirmPassword();
+            }
+
+            function checkConfirmPassword() {
+                if (confirmPassword.value && confirmPassword.value !== password.value) {
+                    confirmPassword.classList.add('border-red-500', 'bg-red-50/50');
+                    confirmPassword.classList.remove('border-gray-200');
                 } else {
-                    this.classList.remove('border-red-500/50', 'bg-red-50');
-                    this.classList.add('border-gray-200', 'focus:border-brand-red');
+                    confirmPassword.classList.remove('border-red-500', 'bg-red-50/50');
+                    confirmPassword.classList.add('border-gray-200');
                 }
-            });
+            }
+
+            password.addEventListener('input', updatePasswordStrength);
+            confirmPassword.addEventListener('input', checkConfirmPassword);
         });
     </script>
 </body>

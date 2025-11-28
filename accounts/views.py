@@ -5,6 +5,17 @@ from django.contrib import messages
 from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth.decorators import login_required
 
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from django.contrib.auth import get_user_model
+from django.views.decorators.csrf import csrf_protect
+
+# Define the user model
+User = get_user_model() 
+
+# Define the consistent template path
+TEMPLATE_NAME = 'accounts/authentication/register.html'
+
 @csrf_protect
 def register_view(request):
     if request.method == 'POST':
@@ -15,31 +26,31 @@ def register_view(request):
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
         
-        # Basic validation
+        # --- 1. Basic Validation (No ugly errors, just messages) ---
         if not all([username, email, password, confirm_password]):
-            messages.error(request, 'All fields are required.')
-            return render(request, 'auth/register.html')
+            messages.error(request, 'Please fill in all required fields.')
+            return render(request, TEMPLATE_NAME) # Consistent path
         
         if password != confirm_password:
             messages.error(request, 'Passwords do not match.')
-            return render(request, 'auth/register.html')
+            return render(request, TEMPLATE_NAME) # Consistent path
         
         if len(password) < 8:
             messages.error(request, 'Password must be at least 8 characters long.')
-            return render(request, 'auth/register.html')
+            return render(request, TEMPLATE_NAME) # Consistent path
         
-        # Check if username already exists
+        # --- 2. Check Database Existence ---
         if User.objects.filter(username=username).exists():
-            messages.error(request, 'Username already exists.')
-            return render(request, 'auth/register.html')
+            messages.error(request, 'That username is already taken.')
+            return render(request, TEMPLATE_NAME) # Consistent path
         
-        # Check if email already exists
-        if User.objects.filter(email=email).exists():
-            messages.error(request, 'Email already registered.')
-            return render(request, 'auth/register.html')
+        # Using __iexact for case-insensitive email check (better practice)
+        if User.objects.filter(email__iexact=email).exists(): 
+            messages.error(request, 'This email address is already registered.')
+            return render(request, TEMPLATE_NAME) # Consistent path
         
         try:
-            # Create user
+            # --- 3. Create user ---
             user = User.objects.create_user(
                 username=username,
                 email=email,
@@ -47,13 +58,18 @@ def register_view(request):
                 first_name=first_name if first_name else None,
                 last_name=last_name if last_name else None
             )
-            messages.success(request, 'Account created successfully! Please login.')
+            messages.success(request, 'Account created successfully! You can now log in.')
             return redirect('login')
+            
         except Exception as e:
-            messages.error(request, 'Error creating account. Please try again.')
-            return render(request, 'auth/register.html')
+            # --- 4. Server/Database Error Handling ---
+            print(f"Error creating account: {e}") 
+            messages.error(request, 'A server error occurred. Please try again.')
+            return render(request, TEMPLATE_NAME) # Consistent path
     
-    return render(request, 'accounts/authentication/register.html')
+    # --- GET request (Initial load) ---
+    return render(request, TEMPLATE_NAME) # Consistent path
+
 
 @csrf_protect
 def login_view(request):
