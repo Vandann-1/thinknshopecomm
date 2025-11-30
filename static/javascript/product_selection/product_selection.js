@@ -609,14 +609,22 @@ function displayPurchaseAddressSelection(addresses) {
         `;
     }
 
-    content += `
-        <div class="purchase-modal-actions" style="display: flex; gap: 10px; margin-top: 20px;">
-            <button class="purchase-btn purchase-btn-secondary" id="backToProductBtn" style="flex: 1; padding: 12px; background: #607D8B; color: white; border: none; border-radius: 4px; cursor: pointer; transition: background 0.3s;">Back</button>
-            <button class="purchase-btn purchase-btn-success" id="purchasePlaceOrderBtn" disabled style="flex: 1; padding: 12px; background: #FF5722; color: white; border: none; border-radius: 4px; cursor: pointer; transition: background 0.3s;">
-                Continue to Payment
-            </button>
-        </div>
-    `;
+content += `
+    <div class="purchase-modal-actions">
+        <button class="purchase-btn purchase-btn-secondary"
+            onclick="closePurchaseModal('purchaseAddressModal')">
+            Back
+        </button>
+
+        <button class="purchase-btn bg-green-600 text-white hover:bg-green-700 disabled:bg-gray-300"
+            id="purchasePlaceOrderBtn"
+            onclick="redirectToPurchaseOrderReview()"
+            disabled>
+            Continue to Payment
+        </button>
+    </div>
+`;
+
 
     const modalContentEl = document.getElementById('purchaseAddressModalContent');
     if (modalContentEl) {

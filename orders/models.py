@@ -7,6 +7,8 @@ from decimal import Decimal
 from product.models import * 
 from address.models import Address
 
+recent_views=models.Count('recentlyviewed')
+
 # Order Management System
 class Order(TimestampedModel):
     """
@@ -174,15 +176,3 @@ class OrderStatusUpdate(TimestampedModel):
     
     def __str__(self):
         return f"{self.order.order_id} - {self.old_status} → {self.new_status}"
-    
-    def save(self, *args, **kwargs):
-        # Automatically capture old status from order before saving
-        if self.order and not self.old_status:
-            self.old_status = self.order.status
-        
-        super().save(*args, **kwargs)
-        
-        # Update the order status after saving the status update
-        if self.order and self.new_status:
-            self.order.status = self.new_status
-            self.order.save(update_fields=['status'])

@@ -35,20 +35,24 @@ class OrderAdmin(admin.ModelAdmin):
         "total_amount",
         "created_at",
     )
+
     list_filter = (
         "status",
         "payment_status",
         "payment_method",
         "created_at",
     )
+
     search_fields = ("order_id", "user__username", "tracking_id", "coupon_code")
     ordering = ("-created_at",)
+
     readonly_fields = (
         "order_id",
         "confirmed_at",
         "shipped_at",
         "delivered_at",
     )
+
     inlines = [OrderItemInline, OrderStatusUpdateInline]
 
     fieldsets = (
@@ -62,6 +66,7 @@ class OrderAdmin(admin.ModelAdmin):
                 "payment_reference",
             )
         }),
+
         ("Pricing", {
             "fields": (
                 "subtotal",
@@ -72,12 +77,14 @@ class OrderAdmin(admin.ModelAdmin):
                 "coupon_code",
             )
         }),
+
         ("Addresses", {
             "fields": (
                 "shipping_address",
                 "billing_address",
             )
         }),
+
         ("Tracking", {
             "fields": (
                 "tracking_id",
@@ -85,6 +92,7 @@ class OrderAdmin(admin.ModelAdmin):
                 "estimated_delivery",
             )
         }),
+
         ("Timestamps", {
             "fields": (
                 "confirmed_at",
@@ -92,10 +100,27 @@ class OrderAdmin(admin.ModelAdmin):
                 "delivered_at",
             )
         }),
+
         ("Notes", {
             "fields": ("order_notes",)
         }),
     )
+
+    def save_related(self, request, form, formsets, change):
+        """
+        Ensures status updates created through inline are applied to the Order.
+        """
+        super().save_related(request, form, formsets, change)
+
+        order = form.instance
+
+        # Get latest status update
+        latest_update = order.status_updates.first()
+
+        # Apply new status if needed
+        if latest_update and latest_update.new_status and order.status != latest_update.new_status:
+            order.status = latest_update.new_status
+            order.save(update_fields=["status"])
 
 
 # --- Order Item Admin ---
@@ -108,22 +133,28 @@ class OrderItemAdmin(admin.ModelAdmin):
 
 
 # --- Order Status Update Admin ---
-
-from django.contrib import admin
-from .models import OrderStatusUpdate
-
 @admin.register(OrderStatusUpdate)
 class OrderStatusUpdateAdmin(admin.ModelAdmin):
     list_display = ('order', 'old_status', 'new_status', 'created_at', 'updated_by')
     list_filter = ('new_status', 'created_at')
     search_fields = ('order__order_id', 'notes')
     readonly_fields = ('created_at', 'updated_at', 'old_status')
-    
+
     fields = ('order', 'old_status', 'new_status', 'notes', 'updated_by', 'created_at', 'updated_at')
-    
+
     def save_model(self, request, obj, form, change):
-        # Automatically set updated_by to current admin user
+        # Set updated_by automatically
         if not obj.updated_by:
             obj.updated_by = request.user
+
+        # Save the status update entry FIRST
         super().save_model(request, obj, form, change)
 
+        # Apply status change to Order
+        if (
+            obj.order
+            and obj.new_status
+            and obj.order.status != obj.new_status
+        ):
+            obj.order.status = obj.new_status
+            obj.order.save(update_fields=['status'])

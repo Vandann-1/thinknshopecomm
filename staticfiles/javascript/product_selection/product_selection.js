@@ -498,14 +498,22 @@ function displayPurchaseAddressSelection(addresses) {
         `;
     }
 
-    content += `
-        <div class="purchase-modal-actions">
-            <button class="purchase-btn purchase-btn-secondary" onclick="closePurchaseModal('purchaseAddressModal')">Back</button>
-            <button class="purchase-btn purchase-btn-success" id="purchasePlaceOrderBtn" onclick="redirectToPurchaseOrderReview()" disabled>
-                Continue to Payment
-            </button>
-        </div>
-    `;
+content += `
+    <div class="purchase-modal-actions">
+        <button class="purchase-btn purchase-btn-secondary"
+            onclick="closePurchaseModal('purchaseAddressModal')">
+            Back
+        </button>
+
+        <button class="purchase-btn bg-green-600 text-white hover:bg-green-700 disabled:bg-gray-300"
+            id="purchasePlaceOrderBtn"
+            onclick="redirectToPurchaseOrderReview()"
+            disabled>
+            Continue to Payment
+        </button>
+    </div>
+`;
+
 
     document.getElementById('purchaseAddressModalContent').innerHTML = content;
     openPurchaseModal('purchaseAddressModal');

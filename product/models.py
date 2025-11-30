@@ -24,7 +24,7 @@ class Category(TimestampedModel):
     Supports nested categories (parent-child relationships) for better organization.
     Used for navigation, filtering, and SEO purposes.
     """
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, unique=True)
     slug = models.SlugField(unique=True, help_text="URL-friendly name")
     description = models.TextField(blank=True, help_text="Category description for SEO")
     parent = models.ForeignKey(
@@ -70,7 +70,7 @@ class Brand(TimestampedModel):
     Includes brand information, logos, and metadata for SEO.
     """
     name = models.CharField(max_length=100, unique=True)
-    slug = models.SlugField(unique=True,blank=False)
+    slug = models.SlugField(unique=True)
     logo = models.ImageField(upload_to='brands/', blank=True, null=True)
     description = models.TextField(blank=True)
     website_url = models.URLField(blank=True, help_text="Brand's official website")
@@ -212,7 +212,6 @@ class Product(TimestampedModel):
     # Analytics
     view_count = models.PositiveIntegerField(default=0)
     purchase_count = models.PositiveIntegerField(default=0)
-
     
     class Meta:
         ordering = ['-created_at']
@@ -304,9 +303,6 @@ class ProductVariant(TimestampedModel):
     
     # Variant image
     image = models.ImageField(upload_to='products/variants/', blank=True, null=True)
-    
-    leak_proof=models.BooleanField(default=False, help_text="Indicates if the product is leak proof", null=True, blank=True)
-    net_weight=models.CharField(max_length=100, help_text="Net weight of the product", null=True, blank=True)
     
     # Status
     is_active = models.BooleanField(default=True)
