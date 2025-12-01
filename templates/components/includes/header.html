@@ -239,9 +239,9 @@
                 </div>
             </div>
             {% else %}
-            <div class="skatezoo-logo text-2xl font-black text-red-600">
+            <a href="#" class="skatezoo-logo flex items-center text-2xl sm:text-3xl md:text-4xl font-black text-red-600 transition-colors duration-300 hover:text-red-700 mx-2 sm:mx-4 md:mx-10 flex-shrink-0">
                 Thinkn<span class="text-gray-900">Shop</span>
-            </div>
+            </a>
             {% endif %}
             <button class="skatezo-mobile-menu-close bg-transparent border-none text-gray-500 text-xl cursor-pointer p-2 rounded-lg transition-colors duration-200 hover:bg-gray-50 hover:text-red-600" onclick="closeMobileMenu()">
                 <i class="fas fa-times"></i>
@@ -251,12 +251,12 @@
         <div class="skatezo-mobile-menu-content p-5">
             <!-- Mobile Search -->
             <div class="skatezo-mobile-search mb-8">
-                <!-- <form class="skatezo-mobile-search-wrapper flex bg-gray-100 border border-gray-300 rounded-lg overflow-hidden transition-all duration-200 focus-within:border-red-500 focus-within:ring-2 focus-within:ring-red-500/10" method="GET" action="{% url 'products:product-list' %}">
+                 <form class="skatezo-mobile-search-wrapper flex bg-gray-100 border border-gray-300 rounded-lg overflow-hidden transition-all duration-200 focus-within:border-red-500 focus-within:ring-2 focus-within:ring-red-500/10" method="GET" action="{% url 'products:product-list' %}">
                     <input type="text" name="search" class="skatezo-mobile-search-input flex-1 bg-transparent border-none px-4 py-3 text-gray-700 text-sm outline-none placeholder-gray-400" placeholder="Search products..." value="{{ request.GET.search }}">
                     <button type="submit" class="skatezo-mobile-search-btn bg-gray-100 border-none px-4 py-3 text-red-600 cursor-pointer flex items-center justify-center text-sm transition-colors duration-200 hover:bg-gray-200 hover:text-red-700">
                         <i class="fas fa-search"></i>
                     </button>
-                </form> -->
+                </form> 
             </div>
 
             <!-- Main Navigation -->

@@ -159,11 +159,14 @@
                         </div>
                     </div>
                     
-{% url 'products:product-detail' slug=product.slug %}
-"
-   class="block w-full bg-blue-600 text-white text-center py-3 rounded-lg font-semibold hover:bg-blue-700 transition mb-3">
+{% if product.slug %}
+<a href="{% url 'products:product-detail' slug=product.slug %}" class="block w-full bg-blue-600 text-white text-center py-3 rounded-lg font-semibold hover:bg-blue-700 transition mb-3">
+{% else %}
+<a href="#" class="block w-full bg-gray-400 text-white text-center py-3 rounded-lg font-semibold cursor-not-allowed mb-3">
+{% endif %}
     Proceed to Checkout
 </a>
+
 
                     
                     <a href="#" 
