@@ -1551,99 +1551,129 @@
 
 <main class="relative w-full bg-white overflow-hidden">
 
-    <!-- HERO SECTION -->
-    <section class="relative w-full overflow-hidden bg-white py-16 sm:py-20 lg:py-28">
+<!-- =========================================== -->
+<!-- THINKNSHOP – FULL PREMIUM WHITE UI + RED MARQUEE -->
+<!-- =========================================== -->
 
-        <!-- Grid BG -->
-        <div class="absolute inset-0 [background-image:linear-gradient(rgba(0,0,0,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.03)_1px,transparent_1px)] bg-[size:34px_34px]"></div>
+<!-- HERO SECTION -->
+<section class="relative w-full bg-white text-black overflow-hidden py-24">
 
-        <!-- Diagonal Split (ONLY on large screens) -->
-        <div class="hidden lg:block absolute top-0 right-0 w-1/2 h-full bg-gradient-to-br from-gray-50 to-gray-100 origin-right -skew-x-6"></div>
+    <div class="absolute inset-0 bg-gradient-to-br from-red-50 via-transparent to-white"></div>
 
-        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
+    <div class="relative max-w-7xl mx-auto px-6 lg:px-14 grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
 
-            <!-- LEFT -->
-            <div class="max-w-xl text-center lg:text-left">
-                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight text-gray-900 tracking-tight">
-                    Designed for Performance.<br>
-                    Built for <span class="text-red-500">Every Day.</span>
-                </h1>
+        <!-- LEFT -->
+        <div class="space-y-6">
+            <span class="inline-block bg-red-100 text-red-600 border border-red-300 px-4 py-1 rounded-full tracking-widest text-xs uppercase">
+                ThinkNShop Exclusive
+            </span>
 
-                <!-- Specs -->
-                <div class="mt-6 sm:mt-8 grid grid-cols-3 gap-4 text-xs sm:text-sm md:text-base font-medium text-gray-700">
-                    <div>
-                        <span class="text-red-500 block text-lg sm:text-xl font-bold">2h</span>
-                        Cold Retention
-                    </div>
-                    <div>
-                        <span class="text-red-500 block text-lg sm:text-xl font-bold">BPA-Free</span>
-                        Safe Material
-                    </div>
-                    <div>
-                        <span class="text-red-500 block text-lg sm:text-xl font-bold">Leak-0%</span>
-                        Secure Seal
-                    </div>
-                </div>
+            <h1 class="text-4xl md:text-6xl font-extrabold leading-tight tracking-tight">
+                The <span class="text-red-600">Perfect Bottle</span><br>
+                For Everyday Performance.
+            </h1>
 
-                <p class="mt-5 sm:mt-6 text-gray-600 text-base sm:text-lg max-w-md mx-auto lg:mx-0 leading-relaxed">
-                    Hydration engineered with precision. A bottle crafted to elevate your daily routine with style and durability.
-                </p>
+            <p class="text-gray-600 max-w-md text-base md:text-lg leading-relaxed">
+                Built with modern engineering and minimalist style. Strong, leakproof, BPA-free — made to elevate your daily routine.
+            </p>
 
-                <a href="{% url 'products:product-list' %}"
-                   class="inline-block mt-8 sm:mt-10 px-8 py-3 sm:px-10 sm:py-4 bg-red-500 hover:bg-red-600 text-white font-semibold rounded-md transition-all text-base sm:text-lg">
-                    Explore Products
-                </a>
+            <div class="flex flex-wrap gap-3 pt-2">
+                <span class="px-4 py-2 rounded-full bg-white border border-gray-200 text-sm shadow-sm">2h Cold Retention</span>
+                <span class="px-4 py-2 rounded-full bg-white border border-gray-200 text-sm shadow-sm">BPA Free</span>
+                <span class="px-4 py-2 rounded-full bg-white border border-gray-200 text-sm shadow-sm">100% Leakproof</span>
             </div>
 
-            <!-- RIGHT -->
-            <div class="relative w-[260px] sm:w-[300px] md:w-[350px] lg:w-[420px]">
-                <img src="https://img.freepik.com/premium-photo/realistic-white-water-bottle-mockup-background_257043-42805.jpg"
-                     class="w-full drop-shadow-[0_10px_40px_rgba(0,0,0,0.15)] transition-transform duration-500 mx-auto lg:mx-0 group-hover:scale-105"
-                     alt="Bottle">
-            </div>
+            <a href="{% url 'products:product-list' %}"
+               class="inline-block mt-6 px-10 py-4 bg-red-600 hover:bg-red-700 text-white font-semibold text-lg rounded-xl shadow-md transition-all">
+                Shop Now →
+            </a>
+        </div>
+
+        <!-- RIGHT — BIG FULL IMAGE -->
+        <div class="relative flex justify-center lg:justify-end">
+
+            <!-- Soft Glow -->
+            <div class="absolute inset-0 bg-red-200/30 blur-[130px] rounded-full"></div>
+
+            <img src="https://tse1.mm.bing.net/th/id/OIP.p4aQ1JrAjl9nQu2K5aLTBQHaEo?cb=ucfimg2&ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3"
+                class="relative w-[380px] sm:w-[450px] md:w-[520px] lg:w-[600px] xl:w-[650px] drop-shadow-2xl transition-transform duration-500 hover:scale-105"
+                alt="Bottle">
 
         </div>
-    </section>
 
-<div class="w-full bg-[#111] text-white rounded-xl p-4 mt-4 flex flex-col items-center justify-center text-center shadow-lg border border-[#222]">
-    <h3 class="text-xl font-semibold tracking-wide">ALL BOTTLES @ ₹99</h3>
-    <p class="text-sm mt-1 opacity-90">Limited Launch Offer</p>
-    <p class="text-sm mt-1 font-medium">
-        Use Code: <span class="text-[#00ff9d] font-bold">LAUNCH99</span>
-    </p>
-
-    <!-- Timer -->
-    <p class="text-sm mt-3 opacity-90">
-        Offer ends in:
-        <span id="offer-countdown" class="font-mono font-semibold">--d --h --m --s</span>
-    </p>
-
-    <div class="mt-3 px-4 py-1 rounded-lg bg-[#00ff9d] text-black font-semibold text-sm tracking-wide cursor-pointer">
-        <a href="{% url 'products:product-list' %}">
-            Grab Yours Now →
-        </a>
     </div>
+</section>
+
+
+
+<!-- ================= MARQUEE SECTION (RED + WHITE) ================= -->
+<style>
+    @keyframes scroll-left {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-50%); }
+    }
+    .marquee-runner {
+        animation: scroll-left 18s linear infinite;
+    }
+</style>
+
+<div class="w-full overflow-hidden bg-red-600 py-3 shadow-md">
+    <div class="marquee-runner flex whitespace-nowrap font-semibold text-white text-sm sm:text-base">
+
+        <span class="mx-10">FREE SHIPPING ABOVE ₹500</span>
+        <span class="mx-10 opacity-90">COD AVAILABLE</span>
+        <span class="mx-10">100% REFUND GUARANTEE</span>
+        <span class="mx-10 opacity-90">FAST DELIVERY PAN INDIA</span>
+        <span class="mx-10">PREMIUM QUALITY PRODUCTS</span>
+
+        <!-- seamless loop for infinite scroll -->
+        <span class="mx-10">FREE SHIPPING ABOVE ₹500</span>
+        <span class="mx-10 opacity-90">COD AVAILABLE</span>
+        <span class="mx-10">100% REFUND GUARANTEE</span>
+        <span class="mx-10 opacity-90">FAST DELIVERY PAN INDIA</span>
+        <span class="mx-10">PREMIUM QUALITY PRODUCTS</span>
+
+    </div>
+</div>
+<!-- ================= END MARQUEE ================= -->
+
+
+
+<!-- ₹99 OFFER SECTION -->
+<div class="relative max-w-3xl mx-auto mt-12 bg-white border border-red-200 rounded-2xl p-8 text-center shadow-lg">
+    
+    <div class="absolute inset-0 -z-10 bg-red-100/40 blur-[70px] rounded-2xl"></div>
+
+    <h2 class="text-3xl font-extrabold text-red-600 tracking-wide">₹99 LAUNCH OFFER</h2>
+    <p class="text-gray-600 mt-2 text-sm">Only for early customers. Limited stock.</p>
+
+    <p class="mt-3 text-lg font-medium">
+        Use Code: <span class="text-red-600 font-bold tracking-wider">LAUNCH99</span>
+    </p>
+
+    <p class="mt-3 text-gray-500 text-sm">
+        Ends in <span id="offer-countdown" class="font-mono text-red-600 font-semibold">--d --h --m --s</span>
+    </p>
+
+    <a href="{% url 'products:product-list' %}"
+       class="mt-6 inline-block px-8 py-3 bg-red-600 hover:bg-red-700 rounded-xl text-white font-semibold shadow-md transition-all">
+        Grab It Now →
+    </a>
 </div>
 
 
+<!-- COUNTDOWN SCRIPT -->
 <script>
-    // 10 days offer from the time user opens the page
     const offerDurationDays = 10;
-
-    // End time = now + 10 days
     const offerEndTime = new Date().getTime() + offerDurationDays * 24 * 60 * 60 * 1000;
 
     function updateOfferCountdown() {
         const now = new Date().getTime();
         const distance = offerEndTime - now;
-
         const countdownEl = document.getElementById("offer-countdown");
-        if (!countdownEl) return;
 
         if (distance <= 0) {
             countdownEl.innerText = "Offer expired";
-            // Optional: also gray out UI or change text
-            // document.querySelector(".your-offer-div").classList.add("opacity-50");
             clearInterval(timerInterval);
             return;
         }
@@ -1656,86 +1686,39 @@
         countdownEl.innerText = `${days}d ${hours}h ${minutes}m ${seconds}s`;
     }
 
-    // Run immediately once
     updateOfferCountdown();
-    // Update every second
     const timerInterval = setInterval(updateOfferCountdown, 1000);
 </script>
 
 
 
+<!-- FIRST ORDER OFFER -->
+<section class="w-full py-16">
+    <div class="max-w-4xl mx-auto text-center bg-white/40 backdrop-blur-xl border border-red-200 rounded-3xl px-10 py-12 shadow-xl">
 
+        <span class="inline-block bg-red-600 text-white px-4 py-1 text-xs rounded-full tracking-widest uppercase">
+            First Order Offer
+        </span>
 
+        <h2 class="text-3xl md:text-4xl font-extrabold mt-4">
+            Get <span class="text-red-600">30% OFF</span> Instantly
+        </h2>
 
+        <p class="text-gray-600 mt-3">
+            Apply the code at checkout and enjoy your welcome reward.
+        </p>
 
-
-    <!-- MARQUEE -->
-    <style>
-        @keyframes scroll-left { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-        .scrolling-text-runner { animation: scroll-left 18s linear infinite; }
-        @media (max-width: 640px) {
-            .scrolling-text-runner { animation-duration: 8s; }
-        }
-    </style>
-
-    <div class="w-full overflow-hidden bg-[#7A0000] py-2 sm:py-3 border-b border-red-900">
-        <div class="scrolling-text-runner flex whitespace-nowrap">
-
-            <span class="inline-block mx-6 sm:mx-14 text-white text-sm sm:text-lg font-semibold">FREE SHIPPING ABOVE ₹500</span>
-            <span class="inline-block mx-6 sm:mx-14 text-gray-200 text-sm sm:text-lg">COD AVAILABLE</span>
-            <span class="inline-block mx-6 sm:mx-14 text-white text-sm sm:text-lg font-semibold">100% REFUND GUARANTEE</span>
-            <span class="inline-block mx-6 sm:mx-14 text-gray-200 text-sm sm:text-lg">FAST DELIVERY PAN INDIA</span>
-            <span class="inline-block mx-6 sm:mx-14 text-white text-sm sm:text-lg font-semibold">PREMIUM QUALITY PRODUCTS</span>
-
-            <!-- Loop -->
-            <span class="inline-block mx-6 sm:mx-14 text-white text-sm sm:text-lg font-semibold">FREE SHIPPING ABOVE ₹500</span>
-            <span class="inline-block mx-6 sm:mx-14 text-gray-200 text-sm sm:text-lg">COD AVAILABLE</span>
-            <span class="inline-block mx-6 sm:mx-14 text-white text-sm sm:text-lg font-semibold">100% REFUND GUARANTEE</span>
-            <span class="inline-block mx-6 sm:mx-14 text-gray-200 text-sm sm:text-lg">FAST DELIVERY PAN INDIA</span>
-            <span class="inline-block mx-6 sm:mx-14 text-white text-sm sm:text-lg font-semibold">PREMIUM QUALITY PRODUCTS</span>
-
+        <div class="inline-flex items-center gap-3 bg-white text-black rounded-xl px-6 py-3 mt-6 text-lg font-bold tracking-[0.25em] shadow-md border border-gray-200">
+            WELCOME30
         </div>
-    </div>
 
-<section class="w-full bg-black text-white py-10 px-6">
-  <div class="max-w-4xl mx-auto text-center border border-red-600 rounded-2xl px-6 py-10">
-    
-    <!-- Badge -->
-    <p class="inline-block mb-4 text-xs tracking-[0.2em] uppercase bg-red-600 text-white px-4 py-1 rounded-full">
-      First Order Offer
-    </p>
-    
-    <!-- Main Heading -->
-    <h2 class="text-3xl md:text-4xl font-extrabold mb-3">
-      Get <span class="text-red-500">30% OFF</span> on Your First Order
-    </h2>
-    
-    <!-- Subtext -->
-    <p class="text-sm md:text-base text-gray-300 mb-6">
-      Start your journey with ThinknShop and pay less on your very first checkout.
-    </p>
-    
-    <!-- Code Box -->
-    <div class="inline-flex items-center gap-3 bg-white text-black rounded-xl px-5 py-3 mb-4">
-      <span class="text-xs uppercase tracking-wide text-gray-600">Use Code</span>
-      <span class="text-lg font-semibold tracking-[0.25em]">
-        WELCOME30
-      </span>
+        <p class="text-xs text-gray-500 mt-6">*Valid on first order only</p>
     </div>
-    
-    <!-- Steps -->
-    <div class="mt-4 space-y-1 text-xs md:text-sm text-gray-300">
-      <p>1. Add your favourite products to cart</p>
-      <p>2. Apply code <span class="font-semibold text-white">WELCOME30</span> at checkout</p>
-      <p>3. Get <span class="font-semibold text-red-500">30% OFF</span> on your first order</p>
-    </div>
-    
-    <!-- Disclaimer -->
-    <p class="mt-5 text-[11px] text-gray-500 uppercase tracking-wide">
-      *Valid only on first order • Limited time offer
-    </p>
-  </div>
 </section>
+
+
+
+
 
 
 
