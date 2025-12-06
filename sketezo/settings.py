@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'skatezo.onrender.com',
+    'thinknshopecomm.onrender.com',
     '127.0.0.1',
     'localhost'
 ]
