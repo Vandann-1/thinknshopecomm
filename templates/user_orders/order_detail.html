@@ -308,9 +308,9 @@
                 {% endif %}
             </div>
 
-            <p class="text-sm text-gray-600">
+            <!-- <p class="text-sm text-gray-600">
                 Placed on {{ order.created_at|date:"F d, Y \\a\\t g:i A" }}
-            </p>
+            </p> -->
         </div>
 
         <!-- RIGHT: actions -->
@@ -613,44 +613,55 @@
 
 
     <!-- SHIPPING ADDRESS -->
-    <div class="card p-4 sm:p-6 bg-white rounded-xl shadow-sm">
-        <h2 class="text-base sm:text-lg font-semibold text-gray-900 mb-3 sm:mb-4">
-            Shipping Address
-        </h2>
+<div class="card p-4 sm:p-6 bg-white rounded-xl shadow-sm">
+    <h2 class="text-base sm:text-lg font-semibold text-gray-900 mb-3 sm:mb-4">
+        Shipping Address
+    </h2>
 
-        {% if order.shipping_address %}
-        <div class="text-sm space-y-1.5">
+    {% if order.shipping_address %}
+    <div class="text-sm space-y-1.5">
 
-            <p class="font-semibold text-gray-900">
-                {{ order.shipping_address.first_name }} {{ order.shipping_address.last_name }}
-            </p>
+        <p class="font-semibold text-gray-900">
+            {{ order.shipping_address.first_name }} {{ order.shipping_address.last_name }}
+        </p>
 
-            <p class="text-gray-700">{{ order.shipping_address.address_line_1 }}</p>
+        <p class="text-gray-700">{{ order.shipping_address.address_line_1 }}</p>
 
-            {% if order.shipping_address.address_line_2 %}
-            <p class="text-gray-700">{{ order.shipping_address.address_line_2 }}</p>
-            {% endif %}
-
-            <p class="text-gray-700">
-                {{ order.shipping_address.city }},
-                {{ order.shipping_address.state }}
-                {{ order.shipping_address.postal_code }}
-            </p>
-
-            <p class="text-gray-700">{{ order.shipping_address.country }}</p>
-
-            {% if order.shipping_address.phone %}
-            <p class="text-gray-600 pt-2 mt-2 border-t">
-                <span class="text-gray-500">Phone:</span>
-                {{ order.shipping_address.phone }}
-            </p>
-            {% endif %}
-
-        </div>
-        {% else %}
-        <p class="text-sm text-gray-500">No shipping address provided</p>
+        {% if order.shipping_address.address_line_2 %}
+        <p class="text-gray-700">{{ order.shipping_address.address_line_2 }}</p>
         {% endif %}
+
+        <p class="text-gray-700">
+            {{ order.shipping_address.city }},
+            {{ order.shipping_address.state }}
+            {{ order.shipping_address.postal_code }}
+        </p>
+
+        <p class="text-gray-700">{{ order.shipping_address.country }}</p>
+
+        {% if order.shipping_address.phone %}
+        <p class="text-gray-600 pt-2 mt-2 border-t">
+            <span class="text-gray-500">Phone:</span>
+            {{ order.shipping_address.phone }}
+        </p>
+        {% endif %}
+
     </div>
+    {% else %}
+    <p class="text-sm text-gray-500">No shipping address provided</p>
+    {% endif %}
+
+    <!-- 🔥 BACK TO HOME BUTTON (ADDED) -->
+    <div class="mt-4 pt-3 border-t">
+        <a href="/" 
+           class="inline-block text-xs sm:text-sm px-3 py-2 bg-gray-100 text-gray-700 rounded-md border border-gray-300
+                  hover:bg-gray-200 hover:text-gray-900 transition font-medium">
+            ← Back to Home
+        </a>
+    </div>
+
+</div>
+
 
 </div>
 
@@ -659,19 +670,7 @@
 
 
 <!-- BACK TO HOME BUTTON -->
-<a href="{% url 'products:product-list' %}" 
-   class="inline-flex items-center justify-center 
-          px-5 py-2.5 sm:px-6 sm:py-3 
-          text-sm sm:text-base font-medium rounded-md text-white 
-          bg-red-600 hover:bg-red-700 
-          transition duration-300 shadow-md">
-    
-    <svg class="h-4 w-4 sm:h-5 sm:w-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
-        <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/>
-    </svg>
 
-    Back to Home
-</a>
 
 
 <!-- DELIVERY INFORMATION -->
@@ -750,43 +749,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
 <div class="w-full max-w-xl bg-white border border-gray-200 rounded-xl p-4 sm:p-6 shadow-sm font-[Inter]">
-
-  <!-- DELIVERY ROW -->
-  <div class="flex items-start gap-3 sm:gap-4 pb-4 sm:pb-5">
-
-      <!-- Icon Box -->
-      <div class="w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center 
-                  rounded-md bg-gray-100 border border-gray-200 flex-shrink-0">
-        <svg class="w-5 h-5 sm:w-6 sm:h-6 text-gray-700" fill="none" stroke="currentColor" stroke-width="2"
-             viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round"
-                  d="M3 10h18M3 14h18M5 6h14M6 18h12" />
-        </svg>
-      </div>
-
-      <!-- TEXT SECTION -->
-      <div class="flex-1 min-w-0">
-
-        <p class="text-gray-900 font-semibold text-sm sm:text-base">
-          Estimated Delivery
-        </p>
-
-        <p class="text-gray-700 mt-1 text-xs sm:text-sm leading-relaxed">
-          Your order will arrive within
-          <span class="font-semibold text-gray-900">3–7 days</span>
-          depending on your location.
-        </p>
-
-        <!-- BADGE -->
-        <span class="inline-block mt-3 px-2.5 py-1 text-[10px] sm:text-xs bg-gray-100 
-                     border border-gray-200 text-gray-700 rounded-full whitespace-nowrap">
-          Fast Processing Available
-        </span>
-
-      </div>
-
-  </div>
-
 </div>
 
 
@@ -812,6 +774,10 @@
             </div>
         </div>
     </div>
+
+
+
+
 </div>
 {% endblock %}
 
