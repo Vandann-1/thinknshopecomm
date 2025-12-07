@@ -190,22 +190,18 @@ class ColorAdmin(admin.ModelAdmin):
 @admin.register(Size)
 class SizeAdmin(admin.ModelAdmin):
     """
-    Admin interface for managing sizes.
+    Admin interface for managing bottle sizes.
     """
-    list_display = ('name', 'category', 'chest', 'waist', 'hip', 'is_active', 'sort_order')
-    list_filter = ('category', 'is_active')
+    list_display = ('name', 'volume_ml', 'is_active', 'sort_order')
+    list_filter = ('is_active',)
     search_fields = ('name',)
     list_editable = ('is_active', 'sort_order')
-    ordering = ('category', 'sort_order')
-    
+    ordering = ('sort_order',)
+
     fieldsets = (
         ('Basic Information', {
-            'fields': ('name', 'category', 'sort_order', 'is_active')
+            'fields': ('name', 'volume_ml', 'sort_order', 'is_active')
         }),
-        ('Size Chart (cm)', {
-            'fields': ('chest', 'waist', 'hip', 'length'),
-            'classes': ('collapse',)
-        })
     )
 
 
@@ -543,7 +539,7 @@ class ProductAttributeValueAdmin(admin.ModelAdmin):
 # ============================================================================
 
 # Customize the admin site header and title
-admin.site.site_header = "Skatezo Admin Panel"
-admin.site.site_title = "Skatezo-Commerce Admin"
-admin.site.index_title = "Welcome to Skatezo Administration"
+admin.site.site_header = "Thinknshop Admin Panel"
+admin.site.site_title = "Thinknshop E-Commerce Admin"
+admin.site.index_title = "Welcome to Thinknshop Administration"
 

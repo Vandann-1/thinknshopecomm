@@ -110,32 +110,29 @@ class Color(models.Model):
 
 class Size(models.Model):
     """
-    Size options for clothing products.
-    Includes size charts and categories for different clothing types.
+    Size options for bottle products.
+    Stores simple, customizable volume sizes (default 950ml).
     """
-    SIZE_CATEGORIES = [
-        ('clothing', 'Clothing'),
-        ('shoes', 'Shoes'),
-        ('accessories', 'Accessories'),
+
+    BOTTLE_CATEGORIES = [
+        ('bottle', 'Bottle'),
     ]
-    
-    name = models.CharField(max_length=20)  # S, M, L, XL, 32, 34, etc.
-    category = models.CharField(max_length=20, choices=SIZE_CATEGORIES, default='clothing')
+
+    name = models.CharField(max_length=20, default="950ml")  # e.g., 950ml, 750ml, 500ml
+    category = models.CharField(max_length=20, choices=BOTTLE_CATEGORIES, default='bottle')
     sort_order = models.PositiveIntegerField(default=0)
     is_active = models.BooleanField(default=True)
-    
-    # Size chart measurements (in cm)
-    chest = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
-    waist = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
-    hip = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
-    length = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
-    
+
+    # Bottle volume field (in ml)
+    volume_ml = models.PositiveIntegerField(default=950)
+
     class Meta:
         ordering = ['category', 'sort_order']
         unique_together = ['name', 'category']
-    
+
     def __str__(self):
-        return f"{self.name} ({self.get_category_display()})"
+        return f"{self.name} ({self.volume_ml}ml)"
+
 
 
 class Material(models.Model):
