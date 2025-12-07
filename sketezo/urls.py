@@ -23,7 +23,7 @@ from customize.views import *
 
 
 urlpatterns = [
-    path('13092006/', admin.site.urls),
+    path('admin13092006/', admin.site.urls),
     path('main_page/',home,name='main_page'),
     path('',include('product.urls')),
     path('dev_mode/',include('dev_mode.urls')),
