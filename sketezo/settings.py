@@ -23,6 +23,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 DEBUG = False
 
 ALLOWED_HOSTS = [
+    'www.thinknshop.in',
+    'thinknshop.in',
     'thinknshopecomm.onrender.com',
     '127.0.0.1',
     'localhost'
@@ -93,7 +95,7 @@ MIDDLEWARE = [
 
 ]
 
-ROOT_URLCONF = 'sketezo.urls'
+ROOT_URLCONF =  'sketezo.urls'
 
 TEMPLATES = [
     {
