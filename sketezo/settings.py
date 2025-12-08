@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = [
     # 'www.thinknshop.in',
@@ -28,6 +28,7 @@ ALLOWED_HOSTS = [
     # 'thinknshopecomm.onrender.com',
     # '127.0.0.1',
    # 'localhost'
+   
    "*"
 ]
 
