@@ -11,8 +11,8 @@ let variantData = {};
 
 // CSRF Token helper
 function getCSRFToken() {
-    return document.querySelector('[name=csrfmiddlewaretoken]')?.value || 
-           document.querySelector('meta[name=csrf-token]')?.getAttribute('content') || '';
+    return document.querySelector('[name=csrfmiddlewaretoken]')?.value ||
+        document.querySelector('meta[name=csrf-token]')?.getAttribute('content') || '';
 }
 
 // Modal Management
@@ -33,10 +33,10 @@ function closePurchaseModal(modalId) {
 }
 
 // Initialize purchase flow
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // Attach event listeners to purchase buttons
     document.querySelectorAll('.purchase-btn[data-product-id]').forEach(button => {
-        button.addEventListener('click', function() {
+        button.addEventListener('click', function () {
             const productId = this.getAttribute('data-product-id');
             initiatePurchase(productId);
         });
@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Close modal when clicking overlay
     document.querySelectorAll('.purchase-modal-overlay').forEach(overlay => {
-        overlay.addEventListener('click', function(e) {
+        overlay.addEventListener('click', function (e) {
             if (e.target === this) {
                 closePurchaseModal(this.id);
             }
@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', function() {
 async function initiatePurchase(productId) {
     try {
         showPurchaseLoading('Loading product details...');
-        
+
         const response = await fetch(`/orders/products/${productId}/details/`, {
             method: 'GET',
             headers: {
@@ -98,21 +98,21 @@ async function initiatePurchase(productId) {
 // Display Product Selection Modal
 function displayProductSelection(productData) {
     const { product, colors, sizes } = productData;
-    
+
     // Validate product data
     if (!product) {
         showPurchaseAlert('error', 'Invalid product data');
         return;
     }
-    
+
     const modalContent = `
         <div class="purchase-product-info">
             <h3>${escapeHtml(product.name || 'Product')}</h3>
             <div class="purchase-price-display" id="purchaseCurrentPrice">
-                ${product.discounted_price ? 
-                    `<span class="purchase-original-price">₹${product.base_price}</span>₹${product.discounted_price}` : 
-                    `₹${product.base_price || '0'}`
-                }
+                ${product.discounted_price ?
+            `<span class="purchase-original-price">₹${product.base_price}</span>₹${product.discounted_price}` :
+            `₹${product.base_price || '0'}`
+        }
             </div>
             <div class="purchase-stock-status" id="purchaseStockStatus">${product.total_stock || 0} items available</div>
         </div>
@@ -168,10 +168,10 @@ function displayProductSelection(productData) {
     const modalContentEl = document.getElementById('purchaseProductModalContent');
     if (modalContentEl) {
         modalContentEl.innerHTML = modalContent;
-        
+
         // Add event listeners after content is inserted
         addProductModalEventListeners(colors || [], sizes || []);
-        
+
         openPurchaseModal('purchaseProductModal');
 
         // Auto-select if only one option
@@ -196,7 +196,7 @@ function addProductModalEventListeners(colors, sizes) {
     // Color selection listeners using event delegation
     const colorOptions = document.getElementById('purchaseColorOptions');
     if (colorOptions) {
-        colorOptions.addEventListener('click', function(e) {
+        colorOptions.addEventListener('click', function (e) {
             const button = e.target.closest('.purchase-color-option');
             if (button) {
                 const colorId = button.getAttribute('data-color-id');
@@ -206,11 +206,11 @@ function addProductModalEventListeners(colors, sizes) {
             }
         });
     }
-    
+
     // Size selection listeners using event delegation
     const sizeOptions = document.getElementById('purchaseSizeOptions');
     if (sizeOptions) {
-        sizeOptions.addEventListener('click', function(e) {
+        sizeOptions.addEventListener('click', function (e) {
             const button = e.target.closest('.purchase-size-option');
             if (button) {
                 const sizeId = button.getAttribute('data-size-id');
@@ -220,24 +220,24 @@ function addProductModalEventListeners(colors, sizes) {
             }
         });
     }
-    
+
     // Quantity listeners
     const decreaseBtn = document.getElementById('purchaseDecreaseQty');
     const increaseBtn = document.getElementById('purchaseIncreaseQty');
     const proceedBtn = document.getElementById('purchaseProceedBtn');
-    
+
     if (decreaseBtn) {
-        decreaseBtn.addEventListener('click', function() {
+        decreaseBtn.addEventListener('click', function () {
             updatePurchaseQuantity(-1);
         });
     }
     if (increaseBtn) {
-        increaseBtn.addEventListener('click', function() {
+        increaseBtn.addEventListener('click', function () {
             updatePurchaseQuantity(1);
         });
     }
     if (proceedBtn) {
-        proceedBtn.addEventListener('click', function() {
+        proceedBtn.addEventListener('click', function () {
             proceedToReview();
         });
     }
@@ -249,32 +249,32 @@ function selectPurchaseColor(colorId) {
         console.error('Invalid colorId:', colorId);
         return;
     }
-    
+
     selectedColor = String(colorId);
-    
+
     // Reset selected size when color changes
     selectedSize = null;
     selectedVariant = null;
-    
+
     // Update color UI
     document.querySelectorAll('.purchase-color-option').forEach(option => {
         option.style.border = '2px solid #ddd';
         option.style.boxShadow = 'none';
     });
-    
+
     const selectedColorBtn = document.querySelector(`[data-color-id="${selectedColor}"]`);
     if (selectedColorBtn) {
         selectedColorBtn.style.border = '3px solid #FF5722'; /* ThinknShop Primary */
         selectedColorBtn.style.boxShadow = '0 0 0 2px rgba(255,87,34,0.25)'; /* ThinknShop Primary */
     }
-    
+
     // Reset size selection UI
     document.querySelectorAll('.purchase-size-option').forEach(option => {
         option.style.background = 'white';
         option.style.color = '#333';
         option.style.border = '1px solid #ddd';
     });
-    
+
     updatePurchaseSizeAvailability();
     updatePurchasePriceDisplay();
     checkPurchaseSelectionComplete();
@@ -286,23 +286,23 @@ function selectPurchaseSize(sizeId) {
         console.error('Invalid sizeId:', sizeId);
         return;
     }
-    
+
     selectedSize = String(sizeId);
-    
+
     // Update size UI
     document.querySelectorAll('.purchase-size-option').forEach(option => {
         option.style.background = 'white';
         option.style.color = '#333';
         option.style.border = '1px solid #ddd';
     });
-    
+
     const selectedSizeBtn = document.querySelector(`[data-size-id="${selectedSize}"]`);
     if (selectedSizeBtn) {
         selectedSizeBtn.style.background = '#FF5722'; /* ThinknShop Primary */
         selectedSizeBtn.style.color = 'white';
         selectedSizeBtn.style.border = '1px solid #FF5722'; /* ThinknShop Primary */
     }
-    
+
     updatePurchaseVariantInfo();
     checkPurchaseSelectionComplete();
 }
@@ -314,15 +314,15 @@ function updatePurchaseSizeAvailability() {
     document.querySelectorAll('.purchase-size-option').forEach(sizeOption => {
         const sizeId = sizeOption.getAttribute('data-size-id');
         if (!sizeId) return;
-        
+
         const variantKey = `${selectedColor}_${sizeId}`;
         const variant = variantData[variantKey];
-        
+
         // Reset styles
         sizeOption.disabled = false;
         sizeOption.style.opacity = '1';
         sizeOption.style.cursor = 'pointer';
-        
+
         if (!variant || !variant.is_in_stock) {
             sizeOption.disabled = true;
             sizeOption.style.opacity = '0.5';
@@ -337,7 +337,7 @@ function updatePurchaseVariantInfo() {
 
     const variantKey = `${selectedColor}_${selectedSize}`;
     selectedVariant = variantData[variantKey];
-    
+
     if (selectedVariant) {
         // Update quantity limits
         const quantityInput = document.getElementById('purchaseQuantityInput');
@@ -349,7 +349,7 @@ function updatePurchaseVariantInfo() {
                 quantityInput.value = selectedQuantity;
             }
         }
-        
+
         updatePurchasePriceDisplay();
         calculatePurchasePrice();
     }
@@ -359,16 +359,16 @@ function updatePurchaseVariantInfo() {
 function updatePurchasePriceDisplay() {
     const priceEl = document.getElementById('purchaseCurrentPrice');
     const stockEl = document.getElementById('purchaseStockStatus');
-    
+
     if (!priceEl || !stockEl) return;
-    
+
     if (selectedVariant) {
         // Update price
         const effectivePrice = selectedVariant.effective_price || selectedVariant.price || 0;
-        priceEl.innerHTML = selectedVariant.discounted_price ? 
+        priceEl.innerHTML = selectedVariant.discounted_price ?
             `<span class="purchase-original-price" style="text-decoration: line-through; color: #999; margin-right: 8px;">₹${selectedVariant.price || 0}</span> ₹${selectedVariant.discounted_price}` :
             `₹${effectivePrice}`;
-        
+
         // Update stock
         if (!selectedVariant.is_in_stock) {
             stockEl.textContent = 'Out of Stock';
@@ -383,10 +383,10 @@ function updatePurchasePriceDisplay() {
     } else if (currentProduct && currentProduct.product) {
         // Show base product info
         const product = currentProduct.product;
-        priceEl.innerHTML = product.discounted_price ? 
+        priceEl.innerHTML = product.discounted_price ?
             `<span class="purchase-original-price" style="text-decoration: line-through; color: #999; margin-right: 8px;">₹${product.base_price || 0}</span> ₹${product.discounted_price}` :
             `₹${product.base_price || 0}`;
-        
+
         stockEl.textContent = `${product.total_stock || 0} items available`;
         stockEl.style.color = '#6c757d';
     }
@@ -398,26 +398,26 @@ function updatePurchaseQuantity(change) {
         showPurchaseAlert('error', 'Please select color and size first');
         return;
     }
-    
+
     const newQuantity = selectedQuantity + change;
     const maxStock = selectedVariant.stock || 1;
-    
+
     if (newQuantity < 1) {
         showPurchaseAlert('error', 'Quantity cannot be less than 1');
         return;
     }
-    
+
     if (newQuantity > maxStock) {
         showPurchaseAlert('error', `Only ${maxStock} items available`);
         return;
     }
-    
+
     selectedQuantity = newQuantity;
     const quantityInput = document.getElementById('purchaseQuantityInput');
     if (quantityInput) {
         quantityInput.value = selectedQuantity;
     }
-    
+
     // Recalculate price with new quantity
     calculatePurchasePrice();
 }
@@ -426,10 +426,10 @@ function updatePurchaseQuantity(change) {
 function checkPurchaseSelectionComplete() {
     const proceedBtn = document.getElementById('purchaseProceedBtn');
     if (!proceedBtn) return;
-    
+
     const isComplete = selectedColor && selectedSize && selectedVariant && selectedVariant.is_in_stock;
     proceedBtn.disabled = !isComplete;
-    
+
     if (isComplete) {
         proceedBtn.style.opacity = '1';
         proceedBtn.style.cursor = 'pointer';
@@ -473,7 +473,7 @@ async function calculatePurchasePrice() {
         }
 
         const data = await response.json();
-        
+
         if (data.success && data.pricing) {
             currentPricing = data.pricing;
             displayPurchasePricingSummary(data.pricing, data.discount);
@@ -488,7 +488,7 @@ async function calculatePurchasePrice() {
 // Display Pricing Summary
 function displayPurchasePricingSummary(pricing, discount) {
     if (!pricing) return;
-    
+
     const summaryHtml = `
         <h4 style="margin-bottom: 15px; color: #333; font-size: 16px;">Price Breakdown</h4>
         <div class="purchase-price-row" style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 14px;">
@@ -515,7 +515,7 @@ function displayPurchasePricingSummary(pricing, discount) {
             <span style="color: #FF5722;">₹${pricing.total_amount || 0}</span>
         </div>
     `;
-    
+
     const priceSummary = document.getElementById('purchasePriceSummary');
     if (priceSummary) {
         priceSummary.innerHTML = summaryHtml;
@@ -529,7 +529,7 @@ async function proceedToReview() {
 
     try {
         showPurchaseLoading('Loading addresses...');
-        
+
         const response = await fetch('/orders/address/manage/', {
             method: 'GET',
             headers: {
@@ -568,7 +568,7 @@ async function proceedToReview() {
 // Display Address Selection
 function displayPurchaseAddressSelection(addresses) {
     let content = '';
-    
+
     if (!addresses || addresses.length === 0) {
         content = `
             <div class="purchase-no-addresses" style="text-align: center; padding: 40px;">
@@ -609,7 +609,7 @@ function displayPurchaseAddressSelection(addresses) {
         `;
     }
 
-content += `
+    content += `
     <div class="purchase-modal-actions">
         <button class="purchase-btn purchase-btn-secondary"
             onclick="closePurchaseModal('purchaseAddressModal')">
@@ -629,10 +629,10 @@ content += `
     const modalContentEl = document.getElementById('purchaseAddressModalContent');
     if (modalContentEl) {
         modalContentEl.innerHTML = content;
-        
+
         // Add event listeners using delegation and proper selectors
         addAddressModalEventListeners(addresses);
-        
+
         openPurchaseModal('purchaseAddressModal');
 
         // Auto-select default address
@@ -652,11 +652,11 @@ function addAddressModalEventListeners(addresses) {
     if (showAddAddressBtn) {
         showAddAddressBtn.addEventListener('click', showPurchaseAddAddressModal);
     }
-    
+
     // Address selection using event delegation
     const addressesGrid = document.getElementById('purchaseAddressesGrid');
     if (addressesGrid) {
-        addressesGrid.addEventListener('click', function(e) {
+        addressesGrid.addEventListener('click', function (e) {
             const card = e.target.closest('.purchase-address-card');
             if (card) {
                 const addressId = card.getAttribute('data-address-id');
@@ -666,22 +666,22 @@ function addAddressModalEventListeners(addresses) {
             }
         });
     }
-    
+
     // Apply coupon button
     const applyCouponBtn = document.getElementById('applyCouponBtn');
     if (applyCouponBtn) {
         applyCouponBtn.addEventListener('click', applyPurchaseCoupon);
     }
-    
+
     // Back button
     const backBtn = document.getElementById('backToProductBtn');
     if (backBtn) {
-        backBtn.addEventListener('click', function() {
+        backBtn.addEventListener('click', function () {
             closePurchaseModal('purchaseAddressModal');
             openPurchaseModal('purchaseProductModal');
         });
     }
-    
+
     // Place order button
     const placeOrderBtn = document.getElementById('purchasePlaceOrderBtn');
     if (placeOrderBtn) {
@@ -695,26 +695,26 @@ function selectPurchaseAddress(addressId) {
         console.error('Invalid addressId:', addressId);
         return;
     }
-    
+
     selectedAddress = String(addressId);
-    
+
     // Update UI
     document.querySelectorAll('.purchase-address-card').forEach(card => {
         card.style.border = '2px solid #ddd';
         card.style.background = 'white';
     });
-    
+
     const selectedCard = document.querySelector(`[data-address-id="${selectedAddress}"]`);
     if (selectedCard) {
         selectedCard.style.border = '2px solid #FF5722'; /* ThinknShop Primary */
         selectedCard.style.background = '#fff8e1'; /* Light background for selection */
-        
+
         const radioInput = selectedCard.querySelector('input[type="radio"]');
         if (radioInput) {
             radioInput.checked = true;
         }
     }
-    
+
     const placeOrderBtn = document.getElementById('purchasePlaceOrderBtn');
     if (placeOrderBtn) {
         placeOrderBtn.disabled = false;
@@ -728,7 +728,7 @@ function selectPurchaseAddress(addressId) {
 async function applyPurchaseCoupon() {
     const couponInput = document.getElementById('purchaseCouponInput');
     if (!couponInput) return;
-    
+
     const couponCode = couponInput.value.trim();
     if (!couponCode) {
         showPurchaseAlert('error', 'Please enter a coupon code');
@@ -742,7 +742,7 @@ async function applyPurchaseCoupon() {
 
     try {
         showPurchaseLoading('Applying coupon...');
-        
+
         const response = await fetch('/orders/calculate-total/', {
             method: 'POST',
             headers: {
@@ -775,16 +775,16 @@ async function applyPurchaseCoupon() {
         if (data.success && data.discount) {
             appliedCoupon = data.discount;
             currentPricing = data.pricing;
-            
-            statusEl.innerHTML = 
+
+            statusEl.innerHTML =
                 `<div class="purchase-alert purchase-success" style="padding: 10px; background: #d4edda; color: #155724; border-radius: 4px; margin-top: 10px;">✓ Coupon applied successfully!</div>`;
-            
+
             const summaryEl = document.getElementById('purchaseReviewPriceSummary');
             if (summaryEl) {
                 summaryEl.innerHTML = generatePurchasePricingHtml(data.pricing, data.discount);
             }
         } else {
-            statusEl.innerHTML = 
+            statusEl.innerHTML =
                 `<div class="purchase-alert purchase-error" style="padding: 10px; background: #f8d7da; color: #721c24; border-radius: 4px; margin-top: 10px;">${escapeHtml(data.error || 'Invalid coupon code')}</div>`;
         }
     } catch (error) {
@@ -797,7 +797,7 @@ async function applyPurchaseCoupon() {
 // Generate Pricing HTML
 function generatePurchasePricingHtml(pricing, discount = null) {
     if (!pricing) return '';
-    
+
     return `
         <h4 style="margin-bottom: 15px; color: #333; font-size: 16px;">Order Summary</h4>
         <div class="purchase-price-row" style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 14px;">
@@ -833,13 +833,13 @@ function showPurchaseAddAddressModal() {
 async function savePurchaseAddress() {
     const form = document.getElementById('purchaseAddAddressForm');
     if (!form) return;
-    
+
     const formData = new FormData(form);
     const addressData = Object.fromEntries(formData);
 
     try {
         showPurchaseLoading('Saving address...');
-        
+
         const response = await fetch('/orders/manage-address/', {
             method: 'POST',
             headers: {
@@ -933,12 +933,12 @@ function showPurchaseAlert(type, message) {
         color: ${type === 'success' ? '#155724' : type === 'error' ? '#721c24' : '#856404'};
         border: 1px solid ${type === 'success' ? '#c3e6cb' : type === 'error' ? '#f5c6cb' : '#ffeaa7'};
     `;
-    
+
     alert.innerHTML = `
         <span>${escapeHtml(message)}</span>
         <button onclick="this.parentElement.remove()" style="background: none; border: none; font-size: 20px; cursor: pointer; color: inherit; padding: 0; line-height: 1;">×</button>
     `;
-    
+
     document.body.appendChild(alert);
     setTimeout(() => {
         if (alert.parentElement) {
@@ -958,7 +958,7 @@ style.textContent = `
 document.head.appendChild(style);
 
 // Keyboard shortcuts
-document.addEventListener('keydown', function(e) {
+document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape') {
         const activeModal = document.querySelector('.purchase-modal-overlay.purchase-modal-active');
         if (activeModal) {
@@ -968,7 +968,7 @@ document.addEventListener('keydown', function(e) {
 });
 
 // Form submission prevention
-document.addEventListener('submit', function(e) {
+document.addEventListener('submit', function (e) {
     if (e.target.id === 'purchaseAddAddressForm') {
         e.preventDefault();
         savePurchaseAddress();
