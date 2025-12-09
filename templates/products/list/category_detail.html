@@ -805,12 +805,12 @@
               <div class="mb-3">
                 {% if product.discounted_price %}
                 <div class="flex items-center gap-2">
-                  <span class="text-lg font-bold text-gray-900">${{ product.discounted_price }}</span>
-                  <span class="text-sm text-gray-500 line-through">${{ product.base_price }}</span>
+                  <span class="text-lg font-bold text-gray-900">₹{{ product.discounted_price }}</span>
+                  <span class="text-sm text-gray-500 line-through">₹{{ product.base_price }}</span>
                   <span class="text-xs font-semibold text-primary-600 bg-primary-50 px-2 py-1 rounded-full">{{ product.get_discount_percent }}% OFF</span>
                 </div>
                 {% else %}
-                <span class="text-lg font-bold text-gray-900">${{ product.base_price }}</span>
+                <span class="text-lg font-bold text-gray-900">₹{{ product.base_price }}</span>
                 {% endif %}
               </div>
 
