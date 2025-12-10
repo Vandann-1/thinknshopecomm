@@ -462,13 +462,15 @@ class WishlistAdmin(admin.ModelAdmin):
 
 @admin.register(RecentlyViewed)
 class RecentlyViewedAdmin(admin.ModelAdmin):
-    """
-    Admin interface for viewing customer browsing history.
-    """
-    list_display = ('user', 'product', 'viewed_at')
+    list_display = ('user', 'user_email', 'product', 'viewed_at')
+    search_fields = ('user__username', 'user__email', 'product__name')
     list_filter = ('viewed_at', 'product__category')
-    search_fields = ('user__username', 'product__name')
     readonly_fields = ('viewed_at',)
+
+    def user_email(self, obj):
+        return obj.user.email if obj.user.email else "No Email"
+    user_email.short_description = "Email"
+
 
 
 # ============================================================================
