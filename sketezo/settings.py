@@ -130,11 +130,13 @@ WSGI_APPLICATION = 'sketezo.wsgi.application'
 # Production Only (Render PostgreSQL)
 import dj_database_url
 
+import dj_database_url
+
 DATABASES = {
     'default': dj_database_url.config(
-        default="postgresql://thinknshop_user:liUyBbhCftZY5vme2It1qQn8rFgfPpdE@dpg-d4q4gau3jp1c739becl0-a.oregon-postgres.render.com/thinknshop",
+        default="postgresql://thinknshop_jdjq_user:gPFMloDQ99kMgGozwvqZMrE5VhDsOs4m@dpg-d4t7m9vdiees73atjfug-a.oregon-postgres.render.com/thinknshop_jdjq",
         conn_max_age=600,
-        ssl_require=True
+        ssl_require=True,
     )
 }
 
