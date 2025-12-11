@@ -207,6 +207,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 # # Razorpay Credentials For real payments
-# RAZORPAY_KEY_ID = "rzp_live_RoklzNDLuPrVaD"
-# RAZORPAY_KEY_SECRET = "s4AfRsl5rF9H6SKtJJYy3Kyu"
+RAZORPAY_KEY_ID = "rzp_live_RoklzNDLuPrVaD"
+RAZORPAY_KEY_SECRET = "s4AfRsl5rF9H6SKtJJYy3Kyu"
 

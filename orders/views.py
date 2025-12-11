@@ -25,7 +25,7 @@ from django.urls import reverse_lazy
 logger = logging.getLogger(__name__)
 # Views
 # Initialize Razorpay client
-# razorpay_client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
+razorpay_client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
 
 # GET PRODUCT DETAILS FOR ORDERING=============================================================================================
 
