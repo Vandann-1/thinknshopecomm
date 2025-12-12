@@ -756,32 +756,58 @@
 
 
 <!-- Cancel Modal -->
-<div id="cancelModal" class="fixed inset-0 bg-black bg-opacity-50 overflow-y-auto h-full w-full hidden z-50">
-    <div class="relative top-20 mx-auto p-5 border w-full max-w-md shadow-2xl rounded-2xl bg-white m-4">
-        <div class="mt-3 text-center">
-            <h3 class="text-xl font-semibold text-black mb-4">Cancel Order</h3>
-            <div class="mb-6">
-                <p class="text-gray-600">
-                    Are you sure you want to cancel order #{{ order.order_id }}? This action cannot be undone.
-                </p>
+<div id="cancelModal" 
+     class="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center 
+            px-4 py-6 z-50 hidden">
+
+    <div class="bg-white w-full max-w-md rounded-2xl shadow-2xl p-6 animate-scaleIn">
+
+        <div class="text-center">
+            <div class="w-14 h-14 mx-auto rounded-full bg-red-100 flex items-center justify-center mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" 
+                     class="h-8 w-8 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                          d="M12 9v2m0 4h.01M5.22 5.22l13.56 13.56M4.93 4.93a10 10 0 1114.14 14.14"/>
+                </svg>
             </div>
-            <div class="flex flex-col sm:flex-row justify-center gap-3">
-                <button id="cancelConfirm" 
-                        class="bg-red-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-red-700 transition-colors">
+
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">
+                Cancel Order
+            </h3>
+
+            <p class="text-gray-600 mb-6 leading-relaxed">
+                Are you sure you want to cancel order 
+                <span class="font-semibold text-black">#{{ order.order_id }}</span>? 
+                This action cannot be undone.
+            </p>
+
+            <div class="flex flex-col sm:flex-row gap-3 mt-4">
+                <button id="cancelConfirm"
+                        class="w-full bg-red-600 text-white px-6 py-3 rounded-lg font-semibold
+                               hover:bg-red-700 transition-all active:scale-95">
                     Yes, Cancel Order
                 </button>
-                <button onclick="closeCancelModal()" 
-                        class="bg-gray-200 text-black px-6 py-3 rounded-lg font-medium hover:bg-gray-300 transition-colors">
+
+                <button onclick="closeCancelModal()"
+                        class="w-full bg-gray-200 text-gray-900 px-6 py-3 rounded-lg font-semibold
+                               hover:bg-gray-300 transition-all active:scale-95">
                     Keep Order
                 </button>
             </div>
         </div>
+
     </div>
-
-
-
-
 </div>
+<style>
+@keyframes scaleIn {
+  0% { transform: scale(0.9); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.animate-scaleIn {
+  animation: scaleIn 0.18s ease-out;
+}
+</style>
 {% endblock %}
 
 

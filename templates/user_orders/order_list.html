@@ -314,23 +314,38 @@
                                 </div>
                                 
                                 <!-- Actions -->
-                                <div class="flex flex-col space-y-2">
-                                    <a href="{% url 'order_detail' order.order_id %}" class="btn-primary text-center">
-                                        View Details
-                                    </a>
-                                    <div class="flex space-x-2">
-                                        {% if order.can_be_cancelled %}
-                                            <button onclick="cancelOrder('{{ order.order_id }}')" class="btn-danger flex-1 text-center">
-                                                Cancel
-                                            </button>
-                                        {% endif %}
-                                        {% if order.status == 'delivered' %}
-                                            <a href="{% url 'reorder' order.order_id %}" class="btn-success flex-1 text-center">
-                                                Reorder
-                                            </a>
-                                        {% endif %}
-                                    </div>
-                                </div>
+<div class="flex flex-col gap-3 w-full max-w-xs">
+
+    <!-- View Details -->
+    <a href="{% url 'order_detail' order.order_id %}"
+       class="w-full bg-blue-600 text-white font-semibold py-2.5 rounded-lg 
+              text-center hover:bg-blue-700 transition-all active:scale-95">
+        View Details
+    </a>
+
+    <!-- Cancel + Reorder (responsive layout) -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+
+        {% if order.can_be_cancelled %}
+        <button onclick="cancelOrder('{{ order.order_id }}')"
+                class="w-full bg-red-600 text-white py-2.5 font-semibold rounded-lg 
+                       hover:bg-red-700 transition-all active:scale-95">
+            Cancel
+        </button>
+        {% endif %}
+
+        {% if order.status == 'delivered' %}
+        <a href="{% url 'order_detail' order.order_id %}"
+           class="w-full bg-green-600 text-white py-2.5 font-semibold rounded-lg 
+                  hover:bg-green-700 transition-all active:scale-95">
+            Reorder
+        </a>
+        {% endif %}
+
+    </div>
+
+</div>
+
                             </div>
 
                             <!-- Desktop Layout -->
@@ -401,23 +416,35 @@
                                 </div>
                                 
                                 <!-- Actions -->
-                                <div class="ml-6 flex flex-col gap-2 min-w-[140px]">
-                                    <a href="{% url 'order_detail' order.order_id %}" class="btn-primary text-center">
-                                        View Details
-                                    </a>
-                                    
-                                    {% if order.can_be_cancelled %}
-                                        <button onclick="cancelOrder('{{ order.order_id }}')" class="btn-danger text-center">
-                                            Cancel Order
-                                        </button>
-                                    {% endif %}
-                                    
-                                    {% if order.status == 'delivered' %}
-                                        <a href="{% url 'reorder' order.order_id %}" class="btn-success text-center">
-                                            Reorder
-                                        </a>
-                                    {% endif %}
-                                </div>
+<div class="ml-4 flex flex-col gap-2 w-full max-w-[180px]">
+
+    <!-- View Details -->
+    <a href="{% url 'order_detail' order.order_id %}"
+       class="w-full px-4 py-2 rounded-lg text-center font-semibold 
+              bg-blue-600 text-white hover:bg-blue-700 transition-all active:scale-95">
+        View Details
+    </a>
+
+    {% if order.can_be_cancelled %}
+    <!-- Cancel Order -->
+    <button onclick="cancelOrder('{{ order.order_id }}')"
+            class="w-full px-4 py-2 rounded-lg text-center font-semibold
+                   bg-red-600 text-white hover:bg-red-700 transition-all active:scale-95">
+        Cancel Order
+    </button>
+    {% endif %}
+
+    {% if order.status == 'delivered' %}
+    <!-- Reorder -->
+    <a href="{% url 'reorder' order.order_id %}"
+       class="w-full px-4 py-2 rounded-lg text-center font-semibold
+              bg-green-600 text-white hover:bg-green-700 transition-all active:scale-95">
+        Reorder
+    </a>
+    {% endif %}
+    
+</div>
+
                             </div>
                         </div>
                     </div>
