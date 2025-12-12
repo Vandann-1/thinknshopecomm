@@ -333,12 +333,14 @@
             </a>
             {% endif %}
 
-            {% if order.status == 'delivered' %}
-            <a href="{% url 'orders_reorder' order.order_id %}"
-               class="w-full sm:w-auto bg-blue-600 text-white px-4 py-2 rounded-md font-semibold
-                      hover:bg-blue-700 transition">
-                Reorder Items
-            </a>
+{% if order.status == 'delivered' %}
+<a href="{% url 'reorder' order.order_id %}"
+   class="w-full sm:w-auto bg-blue-600 text-white px-4 py-2 rounded-md font-semibold
+          hover:bg-blue-700 transition">
+    Reorder Items
+</a>
+
+
             {% endif %}
 
         </div>

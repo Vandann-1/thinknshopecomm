@@ -9,7 +9,7 @@ urlpatterns = [
     
     # Order actions
     path('<str:order_id>/cancel/', views.cancel_order, name='cancel_order'),
-    path('<str:order_id>/reorder/', views.reorder, name='reorder'),
+path('<str:order_id>/reorder/', views.reorder, name='reorder'),
     path('<str:order_id>/invoice/', views.download_invoice, name='download_invoice'),
     
     # AJAX endpoints
