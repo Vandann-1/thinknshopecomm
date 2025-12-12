@@ -840,7 +840,7 @@ async function savePurchaseAddress() {
     try {
         showPurchaseLoading('Saving address...');
 
-        const response = await fetch('/orders/manage-address/', {
+        const response = await fetch('/address/manage_address/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

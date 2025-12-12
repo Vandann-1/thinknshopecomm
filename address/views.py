@@ -4,11 +4,13 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 from django.core.paginator import Paginator
 from django.db import transaction
 import json
 import requests
 from .models import Address, PincodeData
+from django.views import View
 
 
 # Address Management View
@@ -24,6 +26,38 @@ def address_management(request):
         'page_title': 'Manage Addresses'
     }
     return render(request, 'address/manage/address_management.html', context)
+
+
+# Address Management View
+@login_required
+def address_management(request):
+    """
+    Main address management view
+    """
+ 
+    
+    data = {
+        'success': 'ok'
+    }
+    # return render(request, 'address/manage/address_management.html', context)
+    return JsonResponse(data=data)  # Placeholder for actual rendering
+
+@method_decorator(login_required,name='dispatch')
+class AddressManagement(View):
+    
+    def get(self, request):
+        addresses = Address.objects.filter(user=request.user, is_active=True)
+        context = {
+            'addresses': addresses,
+            'page_title': 'Manage Addresses'
+        }
+        return render(request, 'address/manage/address_management.html', context)   
+    def post(self, request):
+        data = {
+            'success': 'ok'
+        }
+        return JsonResponse(data=data)  # Placeholder for actual rendering
+
 
 @csrf_exempt
 @require_http_methods(["POST"])

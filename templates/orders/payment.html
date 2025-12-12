@@ -51,17 +51,14 @@
 </head>
 <body class="bg-gray-50 font-inter">
     <!-- Header with Logo -->
-    <div class="bg-white border-b border-border">
-        <div class="max-w-2xl mx-auto px-4 py-6">
-            <div class="flex items-center justify-center">
-               <div class="w-12 h-12 rounded-full logo-gradient flex items-center justify-center mr-3 overflow-hidden">
-                    <img src="{% static 'brand/images/skatezo.jpeg' %}" class="w-full h-full object-cover rounded-full">
-                </div>
-
-                <h1 class="text-2xl font-semibold text-primary">Skatezo</h1>
-            </div>
+<div class="bg-white border-b border-border">
+    <div class="max-w-2xl mx-auto px-4 py-6">
+        <div class="flex items-center justify-center">
+            <h1 class="text-2xl font-semibold text-primary">thinknshop</h1>
         </div>
     </div>
+</div>
+
 
     <!-- Main Content -->
     <div class="min-h-screen bg-gray-50 py-8 px-4">
@@ -197,7 +194,7 @@
                 "key": keyId,
                 "amount": amount, // Amount in paise
                 "currency": "{{ currency }}",
-                "name": "Skatezo",
+                "name": "ThinknShop",
                 "description": "Order {{ order.order_id }}",
                 "order_id": orderId,
                 "handler": function (response) {

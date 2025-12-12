@@ -1,3 +1,6 @@
+/* --- THINKNSHOP THEME VARIABLES & OVERLAY --- */
+
+/* Modal Overlay: No changes needed here, still centered and full screen */
 .purchase-modal-overlay {
     display: none;
     position: fixed;
@@ -5,7 +8,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.6); /* Slightly darker overlay for focus */
     z-index: 1000;
     align-items: center;
     justify-content: center;
@@ -15,16 +18,18 @@
     display: flex;
 }
 
+/* Modal Box: Softer shadow for a premium feel */
 .purchase-modal {
     background: white;
-    border-radius: 8px;
+    border-radius: 10px; /* Slightly larger border-radius */
     max-width: 600px;
     width: 90%;
     max-height: 90vh;
     overflow-y: auto;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); /* Softer, wider shadow */
 }
 
+/* Header: Clean, standard header */
 .purchase-modal-header {
     padding: 20px 24px;
     border-bottom: 1px solid #e5e5e5;
@@ -35,17 +40,18 @@
 
 .purchase-modal-title {
     margin: 0;
-    font-size: 20px;
-    font-weight: 600;
-    color: #333;
+    font-size: 22px; /* Slightly larger title */
+    font-weight: 700; /* Bolder font weight */
+    color: #1A1A1A; /* Darker, more dominant text */
 }
 
+/* Close Button: Slightly more subtle color */
 .purchase-modal-close {
     background: none;
     border: none;
     font-size: 24px;
     cursor: pointer;
-    color: #666;
+    color: #A0A0A0; /* Lighter close icon */
     padding: 0;
     width: 30px;
     height: 30px;
@@ -55,9 +61,10 @@
 }
 
 .purchase-modal-close:hover {
-    color: #333;
+    color: #444;
 }
 
+/* Body & Footer: Standard padding/layout - no changes needed */
 .purchase-modal-body {
     padding: 24px;
 }
@@ -70,36 +77,40 @@
     gap: 12px;
 }
 
+
+/* --- BUTTONS --- */
 .purchase-btn {
     padding: 10px 20px;
     border: none;
-    border-radius: 4px;
+    border-radius: 6px; /* Slightly more rounded buttons */
     cursor: pointer;
     font-size: 14px;
-    font-weight: 500;
-    transition: background-color 0.2s;
+    font-weight: 600; /* Bolder button text */
+    transition: background-color 0.2s, transform 0.1s;
 }
 
+/* Thinknshop Primary Color (Deep Teal) */
 .purchase-btn-primary {
-    background-color: #007bff;
+    background-color: #0B7C8E; /* NEW Primary Teal */
     color: white;
 }
 
 .purchase-btn-primary:hover {
-    background-color: #0056b3;
+    background-color: #085F6B; /* Darker Teal on hover */
+    transform: translateY(-1px); /* Slight lift on hover */
 }
 
 .purchase-btn-secondary {
-    background-color: #6c757d;
+    background-color: #A0A0A0; /* Soft gray for secondary action */
     color: white;
 }
 
 .purchase-btn-secondary:hover {
-    background-color: #545b62;
+    background-color: #8C8C8C;
 }
 
 .purchase-btn-success {
-    background-color: #28a745;
+    background-color: #28a745; 
     color: white;
 }
 
@@ -110,24 +121,29 @@
 .purchase-btn:disabled {
     opacity: 0.6;
     cursor: not-allowed;
+    transform: none; /* No lift when disabled */
 }
 
+
+/* --- ADDRESS CARD / SELECTION --- */
 .purchase-address-card {
-    border: 2px solid #e5e5e5;
+    border: 1px solid #ddd; /* Lighter default border */
     border-radius: 8px;
     padding: 16px;
     margin-bottom: 12px;
     cursor: pointer;
-    transition: border-color 0.2s;
+    transition: border-color 0.2s, background-color 0.2s;
 }
 
 .purchase-address-card:hover {
-    border-color: #007bff;
+    border-color: #0B7C8E; /* New primary color on hover */
+    box-shadow: 0 2px 5px rgba(11, 124, 142, 0.1); /* Subtle shadow on hover */
 }
 
 .purchase-address-card.purchase-selected {
-    border-color: #007bff;
-    background-color: #f8f9fa;
+    border-width: 2px; /* Thicker border on selection */
+    border-color: #0B7C8E; /* New primary color for selection */
+    background-color: #F0FAFB; /* Very light, tinted background on selection */
 }
 
 .purchase-default-badge {
@@ -138,23 +154,13 @@
     border-radius: 12px;
 }
 
+
+/* --- ALERTS, COUPONS, PRICE SUMMARY --- */
 .purchase-alert {
     padding: 12px 16px;
-    border-radius: 4px;
+    border-radius: 6px; /* Consistency in rounding */
     margin: 12px 0;
     position: relative;
-}
-
-.purchase-alert.purchase-success {
-    background-color: #d4edda;
-    color: #155724;
-    border: 1px solid #c3e6cb;
-}
-
-.purchase-alert.purchase-error {
-    background-color: #f8d7da;
-    color: #721c24;
-    border: 1px solid #f5c6cb;
 }
 
 .purchase-coupon-section {
@@ -172,51 +178,56 @@
 
 .purchase-coupon-input-group input {
     flex: 1;
-    padding: 8px 12px;
+    padding: 10px 12px; /* Slightly taller input */
     border: 1px solid #ddd;
     border-radius: 4px;
 }
 
 .purchase-coupon-input-group button {
     padding: 8px 16px;
-    background-color: #007bff;
+    background-color: #0B7C8E; /* New primary color for coupon button */
     color: white;
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    font-weight: 600;
 }
 
 .purchase-coupon-input-group button:hover {
-    background-color: #0056b3;
+    background-color: #085F6B;
 }
 
 .purchase-price-summary {
     margin-top: 20px;
-    padding: 16px;
+    padding: 18px; /* Slightly more padding */
     border: 1px solid #e5e5e5;
     border-radius: 8px;
-    background-color: #f8f9fa;
+    background-color: #fcfdfe; /* Subtle off-white for contrast */
 }
 
 .purchase-price-row {
     display: flex;
     justify-content: space-between;
     margin-bottom: 8px;
+    color: #555; /* Softer text color for general rows */
 }
 
 .purchase-price-row.purchase-total {
     font-weight: bold;
-    font-size: 18px;
-    border-top: 1px solid #ddd;
-    padding-top: 8px;
-    margin-top: 8px;
+    font-size: 20px; /* Larger total font size */
+    color: #1A1A1A; /* Stronger text color for total */
+    border-top: 2px solid #eee; /* Thicker dividing line */
+    padding-top: 12px; /* More space above total */
+    margin-top: 12px;
 }
 
+
+/* --- SPINNER & INPUT FOCUS --- */
 .purchase-spinner {
     width: 40px;
     height: 40px;
     border: 4px solid #f3f3f3;
-    border-top: 4px solid #007bff;
+    border-top: 4px solid #0B7C8E; /* New primary color for spinner */
     border-radius: 50%;
     animation: purchase-spin 1s linear infinite;
     margin-bottom: 16px;
@@ -228,11 +239,11 @@
 }
 
 .purchase-input-field, .purchase-select-field {
-    transition: border-color 0.2s;
+    transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 .purchase-input-field:focus, .purchase-select-field:focus {
     outline: none;
-    border-color: #007bff;
-    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+    border-color: #0B7C8E; /* New primary color for focus */
+    box-shadow: 0 0 0 3px rgba(11, 124, 142, 0.2); /* Slightly wider, softer focus ring */
 }
