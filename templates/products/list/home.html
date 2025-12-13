@@ -1629,29 +1629,85 @@
 
 
 <!-- ₹99 OFFER SECTION -->
-<div class="relative max-w-3xl mx-auto mt-12 bg-white border border-red-200 rounded-2xl p-8 text-center shadow-lg">
+<div class="relative max-w-3xl mx-auto mt-12 bg-white border border-red-200 rounded-2xl p-8 text-center shadow-xl overflow-hidden">
+
+    <!-- Glow -->
+    <div class="absolute inset-0 -z-10 bg-red-200/40 blur-[80px] rounded-2xl"></div>
+
+    <!-- Badge -->
+    <div class="absolute top-4 right-4 bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-full tracking-wide">
+        LIMITED
+    </div>
+
+    <h2 class="text-3xl font-extrabold text-red-600 tracking-wide">
+        ₹99 LAUNCH OFFER
+    </h2>
+
+    <p class="text-gray-600 mt-2 text-sm">
+        Early customers only • Limited stock available
+    </p>
+
+    <!-- COUPON BOX -->
+    <div class="mt-5 flex justify-center">
+        <div class="flex items-center gap-3 bg-red-50 border border-red-200 rounded-xl px-5 py-3">
+            <span class="text-gray-700 font-medium">Use Code:</span>
+            <span id="couponCode" class="text-red-600 font-extrabold tracking-widest text-lg">
+                LAUNCH99
+            </span>
+<button
+    onclick="copyCoupon()"
+    title="Copy code"
+    class="ml-2 p-2 rounded-lg bg-red-600 hover:bg-red-700 transition text-white flex items-center justify-center">
     
-    <div class="absolute inset-0 -z-10 bg-red-100/40 blur-[70px] rounded-2xl"></div>
+    <!-- COPY ICON (SVG) -->
+    <svg xmlns="http://www.w3.org/2000/svg"
+         class="w-5 h-5"
+         fill="none"
+         viewBox="0 0 24 24"
+         stroke="currentColor"
+         stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round"
+              d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2M8 16h8a2 2 0 002-2V8a2 2 0 00-2-2H8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+    </svg>
+</button>
 
-    <h2 class="text-3xl font-extrabold text-red-600 tracking-wide">₹99 LAUNCH OFFER</h2>
-    <p class="text-gray-600 mt-2 text-sm">Only for early customers. Limited stock.</p>
+        </div>
+    </div>
 
-    <p class="mt-3 text-lg font-medium">
-        Use Code: <span class="text-red-600 font-bold tracking-wider">LAUNCH99</span>
+    <!-- COPY FEEDBACK -->
+    <p id="copyFeedback" class="mt-2 text-sm text-green-600 hidden">
+        ✓ Code copied! Use it at checkout
     </p>
 
-    <p class="mt-3 text-gray-500 text-sm">
-        Ends in <span id="offer-countdown" class="font-mono text-red-600 font-semibold">--d --h --m --s</span>
+    <!-- COUNTDOWN -->
+    <p class="mt-4 text-gray-500 text-sm">
+        Offer ends in
+        <span id="offer-countdown" class="font-mono text-red-600 font-semibold">
+            --d --h --m --s
+        </span>
     </p>
 
+    <!-- URGENCY BAR -->
+    <div class="mt-4 max-w-xs mx-auto">
+        <div class="h-2 bg-gray-200 rounded-full overflow-hidden">
+            <div id="urgencyBar" class="h-full bg-red-600 transition-all duration-1000" style="width: 100%;"></div>
+        </div>
+        <p class="mt-2 text-xs text-gray-500">
+            Stock filling fast
+        </p>
+    </div>
+
+    <!-- CTA -->
     <a href="{% url 'products:product-list' %}"
-       class="mt-6 inline-block px-8 py-3 bg-red-600 hover:bg-red-700 rounded-xl text-white font-semibold shadow-md transition-all">
-        Grab It Now →
+       class="mt-7 inline-flex items-center justify-center gap-2 px-10 py-3 bg-red-600 hover:bg-red-700 rounded-xl text-white font-bold shadow-lg transition-all">
+        Grab Offer Now
+        <span class="text-xl">→</span>
     </a>
 </div>
 
 
-<!-- COUNTDOWN SCRIPT -->
+
+
 <script>
     const offerDurationDays = 10;
     const offerEndTime = new Date().getTime() + offerDurationDays * 24 * 60 * 60 * 1000;
@@ -1660,12 +1716,17 @@
         const now = new Date().getTime();
         const distance = offerEndTime - now;
         const countdownEl = document.getElementById("offer-countdown");
+        const urgencyBar = document.getElementById("urgencyBar");
 
         if (distance <= 0) {
             countdownEl.innerText = "Offer expired";
-            clearInterval(timerInterval);
+            urgencyBar.style.width = "0%";
             return;
         }
+
+        const total = offerDurationDays * 24 * 60 * 60 * 1000;
+        const progress = (distance / total) * 100;
+        urgencyBar.style.width = `${progress}%`;
 
         const days = Math.floor(distance / (1000 * 60 * 60 * 24));
         const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -1675,35 +1736,23 @@
         countdownEl.innerText = `${days}d ${hours}h ${minutes}m ${seconds}s`;
     }
 
+    function copyCoupon() {
+        const code = document.getElementById("couponCode").innerText;
+        navigator.clipboard.writeText(code);
+
+        const feedback = document.getElementById("copyFeedback");
+        feedback.classList.remove("hidden");
+
+        setTimeout(() => {
+            feedback.classList.add("hidden");
+        }, 2000);
+    }
+
     updateOfferCountdown();
-    const timerInterval = setInterval(updateOfferCountdown, 1000);
+    setInterval(updateOfferCountdown, 1000);
 </script>
 
 
-
-<!-- FIRST ORDER OFFER -->
-<section class="w-full py-16">
-    <div class="max-w-4xl mx-auto text-center bg-white/40 backdrop-blur-xl border border-red-200 rounded-3xl px-10 py-12 shadow-xl">
-
-        <span class="inline-block bg-red-600 text-white px-4 py-1 text-xs rounded-full tracking-widest uppercase">
-            First Order Offer
-        </span>
-
-        <h2 class="text-3xl md:text-4xl font-extrabold mt-4">
-            Get <span class="text-red-600">30% OFF</span> Instantly
-        </h2>
-
-        <p class="text-gray-600 mt-3">
-            Apply the code at checkout and enjoy your welcome reward.
-        </p>
-
-        <div class="inline-flex items-center gap-3 bg-white text-black rounded-xl px-6 py-3 mt-6 text-lg font-bold tracking-[0.25em] shadow-md border border-gray-200">
-            WELCOME30
-        </div>
-
-        <p class="text-xs text-gray-500 mt-6">*Valid on first order only</p>
-    </div>
-</section>
 
 
 
@@ -1772,6 +1821,92 @@
             </div>
         </div>
     </section>
+
+
+
+<section class="w-full py-16">
+    <div class="max-w-4xl mx-auto text-center bg-white/40 backdrop-blur-xl border border-red-200 rounded-3xl px-10 py-12 shadow-xl">
+
+        <span class="inline-block bg-red-600 text-white px-4 py-1 text-xs rounded-full tracking-widest uppercase">
+            First Order Offer
+        </span>
+
+        <h2 class="text-3xl md:text-4xl font-extrabold mt-4">
+            Get <span class="text-red-600">30% OFF</span> Instantly
+        </h2>
+
+        <p class="text-gray-600 mt-3">
+            Apply the code at checkout and enjoy your welcome reward.
+        </p>
+
+        <!-- COUPON + COPY -->
+        <div class="mt-6 flex justify-center">
+            <div class="inline-flex items-center gap-4 bg-white text-black rounded-xl px-6 py-3 text-lg font-bold tracking-[0.25em] shadow-md border border-gray-200">
+
+                <span id="welcomeCoupon">WELCOME30</span>
+
+                <!-- COPY ICON -->
+                <button
+                    onclick="copyWelcomeCoupon(event)"
+                    title="Copy code"
+                    class="p-2 rounded-lg bg-red-600 hover:bg-red-700 transition text-white flex items-center justify-center">
+
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         class="w-5 h-5"
+                         fill="none"
+                         viewBox="0 0 24 24"
+                         stroke="currentColor"
+                         stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                              d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2M8 16h8a2 2 0 002-2V8a2 2 0 00-2-2H8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- FEEDBACK -->
+        <p id="welcomeCopyFeedback" class="text-sm text-green-600 mt-3 hidden">
+            ✓ Code copied! Use it at checkout
+        </p>
+
+        <p class="text-xs text-gray-500 mt-6">
+            *Valid on first order only
+        </p>
+    </div>
+</section>
+
+<script>
+function copyWelcomeCoupon(event) {
+    const code = document.getElementById("welcomeCoupon").innerText;
+    navigator.clipboard.writeText(code);
+
+    const feedback = document.getElementById("welcomeCopyFeedback");
+    feedback.classList.remove("hidden");
+
+    const btn = event.currentTarget;
+    const originalIcon = btn.innerHTML;
+
+    // Switch to check icon
+    btn.innerHTML = `
+        <svg xmlns="http://www.w3.org/2000/svg"
+             class="w-5 h-5"
+             fill="none"
+             viewBox="0 0 24 24"
+             stroke="currentColor"
+             stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M5 13l4 4L19 7" />
+        </svg>
+    `;
+
+    setTimeout(() => {
+        btn.innerHTML = originalIcon;
+        feedback.classList.add("hidden");
+    }, 2000);
+}
+</script>
+
+
 
 
     <!-- WHY THINKNSHOP -->
