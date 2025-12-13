@@ -207,14 +207,16 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # ---------------------------------------------------
 # CLOUDINARY FILE STORAGE (USE DIRECT VALUES HERE)
 # ---------------------------------------------------
+
+from decouple import config
+
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': 'dajhsics7',
-    'API_KEY': '617272776764369',
-    'API_SECRET': 'SfPZ_PrNYvMeEs66SU_uI8KLpSM',
+    'CLOUD_NAME': config('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': config('CLOUDINARY_API_KEY'),
+    'API_SECRET': config('CLOUDINARY_API_SECRET'),
 }
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-# ---------------------------------------------------
 
 
 # Extra production flags (recommended)
