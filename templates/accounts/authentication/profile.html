@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Profile - ThinknShop</title>
+    <title>Profile – ThinknShop</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
 
@@ -19,89 +19,155 @@
 
 <body class="bg-gray-100">
 
-<!-- TOP BLACK BAR -->
+<!-- TOP BAR -->
 <div class="w-full bg-black text-white text-xs py-2 text-center tracking-wide">
     FREE SHIPPING OVER ₹500
 </div>
 
-
 <!-- HEADER -->
 <header class="bg-white border-b shadow-sm">
-    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+    <div class="max-w-7xl mx-auto px-6 py-4 grid grid-cols-3 items-center">
 
-        <!-- MOBILE MENU BUTTON -->
-        <button id="mobileMenuBtn" class="lg:hidden text-3xl text-gray-700">
-            ☰
-        </button>
+        <!-- LEFT: MOBILE MENU -->
+        <div class="flex items-center">
+            <button id="mobileMenuBtn" class="lg:hidden text-3xl text-gray-700">
+                ☰
+            </button>
+        </div>
 
-        <!-- LOGO -->
-        <a href="/" class="text-3xl font-extrabold tracking-tight">
-            Thinkn<span class="text-red-600">Shop.</span>
-        </a>
+        <!-- CENTER: LOGO (ALWAYS CENTERED) -->
+        <div class="flex justify-center">
+            <a href="/" class="text-3xl font-extrabold tracking-tight">
+                Thinkn<span class="text-red-600">Shop.</span>
+            </a>
+        </div>
 
-        <!-- DESKTOP NAV -->
-        <div class="hidden lg:flex items-center gap-6">
-
-            <a href="/" class="text-gray-700 font-semibold hover:text-red-600 transition">
+        <!-- RIGHT: DESKTOP ACTIONS -->
+        <div class="hidden lg:flex justify-end items-center gap-6">
+            <a href="/" class="font-semibold hover:text-red-600 transition">
                 Home
             </a>
 
             <form action="{% url 'logout' %}" method="POST">
                 {% csrf_token %}
-                <button class="border border-gray-700 px-4 py-1.5 rounded-md font-semibold hover:bg-red-600 hover:text-white hover:border-red-600 transition">
+                <button class="border px-4 py-1.5 rounded-md font-semibold hover:bg-red-600 hover:text-white transition">
                     Sign Out
                 </button>
             </form>
 
             <div class="w-10 h-10 bg-red-600 rounded-full flex items-center justify-center text-white font-bold">
-                {{ user.first_name.0|upper|default:user.username.0|upper }}
+                {{ user.username|first|upper }}
             </div>
-
         </div>
 
     </div>
 </header>
 
-<!-- MOBILE OVERLAY -->
-<div id="mobileOverlay" class="fixed inset-0 bg-black bg-opacity-40 backdrop-blur-sm hidden"></div>
 
-<!-- MOBILE SLIDE MENU -->
-<div id="mobileMenu" class="fixed top-0 left-0 h-full w-72 bg-white border-r shadow-lg z-50 transform -translate-x-full transition-all duration-300">
+<!-- OVERLAY -->
+<div id="mobileOverlay"
+     class="fixed inset-0 bg-black bg-opacity-40 backdrop-blur-sm hidden z-40">
+</div>
 
-    <div class="flex justify-between items-center p-5 border-b">
-        <h2 class="text-xl font-bold text-gray-800">Menu</h2>
-        <button id="closeMenu" class="text-3xl text-gray-700">&times;</button>
-    </div>
+<!-- RIGHT SIDE MOBILE MENU -->
+<div id="mobileMenu"
+     class="fixed top-0 right-0 h-full w-80 bg-white shadow-2xl z-50 transform translate-x-full transition-all duration-300">
 
-    <div class="p-5 space-y-4 font-semibold text-gray-800">
-
-        <!-- Profile Section -->
-        <div class="flex items-center gap-3 border-b pb-4">
+    <!-- MENU HEADER -->
+    <div class="p-6 border-b flex justify-between items-center">
+        <div class="flex items-center gap-3">
             <div class="w-12 h-12 bg-red-600 rounded-full flex items-center justify-center text-white font-bold">
-                {{ user.first_name.0|upper|default:user.username.0|upper }}
+                {{ user.username|first|upper }}
             </div>
             <div>
-                <p class="font-bold">{{ user.first_name }} {{ user.last_name }}</p>
+                <p class="font-bold">{{ user.first_name|default:user.username }}</p>
                 <p class="text-sm text-gray-500">{{ user.email }}</p>
             </div>
         </div>
+        <button id="closeMenu" class="text-3xl">&times;</button>
+    </div>
 
-        <a href="/" class="block hover:text-red-600 transition">Home</a>
-        <a href="#" class="block hover:text-red-600 transition">Orders</a>
-        <a href="#" class="block hover:text-red-600 transition">Wishlist</a>
-        <a href="#" class="block hover:text-red-600 transition">Account Settings</a>
+    <!-- MENU LINKS -->
+    <div class="p-6 space-y-3 font-semibold text-gray-800">
+
+        <a href="/" class="flex items-center gap-3 p-3 rounded-lg hover:bg-red-50 hover:text-red-600 transition">
+             Home
+        </a>
+
+        <a href="#" class="flex items-center gap-3 p-3 rounded-lg hover:bg-red-50 hover:text-red-600 transition">
+             Orders
+        </a>
+
+        <a href="#" class="flex items-center gap-3 p-3 rounded-lg hover:bg-red-50 hover:text-red-600 transition">
+             Wishlist
+        </a>
+
+        <a href="#" class="flex items-center gap-3 p-3 rounded-lg hover:bg-red-50 hover:text-red-600 transition">
+            ⚙️ Account Settings
+        </a>
+
+        <hr>
 
         <form action="{% url 'logout' %}" method="POST">
             {% csrf_token %}
-            <button class="w-full mt-4 py-2 rounded bg-gray-100 hover:bg-red-600 hover:text-white transition">
+            <button class="w-full mt-4 py-3 bg-red-600 text-white rounded-lg font-bold hover:bg-red-700 transition">
                 Sign Out
             </button>
         </form>
-
     </div>
 </div>
 
-<!-- MOBILE MENU SCRIPT -->
+<!-- MAIN CONTENT -->
+<div class="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 lg:grid-cols-4 gap-10">
+
+    <!-- SIDEBAR -->
+    <aside class="bg-white p-6 rounded-xl shadow border">
+        <div class="text-center">
+            <div class="w-28 h-28 bg-red-600 text-white text-4xl font-bold rounded-full flex items-center justify-center mx-auto">
+                {{ user.username|first|upper }}
+            </div>
+            <h2 class="mt-4 text-xl font-bold">
+                {{ user.first_name|default:user.username }}
+            </h2>
+            <p class="text-gray-500 text-sm">{{ user.email }}</p>
+        </div>
+
+        <hr class="my-6">
+
+        <ul class="space-y-4 font-semibold">
+            <li class="hover:text-red-600 cursor-pointer">My Profile</li>
+            <li class="hover:text-red-600 cursor-pointer">Orders</li>
+            <li class="hover:text-red-600 cursor-pointer">Wishlist</li>
+            <li class="hover:text-red-600 cursor-pointer">Account Settings</li>
+        </ul>
+    </aside>
+
+    <!-- PROFILE CONTENT -->
+    <main class="lg:col-span-3 bg-white p-10 rounded-xl shadow border">
+
+        <h1 class="text-3xl font-extrabold mb-2">Account Overview</h1>
+        <p class="text-gray-600 mb-10">Manage your ThinknShop account details.</p>
+
+        <div class="grid md:grid-cols-2 gap-6">
+            <div class="bg-gray-50 border p-5 rounded-lg">
+                <p class="text-xs uppercase text-gray-500 font-bold">Username</p>
+                <p class="text-lg font-semibold">{{ user.username }}</p>
+            </div>
+
+            <div class="bg-gray-50 border p-5 rounded-lg">
+                <p class="text-xs uppercase text-gray-500 font-bold">Email</p>
+                <p class="text-lg font-semibold">{{ user.email }}</p>
+            </div>
+
+            <div class="bg-gray-50 border p-5 rounded-lg">
+                <p class="text-xs uppercase text-gray-500 font-bold">Joined</p>
+                <p class="text-lg font-semibold">{{ user.date_joined|date:"F d, Y" }}</p>
+            </div>
+        </div>
+    </main>
+</div>
+
+<!-- SINGLE SCRIPT -->
 <script>
     const menu = document.getElementById("mobileMenu");
     const overlay = document.getElementById("mobileOverlay");
@@ -109,98 +175,18 @@
     const closeBtn = document.getElementById("closeMenu");
 
     openBtn.addEventListener("click", () => {
-        menu.classList.remove("-translate-x-full");
+        menu.classList.remove("translate-x-full");
         overlay.classList.remove("hidden");
     });
 
-    const closeMenuAction = () => {
-        menu.classList.add("-translate-x-full");
+    const closeMenu = () => {
+        menu.classList.add("translate-x-full");
         overlay.classList.add("hidden");
     };
 
-    closeBtn.addEventListener("click", closeMenuAction);
-    overlay.addEventListener("click", closeMenuAction);
+    closeBtn.addEventListener("click", closeMenu);
+    overlay.addEventListener("click", closeMenu);
 </script>
-
-<!-- MAIN CONTENT GRID -->
-<div class="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 lg:grid-cols-4 gap-10">
-
-    <!-- SIDEBAR -->
-    <aside class="bg-white p-6 rounded-xl shadow border border-gray-200">
-
-        <div class="text-center">
-<div class="w-28 h-28 rounded-full bg-red-600 text-white text-4xl font-bold flex items-center justify-center mx-auto shadow-sm">
-    {{ user.username|first|upper }}
-</div>
-
-
-            <h2 class="text-xl font-bold mt-4 text-gray-900">
-                {% if user.first_name %}
-                    {{ user.first_name }} {{ user.last_name }}
-                {% else %}
-                    {{ user.username }}
-                {% endif %}
-            </h2>
-
-            <p class="text-gray-500 text-sm">{{ user.email }}</p>
-        </div>
-
-        <hr class="my-6">
-
-        <ul class="space-y-4 font-semibold text-gray-700">
-            <li class="hover:text-red-600 cursor-pointer">My Profile</li>
-            <li class="hover:text-red-600 cursor-pointer">Orders</li>
-            <li class="hover:text-red-600 cursor-pointer">Wishlist</li>
-            <li class="hover:text-red-600 cursor-pointer">Account Settings</li>
-        </ul>
-
-    </aside>
-
-    <!-- MAIN PROFILE SECTION -->
-    <main class="lg:col-span-3 bg-white p-10 rounded-xl shadow border border-gray-200">
-
-        <div class="mb-10">
-            <h1 class="text-3xl font-extrabold text-gray-900">Account Overview</h1>
-            <p class="text-gray-600 mt-2 text-lg">Here’s everything about your ThinknShop account.</p>
-        </div>
-
-        <!-- PERSONAL INFO -->
-        <section class="mb-12">
-            <h2 class="text-2xl font-bold text-gray-900 mb-4">Personal Details</h2>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-
-                <div class="bg-gray-50 border rounded-lg p-5">
-                    <p class="text-xs uppercase text-gray-500 font-bold">Username</p>
-                    <p class="text-lg font-semibold">{{ user.username }}</p>
-                </div>
-
-                <div class="bg-gray-50 border rounded-lg p-5">
-                    <p class="text-xs uppercase text-gray-500 font-bold">Email Address</p>
-                    <p class="text-lg font-semibold">{{ user.email }}</p>
-                </div>
-
-                <div class="bg-gray-50 border rounded-lg p-5">
-                    <p class="text-xs uppercase text-gray-500 font-bold">Full Name</p>
-                    <p class="text-lg font-semibold">{{ user.first_name }} {{ user.last_name }}</p>
-                </div>
-
-            </div>
-        </section>
-
-        <!-- ACCOUNT ACTIVITY -->
-        <section>
-            <h2 class="text-2xl font-bold text-gray-900 mb-4">Account Activity</h2>
-
-            <div class="bg-gray-50 border rounded-lg p-5">
-                <p class="text-xs uppercase text-gray-500 font-bold">Member Since</p>
-                <p class="text-lg font-semibold">{{ user.date_joined|date:"F d, Y" }}</p>
-            </div>
-        </section>
-
-    </main>
-
-</div>
 
 </body>
 </html>
