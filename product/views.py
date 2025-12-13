@@ -3,6 +3,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q, Min, Max, Count, Avg,When,Case
 from django.http import JsonResponse
 from django.views.generic import ListView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import models
 from .models import (
     Product, Category, Brand, Color, Size, Material, 
@@ -40,7 +41,9 @@ from django.conf import settings
 1 )  HomePage - Displays Initial Categories , Brands , New Arrivals ETC - No Login Required For Exploring
 The Products
 """
-class HomePageView(ListView):
+
+# @login_required(login_url='/accounts/login/')
+class HomePageView(LoginRequiredMixin,ListView):
     """
     Enhanced homepage displaying featured categories, brands, collections and products
     with additional features like trending products, price ranges, and reviews
