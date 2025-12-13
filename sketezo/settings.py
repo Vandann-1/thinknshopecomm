@@ -184,30 +184,26 @@ USE_TZ = True
 
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.1/howto/static-files/
-# Static files (CSS, JavaScript, Images)
-# Static files (CSS, JavaScript, Images)
+# Static files
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-
-# Enable WhiteNoise storage for compressed and cached static files
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-# For development, optionally still keep additional static dirs
-STATICFILES_DIRS = [
-    BASE_DIR / 'static',
-]
+# Django 5.x storage configuration (IMPORTANT)
+STORAGES = {
+    "default": {
+        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
 
-# Media files (user uploads)
+# Media files (can stay, Cloudinary will ignore in prod)
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-
-# ---------------------------------------------------
-# CLOUDINARY FILE STORAGE (USE DIRECT VALUES HERE)
-# ---------------------------------------------------
-
+# Cloudinary credentials
 from decouple import config
 
 CLOUDINARY_STORAGE = {
@@ -215,15 +211,6 @@ CLOUDINARY_STORAGE = {
     'API_KEY': config('CLOUDINARY_API_KEY'),
     'API_SECRET': config('CLOUDINARY_API_SECRET'),
 }
-
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-
-
-# Extra production flags (recommended)
-
-# Default primary key field type
-# https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 
