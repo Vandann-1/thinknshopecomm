@@ -215,6 +215,6 @@ CLOUDINARY_STORAGE = {
 
 
 # # Razorpay Credentials For real payments
-RAZORPAY_KEY_ID = "rzp_live_RoklzNDLuPrVaD"
-RAZORPAY_KEY_SECRET = "s4AfRsl5rF9H6SKtJJYy3Kyu"
+RAZORPAY_KEY_ID = "rzp_live_RrSCite2n9vAim"
+RAZORPAY_KEY_SECRET = "80NKumjOqpHSuDk8a4meYg7J"
 
