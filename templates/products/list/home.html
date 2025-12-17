@@ -37,6 +37,8 @@
         }
         
         body {
+            margin: 0;
+            padding: 0;
             font-family: var(--font-family);
             color: var(--text-medium);
             background-color: var(--bg-white);
@@ -987,13 +989,28 @@
 
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-<style>
+<!-- <style>
+
+
+
+     * {
+  outline: 2px solid red !important;
+}
+
+
+
+
+
+
+
     /* Base Styles (for font and body padding) */
     body {
+        margin: 0;
+        padding: 0;
         font-family: 'Inter', sans-serif;
         background: #f7f7f7;
         min-height: 100vh;
-        padding-top: 130px;
+    
     }
     
     @media (min-width: 768px) {
@@ -1118,7 +1135,7 @@
             font-size: 1.25rem;
         }
     }
-</style>
+</style> -->
 </head>
 <body>
     
@@ -1537,7 +1554,13 @@
     console.log('Thinknshop Red/White Premium Navbar initialized successfully! 🚀');
 </script>
 
-
+<!-- <br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br> -->
 <main class="relative w-full bg-white overflow-hidden">
 
 <!-- =========================================== -->
@@ -1545,53 +1568,152 @@
 <!-- =========================================== -->
 
 <!-- HERO SECTION -->
-<section class="relative w-full bg-white text-black overflow-hidden py-24">
+ <br>
+<br>
+<br>
 
-    <div class="absolute inset-0 bg-gradient-to-br from-red-50 via-transparent to-white"></div>
+<br>
+<br>
 
-    <div class="relative max-w-7xl mx-auto px-6 lg:px-14 grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+<section class="relative w-full min-h-[100dvh] overflow-hidden bg-black">
 
-        <!-- LEFT -->
-        <div class="space-y-6">
-            <span class="inline-block bg-red-100 text-red-600 border border-red-300 px-4 py-1 rounded-full tracking-widest text-xs uppercase">
-                ThinkNShop Exclusive
-            </span>
+  <div id="hero-slider" class="relative w-full min-h-[100dvh]">
 
-            <h1 class="text-4xl md:text-6xl font-extrabold leading-tight tracking-tight">
-                The <span class="text-red-600">Perfect Bottle</span><br>
-                For Everyday Performance.
-            </h1>
+    <!-- SLIDE 1 : RED -->
+    <div class="hero-slide absolute inset-0 bg-red-600 flex items-center">
+      <div class="w-full max-w-6xl mx-auto px-5 flex flex-col md:flex-row items-center gap-10">
 
-            <p class="text-gray-600 max-w-md text-base md:text-lg leading-relaxed">
-                Built with modern engineering and minimalist style. Strong, leakproof, BPA-free — made to elevate your daily routine.
-            </p>
+        <!-- TEXT -->
+        <div class="text-white text-center md:text-left md:w-1/2">
+          <p class="uppercase tracking-widest text-sm opacity-90">New Arrival</p>
 
-            <div class="flex flex-wrap gap-3 pt-2">
-                <span class="px-4 py-2 rounded-full bg-white border border-gray-200 text-sm shadow-sm">2h Cold Retention</span>
-                <span class="px-4 py-2 rounded-full bg-white border border-gray-200 text-sm shadow-sm">BPA Free</span>
-                <span class="px-4 py-2 rounded-full bg-white border border-gray-200 text-sm shadow-sm">100% Leakproof</span>
-            </div>
+          <h1 class="mt-3 text-4xl md:text-6xl font-black leading-tight">
+            Bold <br class="hidden md:block"> Bottles
+          </h1>
 
-            <a href="{% url 'products:product-list' %}"
-               class="inline-block mt-6 px-10 py-4 bg-red-600 hover:bg-red-700 text-white font-semibold text-lg rounded-xl shadow-md transition-all">
-                Shop Now →
-            </a>
+          <p class="mt-4 text-white/90 max-w-md mx-auto md:mx-0">
+            Premium finish. Built for everyday hustle.
+          </p>
+
+          <a href="{% url 'products:product-list' %}" class="inline-block mt-6 px-8 py-3 bg-black text-white rounded-full font-semibold">
+            Shop Now
+          </a>
         </div>
 
-        <!-- RIGHT — BIG FULL IMAGE -->
-        <div class="relative flex justify-center lg:justify-end">
-
-            <!-- Soft Glow -->
-            <div class="absolute inset-0 bg-red-200/30 blur-[130px] rounded-full"></div>
-
-            <img src="https://tse1.mm.bing.net/th/id/OIP.p4aQ1JrAjl9nQu2K5aLTBQHaEo?cb=ucfimg2&ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3"
-                class="relative w-[380px] sm:w-[450px] md:w-[520px] lg:w-[600px] xl:w-[650px] drop-shadow-2xl transition-transform duration-500 hover:scale-105"
-                alt="Bottle">
-
+        <!-- PRODUCT -->
+        <div class="md:w-1/2 flex justify-center">
+        <img src="https://wallpapercave.com/wp/wp10129207.jpg"
+         class="w-[200px] sm:w-[220px] md:w-[360px] drop-shadow-2xl animate-float"
+         alt="ThinknShop Bottle">
         </div>
-
+      </div>
     </div>
+    
+
+    <!-- SLIDE 2 : YELLOW -->
+    <div class="hero-slide absolute inset-0 bg-yellow-400 flex items-center translate-x-full">
+      <div class="w-full max-w-6xl mx-auto px-5 flex flex-col md:flex-row items-center gap-10">
+
+        <div class="text-black text-center md:text-left md:w-1/2">
+          <p class="uppercase tracking-widest text-sm">Trending</p>
+
+          <h1 class="mt-3 text-4xl md:text-6xl font-black leading-tight">
+            Anime <br class="hidden md:block"> Bottles
+          </h1>
+
+          <p class="mt-4 text-black/80 max-w-md mx-auto md:mx-0">
+            Sharp prints. Long-lasting color.
+          </p>
+
+          <a href="{% url 'products:product-list' %}" class="inline-block mt-6 px-8 py-3 bg-black text-white rounded-full font-semibold">
+            View Collection
+          </a>
+        </div>
+
+        <div class="md:w-1/2 flex justify-center">
+          <img src="https://external-preview.redd.it/PsdO3t-JtAU4jSo3K31PcRvqpF59Zr68VSRwrxxYS88.png?format=pjpg&auto=webp&s=a594e4839ef5d369fa256c2626f5f0ce252cd14e"
+               class="w-[240px] md:w-[360px] animate-float drop-shadow-2xl"
+               alt="">
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 3 : BLACK + ORANGE -->
+    <div class="hero-slide absolute inset-0 bg-black flex items-center translate-x-full">
+      <div class="w-full max-w-6xl mx-auto px-5 flex flex-col md:flex-row items-center gap-10">
+
+        <div class="text-white text-center md:text-left md:w-1/2">
+          <p class="uppercase tracking-widest text-sm text-orange-400">Custom</p>
+
+          <h1 class="mt-3 text-4xl md:text-6xl font-black leading-tight">
+            Your <br class="hidden md:block"> Design
+          </h1>
+
+          <p class="mt-4 text-white/80 max-w-md mx-auto md:mx-0">
+            Upload. Customize. We print it clean.
+          </p>
+
+          <a href="{% url 'products:product-list' %}" class="inline-block mt-6 px-8 py-3 bg-orange-500 text-black rounded-full font-semibold">
+        
+            Customize Now
+          </a>
+        </div>
+
+        <div class="md:w-1/2 flex justify-center">
+          <img src="https://wallpaperaccess.com/full/342047.jpg"
+               class="w-[240px] md:w-[360px] animate-float drop-shadow-2xl"
+               alt="">
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- DOTS -->
+  <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-3 z-50">
+    <button class="dot w-3 h-3 rounded-full bg-white"></button>
+    <button class="dot w-3 h-3 rounded-full bg-white/40"></button>
+    <button class="dot w-3 h-3 rounded-full bg-white/40"></button>
+  </div>
 </section>
+
+
+<script>
+const slides = document.querySelectorAll(".hero-slide");
+const dots = document.querySelectorAll(".dot");
+let current = 0;
+
+function showSlide(i) {
+  slides.forEach((slide, idx) => {
+    slide.style.transform =
+      idx === i ? "translateX(0)" : "translateX(100%)";
+  });
+
+  dots.forEach((d, idx) => {
+    d.classList.toggle("bg-white", idx === i);
+    d.classList.toggle("bg-white/40", idx !== i);
+  });
+}
+
+dots.forEach((dot, i) => {
+  dot.addEventListener("click", () => {
+    current = i;
+    showSlide(current);
+  });
+});
+
+setInterval(() => {
+  current = (current + 1) % slides.length;
+  showSlide(current);
+}, 5000);
+
+showSlide(0);
+</script>
+
+
+
+
+
 
 
 
