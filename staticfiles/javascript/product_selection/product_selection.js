@@ -573,7 +573,7 @@ function displayPurchaseAddressSelection(addresses) {
         content = `
             <div class="purchase-no-addresses" style="text-align: center; padding: 40px;">
                 <h4 style="margin-bottom: 20px;">No addresses found</h4>
-                <button class="purchase-btn purchase-btn-primary" id="showAddAddressBtn" style="padding: 12px 24px; background: #FF5722; color: white; border: none; border-radius: 4px; cursor: pointer; transition: background 0.3s;">Add Address</button>
+                <button  class="purchase-btn purchase-btn-primary" id="showAddAddressBtn" style="padding: 12px 24px; background: #FF5722; color: white; border: none; border-radius: 4px; cursor: pointer; transition: background 0.3s;">Add Address</button>
             </div>
         `;
     } else {
