@@ -70,6 +70,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'django.contrib.sitemaps',
     'dev_mode',
     'product',
     'accounts',
@@ -86,6 +88,10 @@ INSTALLED_APPS = [
     
   
 ]
+
+SITE_ID = 1
+DEFAULT_DOMAIN = "thinknshop.in"
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

@@ -1,276 +1,143 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Join ThinknShop</title>
-    
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        'sans': ['Inter', 'sans-serif'], 
-                    },
-                    colors: {
-                        brand: {
-                            red: '#dc2626', 
-                            redDark: '#b91c1c', 
-                            gray: '#737373',
-                            grayLighter: '#f9fafb',
-                        }
-                    },
-                    borderRadius: {
-                        '4xl': '2rem',
-                    },
-                    boxShadow: {
-                        'red-glow': '0 10px 20px -5px rgba(220, 38, 38, 0.4)',
-                    },
-                    animation: {
-                        'fade-in-up': 'fadeInUp 0.8s ease-out',
-                    },
-                    keyframes: {
-                        fadeInUp: {
-                            '0%': { opacity: '0', transform: 'translateY(20px)' },
-                            '100%': { opacity: '1', transform: 'translateY(0)' }
-                        },
-                    }
-                }
-            }
-        }
-    </script>
-    
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #ffffff;
-        }
-        
-        /* Consistent card style */
-        .register-card {
-            background-color: #f9fafb;
-            border: 1px solid #f3f4f6;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15); 
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Create Account | ThinknShop</title>
 
-        /* Consistent input focus styling */
-        .form-input:focus {
-            border-color: #dc2626 !important;
-            box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.4) !important;
-        }
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 
-        /* Input autofill light mode fix */
-        input:-webkit-autofill,
-        input:-webkit-autofill:hover, 
-        input:-webkit-autofill:focus, 
-        input:-webkit-autofill:active{
-            -webkit-box-shadow: 0 0 0 30px #f9fafb inset !important;
-            -webkit-text-fill-color: #171717 !important;
-            transition: background-color 5000s ease-in-out 0s;
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'sans-serif'] },
+          colors: {
+            brand: '#dc2626',
+            brandDark: '#b91c1c'
+          }
         }
-    </style>
+      }
+    }
+  </script>
 </head>
-<body class="min-h-screen bg-white text-gray-900 flex items-center justify-center p-4 lg:p-8">
 
-    <div class="w-full max-w-[480px] animate-fade-in-up">
-        
-        <div class="text-center mb-8">
-            <div class="inline-flex items-center justify-center w-16 h-16 bg-brand-red rounded-2xl mb-4 shadow-xl shadow-red-600/30 transform hover:scale-105 transition-transform duration-300">
-                <img src="{% static 'brand/images/thinknshop.png' %}" alt="ThinknShop" class="w-10 h-10 object-contain brightness-0 invert">
-            </div>
-            <h1 class="text-3xl font-extrabold tracking-tight mb-2 text-gray-900">
-                Join ThinknShop
-            </h1>
-            <p class="text-gray-600 text-base font-medium">Create your secure shopping account</p>
-        </div>
+<body class="min-h-screen bg-white font-sans">
 
-        <div class="register-card rounded-4xl p-8 md:p-10">
-            {% if messages %}
-                <div class="mb-8 space-y-3">
-                    {% for message in messages %}
-                        <div class="p-4 rounded-xl text-sm font-medium flex items-center 
-                            {% if message.tags == 'error' %}bg-red-100 text-red-700 border border-red-200
-                            {% else %}bg-green-100 text-green-700 border border-green-200{% endif %}">
-                            
-                            {% if message.tags == 'error' %}
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
-                            {% else %}
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
-                            {% endif %}
-                            {{ message }}
-                        </div>
-                    {% endfor %}
-                </div>
-            {% endif %}
+  <!-- Top Brand Bar -->
+  <div class="w-full border-b border-gray-200">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center gap-3">
+      <!-- <img src="{% static 'brand/images/thinknshop.png' %}" class="h-8" alt="ThinknShop"> -->
+      <span class="font-extrabold text-lg tracking-tight">ThinknShop</span>
+    </div>
+  </div>
 
-            <form method="post" class="space-y-6">
-                {% csrf_token %}
-                
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                    <div class="space-y-2">
-                        <label for="first_name" class="text-sm font-semibold text-gray-700 ml-1">First Name</label>
-                        <input 
-                            type="text" id="first_name" name="first_name" placeholder="John" required
-                            class="form-input w-full px-5 py-3.5 bg-white border-2 border-gray-200 rounded-xl focus:outline-none text-gray-900 placeholder-gray-400 font-medium transition duration-200"
-                        >
-                    </div>
-                    <div class="space-y-2">
-                        <label for="last_name" class="text-sm font-semibold text-gray-700 ml-1">Last Name</label>
-                        <input 
-                            type="text" id="last_name" name="last_name" placeholder="Doe" required
-                            class="form-input w-full px-5 py-3.5 bg-white border-2 border-gray-200 rounded-xl focus:outline-none text-gray-900 placeholder-gray-400 font-medium transition duration-200"
-                        >
-                    </div>
-                </div>
+  <!-- Main -->
+  <div class="max-w-6xl mx-auto grid lg:grid-cols-2 min-h-[calc(100vh-72px)]">
 
-                <div class="space-y-5">
-                    <div class="space-y-2">
-                        <label for="username" class="text-sm font-semibold text-gray-700 ml-1">Username</label>
-                        <div class="relative">
-                            <span class="absolute left-5 top-1/2 -translate-y-1/2 text-gray-500 font-medium text-lg">@</span>
-                            <input 
-                                type="text" id="username" name="username" placeholder="username" required
-                                class="form-input w-full pl-10 pr-5 py-3.5 bg-white border-2 border-gray-200 rounded-xl focus:outline-none text-gray-900 placeholder-gray-400 font-medium transition duration-200"
-                            >
-                        </div>
-                    </div>
-                    <div class="space-y-2">
-                        <label for="email" class="text-sm font-semibold text-gray-700 ml-1">Email Address</label>
-                        <input 
-                            type="email" id="email" name="email" placeholder="john@example.com" required
-                            class="form-input w-full px-5 py-3.5 bg-white border-2 border-gray-200 rounded-xl focus:outline-none text-gray-900 placeholder-gray-400 font-medium transition duration-200"
-                        >
-                    </div>
-                </div>
+    <!-- Left (Brand Message) -->
+    <div class="hidden lg:flex flex-col justify-center px-12">
+      <h1 class="text-4xl font-extrabold leading-tight">
+        Join <span class="text-brand">ThinknShop</span><br>
+        Shop smarter, faster.
+      </h1>
+      <p class="mt-4 text-gray-600 max-w-md">
+        Create your account to access exclusive deals, faster checkout,
+        and personalized product drops.
+      </p>
 
-                <div class="space-y-5 pt-2">
-                    <div class="space-y-2">
-                        <label for="password" class="text-sm font-semibold text-gray-700 ml-1">Password</label>
-                        <input 
-                            type="password" id="password" name="password" placeholder="••••••••" required
-                            class="form-input w-full px-5 py-3.5 bg-white border-2 border-gray-200 rounded-xl focus:outline-none text-gray-900 placeholder-gray-400 font-medium transition duration-200"
-                        >
-                        <div class="h-1.5 w-full bg-gray-200 rounded-full overflow-hidden mt-3">
-                            <div id="strength-bar" class="h-full w-0 bg-brand-red transition-all duration-500 ease-out"></div>
-                        </div>
-                        <p id="password-hint" class="text-xs text-gray-500 ml-1 mt-2">Minimum 8 characters</p>
-                    </div>
-                    <div class="space-y-2">
-                        <label for="confirm_password" class="text-sm font-semibold text-gray-700 ml-1">Confirm Password</label>
-                        <input 
-                            type="password" id="confirm_password" name="confirm_password" placeholder="••••••••" required
-                            class="form-input w-full px-5 py-3.5 bg-white border-2 border-gray-200 rounded-xl focus:outline-none text-gray-900 placeholder-gray-400 font-medium transition duration-200"
-                        >
-                    </div>
-                </div>
-
-                <button 
-                    type="submit" 
-                    class="w-full bg-brand-red hover:bg-brand-redDark text-white py-4 px-6 rounded-xl font-extrabold text-lg transition duration-200 shadow-red-glow transform hover:scale-[1.01] active:scale-[0.99] mt-8"
-                >
-                    Create Account
-                </button>
-            </form>
-
-            <div class="text-center mt-8 pt-6 border-t border-gray-200">
-                <p class="text-gray-500 font-medium text-sm">
-                    Already have an account? 
-                    <a href="{% url 'login' %}" class="text-brand-red font-extrabold hover:text-brand-redDark transition-colors ml-1">
-                        Sign in here
-                    </a>
-                </p>
-            </div>
-        </div>
-        
-        <div class="mt-10 flex justify-around space-x-6 text-center animate-fade-in-up [animation-delay:200ms]">
-            <div class="p-3">
-                <div class="text-xl font-black text-gray-900">1,800+</div>
-                <div class="text-[10px] uppercase tracking-wider font-bold text-gray-500 mt-1">Happy Customers</div>
-            </div>
-            <div class="w-px bg-gray-200"></div>
-            <div class="p-3">
-                <div class="text-xl font-black text-gray-900">94%</div>
-                <div class="text-[10px] uppercase tracking-wider font-bold text-gray-500 mt-1">Positive Feedback</div>
-            </div>
-            <div class="w-px bg-gray-200"></div>
-            <div class="p-3">
-                <div class="text-xl font-black text-gray-900">10+</div>
-                <div class="text-[10px] uppercase tracking-wider font-bold text-gray-500 mt-1">Cities Served</div>
-            </div>
-        </div>
-
-        <div class="mt-8 text-center">
-            <p class="text-xs text-gray-500 max-w-xs mx-auto leading-relaxed">
-                By creating an account, you agree to our 
-                <a href="#" class="text-gray-600 hover:text-gray-900 font-medium underline-offset-2 transition-colors">Terms of Service</a> 
-                and 
-                <a href="#" class="text-gray-600 hover:text-gray-900 font-medium underline-offset-2 transition-colors">Privacy Policy</a>.
-            </p>
-        </div>
+      <ul class="mt-8 space-y-3 text-sm text-gray-700">
+        <li>✔ Secure checkout</li>
+        <li>✔ Order tracking</li>
+        <li>✔ Early access offers</li>
+      </ul>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const password = document.getElementById('password');
-            const confirmPassword = document.getElementById('confirm_password');
-            const passwordHint = document.getElementById('password-hint');
-            const strengthBar = document.getElementById('strength-bar');
-            
-            function updatePasswordStrength() {
-                const val = password.value;
-                let strength = 0;
-                if (val.length > 0) strength += 1;
-                if (val.length >= 8) strength += 1;
-                if (/[A-Z]/.test(val) && /[0-9]/.test(val)) strength += 1;
-                if (/[^A-Za-z0-9]/.test(val)) strength += 1;
+    <!-- Right (Form) -->
+    <div class="flex items-center justify-center px-6">
+      <div class="w-full max-w-md border border-gray-200 rounded-2xl p-8 shadow-sm">
 
-                let width, color, hintText, hintColor;
+        <h2 class="text-2xl font-extrabold mb-1">Create Account</h2>
+        <p class="text-sm text-gray-500 mb-6">
+          Takes less than a minute.
+        </p>
 
-                switch(strength) {
-                    case 0:
-                        width = '0%'; color = 'bg-gray-200'; hintText = 'Minimum 8 characters'; hintColor = 'text-gray-500';
-                        break;
-                    case 1:
-                        width = '25%'; color = 'bg-red-500'; hintText = 'Too weak'; hintColor = 'text-red-500';
-                        break;
-                    case 2:
-                        width = '50%'; color = 'bg-orange-500'; hintText = 'Needs uppercase and number'; hintColor = 'text-orange-500';
-                        break;
-                    case 3:
-                        width = '75%'; color = 'bg-yellow-500'; hintText = 'Good, consider a special character'; hintColor = 'text-yellow-500';
-                        break;
-                    case 4:
-                        width = '100%'; color = 'bg-green-500'; hintText = 'Strong password!'; hintColor = 'text-green-500';
-                        break;
-                }
-                
-                strengthBar.style.width = width;
-                strengthBar.className = `h-full transition-all duration-500 ease-out ${color}`;
-                passwordHint.textContent = hintText;
-                passwordHint.className = `text-xs ${hintColor} ml-1 mt-2`;
+        {% if messages %}
+          <div class="space-y-3 mb-6">
+            {% for message in messages %}
+              <div class="text-sm px-4 py-3 rounded-lg
+                {% if message.tags == 'error' %}
+                  bg-red-50 text-red-600 border border-red-200
+                {% else %}
+                  bg-green-50 text-green-600 border border-green-200
+                {% endif %}
+              ">
+                {{ message }}
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
 
-                checkConfirmPassword();
-            }
+        <form method="post" class="space-y-4">
+          {% csrf_token %}
 
-            function checkConfirmPassword() {
-                if (confirmPassword.value && confirmPassword.value !== password.value) {
-                    confirmPassword.classList.add('border-red-500', 'bg-red-50/50');
-                    confirmPassword.classList.remove('border-gray-200');
-                } else {
-                    confirmPassword.classList.remove('border-red-500', 'bg-red-50/50');
-                    confirmPassword.classList.add('border-gray-200');
-                }
-            }
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="text-sm font-semibold">First Name</label>
+              <input type="text" name="first_name" required
+                class="mt-1 w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand"/>
+            </div>
+            <div>
+              <label class="text-sm font-semibold">Last Name</label>
+              <input type="text" name="last_name" required
+                class="mt-1 w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand"/>
+            </div>
+          </div>
 
-            password.addEventListener('input', updatePasswordStrength);
-            confirmPassword.addEventListener('input', checkConfirmPassword);
-        });
-    </script>
+          <div>
+            <label class="text-sm font-semibold">Username</label>
+            <input type="text" name="username" required
+              class="mt-1 w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand"/>
+          </div>
+
+          <div>
+            <label class="text-sm font-semibold">Email</label>
+            <input type="email" name="email" required
+              class="mt-1 w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand"/>
+          </div>
+
+          <div>
+            <label class="text-sm font-semibold">Password</label>
+            <input type="password" name="password" required
+              class="mt-1 w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand"/>
+          </div>
+
+          <div>
+            <label class="text-sm font-semibold">Confirm Password</label>
+            <input type="password" name="confirm_password" required
+              class="mt-1 w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand"/>
+          </div>
+
+          <button
+            type="submit"
+            class="w-full bg-brand hover:bg-brandDark text-white py-3.5 rounded-xl font-extrabold transition">
+            Create Account
+          </button>
+        </form>
+
+        <p class="text-sm text-center text-gray-500 mt-6">
+          Already have an account?
+          <a href="{% url 'login' %}" class="text-brand font-bold hover:underline ml-1">
+            Sign in
+          </a>
+        </p>
+
+      </div>
+    </div>
+
+  </div>
+
 </body>
 </html>

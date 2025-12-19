@@ -13,3 +13,9 @@ def shipping(request):
 
 def contact(request):
     return render(request,'supports/contact.html')
+
+def terms(request):
+    return render(request,'supports/terms.html')
+
+def policy(request):
+    return render(request,'supports/policy.html')
