@@ -2142,7 +2142,7 @@ document.querySelectorAll(".footer-toggle").forEach(btn => {
 
 
 
-<div id="xmasFloat" style="
+<!-- <div id="xmasFloat" style="
 position:fixed;
 inset:0;
 display:none;
@@ -2185,46 +2185,60 @@ backdrop-filter:blur(8px);
     </div>
 
   </div>
-</div>
+</div> -->
 
 <script>
-document.addEventListener("DOMContentLoaded", function() {
+(function(){
 
-  setTimeout(function(){
+  const HOME_PATHS = ["/", "/home", "/main_page/"];   // add your homepage routes here
+
+  const currentPath = window.location.pathname;
+
+  if(!HOME_PATHS.includes(currentPath)) return;   // EXIT on non-home pages
+
+  document.addEventListener("DOMContentLoaded", function(){
+
     document.getElementById("xmasFloat").style.display = "flex";
-  }, 1200);
 
-  const end = new Date(new Date().getFullYear(), 11, 25, 23, 59, 59).getTime();
-  const timer = document.getElementById("xmasTimer");
+    // countdown
+    const timer = document.getElementById("xmasTimer");
+    const end = new Date(new Date().getFullYear(),11,25,23,59,59).getTime();
 
-  setInterval(() => {
-    const now = new Date().getTime();
-    const diff = end - now;
-    if (diff < 0) return timer.innerHTML = "Deal expired";
+    setInterval(() => {
+      const diff = end - Date.now();
+      if(diff<=0) return timer.innerHTML="Deal expired";
 
-    const d = Math.floor(diff / (1000*60*60*24));
-    const h = Math.floor((diff / (1000*60*60)) % 24);
-    const m = Math.floor((diff / (1000*60)) % 60);
-    const s = Math.floor((diff / 1000) % 60);
-    timer.innerHTML = `⏰ Ends in ${d}d ${h}h ${m}m ${s}s`;
-  }, 1000);
+      const d=Math.floor(diff/86400000),
+            h=Math.floor(diff%86400000/3600000),
+            m=Math.floor(diff%3600000/60000),
+            s=Math.floor(diff%60000/1000);
 
-  let stock = 63;
-  const stockEl = document.getElementById("xmasStock");
+      timer.innerHTML = `⏰ Ends in ${d}d ${h}h ${m}m ${s}s`;
+    },1000);
 
-  setInterval(() => {
-    if (stock > 11 && Math.random() > .6) {
-      stock--;
-      stockEl.innerHTML = `Only <b>${stock}</b> packs left`;
-    }
-  }, 4000);
+    // stock burn
+    let stock = parseInt(localStorage.getItem("xmasStock") || "63");
+    const stockEl = document.getElementById("xmasStock");
+    stockEl.innerHTML = `Only <b>${stock}</b> packs left`;
 
-});
+    setInterval(()=>{
+      if(stock>11 && Math.random()>0.6){
+        stock--;
+        localStorage.setItem("xmasStock",stock);
+        stockEl.innerHTML = `Only <b>${stock}</b> packs left`;
+      }
+    },4000);
 
-function closeFloat() {
-  document.getElementById("xmasFloat").style.display = "none";
-}
+  });
+
+  window.closeFloat = function(){
+    document.getElementById("xmasFloat").style.display="none";
+  };
+
+})();
 </script>
+
+
 
 
 
