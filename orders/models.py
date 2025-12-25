@@ -176,3 +176,85 @@ class OrderStatusUpdate(TimestampedModel):
     
     def __str__(self):
         return f"{self.order.order_id} - {self.old_status} → {self.new_status}"
+
+# ZippyPOst Integration 
+class ZippypostOrder(TimestampedModel):
+    ZIPY_STATUS_CHOICES = (
+        ("CREATED", "Created"),
+        ("PICKED_UP", "Picked Up"),
+        ("IN_TRANSIT", "In Transit"),
+        ("OUT_FOR_DELIVERY", "Out for Delivery"),
+        ("DELIVERED", "Delivered"),
+        ("RTO_INITIATED", "RTO Initiated"),
+        ("RTO_DELIVERED", "RTO Delivered"),
+        ("CANCELLED", "Cancelled"),
+        ("FAILED", "Failed"),
+    )
+
+    order = models.OneToOneField(
+        Order,
+        on_delete=models.CASCADE,
+        related_name="zippypost",
+        null=True,
+        blank=True
+    )
+
+    zippypost_order_id = models.CharField(
+        max_length=100,
+        unique=True,
+        null=True,
+        blank=True,
+        help_text="Zipypost internal order ID"
+    )
+
+    tracking_number = models.CharField(
+        max_length=100,
+        unique=True,
+        null=True,
+        blank=True,
+        help_text="Courier tracking number"
+    )
+
+    awb_number = models.CharField(
+        max_length=100,
+        null=True,
+        blank=True,
+        help_text="Air Waybill number"
+    )
+
+    courier_name = models.CharField(
+        max_length=255,
+        null=True,
+        blank=True,
+        help_text="Assigned courier partner"
+    )
+
+    shipping_status = models.CharField(
+            max_length=50,
+            choices=ZIPY_STATUS_CHOICES,
+            null=True,
+            blank=True
+    )
+
+    label_url = models.CharField(
+        max_length=5000000,
+        null=True,
+        blank=True,
+        help_text="Shipping label PDF URL or Path"
+    )
+
+    is_cod = models.BooleanField(
+        default=False,
+        help_text="Is Cash on Delivery order"
+    )
+
+    shipment_created = models.BooleanField(
+        default=False,
+        help_text="Shipment successfully created on Zipypost"
+    )
+
+    def __str__(self):
+        return f"Zipypost | Order #{self.order_id if self.order else 'N/A'}"
+
+
+

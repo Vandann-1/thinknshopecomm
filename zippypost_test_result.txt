@@ -1,0 +1,203 @@
+2025-12-25 13:50:07,045 - INFO - ================================================================================
+2025-12-25 13:50:07,047 - INFO - ZIPPYPOST API TEST
+2025-12-25 13:50:07,047 - INFO - ================================================================================
+2025-12-25 13:50:07,048 - INFO - Configured IDs: Warehouse=12, Courier=10, Mode=16
+2025-12-25 13:50:07,048 - INFO - 
+1. Testing Authentication Headers:
+2025-12-25 13:50:07,049 - INFO - ----------------------------------------
+2025-12-25 13:50:07,050 - INFO - Headers keys: ['Content-Type', 'authorization', 'timestamp', 'sellerid']
+2025-12-25 13:50:07,050 - INFO - Content-Type: application/json
+2025-12-25 13:50:07,050 - INFO - timestamp: 1766650807
+2025-12-25 13:50:07,050 - INFO - sellerid: 1255
+2025-12-25 13:50:07,051 - INFO - \u2705 Headers generated successfully
+2025-12-25 13:50:07,052 - INFO - 
+2. Finding Recent Paid Order:
+2025-12-25 13:50:07,052 - INFO - ----------------------------------------
+2025-12-25 13:50:09,156 - INFO - \u2705 Using order: ORD-0F925AF3
+2025-12-25 13:50:09,157 - INFO -    Total Amount: 345.45
+2025-12-25 13:50:09,468 - INFO -    Shipping to: Thane, 410013
+2025-12-25 13:50:09,469 - INFO - 
+3. Testing Zippypost API Call:
+2025-12-25 13:50:09,469 - INFO - ----------------------------------------
+2025-12-25 13:50:11,123 - INFO - ================================================================================
+2025-12-25 13:50:11,123 - INFO - Creating Zippypost shipment for order ORD-0F925AF3
+2025-12-25 13:50:11,123 - INFO - ================================================================================
+2025-12-25 13:50:11,123 - DEBUG - Headers: {
+  "Content-Type": "application/json",
+  "authorization": "c4977265e2...",
+  "timestamp": "1766650811",
+  "sellerid": "1255"
+}
+2025-12-25 13:50:11,123 - DEBUG - Full Payload:
+2025-12-25 13:50:11,124 - DEBUG - {
+  "order_number": "ORD-0F925AF3",
+  "purchase_amount": 345.45,
+  "purchase_date": "2025-12-25",
+  "billing_details_same_as_shipping": true,
+  "shipping_details": {
+    "full_name": "Vandann Darji",
+    "contact_number": "9022641867",
+    "customer_email": "",
+    "address_line_one": "D/17 narmada Ashish ",
+    "address_line_two": "Narmada Nagar cabin Cross road Bhayandar East ",
+    "landmark": "",
+    "pincode": "410013",
+    "city": "Thane"
+  },
+  "billing_details": {
+    "full_name": "Vandann Darji",
+    "contact_number": "9022641867",
+    "gstin": "",
+    "address_line_one": "D/17 narmada Ashish ",
+    "address_line_two": "Narmada Nagar cabin Cross road Bhayandar East ",
+    "company_name": "",
+    "pincode": "410013",
+    "city": "Thane"
+  },
+  "items": [
+    {
+      "sku": "25",
+      "item_name": "Luffy water bottles",
+      "quantity": 1,
+      "item_weight": 0.5,
+      "item_price": 279.0
+    }
+  ],
+  "package_length": 20.0,
+  "package_width": 15.0,
+  "package_height": 10.0,
+  "package_weight": 0.5,
+  "shipping_charge": 50.0,
+  "cod_charge": 0.0,
+  "purchase_tax": 16.45,
+  "purchase_discount": 0.0,
+  "collectable_cod": 0.0,
+  "warehouse_id": 12,
+  "payment_type": 1,
+  "courier_id": 10,
+  "mode_id": 16
+}
+2025-12-25 13:50:11,129 - DEBUG - Starting new HTTPS connection (1): api.zipypost.com:443
+2025-12-25 13:50:11,431 - DEBUG - https://api.zipypost.com:443 "POST /create/shipment HTTP/1.1" 400 116
+2025-12-25 13:50:11,431 - INFO - API Response Status Code: 400
+2025-12-25 13:50:11,432 - INFO - Response Headers: {'Server': 'nginx/1.18.0 (Ubuntu)', 'Date': 'Thu, 25 Dec 2025 08:20:11 GMT', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '116', 'Connection': 'keep-alive', 'X-Powered-By': 'Express', 'ETag': 'W/"74-sphtb38Ja1Nb9TQZxlimn2UBzOU"'}
+2025-12-25 13:50:11,432 - DEBUG - Full Response Body:
+2025-12-25 13:50:11,432 - DEBUG - {"success":false,"message":"Validation Error","error":{"items[0].sku":"items[0].sku must be at least 3 characters"}}
+2025-12-25 13:50:11,432 - ERROR - \u274c Zippypost validation error: Validation failed: {}
+2025-12-25 13:50:11,433 - INFO - 
+\u274c Shipment creation FAILED
+2025-12-25 13:50:11,433 - INFO - Error Message: Validation failed: {}
+2025-12-25 13:50:11,434 - INFO - Full Response Data:
+2025-12-25 13:50:11,434 - INFO - {
+  "success": false,
+  "message": "Validation Error",
+  "error": {
+    "items[0].sku": "items[0].sku must be at least 3 characters"
+  }
+}
+2025-12-25 13:50:11,434 - INFO - 
+================================================================================
+2025-12-25 13:50:11,435 - INFO - TEST COMPLETE
+2025-12-25 14:29:02,234 - INFO - ================================================================================
+2025-12-25 14:29:02,235 - INFO - ZIPPYPOST API TEST
+2025-12-25 14:29:02,235 - INFO - ================================================================================
+2025-12-25 14:29:02,235 - INFO - Configured IDs: Warehouse=2568, Courier=10, Mode=16
+2025-12-25 14:29:02,236 - INFO - 
+1. Testing Authentication Headers:
+2025-12-25 14:29:02,236 - INFO - ----------------------------------------
+2025-12-25 14:29:02,236 - INFO - Headers keys: ['Content-Type', 'authorization', 'timestamp', 'sellerid']
+2025-12-25 14:29:02,236 - INFO - Content-Type: application/json
+2025-12-25 14:29:02,237 - INFO - timestamp: 1766653142
+2025-12-25 14:29:02,237 - INFO - sellerid: 1255
+2025-12-25 14:29:02,237 - INFO - \u2705 Headers generated successfully
+2025-12-25 14:29:02,238 - INFO - 
+2. Finding Recent Paid Order:
+2025-12-25 14:29:02,238 - INFO - ----------------------------------------
+2025-12-25 14:29:04,528 - INFO - \u2705 Using order: ORD-D8B32FAA
+2025-12-25 14:29:04,529 - INFO -    Total Amount: 345.45
+2025-12-25 14:29:04,841 - INFO -    Shipping to: Thane, 410013
+2025-12-25 14:29:04,841 - INFO - 
+3. Testing Zippypost API Call:
+2025-12-25 14:29:04,842 - INFO - ----------------------------------------
+2025-12-25 14:29:06,679 - DEBUG - Starting new HTTPS connection (1): api.zipypost.com:443
+2025-12-25 14:29:07,045 - DEBUG - https://api.zipypost.com:443 "POST /create/shipment HTTP/1.1" 400 116
+2025-12-25 14:29:07,064 - INFO - 
+\u274c Shipment creation FAILED
+2025-12-25 14:29:07,065 - INFO - Error Message: Validation failed: {}
+2025-12-25 14:29:07,065 - INFO - Full Response Data:
+2025-12-25 14:29:07,066 - INFO - {
+  "success": false,
+  "message": "Validation Error",
+  "error": {
+    "items[0].sku": "items[0].sku must be at least 3 characters"
+  }
+}
+2025-12-25 14:29:07,067 - INFO - 
+================================================================================
+2025-12-25 14:29:07,067 - INFO - TEST COMPLETE
+2025-12-25 14:31:02,619 - INFO - ================================================================================
+2025-12-25 14:31:02,621 - INFO - ZIPPYPOST API TEST
+2025-12-25 14:31:02,622 - INFO - ================================================================================
+2025-12-25 14:31:02,622 - INFO - Configured IDs: Warehouse=2568, Courier=10, Mode=16
+2025-12-25 14:31:02,622 - INFO - 
+1. Testing Authentication Headers:
+2025-12-25 14:31:02,623 - INFO - ----------------------------------------
+2025-12-25 14:31:02,625 - INFO - Headers keys: ['Content-Type', 'authorization', 'timestamp', 'sellerid']
+2025-12-25 14:31:02,626 - INFO - Content-Type: application/json
+2025-12-25 14:31:02,626 - INFO - timestamp: 1766653262
+2025-12-25 14:31:02,626 - INFO - sellerid: 1255
+2025-12-25 14:31:02,627 - INFO - \u2705 Headers generated successfully
+2025-12-25 14:31:02,627 - INFO - 
+2. Finding Recent Paid Order:
+2025-12-25 14:31:02,628 - INFO - ----------------------------------------
+2025-12-25 14:31:05,268 - INFO - \u2705 Using order: ORD-D8B32FAA
+2025-12-25 14:31:05,269 - INFO -    Total Amount: 345.45
+2025-12-25 14:31:05,655 - INFO -    Shipping to: Thane, 410013
+2025-12-25 14:31:05,656 - INFO - 
+3. Testing Zippypost API Call:
+2025-12-25 14:31:05,656 - INFO - ----------------------------------------
+2025-12-25 14:31:07,524 - DEBUG - Starting new HTTPS connection (1): api.zipypost.com:443
+2025-12-25 14:31:08,010 - DEBUG - https://api.zipypost.com:443 "POST /create/shipment HTTP/1.1" 400 147
+2025-12-25 14:31:08,041 - INFO - 
+\u274c Shipment creation FAILED
+2025-12-25 14:31:08,042 - INFO - Error Message: Validation failed: {}
+2025-12-25 14:31:08,042 - INFO - Full Response Data:
+2025-12-25 14:31:08,043 - INFO - {
+  "success": false,
+  "message": "Validation Error",
+  "error": {
+    "booking_process_error": "Error: Can\u2019t calculate zone, Given pincode is not serviceable."
+  }
+}
+2025-12-25 14:31:08,044 - INFO - 
+================================================================================
+2025-12-25 14:31:08,044 - INFO - TEST COMPLETE
+2025-12-25 14:35:09,090 - INFO - ================================================================================
+2025-12-25 14:35:09,091 - INFO - ZIPPYPOST API TEST
+2025-12-25 14:35:09,092 - INFO - ================================================================================
+2025-12-25 14:35:09,092 - INFO - Configured IDs: Warehouse=2568, Courier=10, Mode=16
+2025-12-25 14:35:09,093 - INFO - 
+1. Testing Authentication Headers:
+2025-12-25 14:35:09,093 - INFO - ----------------------------------------
+2025-12-25 14:35:09,094 - INFO - Headers keys: ['Content-Type', 'authorization', 'timestamp', 'sellerid']
+2025-12-25 14:35:09,095 - INFO - Content-Type: application/json
+2025-12-25 14:35:09,095 - INFO - timestamp: 1766653509
+2025-12-25 14:35:09,096 - INFO - sellerid: 1255
+2025-12-25 14:35:09,096 - INFO - \u2705 Headers generated successfully
+2025-12-25 14:35:09,098 - INFO - 
+2. Finding Recent Paid Order:
+2025-12-25 14:35:09,098 - INFO - ----------------------------------------
+2025-12-25 14:35:11,416 - INFO - \u2705 Using order: ORD-D8B32FAA
+2025-12-25 14:35:11,417 - INFO -    Total Amount: 345.45
+2025-12-25 14:35:11,724 - INFO -    Shipping to: Thane, 400001
+2025-12-25 14:35:11,725 - INFO - 
+3. Testing Zippypost API Call:
+2025-12-25 14:35:11,725 - INFO - ----------------------------------------
+2025-12-25 14:35:13,332 - DEBUG - Starting new HTTPS connection (1): api.zipypost.com:443
+2025-12-25 14:35:16,443 - DEBUG - https://api.zipypost.com:443 "POST /create/shipment HTTP/1.1" 200 125
+2025-12-25 14:35:16,473 - INFO - 
+\u274c Shipment creation FAILED
+2025-12-25 14:35:16,474 - INFO - Error Message: API returned status 200: {"success":true,"booking":true,"RESULT":{"awb":"76763762784","courier":"Bluedart+","label":"NA","routingCode":"BOM/FRT/FRT"}}
+2025-12-25 14:35:16,474 - INFO - 
+================================================================================
+2025-12-25 14:35:16,475 - INFO - TEST COMPLETE

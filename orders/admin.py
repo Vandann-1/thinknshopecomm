@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Order, OrderItem, OrderStatusUpdate
+from .models import Order, OrderItem, OrderStatusUpdate, ZippypostOrder
 from django.utils.html import format_html
 
 
@@ -240,3 +240,7 @@ class OrderStatusUpdateAdmin(admin.ModelAdmin):
         ):
             obj.order.status = obj.new_status
             obj.order.save(update_fields=['status'])
+
+
+
+admin.site.register(ZippypostOrder)
