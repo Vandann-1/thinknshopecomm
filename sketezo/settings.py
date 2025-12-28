@@ -207,12 +207,12 @@ CLOUDINARY_STORAGE = {
 
 # # Razorpay Credentials For real payments
 # for production 
-# RAZORPAY_KEY_ID = "rzp_live_RrSCite2n9vAim"
-# RAZORPAY_KEY_SECRET = "80NKumjOqpHSuDk8a4meYg7J"
+RAZORPAY_KEY_ID = "rzp_live_RrSCite2n9vAim"
+RAZORPAY_KEY_SECRET = "80NKumjOqpHSuDk8a4meYg7J"
 
 # For Test - Development only 
-RAZORPAY_KEY_ID = "rzp_test_jJJrl2JogIrKeo"
-RAZORPAY_KEY_SECRET = "oqJBApRaO4rOYdd4cTcUc7m4"
+# RAZORPAY_KEY_ID = "rzp_test_jJJrl2JogIrKeo"
+# RAZORPAY_KEY_SECRET = "oqJBApRaO4rOYdd4cTcUc7m4"
 
 
 # ==================== LOGGING CONFIGURATION ====================
