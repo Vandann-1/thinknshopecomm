@@ -787,3 +787,129 @@ INFO 2025-12-25 19:59:28,336 zippypost_utils Response Headers: {'Server': 'nginx
 DEBUG 2025-12-25 19:59:28,336 zippypost_utils Full Response Body:
 DEBUG 2025-12-25 19:59:28,337 zippypost_utils {"success":true,"booking":true,"RESULT":{"awb":"76764104804","courier":"Bluedart+","label":"NA","routingCode":"BOM/FRT/FRT"}}
 INFO 2025-12-25 19:59:28,958 zippypost_utils Retrieved label URL for AWB 76764104804
+INFO 2025-12-28 14:43:28,201 views Order review accessed by user 17 with method GET
+INFO 2025-12-28 14:43:28,205 views Order review GET parameters - User: 17, variant_id: 8, quantity: 1, coupon_code: , address_id: d1838089-99d0-4931-8982-36c597903a3c
+INFO 2025-12-28 14:43:28,771 views Found variant 8 - custom water bottles
+INFO 2025-12-28 14:43:28,772 views Pricing calculated - unit_price: 260.00, subtotal: 260.00, shipping: 50.00
+INFO 2025-12-28 14:43:28,774 views Final calculations - taxable_amount: 310.00, tax_amount: 15.5000, total_amount: 325.5000
+INFO 2025-12-28 14:43:29,017 views Selected address d1838089-99d0-4931-8982-36c597903a3c for user 17
+INFO 2025-12-28 14:43:29,268 views Order review page rendered successfully for user 17
+INFO 2025-12-28 14:43:37,324 views Order review accessed by user 17 with method POST
+INFO 2025-12-28 14:43:37,325 views Order creation POST request from user 17
+ERROR 2025-12-28 14:43:42,538 views Error in order creation: Reverse for 'order-review' not found. 'order-review' is not a valid view function or pattern name. for user 17
+Traceback (most recent call last):
+  File "C:\Users\VANDAN\OneDrive\Desktop\thinknshop\thinknshop\orders\views.py", line 548, in create_order
+    return JsonResponse({'redirect_url': redirect_url})
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\http\response.py", line 751, in __init__
+    data = json.dumps(data, cls=encoder, **json_dumps_params)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\json\__init__.py", line 238, in dumps
+    **kw).encode(obj)
+          ~~~~~~^^^^^
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\json\encoder.py", line 200, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\json\encoder.py", line 261, in iterencode
+    return _iterencode(o, 0)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\core\serializers\json.py", line 112, in default
+    return str(o)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\utils\functional.py", line 119, in __str__
+    return str(self.__cast())
+               ~~~~~~~~~~~^^
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\utils\functional.py", line 110, in __cast
+    return func(*self._args, **self._kw)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\urls\base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\urls\resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'complete_payment' not found. 'complete_payment' is not a valid view function or pattern name.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\VANDAN\OneDrive\Desktop\thinknshop\thinknshop\orders\views.py", line 367, in order_review
+    return create_order(request)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\views\decorators\http.py", line 64, in inner
+    return func(request, *args, **kwargs)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\VANDAN\OneDrive\Desktop\thinknshop\thinknshop\orders\views.py", line 558, in create_order
+    return redirect('order-review')
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\shortcuts.py", line 51, in redirect
+    resolve_url(to, *args, **kwargs),
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\shortcuts.py", line 184, in resolve_url
+    return reverse(to, args=args, kwargs=kwargs)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\urls\base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\urls\resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'order-review' not found. 'order-review' is not a valid view function or pattern name.
+INFO 2025-12-28 14:43:50,110 views Order review accessed by user 17 with method POST
+INFO 2025-12-28 14:43:50,111 views Order creation POST request from user 17
+INFO 2025-12-28 14:43:54,395 zippypost_utils Attempting to process Zippypost shipment for order ORD-E09ED895
+INFO 2025-12-28 14:43:55,488 zippypost_utils ================================================================================
+INFO 2025-12-28 14:43:55,488 zippypost_utils Creating Zippypost shipment for order ORD-E09ED895
+INFO 2025-12-28 14:43:55,489 zippypost_utils ================================================================================
+DEBUG 2025-12-28 14:43:55,490 zippypost_utils Headers: {
+  "Content-Type": "application/json",
+  "authorization": "5da163433b...",
+  "timestamp": "1766913235",
+  "sellerid": "1255"
+}
+DEBUG 2025-12-28 14:43:55,491 zippypost_utils Full Payload:
+DEBUG 2025-12-28 14:43:55,493 zippypost_utils {
+  "order_number": "ORD-E09ED895",
+  "purchase_amount": 325.5,
+  "purchase_date": "2025-12-28",
+  "billing_details_same_as_shipping": true,
+  "shipping_details": {
+    "full_name": "Vandann Darji",
+    "contact_number": "9022641867",
+    "customer_email": "",
+    "address_line_one": "D/17 narmada Ashish ",
+    "address_line_two": "Narmada Nagar cabin Cross road Bhayandar East ",
+    "landmark": "",
+    "pincode": "400001",
+    "city": "Thane"
+  },
+  "billing_details": {
+    "full_name": "Vandann Darji",
+    "contact_number": "9022641867",
+    "gstin": "",
+    "address_line_one": "D/17 narmada Ashish ",
+    "address_line_two": "Narmada Nagar cabin Cross road Bhayandar East ",
+    "company_name": "",
+    "pincode": "400001",
+    "city": "Thane"
+  },
+  "items": [
+    {
+      "sku": "200",
+      "item_name": "custom water bottles",
+      "quantity": 1,
+      "item_weight": 0.5,
+      "item_price": 260.0
+    }
+  ],
+  "package_length": 20.0,
+  "package_width": 15.0,
+  "package_height": 10.0,
+  "package_weight": 0.5,
+  "shipping_charge": 50.0,
+  "cod_charge": 50.0,
+  "purchase_tax": 15.5,
+  "purchase_discount": 0.0,
+  "collectable_cod": 325.5,
+  "warehouse_id": 2568,
+  "payment_type": 2,
+  "courier_id": 10,
+  "mode_id": 16
+}
+INFO 2025-12-28 14:43:57,442 zippypost_utils API Response Status Code: 200
+INFO 2025-12-28 14:43:57,443 zippypost_utils Response Headers: {'Server': 'nginx/1.18.0 (Ubuntu)', 'Date': 'Sun, 28 Dec 2025 09:14:02 GMT', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '125', 'Connection': 'keep-alive', 'X-Powered-By': 'Express', 'ETag': 'W/"7d-w3TJjPxshIYvIIOR/04x7brJhWA"'}
+DEBUG 2025-12-28 14:43:57,444 zippypost_utils Full Response Body:
+DEBUG 2025-12-28 14:43:57,444 zippypost_utils {"success":true,"booking":true,"RESULT":{"awb":"77637628740","courier":"Bluedart+","label":"NA","routingCode":"BOM/FRT/FRT"}}
+INFO 2025-12-28 14:43:58,504 zippypost_utils Retrieved label URL for AWB 77637628740
