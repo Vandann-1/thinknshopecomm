@@ -20,12 +20,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from .views import *
 from customize.views import *
-from django.contrib.sitemaps.views import sitemap
-from product.sitemaps import StaticViewSitemap
 
-sitemaps = {
-    'static': StaticViewSitemap,
-}
 
 
 
@@ -46,7 +41,7 @@ urlpatterns = [
     path('customize/', customize_bottle_view, name='customize-bottle'),
     
         # sitemap (ADD THIS LINE)
-    path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='sitemap'),
+
     
     
     path('aboutus',abhout,name='about-us'),
