@@ -1,0 +1,789 @@
+INFO 2025-12-25 14:29:06,665 zippypost_utils ================================================================================
+INFO 2025-12-25 14:29:06,666 zippypost_utils Creating Zippypost shipment for order ORD-D8B32FAA
+INFO 2025-12-25 14:29:06,666 zippypost_utils ================================================================================
+DEBUG 2025-12-25 14:29:06,667 zippypost_utils Headers: {
+  "Content-Type": "application/json",
+  "authorization": "47ecaa6468...",
+  "timestamp": "1766653146",
+  "sellerid": "1255"
+}
+DEBUG 2025-12-25 14:29:06,667 zippypost_utils Full Payload:
+DEBUG 2025-12-25 14:29:06,672 zippypost_utils {
+  "order_number": "ORD-D8B32FAA",
+  "purchase_amount": 345.45,
+  "purchase_date": "2025-12-25",
+  "billing_details_same_as_shipping": true,
+  "shipping_details": {
+    "full_name": "Vandann Darji",
+    "contact_number": "9022641867",
+    "customer_email": "",
+    "address_line_one": "D/17 narmada Ashish ",
+    "address_line_two": "Narmada Nagar cabin Cross road Bhayandar East ",
+    "landmark": "",
+    "pincode": "410013",
+    "city": "Thane"
+  },
+  "billing_details": {
+    "full_name": "Vandann Darji",
+    "contact_number": "9022641867",
+    "gstin": "",
+    "address_line_one": "D/17 narmada Ashish ",
+    "address_line_two": "Narmada Nagar cabin Cross road Bhayandar East ",
+    "company_name": "",
+    "pincode": "410013",
+    "city": "Thane"
+  },
+  "items": [
+    {
+      "sku": "25",
+      "item_name": "Luffy water bottles",
+      "quantity": 1,
+      "item_weight": 0.5,
+      "item_price": 279.0
+    }
+  ],
+  "package_length": 20.0,
+  "package_width": 15.0,
+  "package_height": 10.0,
+  "package_weight": 0.5,
+  "shipping_charge": 50.0,
+  "cod_charge": 0.0,
+  "purchase_tax": 16.45,
+  "purchase_discount": 0.0,
+  "collectable_cod": 0.0,
+  "warehouse_id": 2568,
+  "payment_type": 1,
+  "courier_id": 10,
+  "mode_id": 16
+}
+INFO 2025-12-25 14:29:07,046 zippypost_utils API Response Status Code: 400
+INFO 2025-12-25 14:29:07,047 zippypost_utils Response Headers: {'Server': 'nginx/1.18.0 (Ubuntu)', 'Date': 'Thu, 25 Dec 2025 08:59:07 GMT', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '116', 'Connection': 'keep-alive', 'X-Powered-By': 'Express', 'ETag': 'W/"74-sphtb38Ja1Nb9TQZxlimn2UBzOU"'}
+DEBUG 2025-12-25 14:29:07,048 zippypost_utils Full Response Body:
+DEBUG 2025-12-25 14:29:07,048 zippypost_utils {"success":false,"message":"Validation Error","error":{"items[0].sku":"items[0].sku must be at least 3 characters"}}
+INFO 2025-12-25 14:31:07,500 zippypost_utils ================================================================================
+INFO 2025-12-25 14:31:07,513 zippypost_utils Creating Zippypost shipment for order ORD-D8B32FAA
+INFO 2025-12-25 14:31:07,514 zippypost_utils ================================================================================
+DEBUG 2025-12-25 14:31:07,515 zippypost_utils Headers: {
+  "Content-Type": "application/json",
+  "authorization": "626925cb9b...",
+  "timestamp": "1766653267",
+  "sellerid": "1255"
+}
+DEBUG 2025-12-25 14:31:07,516 zippypost_utils Full Payload:
+DEBUG 2025-12-25 14:31:07,516 zippypost_utils {
+  "order_number": "ORD-D8B32FAA",
+  "purchase_amount": 345.45,
+  "purchase_date": "2025-12-25",
+  "billing_details_same_as_shipping": true,
+  "shipping_details": {
+    "full_name": "Vandann Darji",
+    "contact_number": "9022641867",
+    "customer_email": "",
+    "address_line_one": "D/17 narmada Ashish ",
+    "address_line_two": "Narmada Nagar cabin Cross road Bhayandar East ",
+    "landmark": "",
+    "pincode": "410013",
+    "city": "Thane"
+  },
+  "billing_details": {
+    "full_name": "Vandann Darji",
+    "contact_number": "9022641867",
+    "gstin": "",
+    "address_line_one": "D/17 narmada Ashish ",
+    "address_line_two": "Narmada Nagar cabin Cross road Bhayandar East ",
+    "company_name": "",
+    "pincode": "410013",
+    "city": "Thane"
+  },
+  "items": [
+    {
+      "sku": "SKU-25",
+      "item_name": "Luffy water bottles",
+      "quantity": 1,
+      "item_weight": 0.5,
+      "item_price": 279.0
+    }
+  ],
+  "package_length": 20.0,
+  "package_width": 15.0,
+  "package_height": 10.0,
+  "package_weight": 0.5,
+  "shipping_charge": 50.0,
+  "cod_charge": 0.0,
+  "purchase_tax": 16.45,
+  "purchase_discount": 0.0,
+  "collectable_cod": 0.0,
+  "warehouse_id": 2568,
+  "payment_type": 1,
+  "courier_id": 10,
+  "mode_id": 16
+}
+INFO 2025-12-25 14:31:08,011 zippypost_utils API Response Status Code: 400
+INFO 2025-12-25 14:31:08,012 zippypost_utils Response Headers: {'Server': 'nginx/1.18.0 (Ubuntu)', 'Date': 'Thu, 25 Dec 2025 09:01:08 GMT', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '147', 'Connection': 'keep-alive', 'X-Powered-By': 'Express', 'ETag': 'W/"93-zwPnofdCFKdnC2LfanTkRYMO4h4"'}
+DEBUG 2025-12-25 14:31:08,012 zippypost_utils Full Response Body:
+DEBUG 2025-12-25 14:31:08,013 zippypost_utils {"success":false,"message":"Validation Error","error":{"booking_process_error":"Error: Can’t calculate zone, Given pincode is not serviceable."}}
+INFO 2025-12-25 14:35:13,324 zippypost_utils ================================================================================
+INFO 2025-12-25 14:35:13,325 zippypost_utils Creating Zippypost shipment for order ORD-D8B32FAA
+INFO 2025-12-25 14:35:13,325 zippypost_utils ================================================================================
+DEBUG 2025-12-25 14:35:13,326 zippypost_utils Headers: {
+  "Content-Type": "application/json",
+  "authorization": "e0720fccf9...",
+  "timestamp": "1766653513",
+  "sellerid": "1255"
+}
+DEBUG 2025-12-25 14:35:13,326 zippypost_utils Full Payload:
+DEBUG 2025-12-25 14:35:13,326 zippypost_utils {
+  "order_number": "ORD-D8B32FAA",
+  "purchase_amount": 345.45,
+  "purchase_date": "2025-12-25",
+  "billing_details_same_as_shipping": true,
+  "shipping_details": {
+    "full_name": "Vandann Darji",
+    "contact_number": "9022641867",
+    "customer_email": "",
+    "address_line_one": "D/17 narmada Ashish ",
+    "address_line_two": "Narmada Nagar cabin Cross road Bhayandar East ",
+    "landmark": "",
+    "pincode": "400001",
+    "city": "Thane"
+  },
+  "billing_details": {
+    "full_name": "Vandann Darji",
+    "contact_number": "9022641867",
+    "gstin": "",
+    "address_line_one": "D/17 narmada Ashish ",
+    "address_line_two": "Narmada Nagar cabin Cross road Bhayandar East ",
+    "company_name": "",
+    "pincode": "400001",
+    "city": "Thane"
+  },
+  "items": [
+    {
+      "sku": "SKU-25",
+      "item_name": "Luffy water bottles",
+      "quantity": 1,
+      "item_weight": 0.5,
+      "item_price": 279.0
+    }
+  ],
+  "package_length": 20.0,
+  "package_width": 15.0,
+  "package_height": 10.0,
+  "package_weight": 0.5,
+  "shipping_charge": 50.0,
+  "cod_charge": 0.0,
+  "purchase_tax": 16.45,
+  "purchase_discount": 0.0,
+  "collectable_cod": 0.0,
+  "warehouse_id": 2568,
+  "payment_type": 1,
+  "courier_id": 10,
+  "mode_id": 16
+}
+INFO 2025-12-25 14:35:16,444 zippypost_utils API Response Status Code: 200
+INFO 2025-12-25 14:35:16,444 zippypost_utils Response Headers: {'Server': 'nginx/1.18.0 (Ubuntu)', 'Date': 'Thu, 25 Dec 2025 09:05:16 GMT', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '125', 'Connection': 'keep-alive', 'X-Powered-By': 'Express', 'ETag': 'W/"7d-iu7c+r2w8CyCMp559vb3qLkWeEs"'}
+DEBUG 2025-12-25 14:35:16,445 zippypost_utils Full Response Body:
+DEBUG 2025-12-25 14:35:16,445 zippypost_utils {"success":true,"booking":true,"RESULT":{"awb":"76763762784","courier":"Bluedart+","label":"NA","routingCode":"BOM/FRT/FRT"}}
+INFO 2025-12-25 15:26:36,025 zippypost_utils ================================================================================
+INFO 2025-12-25 15:26:36,028 zippypost_utils Creating Zippypost shipment for order ORD-AC9456E0
+INFO 2025-12-25 15:26:36,029 zippypost_utils ================================================================================
+DEBUG 2025-12-25 15:26:36,029 zippypost_utils Headers: {
+  "Content-Type": "application/json",
+  "authorization": "4b73c2335a...",
+  "timestamp": "1766656596",
+  "sellerid": "1255"
+}
+DEBUG 2025-12-25 15:26:36,030 zippypost_utils Full Payload:
+DEBUG 2025-12-25 15:26:36,031 zippypost_utils {
+  "order_number": "ORD-AC9456E0",
+  "purchase_amount": 336.0,
+  "purchase_date": "2025-12-25",
+  "billing_details_same_as_shipping": true,
+  "shipping_details": {
+    "full_name": "Vandann Darji",
+    "contact_number": "9022641867",
+    "customer_email": "",
+    "address_line_one": "D/17 narmada Ashish ",
+    "address_line_two": "Narmada Nagar cabin Cross road Bhayandar East ",
+    "landmark": "",
+    "pincode": "400001",
+    "city": "Thane"
+  },
+  "billing_details": {
+    "full_name": "Vandann Darji",
+    "contact_number": "9022641867",
+    "gstin": "",
+    "address_line_one": "D/17 narmada Ashish ",
+    "address_line_two": "Narmada Nagar cabin Cross road Bhayandar East ",
+    "company_name": "",
+    "pincode": "400001",
+    "city": "Thane"
+  },
+  "items": [
+    {
+      "sku": "500",
+      "item_name": "spiderman water bottles",
+      "quantity": 1,
+      "item_weight": 0.5,
+      "item_price": 270.0
+    }
+  ],
+  "package_length": 20.0,
+  "package_width": 15.0,
+  "package_height": 10.0,
+  "package_weight": 0.5,
+  "shipping_charge": 50.0,
+  "cod_charge": 0.0,
+  "purchase_tax": 16.0,
+  "purchase_discount": 0.0,
+  "collectable_cod": 0.0,
+  "warehouse_id": 2568,
+  "payment_type": 1,
+  "courier_id": 10,
+  "mode_id": 16
+}
+INFO 2025-12-25 15:26:39,273 zippypost_utils API Response Status Code: 200
+INFO 2025-12-25 15:26:39,274 zippypost_utils Response Headers: {'Server': 'nginx/1.18.0 (Ubuntu)', 'Date': 'Thu, 25 Dec 2025 09:56:39 GMT', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '125', 'Connection': 'keep-alive', 'X-Powered-By': 'Express', 'ETag': 'W/"7d-h+vIo1K5ekejJ9P9q5cDWoPyqHo"'}
+DEBUG 2025-12-25 15:26:39,274 zippypost_utils Full Response Body:
+DEBUG 2025-12-25 15:26:39,275 zippypost_utils {"success":true,"booking":true,"RESULT":{"awb":"76763851080","courier":"Bluedart+","label":"NA","routingCode":"BOM/FRT/FRT"}}
+INFO 2025-12-25 15:38:19,615 zippypost_utils ================================================================================
+INFO 2025-12-25 15:38:19,617 zippypost_utils Creating Zippypost shipment for order ORD-81A828DB
+INFO 2025-12-25 15:38:19,617 zippypost_utils ================================================================================
+DEBUG 2025-12-25 15:38:19,618 zippypost_utils Headers: {
+  "Content-Type": "application/json",
+  "authorization": "8f37398d2a...",
+  "timestamp": "1766657299",
+  "sellerid": "1255"
+}
+DEBUG 2025-12-25 15:38:19,618 zippypost_utils Full Payload:
+DEBUG 2025-12-25 15:38:19,619 zippypost_utils {
+  "order_number": "ORD-81A828DB",
+  "purchase_amount": 312.9,
+  "purchase_date": "2025-12-25",
+  "billing_details_same_as_shipping": true,
+  "shipping_details": {
+    "full_name": "Vandann Darji",
+    "contact_number": "9022641867",
+    "customer_email": "",
+    "address_line_one": "D/17 narmada Ashish ",
+    "address_line_two": "Narmada Nagar cabin Cross road Bhayandar East ",
+    "landmark": "",
+    "pincode": "400001",
+    "city": "Thane"
+  },
+  "billing_details": {
+    "full_name": "Vandann Darji",
+    "contact_number": "9022641867",
+    "gstin": "",
+    "address_line_one": "D/17 narmada Ashish ",
+    "address_line_two": "Narmada Nagar cabin Cross road Bhayandar East ",
+    "company_name": "",
+    "pincode": "400001",
+    "city": "Thane"
+  },
+  "items": [
+    {
+      "sku": "SKU-30",
+      "item_name": "zizu water bottles",
+      "quantity": 1,
+      "item_weight": 0.5,
+      "item_price": 248.0
+    }
+  ],
+  "package_length": 20.0,
+  "package_width": 15.0,
+  "package_height": 10.0,
+  "package_weight": 0.5,
+  "shipping_charge": 50.0,
+  "cod_charge": 0.0,
+  "purchase_tax": 14.9,
+  "purchase_discount": 0.0,
+  "collectable_cod": 0.0,
+  "warehouse_id": 2568,
+  "payment_type": 1,
+  "courier_id": 10,
+  "mode_id": 16
+}
+INFO 2025-12-25 15:38:23,301 zippypost_utils API Response Status Code: 200
+INFO 2025-12-25 15:38:23,315 zippypost_utils Response Headers: {'Server': 'nginx/1.18.0 (Ubuntu)', 'Date': 'Thu, 25 Dec 2025 10:08:23 GMT', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '125', 'Connection': 'keep-alive', 'X-Powered-By': 'Express', 'ETag': 'W/"7d-n54mntDtjZBTt5C/WUBuJ3nw70k"'}
+DEBUG 2025-12-25 15:38:23,315 zippypost_utils Full Response Body:
+DEBUG 2025-12-25 15:38:23,316 zippypost_utils {"success":true,"booking":true,"RESULT":{"awb":"76763872964","courier":"Bluedart+","label":"NA","routingCode":"BOM/FRT/FRT"}}
+INFO 2025-12-25 15:38:24,224 zippypost_utils Retrieved label URL for AWB 76763872964
+INFO 2025-12-25 15:43:38,489 zippypost_utils ================================================================================
+INFO 2025-12-25 15:43:38,490 zippypost_utils Creating Zippypost shipment for order ORD-E472E206
+INFO 2025-12-25 15:43:38,491 zippypost_utils ================================================================================
+DEBUG 2025-12-25 15:43:38,491 zippypost_utils Headers: {
+  "Content-Type": "application/json",
+  "authorization": "594c51c1e4...",
+  "timestamp": "1766657618",
+  "sellerid": "1255"
+}
+DEBUG 2025-12-25 15:43:38,492 zippypost_utils Full Payload:
+DEBUG 2025-12-25 15:43:38,492 zippypost_utils {
+  "order_number": "ORD-E472E206",
+  "purchase_amount": 313.95,
+  "purchase_date": "2025-12-25",
+  "billing_details_same_as_shipping": true,
+  "shipping_details": {
+    "full_name": "Vandann Darji",
+    "contact_number": "9022641867",
+    "customer_email": "",
+    "address_line_one": "D/17 narmada Ashish ",
+    "address_line_two": "Narmada Nagar cabin Cross road Bhayandar East ",
+    "landmark": "",
+    "pincode": "400001",
+    "city": "Thane"
+  },
+  "billing_details": {
+    "full_name": "Vandann Darji",
+    "contact_number": "9022641867",
+    "gstin": "",
+    "address_line_one": "D/17 narmada Ashish ",
+    "address_line_two": "Narmada Nagar cabin Cross road Bhayandar East ",
+    "company_name": "",
+    "pincode": "400001",
+    "city": "Thane"
+  },
+  "items": [
+    {
+      "sku": "SKU-11",
+      "item_name": "ske watter bottles",
+      "quantity": 1,
+      "item_weight": 0.5,
+      "item_price": 249.0
+    }
+  ],
+  "package_length": 20.0,
+  "package_width": 15.0,
+  "package_height": 10.0,
+  "package_weight": 0.5,
+  "shipping_charge": 50.0,
+  "cod_charge": 0.0,
+  "purchase_tax": 14.95,
+  "purchase_discount": 0.0,
+  "collectable_cod": 0.0,
+  "warehouse_id": 2568,
+  "payment_type": 1,
+  "courier_id": 10,
+  "mode_id": 16
+}
+INFO 2025-12-25 15:43:41,561 zippypost_utils API Response Status Code: 200
+INFO 2025-12-25 15:43:41,563 zippypost_utils Response Headers: {'Server': 'nginx/1.18.0 (Ubuntu)', 'Date': 'Thu, 25 Dec 2025 10:13:41 GMT', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '125', 'Connection': 'keep-alive', 'X-Powered-By': 'Express', 'ETag': 'W/"7d-B5/jTnbewcHtszzbXf0Tpaz5T+I"'}
+DEBUG 2025-12-25 15:43:41,563 zippypost_utils Full Response Body:
+DEBUG 2025-12-25 15:43:41,565 zippypost_utils {"success":true,"booking":true,"RESULT":{"awb":"76763884643","courier":"Bluedart+","label":"NA","routingCode":"BOM/FRT/FRT"}}
+INFO 2025-12-25 15:43:42,381 zippypost_utils Retrieved label URL for AWB 76763884643
+INFO 2025-12-25 15:50:37,510 zippypost_utils ================================================================================
+INFO 2025-12-25 15:50:37,512 zippypost_utils Creating Zippypost shipment for order ORD-359E0C96
+INFO 2025-12-25 15:50:37,513 zippypost_utils ================================================================================
+DEBUG 2025-12-25 15:50:37,513 zippypost_utils Headers: {
+  "Content-Type": "application/json",
+  "authorization": "6613bac515...",
+  "timestamp": "1766658037",
+  "sellerid": "1255"
+}
+DEBUG 2025-12-25 15:50:37,514 zippypost_utils Full Payload:
+DEBUG 2025-12-25 15:50:37,515 zippypost_utils {
+  "order_number": "ORD-359E0C96",
+  "purchase_amount": 156.45,
+  "purchase_date": "2025-12-25",
+  "billing_details_same_as_shipping": true,
+  "shipping_details": {
+    "full_name": "Vandann Darji",
+    "contact_number": "9022641867",
+    "customer_email": "",
+    "address_line_one": "D/17 narmada Ashish ",
+    "address_line_two": "Narmada Nagar cabin Cross road Bhayandar East ",
+    "landmark": "",
+    "pincode": "400001",
+    "city": "Thane"
+  },
+  "billing_details": {
+    "full_name": "Vandann Darji",
+    "contact_number": "9022641867",
+    "gstin": "",
+    "address_line_one": "D/17 narmada Ashish ",
+    "address_line_two": "Narmada Nagar cabin Cross road Bhayandar East ",
+    "company_name": "",
+    "pincode": "400001",
+    "city": "Thane"
+  },
+  "items": [
+    {
+      "sku": "195",
+      "item_name": "goku 2  water bottle 37 A",
+      "quantity": 1,
+      "item_weight": 0.5,
+      "item_price": 99.0
+    }
+  ],
+  "package_length": 20.0,
+  "package_width": 15.0,
+  "package_height": 10.0,
+  "package_weight": 0.5,
+  "shipping_charge": 50.0,
+  "cod_charge": 0.0,
+  "purchase_tax": 7.45,
+  "purchase_discount": 0.0,
+  "collectable_cod": 0.0,
+  "warehouse_id": 2568,
+  "payment_type": 1,
+  "courier_id": 10,
+  "mode_id": 16
+}
+INFO 2025-12-25 15:50:40,687 zippypost_utils API Response Status Code: 200
+INFO 2025-12-25 15:50:40,689 zippypost_utils Response Headers: {'Server': 'nginx/1.18.0 (Ubuntu)', 'Date': 'Thu, 25 Dec 2025 10:20:40 GMT', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '125', 'Connection': 'keep-alive', 'X-Powered-By': 'Express', 'ETag': 'W/"7d-KzwrV1pvFk3pdw5VW8XgPTUvzRE"'}
+DEBUG 2025-12-25 15:50:40,689 zippypost_utils Full Response Body:
+DEBUG 2025-12-25 15:50:40,689 zippypost_utils {"success":true,"booking":true,"RESULT":{"awb":"76763896086","courier":"Bluedart+","label":"NA","routingCode":"BOM/FRT/FRT"}}
+INFO 2025-12-25 15:50:41,709 zippypost_utils Retrieved label URL for AWB 76763896086
+INFO 2025-12-25 16:01:52,226 zippypost_utils ================================================================================
+INFO 2025-12-25 16:01:52,240 zippypost_utils Creating Zippypost shipment for order ORD-60BD22E3
+INFO 2025-12-25 16:01:52,241 zippypost_utils ================================================================================
+DEBUG 2025-12-25 16:01:52,242 zippypost_utils Headers: {
+  "Content-Type": "application/json",
+  "authorization": "2a316c01b3...",
+  "timestamp": "1766658712",
+  "sellerid": "1255"
+}
+DEBUG 2025-12-25 16:01:52,242 zippypost_utils Full Payload:
+DEBUG 2025-12-25 16:01:52,243 zippypost_utils {
+  "order_number": "ORD-60BD22E3",
+  "purchase_amount": 156.45,
+  "purchase_date": "2025-12-25",
+  "billing_details_same_as_shipping": true,
+  "shipping_details": {
+    "full_name": "Vandann Darji",
+    "contact_number": "9022641867",
+    "customer_email": "",
+    "address_line_one": "D/17 narmada Ashish ",
+    "address_line_two": "Narmada Nagar cabin Cross road Bhayandar East ",
+    "landmark": "",
+    "pincode": "400001",
+    "city": "Thane"
+  },
+  "billing_details": {
+    "full_name": "Vandann Darji",
+    "contact_number": "9022641867",
+    "gstin": "",
+    "address_line_one": "D/17 narmada Ashish ",
+    "address_line_two": "Narmada Nagar cabin Cross road Bhayandar East ",
+    "company_name": "",
+    "pincode": "400001",
+    "city": "Thane"
+  },
+  "items": [
+    {
+      "sku": "164",
+      "item_name": "naruto 2 water bottle 164",
+      "quantity": 1,
+      "item_weight": 0.5,
+      "item_price": 99.0
+    }
+  ],
+  "package_length": 20.0,
+  "package_width": 15.0,
+  "package_height": 10.0,
+  "package_weight": 0.5,
+  "shipping_charge": 50.0,
+  "cod_charge": 0.0,
+  "purchase_tax": 7.45,
+  "purchase_discount": 0.0,
+  "collectable_cod": 0.0,
+  "warehouse_id": 2568,
+  "payment_type": 1,
+  "courier_id": 10,
+  "mode_id": 16
+}
+INFO 2025-12-25 16:01:55,812 zippypost_utils API Response Status Code: 200
+INFO 2025-12-25 16:01:55,813 zippypost_utils Response Headers: {'Server': 'nginx/1.18.0 (Ubuntu)', 'Date': 'Thu, 25 Dec 2025 10:31:55 GMT', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '125', 'Connection': 'keep-alive', 'X-Powered-By': 'Express', 'ETag': 'W/"7d-k7GeCrUicDiG54er2EZ3kswvfBo"'}
+DEBUG 2025-12-25 16:01:55,814 zippypost_utils Full Response Body:
+DEBUG 2025-12-25 16:01:55,815 zippypost_utils {"success":true,"booking":true,"RESULT":{"awb":"76763912551","courier":"Bluedart+","label":"NA","routingCode":"BOM/FRT/FRT"}}
+INFO 2025-12-25 16:01:56,730 zippypost_utils Retrieved label URL for AWB 76763912551
+INFO 2025-12-25 16:06:13,414 zippypost_utils ================================================================================
+INFO 2025-12-25 16:06:13,415 zippypost_utils Creating Zippypost shipment for order ORD-54603769
+INFO 2025-12-25 16:06:13,416 zippypost_utils ================================================================================
+DEBUG 2025-12-25 16:06:13,417 zippypost_utils Headers: {
+  "Content-Type": "application/json",
+  "authorization": "27bb406a55...",
+  "timestamp": "1766658973",
+  "sellerid": "1255"
+}
+DEBUG 2025-12-25 16:06:13,417 zippypost_utils Full Payload:
+DEBUG 2025-12-25 16:06:13,418 zippypost_utils {
+  "order_number": "ORD-54603769",
+  "purchase_amount": 156.45,
+  "purchase_date": "2025-12-25",
+  "billing_details_same_as_shipping": true,
+  "shipping_details": {
+    "full_name": "Vandann Darji",
+    "contact_number": "9022641867",
+    "customer_email": "",
+    "address_line_one": "D/17 narmada Ashish ",
+    "address_line_two": "Narmada Nagar cabin Cross road Bhayandar East ",
+    "landmark": "",
+    "pincode": "400001",
+    "city": "Thane"
+  },
+  "billing_details": {
+    "full_name": "Vandann Darji",
+    "contact_number": "9022641867",
+    "gstin": "",
+    "address_line_one": "D/17 narmada Ashish ",
+    "address_line_two": "Narmada Nagar cabin Cross road Bhayandar East ",
+    "company_name": "",
+    "pincode": "400001",
+    "city": "Thane"
+  },
+  "items": [
+    {
+      "sku": "100",
+      "item_name": "gojo anime water bottle 165",
+      "quantity": 1,
+      "item_weight": 0.5,
+      "item_price": 99.0
+    }
+  ],
+  "package_length": 20.0,
+  "package_width": 15.0,
+  "package_height": 10.0,
+  "package_weight": 0.5,
+  "shipping_charge": 50.0,
+  "cod_charge": 0.0,
+  "purchase_tax": 7.45,
+  "purchase_discount": 0.0,
+  "collectable_cod": 0.0,
+  "warehouse_id": 2568,
+  "payment_type": 1,
+  "courier_id": 10,
+  "mode_id": 16
+}
+INFO 2025-12-25 16:06:16,621 zippypost_utils API Response Status Code: 200
+INFO 2025-12-25 16:06:16,622 zippypost_utils Response Headers: {'Server': 'nginx/1.18.0 (Ubuntu)', 'Date': 'Thu, 25 Dec 2025 10:36:16 GMT', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '125', 'Connection': 'keep-alive', 'X-Powered-By': 'Express', 'ETag': 'W/"7d-MZUiTtYef+Vjat2IHLN9W7gzmzE"'}
+DEBUG 2025-12-25 16:06:16,622 zippypost_utils Full Response Body:
+DEBUG 2025-12-25 16:06:16,623 zippypost_utils {"success":true,"booking":true,"RESULT":{"awb":"76763918674","courier":"Bluedart+","label":"NA","routingCode":"BOM/FRT/FRT"}}
+INFO 2025-12-25 16:06:17,235 zippypost_utils Retrieved label URL for AWB 76763918674
+INFO 2025-12-25 16:13:59,774 zippypost_utils ================================================================================
+INFO 2025-12-25 16:13:59,776 zippypost_utils Creating Zippypost shipment for order ORD-9E61F692
+INFO 2025-12-25 16:13:59,776 zippypost_utils ================================================================================
+DEBUG 2025-12-25 16:13:59,777 zippypost_utils Headers: {
+  "Content-Type": "application/json",
+  "authorization": "653c453462...",
+  "timestamp": "1766659439",
+  "sellerid": "1255"
+}
+DEBUG 2025-12-25 16:13:59,777 zippypost_utils Full Payload:
+DEBUG 2025-12-25 16:13:59,778 zippypost_utils {
+  "order_number": "ORD-9E61F692",
+  "purchase_amount": 345.45,
+  "purchase_date": "2025-12-25",
+  "billing_details_same_as_shipping": true,
+  "shipping_details": {
+    "full_name": "Vandann Darji",
+    "contact_number": "9022641867",
+    "customer_email": "",
+    "address_line_one": "D/17 narmada Ashish ",
+    "address_line_two": "Narmada Nagar cabin Cross road Bhayandar East ",
+    "landmark": "",
+    "pincode": "400001",
+    "city": "Thane"
+  },
+  "billing_details": {
+    "full_name": "Vandann Darji",
+    "contact_number": "9022641867",
+    "gstin": "",
+    "address_line_one": "D/17 narmada Ashish ",
+    "address_line_two": "Narmada Nagar cabin Cross road Bhayandar East ",
+    "company_name": "",
+    "pincode": "400001",
+    "city": "Thane"
+  },
+  "items": [
+    {
+      "sku": "SKU-25",
+      "item_name": "Luffy water bottles",
+      "quantity": 1,
+      "item_weight": 0.5,
+      "item_price": 279.0
+    }
+  ],
+  "package_length": 20.0,
+  "package_width": 15.0,
+  "package_height": 10.0,
+  "package_weight": 0.5,
+  "shipping_charge": 50.0,
+  "cod_charge": 0.0,
+  "purchase_tax": 16.45,
+  "purchase_discount": 0.0,
+  "collectable_cod": 0.0,
+  "warehouse_id": 2568,
+  "payment_type": 1,
+  "courier_id": 10,
+  "mode_id": 16
+}
+INFO 2025-12-25 16:14:02,773 zippypost_utils API Response Status Code: 200
+INFO 2025-12-25 16:14:02,774 zippypost_utils Response Headers: {'Server': 'nginx/1.18.0 (Ubuntu)', 'Date': 'Thu, 25 Dec 2025 10:44:03 GMT', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '125', 'Connection': 'keep-alive', 'X-Powered-By': 'Express', 'ETag': 'W/"7d-mAQsXa6v5pX/SWE+SvX/uIyFYtg"'}
+DEBUG 2025-12-25 16:14:02,774 zippypost_utils Full Response Body:
+DEBUG 2025-12-25 16:14:02,775 zippypost_utils {"success":true,"booking":true,"RESULT":{"awb":"76763928124","courier":"Bluedart+","label":"NA","routingCode":"BOM/FRT/FRT"}}
+INFO 2025-12-25 16:14:03,656 zippypost_utils Retrieved label URL for AWB 76763928124
+INFO 2025-12-25 19:52:00,494 views Order review accessed by user 17 with method GET
+INFO 2025-12-25 19:52:00,495 views Order review GET parameters - User: 17, variant_id: 7, quantity: 1, coupon_code: , address_id: d1838089-99d0-4931-8982-36c597903a3c
+INFO 2025-12-25 19:52:01,277 views Found variant 7 - Luffy water bottles
+INFO 2025-12-25 19:52:01,278 views Pricing calculated - unit_price: 279.00, subtotal: 279.00, shipping: 50.00
+INFO 2025-12-25 19:52:01,279 views Final calculations - taxable_amount: 329.00, tax_amount: 16.4500, total_amount: 345.4500
+INFO 2025-12-25 19:52:01,612 views Selected address d1838089-99d0-4931-8982-36c597903a3c for user 17
+INFO 2025-12-25 19:52:01,931 views Order review page rendered successfully for user 17
+INFO 2025-12-25 19:52:02,329 views Order review accessed by user 17 with method GET
+INFO 2025-12-25 19:52:02,330 views Order review GET parameters - User: 17, variant_id: 7, quantity: 1, coupon_code: , address_id: d1838089-99d0-4931-8982-36c597903a3c
+INFO 2025-12-25 19:52:02,933 views Found variant 7 - Luffy water bottles
+INFO 2025-12-25 19:52:02,934 views Pricing calculated - unit_price: 279.00, subtotal: 279.00, shipping: 50.00
+INFO 2025-12-25 19:52:02,935 views Final calculations - taxable_amount: 329.00, tax_amount: 16.4500, total_amount: 345.4500
+INFO 2025-12-25 19:52:03,253 views Selected address d1838089-99d0-4931-8982-36c597903a3c for user 17
+INFO 2025-12-25 19:52:03,554 views Order review page rendered successfully for user 17
+INFO 2025-12-25 19:52:23,121 views Order review accessed by user 17 with method POST
+INFO 2025-12-25 19:52:23,122 views Order creation POST request from user 17
+ERROR 2025-12-25 19:52:29,045 views COD Zippypost Error for ORD-C226FD65: cannot import name 'process_zippypost_shipment' from 'orders.zippypost_utils' (C:\Users\User\Desktop\thinkshop\thinknshopecomm\orders\zippypost_utils.py)
+INFO 2025-12-25 19:57:01,531 views Order review accessed by user 17 with method GET
+INFO 2025-12-25 19:57:01,534 views Order review GET parameters - User: 17, variant_id: 7, quantity: 1, coupon_code: , address_id: d1838089-99d0-4931-8982-36c597903a3c
+INFO 2025-12-25 19:57:02,158 views Found variant 7 - Luffy water bottles
+INFO 2025-12-25 19:57:02,159 views Pricing calculated - unit_price: 279.00, subtotal: 279.00, shipping: 50.00
+INFO 2025-12-25 19:57:02,160 views Final calculations - taxable_amount: 329.00, tax_amount: 16.4500, total_amount: 345.4500
+INFO 2025-12-25 19:57:02,516 views Selected address d1838089-99d0-4931-8982-36c597903a3c for user 17
+INFO 2025-12-25 19:57:02,816 views Order review page rendered successfully for user 17
+INFO 2025-12-25 19:57:03,284 views Order review accessed by user 17 with method GET
+INFO 2025-12-25 19:57:03,285 views Order review GET parameters - User: 17, variant_id: 7, quantity: 1, coupon_code: , address_id: d1838089-99d0-4931-8982-36c597903a3c
+INFO 2025-12-25 19:57:04,000 views Found variant 7 - Luffy water bottles
+INFO 2025-12-25 19:57:04,001 views Pricing calculated - unit_price: 279.00, subtotal: 279.00, shipping: 50.00
+INFO 2025-12-25 19:57:04,002 views Final calculations - taxable_amount: 329.00, tax_amount: 16.4500, total_amount: 345.4500
+INFO 2025-12-25 19:57:04,311 views Selected address d1838089-99d0-4931-8982-36c597903a3c for user 17
+INFO 2025-12-25 19:57:04,624 views Order review page rendered successfully for user 17
+INFO 2025-12-25 19:57:15,981 views Order review accessed by user 17 with method POST
+INFO 2025-12-25 19:57:15,984 views Order creation POST request from user 17
+INFO 2025-12-25 19:57:22,170 zippypost_utils Attempting to process Zippypost shipment for order ORD-762EBCFB
+INFO 2025-12-25 19:57:23,474 zippypost_utils ================================================================================
+INFO 2025-12-25 19:57:23,476 zippypost_utils Creating Zippypost shipment for order ORD-762EBCFB
+INFO 2025-12-25 19:57:23,477 zippypost_utils ================================================================================
+DEBUG 2025-12-25 19:57:23,479 zippypost_utils Headers: {
+  "Content-Type": "application/json",
+  "authorization": "4ff087436b...",
+  "timestamp": "1766672843",
+  "sellerid": "1255"
+}
+DEBUG 2025-12-25 19:57:23,482 zippypost_utils Full Payload:
+DEBUG 2025-12-25 19:57:23,483 zippypost_utils {
+  "order_number": "ORD-762EBCFB",
+  "purchase_amount": 345.45,
+  "purchase_date": "2025-12-25",
+  "billing_details_same_as_shipping": true,
+  "shipping_details": {
+    "full_name": "Vandann Darji",
+    "contact_number": "9022641867",
+    "customer_email": "",
+    "address_line_one": "D/17 narmada Ashish ",
+    "address_line_two": "Narmada Nagar cabin Cross road Bhayandar East ",
+    "landmark": "",
+    "pincode": "400001",
+    "city": "Thane"
+  },
+  "billing_details": {
+    "full_name": "Vandann Darji",
+    "contact_number": "9022641867",
+    "gstin": "",
+    "address_line_one": "D/17 narmada Ashish ",
+    "address_line_two": "Narmada Nagar cabin Cross road Bhayandar East ",
+    "company_name": "",
+    "pincode": "400001",
+    "city": "Thane"
+  },
+  "items": [
+    {
+      "sku": "SKU-25",
+      "item_name": "Luffy water bottles",
+      "quantity": 1,
+      "item_weight": 0.5,
+      "item_price": 279.0
+    }
+  ],
+  "package_length": 20.0,
+  "package_width": 15.0,
+  "package_height": 10.0,
+  "package_weight": 0.5,
+  "shipping_charge": 50.0,
+  "cod_charge": 50.0,
+  "purchase_tax": 16.45,
+  "purchase_discount": 0.0,
+  "collectable_cod": 345.45,
+  "warehouse_id": 2568,
+  "payment_type": 2,
+  "courier_id": 10,
+  "mode_id": 16
+}
+INFO 2025-12-25 19:57:26,430 zippypost_utils API Response Status Code: 200
+INFO 2025-12-25 19:57:26,430 zippypost_utils Response Headers: {'Server': 'nginx/1.18.0 (Ubuntu)', 'Date': 'Thu, 25 Dec 2025 14:27:26 GMT', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '125', 'Connection': 'keep-alive', 'X-Powered-By': 'Express', 'ETag': 'W/"7d-yYE3OHI17JAWnWjix6ZofYsuIaA"'}
+DEBUG 2025-12-25 19:57:26,431 zippypost_utils Full Response Body:
+DEBUG 2025-12-25 19:57:26,431 zippypost_utils {"success":true,"booking":true,"RESULT":{"awb":"77635165484","courier":"Bluedart+","label":"NA","routingCode":"BOM/FRT/FRT"}}
+INFO 2025-12-25 19:57:27,215 zippypost_utils Retrieved label URL for AWB 77635165484
+INFO 2025-12-25 19:58:31,979 views Order review accessed by user 17 with method POST
+INFO 2025-12-25 19:58:31,981 views Order creation POST request from user 17
+INFO 2025-12-25 19:59:23,162 zippypost_utils Attempting to process Zippypost shipment for order ORD-B8261AAC
+INFO 2025-12-25 19:59:25,334 zippypost_utils ================================================================================
+INFO 2025-12-25 19:59:25,336 zippypost_utils Creating Zippypost shipment for order ORD-B8261AAC
+INFO 2025-12-25 19:59:25,338 zippypost_utils ================================================================================
+DEBUG 2025-12-25 19:59:25,338 zippypost_utils Headers: {
+  "Content-Type": "application/json",
+  "authorization": "6232bf9f9d...",
+  "timestamp": "1766672965",
+  "sellerid": "1255"
+}
+DEBUG 2025-12-25 19:59:25,339 zippypost_utils Full Payload:
+DEBUG 2025-12-25 19:59:25,339 zippypost_utils {
+  "order_number": "ORD-B8261AAC",
+  "purchase_amount": 345.45,
+  "purchase_date": "2025-12-25",
+  "billing_details_same_as_shipping": true,
+  "shipping_details": {
+    "full_name": "Vandann Darji",
+    "contact_number": "9022641867",
+    "customer_email": "",
+    "address_line_one": "D/17 narmada Ashish ",
+    "address_line_two": "Narmada Nagar cabin Cross road Bhayandar East ",
+    "landmark": "",
+    "pincode": "400001",
+    "city": "Thane"
+  },
+  "billing_details": {
+    "full_name": "Vandann Darji",
+    "contact_number": "9022641867",
+    "gstin": "",
+    "address_line_one": "D/17 narmada Ashish ",
+    "address_line_two": "Narmada Nagar cabin Cross road Bhayandar East ",
+    "company_name": "",
+    "pincode": "400001",
+    "city": "Thane"
+  },
+  "items": [
+    {
+      "sku": "SKU-25",
+      "item_name": "Luffy water bottles",
+      "quantity": 1,
+      "item_weight": 0.5,
+      "item_price": 279.0
+    }
+  ],
+  "package_length": 20.0,
+  "package_width": 15.0,
+  "package_height": 10.0,
+  "package_weight": 0.5,
+  "shipping_charge": 50.0,
+  "cod_charge": 0.0,
+  "purchase_tax": 16.45,
+  "purchase_discount": 0.0,
+  "collectable_cod": 0.0,
+  "warehouse_id": 2568,
+  "payment_type": 1,
+  "courier_id": 10,
+  "mode_id": 16
+}
+INFO 2025-12-25 19:59:28,335 zippypost_utils API Response Status Code: 200
+INFO 2025-12-25 19:59:28,336 zippypost_utils Response Headers: {'Server': 'nginx/1.18.0 (Ubuntu)', 'Date': 'Thu, 25 Dec 2025 14:29:28 GMT', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '125', 'Connection': 'keep-alive', 'X-Powered-By': 'Express', 'ETag': 'W/"7d-RvSESEyvcNEUSgK9aG/1KH7DhyI"'}
+DEBUG 2025-12-25 19:59:28,336 zippypost_utils Full Response Body:
+DEBUG 2025-12-25 19:59:28,337 zippypost_utils {"success":true,"booking":true,"RESULT":{"awb":"76764104804","courier":"Bluedart+","label":"NA","routingCode":"BOM/FRT/FRT"}}
+INFO 2025-12-25 19:59:28,958 zippypost_utils Retrieved label URL for AWB 76764104804

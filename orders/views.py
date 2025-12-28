@@ -12,6 +12,7 @@ from django.views import View
 from django.contrib import messages
 from decimal import Decimal
 import json
+from datetime import datetime
 import razorpay
 from django.conf import settings
 from django.views.decorators.http import require_http_methods,require_POST
@@ -477,10 +478,47 @@ def create_order(request):
         
         # Handle payment method
         if payment_method == 'cod':
-            order.status = 'confirmed'
-            order.save()
-            messages.success(request, f'Order {order.order_id} placed successfully!')
-            return redirect('order_detail',order_id=order.order_id)
+            try:
+                # 1. Update Order and Stock Atomically
+                with transaction.atomic():
+                    order.status = 'confirmed'
+                    order.payment_status = 'pending' # COD is pending payment
+                    order.save()
+                    
+                    # Convert reserved stock to sold (Same logic as Razorpay)
+                    for item in order.items.all():
+                        variant = item.variant
+                        if variant:
+                            variant.reserved_stock -= item.quantity
+                            variant.stock -= item.quantity
+                            variant.save()
+                            
+                            # Record stock movement
+                            StockMovement.objects.create(
+                                variant=variant,
+                                movement_type='out',
+                                reason='sale',
+                                quantity=-item.quantity,
+                                reference_id=order.order_id,
+                                notes=f'Sold via order {order.order_id} (COD)',
+                                created_by=request.user
+                            )
+                
+                # 2. Create Zippypost Shipment (Outside atomic block)
+                try:
+                    from .zippypost_utils import process_zippypost_shipment
+                    process_zippypost_shipment(order)
+                except Exception as zip_error:
+                    # Log error but don't fail the order
+                    logger.error(f"COD Zippypost Error for {order.order_id}: {zip_error}")
+                
+                messages.success(request, f'Order {order.order_id} placed successfully!')
+                return redirect('order_detail',order_id=order.order_id)
+                
+            except Exception as e:
+                logger.error(f"Error validating COD order {order.order_id}: {str(e)}")
+                messages.error(request, "Error placing order. Please try again.")
+                return redirect('order-review')
         
         elif payment_method == 'razorpay':
             # Create Razorpay order
@@ -612,6 +650,20 @@ def verify_payment(request):
                         notes=f'Sold via order {order.order_id}',
                         created_by=request.user
                     )
+            
+            # ========== ZIPPYPOST INTEGRATION ==========
+            # Create shipment on Zippypost after successful payment
+            try:
+                from .zippypost_utils import process_zippypost_shipment
+                
+                # Process shipment in background (or inline for now)
+                process_zippypost_shipment(order)
+                
+            except Exception as zippypost_error:
+                # Log error but don't fail the order - manual processing can be done later
+                logger.exception(f"Zippypost integration error for order {order.order_id}: {str(zippypost_error)}")
+                logger.error("Order payment successful but shipment creation failed - needs manual processing")
+            # ========== END ZIPPYPOST INTEGRATION ==========
             
             return JsonResponse({
                 'success': True,
@@ -817,34 +869,214 @@ def order_detail(request, order_id):
     """
     order = get_object_or_404(Order, order_id=order_id, user=request.user)
     
+    # Tracking Data
+    timeline = []
+    tracking_data = None
+    
+    print(f"DEBUG: Order {order.order_id} - Checking Zippypost")
+    
+    # 1. Try to get Zippypost Tracking
+    if hasattr(order, 'zippypost') and order.zippypost.tracking_number:
+        tracking_no = order.zippypost.tracking_number
+        print(f"DEBUG: Found valid tracking number: {tracking_no}")
+        try:
+            from .zippypost_utils import track_shipment
+            print(f"DEBUG: Calling track_shipment for {tracking_no}")
+            
+            success, api_data, error = track_shipment(tracking_no)
+            print(f"DEBUG: API Response Success: {success}")
+            print(f"DEBUG: API Data: {api_data}")
+            
+            if success and api_data:
+                # Extract events from Zippypost response
+                # Response format: {'success': True, 'result': {'events': [...], 'courier': '...', ...}}
+                result = api_data.get('result') or api_data.get('RESULT') or {}
+                
+                # Extract extra tracking details
+                tracking_data = {
+                    'courier': result.get('courier'),
+                    'status': result.get('status'),
+                    'mode': result.get('mode'),
+                    'zone': result.get('zone'),
+                    'order_number': result.get('order_number')
+                }
+                
+                events = result.get('events', [])
+                
+                for event in events:
+                    # Parse timestamp
+                    scan_time = event.get('scan_time')
+                    timestamp = None
+                    if scan_time:
+                        try:
+                            timestamp = datetime.fromisoformat(scan_time.replace('Z', '+00:00'))
+                        except:
+                            pass
+                    
+                    # Map scan codes to icons
+                    scan_code = event.get('scan_code')
+                    icon = 'check-circle'
+                    if scan_code == 3: # In-transit
+                        icon = 'truck'
+                    elif scan_code == 4: # Out for delivery
+                        icon = 'truck'
+                    elif scan_code == 5: # Delivered
+                         icon = 'check-circle'
+                    elif scan_code == 6: # Cancelled
+                        icon = 'x-circle'
+                    elif scan_code in [7, 10, 11, 18]: # Lost/Damaged/Exception
+                        icon = 'alert-circle'
+                            
+                    timeline.append({
+                        'title': event.get('scan', 'Update'),
+                        'description': event.get('remark', ''),
+                        'location': event.get('location', ''),
+                        'date': timestamp,
+                        'completed': True,
+                        'icon': icon,
+                        'is_cancelled': scan_code == 6
+                    })
+                
+                # Sort by date descending (latest first)
+                timeline.sort(key=lambda x: x['date'] or datetime.min, reverse=True)
+                
+        except Exception as e:
+            logger.error(f"Error fetching tracking for {order.order_id}: {e}")
+            print(f"DEBUG: Exception: {e}")
+            
+    # 2. If no Zippypost data (or failure), fallback to local status
+    if not timeline:
+        # Simple local status timeline
+        timeline = [{
+            'title': 'Order Placed',
+            'description': 'Order has been placed successfully',
+            'date': order.created_at,
+            'completed': True,
+            'icon': 'check-circle'
+        }]
+        if order.status == 'confirmed':
+             timeline.insert(0, {
+                'title': 'Confirmed',
+                'description': 'Order confirmed, preparing for shipment',
+                'date': order.updated_at,
+                'completed': True,
+                'icon': 'check-circle'
+            })
+        elif order.status == 'shipped':
+            timeline.insert(0, {
+                'title': 'Shipped',
+                'description': f"Shipped with {order.courier_partner or 'courier'}",
+                'date': order.updated_at,
+                'completed': True,
+                'icon': 'truck'
+            })
+        elif order.status == 'delivered':
+            timeline.insert(0, {
+                'title': 'Delivered',
+                'description': 'Package delivered to you',
+                'date': order.delivered_at,
+                'completed': True,
+                'icon': 'check-circle'
+            })
+
+    # Calculate Order Summary
+    items = order.items.all()
+    subtotal = sum(item.total_price for item in items)
+    total_quantity = sum(item.quantity for item in items)
+    
+    # Try to get shipping from order if available (assuming added in prev steps or existing)
+    # Default to 0 if not found for robust display
+    shipping_fee = getattr(order, 'shipping_fee', Decimal('0.00')) 
+    
+    order_summary = {
+        'subtotal': subtotal,
+        'shipping': shipping_fee,
+        'discount': Decimal('0.00'),
+        'tax': Decimal('0.00'),
+        'total': order.total_amount,
+        'total_quantity': total_quantity,
+        'item_count': items.count()
+    }
+
     context = {
         'order': order,
-        'order_items': order.items.all(),
-        'can_cancel': order.can_be_cancelled()
+        'order_items': items,
+        'can_cancel': order.can_be_cancelled(),
+        'timeline': timeline,
+        'tracking_data': tracking_data,
+        'order_summary': order_summary,
+        'delivery_info': {
+             'estimated_delivery': getattr(order, 'estimated_delivery', None),
+             'delivery_date': order.delivered_at if order.status == 'delivered' else None,
+             'tracking_available': bool(timeline)
+        },
+        'status_updates': [] 
     }
     
-    return render(request, 'orders/order_detail.html', context)
+    return render(request, 'user_orders/order_detail.html', context)
 
 
-@login_required
 @require_POST
 def cancel_order(request, order_id):
     """
     Cancel order and release reserved stock
     """
+    import sys
+    print(f"\n{'='*50}", flush=True)
+    print(f"🔔 DEBUG: cancel_order VIEW HIT", flush=True)
+    print(f"📦 DEBUG: Order ID: {order_id}", flush=True)
+    print(f"👤 DEBUG: User: {request.user}", flush=True)
+    print(f"🔧 DEBUG: Method: {request.method}", flush=True)
+    print(f"{'='*50}\n", flush=True)
+    sys.stdout.flush()
+    
     try:
         order = get_object_or_404(Order, order_id=order_id, user=request.user)
+        print(f"✅ DEBUG: Order found: {order.order_id}, Status: {order.status}", flush=True)
         
         if not order.can_be_cancelled():
+            print("❌ DEBUG: Order cannot be cancelled", flush=True)
             messages.error(request, 'Order cannot be cancelled at this stage')
-            return redirect('orders:order-detail', order_id=order_id)
+            return redirect('user-orders')
+        # 1. ALWAYS try to cancel Zippypost shipment if it exists
+        print(f"🔍 DEBUG: Checking for Zippypost shipment...", flush=True)
+        if hasattr(order, 'zippypost') and order.zippypost.tracking_number:
+            print(f"📮 DEBUG: Found Zippypost shipment: {order.zippypost.tracking_number}", flush=True)
+            print(f"📊 DEBUG: Current shipping status: {order.zippypost.shipping_status}", flush=True)
+            
+            try:
+                from .zippypost_utils import cancel_shipment
+                print(f"🚀 DEBUG: Calling Zippypost cancel API...", flush=True)
+                zip_success, zip_resp, zip_error = cancel_shipment(order.zippypost.tracking_number)
+                print(f"📥 DEBUG: Zippypost API response - Success: {zip_success}", flush=True)
+                print(f"📝 DEBUG: Error (if any): {zip_error}", flush=True)
+                
+                if zip_success:
+                    order.zippypost.shipping_status = 'CANCELLED'
+                    order.zippypost.save()
+                    print(f"✅ DEBUG: Zippypost status updated to CANCELLED", flush=True)
+                    messages.success(request, 'Shipment cancellation request sent to courier partner.')
+                else:
+                    print(f"⚠️ DEBUG: Zippypost cancellation failed: {zip_error}", flush=True)
+                    logger.error(f"Failed to cancel Zippypost shipment: {zip_error}")
+                    messages.warning(request, f"Could not cancel courier shipment automatically: {zip_error}. Please contact support.")
+            except Exception as e:
+                print(f"💥 DEBUG: Exception in Zippypost cancel: {str(e)}", flush=True)
+                logger.exception(f"Error in Zippypost cancel flow: {e}")
+                messages.warning(request, f"Could not cancel courier shipment: {str(e)}")
+        else:
+            print(f"ℹ️ DEBUG: No Zippypost shipment found for this order", flush=True)
         
+        # 2. ALWAYS cancel local order
+        print(f"🔄 DEBUG: Starting local order cancellation...", flush=True)
         with transaction.atomic():
             # Release reserved stock
+            print(f"📦 DEBUG: Releasing stock for {order.items.count()} items...", flush=True)
             for item in order.items.all():
                 variant = item.variant
                 variant.reserved_stock -= item.quantity
                 variant.save()
+                print(f" ✅ Released {item.quantity} units of {variant}", flush=True)
                 
                 # Record stock movement
                 StockMovement.objects.create(
@@ -858,6 +1090,7 @@ def cancel_order(request, order_id):
                 )
             
             # Update order status
+            print(f"📝 DEBUG: Updating order status to 'cancelled'...", flush=True)
             order.status = 'cancelled'
             order.save()
             
@@ -867,17 +1100,21 @@ def cancel_order(request, order_id):
                     discount = Discount.objects.get(code=order.coupon_code)
                     discount.used_count = max(0, discount.used_count - 1)
                     discount.save()
+                    print(f"🎟️ DEBUG: Reversed discount usage for code: {order.coupon_code}", flush=True)
                 except Discount.DoesNotExist:
+                    print(f"⚠️ DEBUG: Discount code not found: {order.coupon_code}", flush=True)
                     pass
         
+        print(f"✅ DEBUG: Order cancellation completed successfully!", flush=True)
         messages.success(request, f'Order {order.order_id} cancelled successfully')
-        return redirect('orders:order-detail', order_id=order_id)
+        return redirect('user-orders')
         
     except Exception as e:
+        print(f"💥 DEBUG: Exception occurred: {str(e)}", flush=True)
+        logger.exception(f"Error cancelling order {order_id}: {str(e)}")
         messages.error(request, f'Error cancelling order: {str(e)}')
-        return redirect('orders:order-detail', order_id=order_id)
-
-
+        return redirect('user-orders')
+# =============================================================================================================
 @login_required
 def user_orders(request):
     """
