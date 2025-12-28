@@ -27,8 +27,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.sites',
-    'django.contrib.sitemaps',
     'dev_mode',
     'product',
     'accounts',
@@ -169,7 +167,7 @@ STORAGES = {
     },
     "staticfiles": {
         # Use default storage for local development
-         "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+        #  "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
          "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
 }
