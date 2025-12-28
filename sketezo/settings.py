@@ -52,7 +52,7 @@ DEFAULT_DOMAIN = "thinknshop.in"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    # 'whitenoise.middleware.WhiteNoiseMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -170,7 +170,7 @@ STORAGES = {
     "staticfiles": {
         # Use default storage for local development
          "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
-         # "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
 }
 
