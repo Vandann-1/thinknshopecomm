@@ -145,33 +145,25 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
+import os
 
-# STATICFILES_DIRS is where Django looks for static files (e.g. your 'static' folder)
-STATICFILES_DIRS = [
-    BASE_DIR / 'static'
-]
-
-# STATIC_ROOT is where files are collected for production
+STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
+STATICFILES_DIRS = [BASE_DIR / "static"]
 
-# Using default storage for local development (DEBUG=True) to avoid issues with collectstatic
-# The WhiteNoise storage is confusing Django in local dev
-STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
-
-STABILITY = 1
+MEDIA_URL = "/media/"
 
 STORAGES = {
+    # USER UPLOADED FILES → Cloudinary CDN
     "default": {
-        "BACKEND": "django.core.files.storage.FileSystemStorage",
+        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
     },
+
+    # SITE ASSETS (CSS / JS / Fonts) → WhiteNoise
     "staticfiles": {
-        # Use default storage for local development
-        #  "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
-         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
 }
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 

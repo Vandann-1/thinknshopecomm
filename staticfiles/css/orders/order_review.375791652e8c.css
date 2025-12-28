@@ -1,0 +1,528 @@
+Base Colors - NO CHANGE, they are perfect
+:root {
+    --primary-color: #e30613; /* Thinknshop Red */
+    --accent-color: #ff4d4d;
+    --dark-bg: #1a1a1a;       /* Dark Grey/Black for main elements */
+    --light-bg: #2c2c2c;      /* Slightly lighter dark background (Card/Inner BG) */
+    --text-color: #f0f0f0;    /* Light text for dark backgrounds */
+    --subtle-text: #999;
+    --border-color: #444;
+    --success-color: #00bf63; /* Keep success green/teal for positive feedback */
+
+    /* New/Refined Shadows for Dark Mode Depth */
+    --shadow-depth: 0 8px 30px rgba(0, 0, 0, 0.6), 0 0 0 1px var(--border-color);
+    --shadow-subtle: 0 2px 5px rgba(0, 0, 0, 0.4);
+}
+
+/* Global Reset and Body - MINOR TWEAKS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; /* Added common fallbacks */
+    background: var(--dark-bg);
+    color: var(--text-color);
+    line-height: 1.6;
+    min-height: 100vh; /* Ensure body takes full height for consistent background */
+}
+
+.container {
+    max-width: 1280px; /* Slightly wider container for more breathing room */
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Progress Steps - REFINED STYLING */
+.progress-steps {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 50px;
+    background: var(--light-bg);
+    padding: 15px 20px;
+    border-radius: 12px;
+    /* Used new shadow variable */
+    box-shadow: var(--shadow-subtle); 
+    border: 1px solid var(--border-color);
+}
+
+.step {
+    display: flex;
+    align-items: center;
+    margin: 0 15px; /* Tighter spacing */
+    color: var(--subtle-text);
+    transition: color 0.3s ease;
+    font-size: 0.95rem; /* Slightly smaller text */
+}
+
+/* Added separation line */
+.step:not(:last-child)::after {
+    content: '';
+    width: 30px;
+    height: 2px;
+    background: var(--border-color);
+    margin-left: 15px;
+    transition: background 0.3s ease;
+}
+
+.step.completed::after {
+    background: var(--success-color);
+}
+
+.step.active {
+    color: var(--primary-color);
+    font-weight: 700;
+}
+
+.step-number {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+    font-weight: bold;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    flex-shrink: 0; /* Prevent shrinking on small screens */
+}
+
+.step.completed .step-number {
+    background: var(--success-color); 
+    color: white;
+    /* Added checkmark icon placeholder */
+    /* content: '✓'; */ 
+}
+
+.step.active .step-number {
+    background: var(--primary-color);
+    color: white;
+    /* Added subtle pulsing effect for active step */
+    box-shadow: 0 0 0 4px rgba(227, 6, 19, 0.3); 
+}
+
+/* Header - MINOR TWEAKS */
+.review-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.review-header h1 {
+    font-size: 2.8rem; /* Slightly larger */
+    color: var(--text-color);
+    margin-bottom: 10px;
+    font-weight: 800; /* Bolder header */
+}
+
+/* Layout - NO CHANGE */
+.review-content {
+    display: grid;
+    grid-template-columns: 1fr 400px;
+    gap: 40px; /* Increased gap for better separation */
+}
+
+@media (max-width: 768px) {
+    .review-content {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Cards - REFINED SHADOWS/BORDERS */
+.review-card {
+    background: var(--light-bg);
+    border-radius: 12px;
+    padding: 30px; /* Increased padding */
+    margin-bottom: 25px;
+    /* Used new shadow variable for more depth */
+    box-shadow: var(--shadow-depth); 
+    border: 1px solid var(--border-color);
+}
+
+.card-title {
+    font-size: 1.5rem; /* Larger title */
+    color: var(--text-color);
+    margin-bottom: 25px;
+    font-weight: 700;
+    border-bottom: 1px solid var(--border-color); /* Subtle separation */
+    padding-bottom: 15px;
+}
+
+/* Product Review - MINOR TWEAKS */
+.product-review {
+    display: flex;
+    gap: 20px;
+    align-items: center; /* Vertically align items */
+}
+
+.product-image {
+    width: 100px; /* Slightly smaller image for summary context */
+    height: 100px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    flex-shrink: 0; /* Prevent image from shrinking */
+}
+
+.product-info h3 {
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+    color: var(--text-color);
+}
+
+.variant-details {
+    gap: 10px; /* Tighter gap */
+    margin-bottom: 10px;
+}
+
+.variant-item {
+    background: var(--dark-bg);
+    padding: 6px 10px; /* Smaller padding */
+    border-radius: 4px; /* Square edges for variants */
+    font-size: 0.85rem;
+    border: 1px solid var(--border-color); /* Added border for definition */
+}
+
+.color-swatch {
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--light-bg); 
+    box-shadow: 0 0 0 1px var(--border-color); /* Refined box-shadow */
+}
+
+.price-info {
+    margin: 10px 0;
+}
+
+.current-price {
+    font-size: 1.4rem;
+    font-weight: 700; /* Bolder */
+    color: var(--success-color); 
+}
+
+/* Address - MINOR TWEAKS */
+.address-display {
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 20px;
+    transition: all 0.3s ease;
+}
+
+.address-display:hover {
+    border-color: var(--primary-color); /* Red hover highlight */
+}
+
+.address-header {
+    margin-bottom: 15px;
+}
+
+.address-name {
+    font-weight: 700;
+    font-size: 1.2rem;
+}
+
+.change-address-btn {
+    /* Subtle button for address change */
+    background: none;
+    border: none; 
+    color: var(--primary-color);
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.change-address-btn:hover {
+    background: rgba(227, 6, 19, 0.1); /* Subtle red background on hover */
+    color: var(--primary-color);
+}
+
+.address-details {
+    color: var(--subtle-text);
+    line-height: 1.5;
+}
+
+/* Payment Methods - MAJOR REFINEMENT FOR RADIO SELECTION */
+.payment-methods {
+    gap: 10px; /* Tighter gap */
+}
+
+.payment-option {
+    padding: 15px 20px;
+    border: 2px solid var(--border-color);
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    position: relative;
+    user-select: none;
+    cursor: pointer;
+    background: var(--dark-bg); /* Darker BG for options within a card */
+}
+
+.payment-option:hover {
+    border-color: var(--primary-color);
+    background: var(--dark-bg);
+}
+
+.payment-option.selected {
+    border-color: var(--primary-color);
+    background: rgba(227, 6, 19, 0.1); /* Very subtle red tint */
+}
+
+/* Hide default radio and use a custom one */
+.payment-option input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.payment-content {
+    display: flex;
+    align-items: center;
+}
+
+.radio-custom {
+    height: 20px;
+    width: 20px;
+    min-width: 20px;
+    background-color: transparent;
+    border-radius: 50%;
+    border: 2px solid var(--subtle-text);
+    margin-right: 15px;
+    position: relative;
+    transition: border-color 0.3s ease;
+}
+
+.payment-option.selected .radio-custom {
+    border-color: var(--primary-color);
+}
+
+.radio-custom::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.payment-option.selected .radio-custom::after {
+    opacity: 1;
+}
+
+.payment-icon {
+    font-size: 1.8rem; /* Larger icon */
+    margin-right: 15px;
+    color: var(--primary-color);
+    flex-shrink: 0;
+}
+
+.payment-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.payment-title {
+    font-weight: 700;
+    font-size: 1rem;
+}
+
+.payment-description {
+    font-size: 0.85rem;
+    color: var(--subtle-text);
+}
+
+.security-badge {
+    gap: 6px; /* Tighter gap */
+    padding: 10px;
+    background: var(--dark-bg);
+    border-radius: 6px;
+    font-size: 0.85rem;
+    color: var(--subtle-text);
+    justify-content: center;
+    border: 1px solid var(--border-color);
+}
+
+/* Order Notes - REFINED INPUT STYLING */
+.order-notes textarea {
+    width: 100%;
+    min-height: 120px; /* Slightly taller */
+    padding: 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 1rem;
+    resize: vertical;
+    background: var(--dark-bg);
+    color: var(--text-color);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.order-notes textarea::placeholder {
+    color: var(--subtle-text);
+}
+
+.order-notes textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    /* Subtle red glow on focus */
+    box-shadow: 0 0 0 3px rgba(227, 6, 19, 0.2); 
+}
+
+/* Order Summary - REFINED STRUCTURE */
+.order-summary {
+    position: sticky;
+    top: 30px; /* Adjusted sticky position */
+}
+
+.summary-item {
+    margin-bottom: 12px;
+    padding-bottom: 10px;
+    font-size: 1rem;
+}
+
+.summary-item:not(.total) {
+    border-bottom: 1px dashed var(--border-color); /* Dashed separator for subtle look */
+}
+
+.summary-item.total {
+    font-size: 1.5rem; /* Larger total */
+    font-weight: 800;
+    color: var(--text-color);
+    border-top: 2px solid var(--border-color);
+    padding-top: 20px;
+    margin-top: 20px;
+}
+
+.summary-item span:first-child {
+    color: var(--subtle-text);
+}
+
+.discount-row {
+    color: var(--success-color);
+    font-weight: 600;
+}
+
+.shipping-info {
+    /* Toned down the shipping info box for better dark mode aesthetics */
+    background: rgba(227, 6, 19, 0.1); /* Very subtle red background */
+    border: 1px solid var(--primary-color);
+    padding: 15px;
+    border-radius: 8px;
+    margin: 25px 0;
+    text-align: center;
+    color: var(--primary-color); /* Red text for notice */
+    font-weight: 600;
+}
+
+/* Buttons - REFINED HOVER AND FOCUS STATES */
+.order-actions {
+    display: flex;
+    flex-direction: column; /* Stack buttons */
+    gap: 15px; /* Increased gap */
+    margin-top: 30px;
+}
+
+.btn {
+    padding: 15px 24px; /* Larger hit area */
+    border: none;
+    border-radius: 10px; /* Slightly larger border-radius */
+    font-size: 1.1rem; /* Larger font */
+    cursor: pointer;
+    transition: all 0.3s ease, transform 0.1s ease;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    flex: 1;
+}
+
+.btn:focus {
+    outline: 3px solid rgba(255, 255, 255, 0.2); /* Accessibility focus ring */
+    outline-offset: 2px;
+}
+
+.btn:active {
+    transform: translateY(1px); /* Press down effect */
+}
+
+.btn-secondary {
+    background: var(--border-color); /* Darker secondary */
+    color: white;
+}
+
+.btn-secondary:hover {
+    background: #555;
+}
+
+.btn-success {
+    background: var(--success-color);
+    color: white;
+}
+
+.btn-success:hover {
+    background: #009950;
+}
+
+.btn-primary {
+    background: var(--primary-color);
+    color: white;
+    font-weight: 800; /* Extra bold for primary action */
+    text-transform: uppercase;
+}
+
+.btn-primary:hover {
+    background: #a3040e; 
+    box-shadow: 0 4px 15px rgba(227, 6, 19, 0.4); /* Red glow on hover */
+}
+
+/* Alert Messages - REFINED CONTRAST */
+.alert {
+    padding: 18px 25px; /* More padding */
+    margin-bottom: 25px;
+    border-radius: 10px;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+/* Ensure strong contrast for dark mode alerts */
+.alert-success {
+    background: #004d2e; /* Darker green background */
+    color: #ccffdd; /* Lighter text */
+    border: 1px solid var(--success-color);
+}
+
+.alert-error {
+    background: #5c050c; /* Darker red background */
+    color: #fff0f1;
+    border: 1px solid var(--primary-color);
+}
+
+.alert-warning {
+    background: #5e4d00;
+    color: #fffcdb;
+    border: 1px solid #ffcc00;
+}
+
+.alert-info {
+    background: #0d47a1;
+    color: #e3f2fd;
+    border: 1px solid #1e88e5;
+}
+
+/* Icon Placeholder Class (for use with Font Awesome or similar) */
+.icon {
+    margin-right: 8px;
+    line-height: 1;
+}
