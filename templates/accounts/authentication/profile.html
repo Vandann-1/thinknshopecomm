@@ -2,190 +2,120 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Profile – ThinknShop</title>
-
-    <script src="https://cdn.tailwindcss.com"></script>
-
-    <style>
-        body { font-family: 'Manrope', sans-serif; }
-        :root {
-            --primary: #d32f2f;
-            --primary-hover: #b71c1c;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>My Account – ThinknShop</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
-<body class="bg-gray-100">
+<body class="bg-gray-50">
 
-<!-- TOP BAR -->
-<div class="w-full bg-black text-white text-xs py-2 text-center tracking-wide">
-    FREE SHIPPING OVER ₹500
+<!-- MOBILE HEADER -->
+<header class="sticky top-0 z-40 bg-white border-b">
+<div class="max-w-7xl mx-auto px-4 h-14 flex items-center justify-between">
+<button onclick="openMenu()" class="p-2 rounded-lg hover:bg-gray-100">
+<i class="fas fa-bars"></i>
+</button>
+
+<a href="/" class="text-lg font-black text-red-600">
+Thinkn<span class="text-gray-900">Shop</span>
+</a>
+
+<a href="{% url 'cart_view' %}" class="p-2 rounded-lg hover:bg-gray-100">
+<i class="fas fa-shopping-cart"></i>
+</a>
 </div>
-
-<!-- HEADER -->
-<header class="bg-white border-b shadow-sm">
-    <div class="max-w-7xl mx-auto px-6 py-4 grid grid-cols-3 items-center">
-
-        <!-- LEFT: MOBILE MENU -->
-        <div class="flex items-center">
-            <button id="mobileMenuBtn" class="lg:hidden text-3xl text-gray-700">
-                ☰
-            </button>
-        </div>
-
-        <!-- CENTER: LOGO (ALWAYS CENTERED) -->
-        <div class="flex justify-center">
-            <a href="/" class="text-3xl font-extrabold tracking-tight">
-                Thinkn<span class="text-red-600">Shop.</span>
-            </a>
-        </div>
-
-        <!-- RIGHT: DESKTOP ACTIONS -->
-        <div class="hidden lg:flex justify-end items-center gap-6">
-            <a href="/" class="font-semibold hover:text-red-600 transition">
-                Home
-            </a>
-
-            <form action="{% url 'logout' %}" method="POST">
-                {% csrf_token %}
-                <button class="border px-4 py-1.5 rounded-md font-semibold hover:bg-red-600 hover:text-white transition">
-                    Sign Out
-                </button>
-            </form>
-
-            <div class="w-10 h-10 bg-red-600 rounded-full flex items-center justify-center text-white font-bold">
-                {{ user.username|first|upper }}
-            </div>
-        </div>
-
-    </div>
 </header>
 
-
 <!-- OVERLAY -->
-<div id="mobileOverlay"
-     class="fixed inset-0 bg-black bg-opacity-40 backdrop-blur-sm hidden z-40">
+<div id="overlay" class="fixed inset-0 bg-black/40 hidden z-40" onclick="closeMenu()"></div>
+
+<!-- SLIDE MENU -->
+<div id="menu" class="fixed top-0 left-0 w-[85%] max-w-xs h-full bg-white z-50 -translate-x-full transition-all duration-300">
+
+<div class="p-5 border-b flex gap-3">
+<div class="w-12 h-12 rounded-full bg-red-600 text-white flex items-center justify-center font-bold text-lg">
+{{ user.username|first|upper }}
+</div>
+<div>
+<div class="font-semibold">{{ user.first_name|default:user.username }}</div>
+<div class="text-xs text-gray-500">{{ user.email }}</div>
+</div>
 </div>
 
-<!-- RIGHT SIDE MOBILE MENU -->
-<div id="mobileMenu"
-     class="fixed top-0 right-0 h-full w-80 bg-white shadow-2xl z-50 transform translate-x-full transition-all duration-300">
+<div class="p-4 space-y-1 text-sm">
+<a href="/" class="menu-link"><i class="fas fa-home"></i> Home</a>
+<a href="{% url 'my_orders' %}" class="menu-link"><i class="fas fa-box"></i> Orders</a>
+<a href="#" class="menu-link"><i class="fas fa-heart"></i> Wishlist</a>
+<a href="#" class="menu-link"><i class="fas fa-cog"></i> Settings</a>
 
-    <!-- MENU HEADER -->
-    <div class="p-6 border-b flex justify-between items-center">
-        <div class="flex items-center gap-3">
-            <div class="w-12 h-12 bg-red-600 rounded-full flex items-center justify-center text-white font-bold">
-                {{ user.username|first|upper }}
-            </div>
-            <div>
-                <p class="font-bold">{{ user.first_name|default:user.username }}</p>
-                <p class="text-sm text-gray-500">{{ user.email }}</p>
-            </div>
-        </div>
-        <button id="closeMenu" class="text-3xl">&times;</button>
-    </div>
-
-    <!-- MENU LINKS -->
-    <div class="p-6 space-y-3 font-semibold text-gray-800">
-
-        <a href="/" class="flex items-center gap-3 p-3 rounded-lg hover:bg-red-50 hover:text-red-600 transition">
-             Home
-        </a>
-
-        <a href="#" class="flex items-center gap-3 p-3 rounded-lg hover:bg-red-50 hover:text-red-600 transition">
-             Orders
-        </a>
-
-        <a href="#" class="flex items-center gap-3 p-3 rounded-lg hover:bg-red-50 hover:text-red-600 transition">
-             Wishlist
-        </a>
-
-        <a href="#" class="flex items-center gap-3 p-3 rounded-lg hover:bg-red-50 hover:text-red-600 transition">
-            ⚙️ Account Settings
-        </a>
-
-        <hr>
-
-        <form action="{% url 'logout' %}" method="POST">
-            {% csrf_token %}
-            <button class="w-full mt-4 py-3 bg-red-600 text-white rounded-lg font-bold hover:bg-red-700 transition">
-                Sign Out
-            </button>
-        </form>
-    </div>
+<form method="POST" action="{% url 'logout' %}">
+{% csrf_token %}
+<button class="w-full mt-3 bg-red-600 text-white py-2 rounded-xl font-semibold">Logout</button>
+</form>
+</div>
 </div>
 
-<!-- MAIN CONTENT -->
-<div class="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 lg:grid-cols-4 gap-10">
+<style>
+.menu-link{display:flex;gap:10px;align-items:center;padding:12px;border-radius:12px}
+.menu-link:hover{background:#fee2e2;color:#dc2626}
+</style>
 
-    <!-- SIDEBAR -->
-    <aside class="bg-white p-6 rounded-xl shadow border">
-        <div class="text-center">
-            <div class="w-28 h-28 bg-red-600 text-white text-4xl font-bold rounded-full flex items-center justify-center mx-auto">
-                {{ user.username|first|upper }}
-            </div>
-            <h2 class="mt-4 text-xl font-bold">
-                {{ user.first_name|default:user.username }}
-            </h2>
-            <p class="text-gray-500 text-sm">{{ user.email }}</p>
-        </div>
+<!-- MAIN -->
+<main class="max-w-7xl mx-auto px-4 py-8 grid lg:grid-cols-4 gap-6">
 
-        <hr class="my-6">
-
-        <ul class="space-y-4 font-semibold">
-            <li class="hover:text-red-600 cursor-pointer">My Profile</li>
-            <li class="hover:text-red-600 cursor-pointer">Orders</li>
-            <li class="hover:text-red-600 cursor-pointer">Wishlist</li>
-            <li class="hover:text-red-600 cursor-pointer">Account Settings</li>
-        </ul>
-    </aside>
-
-    <!-- PROFILE CONTENT -->
-    <main class="lg:col-span-3 bg-white p-10 rounded-xl shadow border">
-
-        <h1 class="text-3xl font-extrabold mb-2">Account Overview</h1>
-        <p class="text-gray-600 mb-10">Manage your ThinknShop account details.</p>
-
-        <div class="grid md:grid-cols-2 gap-6">
-            <div class="bg-gray-50 border p-5 rounded-lg">
-                <p class="text-xs uppercase text-gray-500 font-bold">Username</p>
-                <p class="text-lg font-semibold">{{ user.username }}</p>
-            </div>
-
-            <div class="bg-gray-50 border p-5 rounded-lg">
-                <p class="text-xs uppercase text-gray-500 font-bold">Email</p>
-                <p class="text-lg font-semibold">{{ user.email }}</p>
-            </div>
-
-            <div class="bg-gray-50 border p-5 rounded-lg">
-                <p class="text-xs uppercase text-gray-500 font-bold">Joined</p>
-                <p class="text-lg font-semibold">{{ user.date_joined|date:"F d, Y" }}</p>
-            </div>
-        </div>
-    </main>
+<!-- SIDEBAR -->
+<aside class="hidden lg:block bg-white rounded-xl border p-6">
+<div class="text-center">
+<div class="w-24 h-24 bg-red-600 text-white text-3xl font-bold rounded-full flex items-center justify-center mx-auto">
+{{ user.username|first|upper }}
+</div>
+<div class="mt-3 font-semibold">{{ user.first_name|default:user.username }}</div>
+<div class="text-xs text-gray-500">{{ user.email }}</div>
 </div>
 
-<!-- SINGLE SCRIPT -->
+<hr class="my-6">
+
+<nav class="space-y-1 text-sm">
+<a class="menu-link" href="#">Profile</a>
+<a class="menu-link" href="{% url 'my_orders' %}">Orders</a>
+<a class="menu-link" href="#">Wishlist</a>
+<a class="menu-link" href="#">Settings</a>
+</nav>
+</aside>
+
+<!-- CONTENT -->
+<section class="lg:col-span-3 space-y-6">
+
+<div class="bg-white p-6 rounded-xl border">
+<h1 class="text-xl font-bold mb-1">Account Overview</h1>
+<p class="text-gray-500 text-sm mb-6">Manage your ThinknShop account</p>
+
+<div class="grid sm:grid-cols-2 gap-4">
+<div class="info-card">Username <span>{{ user.username }}</span></div>
+<div class="info-card">Email <span>{{ user.email }}</span></div>
+<div class="info-card">Joined <span>{{ user.date_joined|date:"M d, Y" }}</span></div>
+</div>
+</div>
+
+</section>
+</main>
+
+<style>
+.info-card{background:#f9fafb;border:1px solid #e5e7eb;border-radius:12px;padding:14px;font-size:13px}
+.info-card span{display:block;font-weight:600;color:#111;margin-top:4px}
+</style>
+
 <script>
-    const menu = document.getElementById("mobileMenu");
-    const overlay = document.getElementById("mobileOverlay");
-    const openBtn = document.getElementById("mobileMenuBtn");
-    const closeBtn = document.getElementById("closeMenu");
-
-    openBtn.addEventListener("click", () => {
-        menu.classList.remove("translate-x-full");
-        overlay.classList.remove("hidden");
-    });
-
-    const closeMenu = () => {
-        menu.classList.add("translate-x-full");
-        overlay.classList.add("hidden");
-    };
-
-    closeBtn.addEventListener("click", closeMenu);
-    overlay.addEventListener("click", closeMenu);
+function openMenu(){
+document.getElementById("menu").classList.remove("-translate-x-full")
+document.getElementById("overlay").classList.remove("hidden")
+}
+function closeMenu(){
+document.getElementById("menu").classList.add("-translate-x-full")
+document.getElementById("overlay").classList.add("hidden")
+}
 </script>
 
 </body>

@@ -1509,3 +1509,4 @@ INFO 2025-12-29 11:27:56,492 views Selected address d1838089-99d0-4931-8982-36c5
 INFO 2025-12-29 11:27:56,746 views Order review page rendered successfully for user 17
 INFO 2025-12-29 11:28:03,010 views Order review accessed by user 17 with method POST
 INFO 2025-12-29 11:28:03,011 views Order creation POST request from user 17
+ERROR 2025-12-29 17:06:21,162 views Error in payment page for order ORD-82F69A54: 'orders' is not a registered namespace
