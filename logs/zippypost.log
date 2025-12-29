@@ -913,3 +913,599 @@ INFO 2025-12-28 14:43:57,443 zippypost_utils Response Headers: {'Server': 'nginx
 DEBUG 2025-12-28 14:43:57,444 zippypost_utils Full Response Body:
 DEBUG 2025-12-28 14:43:57,444 zippypost_utils {"success":true,"booking":true,"RESULT":{"awb":"77637628740","courier":"Bluedart+","label":"NA","routingCode":"BOM/FRT/FRT"}}
 INFO 2025-12-28 14:43:58,504 zippypost_utils Retrieved label URL for AWB 77637628740
+INFO 2025-12-28 20:05:22,805 views Order review accessed by user 17 with method GET
+INFO 2025-12-28 20:05:22,823 views Order review GET parameters - User: 17, variant_id: 8, quantity: 1, coupon_code: , address_id: d1838089-99d0-4931-8982-36c597903a3c
+INFO 2025-12-28 20:05:24,390 views Found variant 8 - custom water bottles
+INFO 2025-12-28 20:05:24,392 views Pricing calculated - unit_price: 260.00, subtotal: 260.00, shipping: 50.00
+INFO 2025-12-28 20:05:24,393 views Final calculations - taxable_amount: 310.00, tax_amount: 15.5000, total_amount: 325.5000
+INFO 2025-12-28 20:05:24,833 views Selected address d1838089-99d0-4931-8982-36c597903a3c for user 17
+INFO 2025-12-28 20:05:25,341 views Order review page rendered successfully for user 17
+INFO 2025-12-28 20:05:39,311 views Order review accessed by user 17 with method POST
+INFO 2025-12-28 20:05:39,312 views Order creation POST request from user 17
+ERROR 2025-12-28 20:05:45,619 views Error in order creation: Reverse for 'order-review' not found. 'order-review' is not a valid view function or pattern name. for user 17
+Traceback (most recent call last):
+  File "C:\Users\VANDAN\OneDrive\Desktop\thinknshop\thinknshop\orders\views.py", line 548, in create_order
+    return JsonResponse({'redirect_url': redirect_url})
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\http\response.py", line 751, in __init__
+    data = json.dumps(data, cls=encoder, **json_dumps_params)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\json\__init__.py", line 238, in dumps
+    **kw).encode(obj)
+          ~~~~~~^^^^^
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\json\encoder.py", line 200, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\json\encoder.py", line 261, in iterencode
+    return _iterencode(o, 0)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\core\serializers\json.py", line 112, in default
+    return str(o)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\utils\functional.py", line 119, in __str__
+    return str(self.__cast())
+               ~~~~~~~~~~~^^
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\utils\functional.py", line 110, in __cast
+    return func(*self._args, **self._kw)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\urls\base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\urls\resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'complete_payment' not found. 'complete_payment' is not a valid view function or pattern name.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\VANDAN\OneDrive\Desktop\thinknshop\thinknshop\orders\views.py", line 367, in order_review
+    return create_order(request)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\views\decorators\http.py", line 64, in inner
+    return func(request, *args, **kwargs)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\VANDAN\OneDrive\Desktop\thinknshop\thinknshop\orders\views.py", line 558, in create_order
+    return redirect('order-review')
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\shortcuts.py", line 51, in redirect
+    resolve_url(to, *args, **kwargs),
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\shortcuts.py", line 184, in resolve_url
+    return reverse(to, args=args, kwargs=kwargs)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\urls\base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\urls\resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'order-review' not found. 'order-review' is not a valid view function or pattern name.
+INFO 2025-12-28 20:06:10,482 views Order review accessed by user 17 with method POST
+INFO 2025-12-28 20:06:10,485 views Order creation POST request from user 17
+ERROR 2025-12-28 20:06:17,403 views Error in order creation: Reverse for 'order-review' not found. 'order-review' is not a valid view function or pattern name. for user 17
+Traceback (most recent call last):
+  File "C:\Users\VANDAN\OneDrive\Desktop\thinknshop\thinknshop\orders\views.py", line 548, in create_order
+    return JsonResponse({'redirect_url': redirect_url})
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\http\response.py", line 751, in __init__
+    data = json.dumps(data, cls=encoder, **json_dumps_params)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\json\__init__.py", line 238, in dumps
+    **kw).encode(obj)
+          ~~~~~~^^^^^
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\json\encoder.py", line 200, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\json\encoder.py", line 261, in iterencode
+    return _iterencode(o, 0)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\core\serializers\json.py", line 112, in default
+    return str(o)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\utils\functional.py", line 119, in __str__
+    return str(self.__cast())
+               ~~~~~~~~~~~^^
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\utils\functional.py", line 110, in __cast
+    return func(*self._args, **self._kw)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\urls\base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\urls\resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'complete_payment' not found. 'complete_payment' is not a valid view function or pattern name.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\VANDAN\OneDrive\Desktop\thinknshop\thinknshop\orders\views.py", line 367, in order_review
+    return create_order(request)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\views\decorators\http.py", line 64, in inner
+    return func(request, *args, **kwargs)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\VANDAN\OneDrive\Desktop\thinknshop\thinknshop\orders\views.py", line 558, in create_order
+    return redirect('order-review')
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\shortcuts.py", line 51, in redirect
+    resolve_url(to, *args, **kwargs),
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\shortcuts.py", line 184, in resolve_url
+    return reverse(to, args=args, kwargs=kwargs)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\urls\base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\urls\resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'order-review' not found. 'order-review' is not a valid view function or pattern name.
+INFO 2025-12-28 20:06:54,124 views Order review accessed by user 17 with method POST
+INFO 2025-12-28 20:06:54,125 views Order creation POST request from user 17
+ERROR 2025-12-28 20:07:01,985 views Error in order creation: Reverse for 'order-review' not found. 'order-review' is not a valid view function or pattern name. for user 17
+Traceback (most recent call last):
+  File "C:\Users\VANDAN\OneDrive\Desktop\thinknshop\thinknshop\orders\views.py", line 548, in create_order
+    return JsonResponse({'redirect_url': redirect_url})
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\http\response.py", line 751, in __init__
+    data = json.dumps(data, cls=encoder, **json_dumps_params)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\json\__init__.py", line 238, in dumps
+    **kw).encode(obj)
+          ~~~~~~^^^^^
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\json\encoder.py", line 200, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\json\encoder.py", line 261, in iterencode
+    return _iterencode(o, 0)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\core\serializers\json.py", line 112, in default
+    return str(o)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\utils\functional.py", line 119, in __str__
+    return str(self.__cast())
+               ~~~~~~~~~~~^^
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\utils\functional.py", line 110, in __cast
+    return func(*self._args, **self._kw)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\urls\base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\urls\resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'complete_payment' not found. 'complete_payment' is not a valid view function or pattern name.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\VANDAN\OneDrive\Desktop\thinknshop\thinknshop\orders\views.py", line 367, in order_review
+    return create_order(request)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\views\decorators\http.py", line 64, in inner
+    return func(request, *args, **kwargs)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\VANDAN\OneDrive\Desktop\thinknshop\thinknshop\orders\views.py", line 558, in create_order
+    return redirect('order-review')
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\shortcuts.py", line 51, in redirect
+    resolve_url(to, *args, **kwargs),
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\shortcuts.py", line 184, in resolve_url
+    return reverse(to, args=args, kwargs=kwargs)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\urls\base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\urls\resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'order-review' not found. 'order-review' is not a valid view function or pattern name.
+INFO 2025-12-29 11:03:30,415 views Order review accessed by user 17 with method GET
+INFO 2025-12-29 11:03:30,418 views Order review GET parameters - User: 17, variant_id: 41, quantity: 1, coupon_code: , address_id: d1838089-99d0-4931-8982-36c597903a3c
+INFO 2025-12-29 11:03:30,973 views Found variant 41 - Customize Water Bottles
+INFO 2025-12-29 11:03:30,974 views Pricing calculated - unit_price: 99.00, subtotal: 99.00, shipping: 50.00
+INFO 2025-12-29 11:03:30,975 views Final calculations - taxable_amount: 149.00, tax_amount: 7.4500, total_amount: 156.4500
+INFO 2025-12-29 11:03:31,296 views Selected address d1838089-99d0-4931-8982-36c597903a3c for user 17
+INFO 2025-12-29 11:03:31,780 views Order review page rendered successfully for user 17
+INFO 2025-12-29 11:03:43,390 views Order review accessed by user 17 with method POST
+INFO 2025-12-29 11:03:43,391 views Order creation POST request from user 17
+INFO 2025-12-29 11:03:51,876 zippypost_utils Attempting to process Zippypost shipment for order ORD-F21260D7
+INFO 2025-12-29 11:03:53,975 zippypost_utils ================================================================================
+INFO 2025-12-29 11:03:53,975 zippypost_utils Creating Zippypost shipment for order ORD-F21260D7
+INFO 2025-12-29 11:03:53,976 zippypost_utils ================================================================================
+DEBUG 2025-12-29 11:03:53,976 zippypost_utils Headers: {
+  "Content-Type": "application/json",
+  "authorization": "fc4e86a4ca...",
+  "timestamp": "1766986433",
+  "sellerid": "1255"
+}
+DEBUG 2025-12-29 11:03:53,977 zippypost_utils Full Payload:
+DEBUG 2025-12-29 11:03:53,977 zippypost_utils {
+  "order_number": "ORD-F21260D7",
+  "purchase_amount": 156.45,
+  "purchase_date": "2025-12-29",
+  "billing_details_same_as_shipping": true,
+  "shipping_details": {
+    "full_name": "Vandann Darji",
+    "contact_number": "9022641867",
+    "customer_email": "",
+    "address_line_one": "D/17 narmada Ashish ",
+    "address_line_two": "Narmada Nagar cabin Cross road Bhayandar East ",
+    "landmark": "",
+    "pincode": "400001",
+    "city": "Thane"
+  },
+  "billing_details": {
+    "full_name": "Vandann Darji",
+    "contact_number": "9022641867",
+    "gstin": "",
+    "address_line_one": "D/17 narmada Ashish ",
+    "address_line_two": "Narmada Nagar cabin Cross road Bhayandar East ",
+    "company_name": "",
+    "pincode": "400001",
+    "city": "Thane"
+  },
+  "items": [
+    {
+      "sku": "999",
+      "item_name": "Customize Water Bottles",
+      "quantity": 1,
+      "item_weight": 0.5,
+      "item_price": 99.0
+    }
+  ],
+  "package_length": 20.0,
+  "package_width": 15.0,
+  "package_height": 10.0,
+  "package_weight": 0.5,
+  "shipping_charge": 50.0,
+  "cod_charge": 50.0,
+  "purchase_tax": 7.45,
+  "purchase_discount": 0.0,
+  "collectable_cod": 156.45,
+  "warehouse_id": 2568,
+  "payment_type": 2,
+  "courier_id": 10,
+  "mode_id": 16
+}
+INFO 2025-12-29 11:03:54,743 zippypost_utils API Response Status Code: 400
+INFO 2025-12-29 11:03:54,744 zippypost_utils Response Headers: {'Server': 'nginx/1.18.0 (Ubuntu)', 'Date': 'Mon, 29 Dec 2025 05:33:59 GMT', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '153', 'Connection': 'keep-alive', 'X-Powered-By': 'Express', 'ETag': 'W/"99-7/HhsQQE04aOL7vIkCkoDt/5fqQ"'}
+DEBUG 2025-12-29 11:03:54,745 zippypost_utils Full Response Body:
+DEBUG 2025-12-29 11:03:54,746 zippypost_utils {"success":false,"message":"Validation Error","error":{"booking_process_error":"Credit limit exceeded. Recharge to proceed with shipment. Order saved."}}
+INFO 2025-12-29 11:23:22,332 views Order review accessed by user 17 with method GET
+INFO 2025-12-29 11:23:22,338 views Order review GET parameters - User: 17, variant_id: 41, quantity: 1, coupon_code: , address_id: d1838089-99d0-4931-8982-36c597903a3c
+INFO 2025-12-29 11:23:22,983 views Found variant 41 - Customize Water Bottles
+INFO 2025-12-29 11:23:22,985 views Pricing calculated - unit_price: 99.00, subtotal: 99.00, shipping: 50.00
+INFO 2025-12-29 11:23:22,986 views Final calculations - taxable_amount: 149.00, tax_amount: 7.4500, total_amount: 156.4500
+INFO 2025-12-29 11:23:23,231 views Selected address d1838089-99d0-4931-8982-36c597903a3c for user 17
+INFO 2025-12-29 11:23:23,477 views Order review page rendered successfully for user 17
+INFO 2025-12-29 11:23:30,965 views Order review accessed by user 17 with method POST
+INFO 2025-12-29 11:23:30,966 views Order creation POST request from user 17
+INFO 2025-12-29 11:23:36,013 zippypost_utils Attempting to process Zippypost shipment for order ORD-F5DBDADE
+INFO 2025-12-29 11:23:37,086 zippypost_utils ================================================================================
+INFO 2025-12-29 11:23:37,087 zippypost_utils Creating Zippypost shipment for order ORD-F5DBDADE
+INFO 2025-12-29 11:23:37,087 zippypost_utils ================================================================================
+DEBUG 2025-12-29 11:23:37,089 zippypost_utils Headers: {
+  "Content-Type": "application/json",
+  "authorization": "c368180df6...",
+  "timestamp": "1766987617",
+  "sellerid": "1255"
+}
+DEBUG 2025-12-29 11:23:37,090 zippypost_utils Full Payload:
+DEBUG 2025-12-29 11:23:37,090 zippypost_utils {
+  "order_number": "ORD-F5DBDADE",
+  "purchase_amount": 156.45,
+  "purchase_date": "2025-12-29",
+  "billing_details_same_as_shipping": true,
+  "shipping_details": {
+    "full_name": "Vandann Darji",
+    "contact_number": "9022641867",
+    "customer_email": "",
+    "address_line_one": "D/17 narmada Ashish ",
+    "address_line_two": "Narmada Nagar cabin Cross road Bhayandar East ",
+    "landmark": "",
+    "pincode": "400001",
+    "city": "Thane"
+  },
+  "billing_details": {
+    "full_name": "Vandann Darji",
+    "contact_number": "9022641867",
+    "gstin": "",
+    "address_line_one": "D/17 narmada Ashish ",
+    "address_line_two": "Narmada Nagar cabin Cross road Bhayandar East ",
+    "company_name": "",
+    "pincode": "400001",
+    "city": "Thane"
+  },
+  "items": [
+    {
+      "sku": "999",
+      "item_name": "Customize Water Bottles",
+      "quantity": 1,
+      "item_weight": 0.5,
+      "item_price": 99.0
+    }
+  ],
+  "package_length": 20.0,
+  "package_width": 15.0,
+  "package_height": 10.0,
+  "package_weight": 0.5,
+  "shipping_charge": 50.0,
+  "cod_charge": 50.0,
+  "purchase_tax": 7.45,
+  "purchase_discount": 0.0,
+  "collectable_cod": 156.45,
+  "warehouse_id": 2568,
+  "payment_type": 2,
+  "courier_id": 10,
+  "mode_id": 16
+}
+INFO 2025-12-29 11:23:37,496 zippypost_utils API Response Status Code: 400
+INFO 2025-12-29 11:23:37,497 zippypost_utils Response Headers: {'Server': 'nginx/1.18.0 (Ubuntu)', 'Date': 'Mon, 29 Dec 2025 05:53:42 GMT', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '153', 'Connection': 'keep-alive', 'X-Powered-By': 'Express', 'ETag': 'W/"99-7/HhsQQE04aOL7vIkCkoDt/5fqQ"'}
+DEBUG 2025-12-29 11:23:37,497 zippypost_utils Full Response Body:
+DEBUG 2025-12-29 11:23:37,498 zippypost_utils {"success":false,"message":"Validation Error","error":{"booking_process_error":"Credit limit exceeded. Recharge to proceed with shipment. Order saved."}}
+INFO 2025-12-29 11:24:12,186 views Order review accessed by user 17 with method POST
+INFO 2025-12-29 11:24:12,186 views Order creation POST request from user 17
+INFO 2025-12-29 11:24:16,423 zippypost_utils Attempting to process Zippypost shipment for order ORD-E08DD27F
+INFO 2025-12-29 11:24:17,404 zippypost_utils ================================================================================
+INFO 2025-12-29 11:24:17,405 zippypost_utils Creating Zippypost shipment for order ORD-E08DD27F
+INFO 2025-12-29 11:24:17,405 zippypost_utils ================================================================================
+DEBUG 2025-12-29 11:24:17,406 zippypost_utils Headers: {
+  "Content-Type": "application/json",
+  "authorization": "ed7f8f5762...",
+  "timestamp": "1766987657",
+  "sellerid": "1255"
+}
+DEBUG 2025-12-29 11:24:17,406 zippypost_utils Full Payload:
+DEBUG 2025-12-29 11:24:17,406 zippypost_utils {
+  "order_number": "ORD-E08DD27F",
+  "purchase_amount": 156.45,
+  "purchase_date": "2025-12-29",
+  "billing_details_same_as_shipping": true,
+  "shipping_details": {
+    "full_name": "Vandann Darji",
+    "contact_number": "9022641867",
+    "customer_email": "",
+    "address_line_one": "D/17 narmada Ashish ",
+    "address_line_two": "Narmada Nagar cabin Cross road Bhayandar East ",
+    "landmark": "",
+    "pincode": "400001",
+    "city": "Thane"
+  },
+  "billing_details": {
+    "full_name": "Vandann Darji",
+    "contact_number": "9022641867",
+    "gstin": "",
+    "address_line_one": "D/17 narmada Ashish ",
+    "address_line_two": "Narmada Nagar cabin Cross road Bhayandar East ",
+    "company_name": "",
+    "pincode": "400001",
+    "city": "Thane"
+  },
+  "items": [
+    {
+      "sku": "999",
+      "item_name": "Customize Water Bottles",
+      "quantity": 1,
+      "item_weight": 0.5,
+      "item_price": 99.0
+    }
+  ],
+  "package_length": 20.0,
+  "package_width": 15.0,
+  "package_height": 10.0,
+  "package_weight": 0.5,
+  "shipping_charge": 50.0,
+  "cod_charge": 50.0,
+  "purchase_tax": 7.45,
+  "purchase_discount": 0.0,
+  "collectable_cod": 156.45,
+  "warehouse_id": 2568,
+  "payment_type": 2,
+  "courier_id": 10,
+  "mode_id": 16
+}
+INFO 2025-12-29 11:24:17,553 zippypost_utils API Response Status Code: 400
+INFO 2025-12-29 11:24:17,554 zippypost_utils Response Headers: {'Server': 'nginx/1.18.0 (Ubuntu)', 'Date': 'Mon, 29 Dec 2025 05:54:22 GMT', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '153', 'Connection': 'keep-alive', 'X-Powered-By': 'Express', 'ETag': 'W/"99-7/HhsQQE04aOL7vIkCkoDt/5fqQ"'}
+DEBUG 2025-12-29 11:24:17,554 zippypost_utils Full Response Body:
+DEBUG 2025-12-29 11:24:17,555 zippypost_utils {"success":false,"message":"Validation Error","error":{"booking_process_error":"Credit limit exceeded. Recharge to proceed with shipment. Order saved."}}
+INFO 2025-12-29 11:24:38,571 views Order review accessed by user 17 with method POST
+INFO 2025-12-29 11:24:38,572 views Order creation POST request from user 17
+ERROR 2025-12-29 11:24:44,207 views Error in order creation: Reverse for 'order-review' not found. 'order-review' is not a valid view function or pattern name. for user 17
+Traceback (most recent call last):
+  File "C:\Users\VANDAN\OneDrive\Desktop\thinknshop\thinknshop\orders\views.py", line 548, in create_order
+    return JsonResponse({'redirect_url': redirect_url})
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\http\response.py", line 751, in __init__
+    data = json.dumps(data, cls=encoder, **json_dumps_params)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\json\__init__.py", line 238, in dumps
+    **kw).encode(obj)
+          ~~~~~~^^^^^
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\json\encoder.py", line 200, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\json\encoder.py", line 261, in iterencode
+    return _iterencode(o, 0)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\core\serializers\json.py", line 112, in default
+    return str(o)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\utils\functional.py", line 119, in __str__
+    return str(self.__cast())
+               ~~~~~~~~~~~^^
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\utils\functional.py", line 110, in __cast
+    return func(*self._args, **self._kw)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\urls\base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\urls\resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'complete_payment' not found. 'complete_payment' is not a valid view function or pattern name.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\VANDAN\OneDrive\Desktop\thinknshop\thinknshop\orders\views.py", line 367, in order_review
+    return create_order(request)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\views\decorators\http.py", line 64, in inner
+    return func(request, *args, **kwargs)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\VANDAN\OneDrive\Desktop\thinknshop\thinknshop\orders\views.py", line 558, in create_order
+    return redirect('order-review')
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\shortcuts.py", line 51, in redirect
+    resolve_url(to, *args, **kwargs),
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\shortcuts.py", line 184, in resolve_url
+    return reverse(to, args=args, kwargs=kwargs)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\urls\base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\urls\resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'order-review' not found. 'order-review' is not a valid view function or pattern name.
+INFO 2025-12-29 11:25:25,646 views Order review accessed by user 17 with method POST
+INFO 2025-12-29 11:25:25,647 views Order creation POST request from user 17
+ERROR 2025-12-29 11:25:28,822 views Error in order creation: Reverse for 'order-review' not found. 'order-review' is not a valid view function or pattern name. for user 17
+Traceback (most recent call last):
+  File "C:\Users\VANDAN\OneDrive\Desktop\thinknshop\thinknshop\orders\views.py", line 548, in create_order
+    return JsonResponse({'redirect_url': redirect_url})
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\http\response.py", line 751, in __init__
+    data = json.dumps(data, cls=encoder, **json_dumps_params)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\json\__init__.py", line 238, in dumps
+    **kw).encode(obj)
+          ~~~~~~^^^^^
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\json\encoder.py", line 200, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\json\encoder.py", line 261, in iterencode
+    return _iterencode(o, 0)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\core\serializers\json.py", line 112, in default
+    return str(o)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\utils\functional.py", line 119, in __str__
+    return str(self.__cast())
+               ~~~~~~~~~~~^^
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\utils\functional.py", line 110, in __cast
+    return func(*self._args, **self._kw)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\urls\base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\urls\resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'complete_payment' not found. 'complete_payment' is not a valid view function or pattern name.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\VANDAN\OneDrive\Desktop\thinknshop\thinknshop\orders\views.py", line 367, in order_review
+    return create_order(request)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\views\decorators\http.py", line 64, in inner
+    return func(request, *args, **kwargs)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\VANDAN\OneDrive\Desktop\thinknshop\thinknshop\orders\views.py", line 558, in create_order
+    return redirect('order-review')
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\shortcuts.py", line 51, in redirect
+    resolve_url(to, *args, **kwargs),
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\shortcuts.py", line 184, in resolve_url
+    return reverse(to, args=args, kwargs=kwargs)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\urls\base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\urls\resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'order-review' not found. 'order-review' is not a valid view function or pattern name.
+INFO 2025-12-29 11:25:32,162 views Order review accessed by user 17 with method POST
+INFO 2025-12-29 11:25:32,163 views Order creation POST request from user 17
+ERROR 2025-12-29 11:25:35,337 views Error in order creation: Reverse for 'order-review' not found. 'order-review' is not a valid view function or pattern name. for user 17
+Traceback (most recent call last):
+  File "C:\Users\VANDAN\OneDrive\Desktop\thinknshop\thinknshop\orders\views.py", line 548, in create_order
+    return JsonResponse({'redirect_url': redirect_url})
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\http\response.py", line 751, in __init__
+    data = json.dumps(data, cls=encoder, **json_dumps_params)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\json\__init__.py", line 238, in dumps
+    **kw).encode(obj)
+          ~~~~~~^^^^^
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\json\encoder.py", line 200, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\json\encoder.py", line 261, in iterencode
+    return _iterencode(o, 0)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\core\serializers\json.py", line 112, in default
+    return str(o)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\utils\functional.py", line 119, in __str__
+    return str(self.__cast())
+               ~~~~~~~~~~~^^
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\utils\functional.py", line 110, in __cast
+    return func(*self._args, **self._kw)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\urls\base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\urls\resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'complete_payment' not found. 'complete_payment' is not a valid view function or pattern name.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\VANDAN\OneDrive\Desktop\thinknshop\thinknshop\orders\views.py", line 367, in order_review
+    return create_order(request)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\views\decorators\http.py", line 64, in inner
+    return func(request, *args, **kwargs)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\VANDAN\OneDrive\Desktop\thinknshop\thinknshop\orders\views.py", line 558, in create_order
+    return redirect('order-review')
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\shortcuts.py", line 51, in redirect
+    resolve_url(to, *args, **kwargs),
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\shortcuts.py", line 184, in resolve_url
+    return reverse(to, args=args, kwargs=kwargs)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\urls\base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\urls\resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'order-review' not found. 'order-review' is not a valid view function or pattern name.
+INFO 2025-12-29 11:25:45,444 views Order review accessed by user 17 with method POST
+INFO 2025-12-29 11:25:45,447 views Order creation POST request from user 17
+ERROR 2025-12-29 11:25:48,531 views Error in order creation: Reverse for 'order-review' not found. 'order-review' is not a valid view function or pattern name. for user 17
+Traceback (most recent call last):
+  File "C:\Users\VANDAN\OneDrive\Desktop\thinknshop\thinknshop\orders\views.py", line 548, in create_order
+    return JsonResponse({'redirect_url': redirect_url})
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\http\response.py", line 751, in __init__
+    data = json.dumps(data, cls=encoder, **json_dumps_params)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\json\__init__.py", line 238, in dumps
+    **kw).encode(obj)
+          ~~~~~~^^^^^
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\json\encoder.py", line 200, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\json\encoder.py", line 261, in iterencode
+    return _iterencode(o, 0)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\core\serializers\json.py", line 112, in default
+    return str(o)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\utils\functional.py", line 119, in __str__
+    return str(self.__cast())
+               ~~~~~~~~~~~^^
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\utils\functional.py", line 110, in __cast
+    return func(*self._args, **self._kw)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\urls\base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\urls\resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'complete_payment' not found. 'complete_payment' is not a valid view function or pattern name.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\VANDAN\OneDrive\Desktop\thinknshop\thinknshop\orders\views.py", line 367, in order_review
+    return create_order(request)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\views\decorators\http.py", line 64, in inner
+    return func(request, *args, **kwargs)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\VANDAN\OneDrive\Desktop\thinknshop\thinknshop\orders\views.py", line 558, in create_order
+    return redirect('order-review')
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\shortcuts.py", line 51, in redirect
+    resolve_url(to, *args, **kwargs),
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\shortcuts.py", line 184, in resolve_url
+    return reverse(to, args=args, kwargs=kwargs)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\urls\base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "C:\Users\VANDAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\urls\resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'order-review' not found. 'order-review' is not a valid view function or pattern name.
+INFO 2025-12-29 11:27:55,605 views Order review accessed by user 17 with method GET
+INFO 2025-12-29 11:27:55,607 views Order review GET parameters - User: 17, variant_id: 41, quantity: 1, coupon_code: , address_id: d1838089-99d0-4931-8982-36c597903a3c
+INFO 2025-12-29 11:27:56,205 views Found variant 41 - Customize Water Bottles
+INFO 2025-12-29 11:27:56,206 views Pricing calculated - unit_price: 99.00, subtotal: 99.00, shipping: 50.00
+INFO 2025-12-29 11:27:56,207 views Final calculations - taxable_amount: 149.00, tax_amount: 7.4500, total_amount: 156.4500
+INFO 2025-12-29 11:27:56,492 views Selected address d1838089-99d0-4931-8982-36c597903a3c for user 17
+INFO 2025-12-29 11:27:56,746 views Order review page rendered successfully for user 17
+INFO 2025-12-29 11:28:03,010 views Order review accessed by user 17 with method POST
+INFO 2025-12-29 11:28:03,011 views Order creation POST request from user 17
