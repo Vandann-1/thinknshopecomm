@@ -215,8 +215,7 @@
                                 A" }}</p>
                             {% elif delivery_info.estimated_delivery %}
                             <p class="text-sm font-medium text-gray-900">Estimated Delivery</p>
-                            <p class="text-lg font-bold text-blue-700">{{ delivery_info.estimated_delivery|date:"d M Y"
-                                }}</p>
+                            <p class="text-lg font-bold text-blue-700">{{ delivery_info.estimated_delivery|date:"M d, Y" }}</p>
                             {% endif %}
                         </div>
                     </div>

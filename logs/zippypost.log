@@ -1627,3 +1627,76 @@ INFO 2025-12-30 20:32:01,695 views Selected address d1838089-99d0-4931-8982-36c5
 INFO 2025-12-30 20:32:01,933 views Order review page rendered successfully for user 17
 INFO 2025-12-30 20:32:08,238 views Order review accessed by user 17 with method POST
 INFO 2025-12-30 20:32:08,238 views Order creation POST request from user 17
+INFO 2025-12-30 21:13:10,243 views Order review accessed by user 17 with method GET
+INFO 2025-12-30 21:13:10,245 views Order review GET parameters - User: 17, variant_id: 11, quantity: 1, coupon_code: , address_id: d1838089-99d0-4931-8982-36c597903a3c
+INFO 2025-12-30 21:13:11,066 views Found variant 11 - naruto1 water bottle  166
+INFO 2025-12-30 21:13:11,067 views Pricing calculated - unit_price: 99.00, subtotal: 99.00, shipping: 50.00
+INFO 2025-12-30 21:13:11,069 views Final calculations - taxable_amount: 149.00, tax_amount: 7.4500, total_amount: 156.4500
+INFO 2025-12-30 21:13:11,460 views Selected address d1838089-99d0-4931-8982-36c597903a3c for user 17
+INFO 2025-12-30 21:13:11,972 views Order review page rendered successfully for user 17
+INFO 2025-12-30 21:13:22,596 views Order review accessed by user 17 with method POST
+INFO 2025-12-30 21:13:22,598 views Order creation POST request from user 17
+INFO 2025-12-30 21:13:29,237 zippypost_utils Attempting to process Zippypost shipment for order ORD-8FCA7F51
+INFO 2025-12-30 21:13:30,263 zippypost_utils ================================================================================
+INFO 2025-12-30 21:13:30,264 zippypost_utils Creating Zippypost shipment for order ORD-8FCA7F51
+INFO 2025-12-30 21:13:30,266 zippypost_utils ================================================================================
+DEBUG 2025-12-30 21:13:30,267 zippypost_utils Headers: {
+  "Content-Type": "application/json",
+  "authorization": "9751486b77...",
+  "timestamp": "1767109410",
+  "sellerid": "1255"
+}
+DEBUG 2025-12-30 21:13:30,269 zippypost_utils Full Payload:
+DEBUG 2025-12-30 21:13:30,270 zippypost_utils {
+  "order_number": "ORD-8FCA7F51",
+  "purchase_amount": 156.45,
+  "purchase_date": "2025-12-30",
+  "billing_details_same_as_shipping": true,
+  "shipping_details": {
+    "full_name": "Vandann Darji",
+    "contact_number": "9022641867",
+    "customer_email": "",
+    "address_line_one": "D/17 narmada Ashish ",
+    "address_line_two": "Narmada Nagar cabin Cross road Bhayandar East ",
+    "landmark": "",
+    "pincode": "400001",
+    "city": "Thane"
+  },
+  "billing_details": {
+    "full_name": "Vandann Darji",
+    "contact_number": "9022641867",
+    "gstin": "",
+    "address_line_one": "D/17 narmada Ashish ",
+    "address_line_two": "Narmada Nagar cabin Cross road Bhayandar East ",
+    "company_name": "",
+    "pincode": "400001",
+    "city": "Thane"
+  },
+  "items": [
+    {
+      "sku": "SKU-50",
+      "item_name": "naruto1 water bottle  166",
+      "quantity": 1,
+      "item_weight": 0.5,
+      "item_price": 99.0
+    }
+  ],
+  "package_length": 20.0,
+  "package_width": 15.0,
+  "package_height": 10.0,
+  "package_weight": 0.5,
+  "shipping_charge": 50.0,
+  "cod_charge": 50.0,
+  "purchase_tax": 7.45,
+  "purchase_discount": 0.0,
+  "collectable_cod": 156.45,
+  "warehouse_id": 2568,
+  "payment_type": 2,
+  "courier_id": 10,
+  "mode_id": 16
+}
+INFO 2025-12-30 21:13:33,711 zippypost_utils API Response Status Code: 200
+INFO 2025-12-30 21:13:33,712 zippypost_utils Response Headers: {'Server': 'nginx/1.18.0 (Ubuntu)', 'Date': 'Tue, 30 Dec 2025 15:43:36 GMT', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '125', 'Connection': 'keep-alive', 'X-Powered-By': 'Express', 'ETag': 'W/"7d-G1TBz5FOibBNBaHq/CUcFAvY0PE"'}
+DEBUG 2025-12-30 21:13:33,713 zippypost_utils Full Response Body:
+DEBUG 2025-12-30 21:13:33,714 zippypost_utils {"success":true,"booking":true,"RESULT":{"awb":"77640247042","courier":"Bluedart+","label":"NA","routingCode":"BOM/FRT/FRT"}}
+INFO 2025-12-30 21:13:34,526 zippypost_utils Retrieved label URL for AWB 77640247042
