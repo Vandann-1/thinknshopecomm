@@ -1510,3 +1510,120 @@ INFO 2025-12-29 11:27:56,746 views Order review page rendered successfully for u
 INFO 2025-12-29 11:28:03,010 views Order review accessed by user 17 with method POST
 INFO 2025-12-29 11:28:03,011 views Order creation POST request from user 17
 ERROR 2025-12-29 17:06:21,162 views Error in payment page for order ORD-82F69A54: 'orders' is not a registered namespace
+INFO 2025-12-30 20:12:46,884 views Order review accessed by user 17 with method GET
+INFO 2025-12-30 20:12:46,911 views Order review GET parameters - User: 17, variant_id: 38, quantity: 1, coupon_code: , address_id: d1838089-99d0-4931-8982-36c597903a3c
+INFO 2025-12-30 20:12:47,405 views Found variant 38 - kohli water bottle 132
+INFO 2025-12-30 20:12:47,406 views Pricing calculated - unit_price: 99.00, subtotal: 99.00, shipping: 50.00
+INFO 2025-12-30 20:12:47,408 views Final calculations - taxable_amount: 149.00, tax_amount: 7.4500, total_amount: 156.4500
+INFO 2025-12-30 20:12:47,648 views Selected address d1838089-99d0-4931-8982-36c597903a3c for user 17
+INFO 2025-12-30 20:12:47,886 views Order review page rendered successfully for user 17
+INFO 2025-12-30 20:17:47,958 views Order review accessed by user 17 with method GET
+INFO 2025-12-30 20:17:47,959 views Order review GET parameters - User: 17, variant_id: 38, quantity: 1, coupon_code: , address_id: d1838089-99d0-4931-8982-36c597903a3c
+INFO 2025-12-30 20:17:48,605 views Found variant 38 - kohli water bottle 132
+INFO 2025-12-30 20:17:48,606 views Pricing calculated - unit_price: 99.00, subtotal: 99.00, shipping: 50.00
+INFO 2025-12-30 20:17:48,607 views Final calculations - taxable_amount: 149.00, tax_amount: 7.4500, total_amount: 156.4500
+INFO 2025-12-30 20:17:48,852 views Selected address d1838089-99d0-4931-8982-36c597903a3c for user 17
+INFO 2025-12-30 20:17:49,096 views Order review page rendered successfully for user 17
+INFO 2025-12-30 20:20:42,595 views Order review accessed by user 17 with method GET
+INFO 2025-12-30 20:20:42,596 views Order review GET parameters - User: 17, variant_id: 38, quantity: 1, coupon_code: , address_id: d1838089-99d0-4931-8982-36c597903a3c
+INFO 2025-12-30 20:20:43,078 views Found variant 38 - kohli water bottle 132
+INFO 2025-12-30 20:20:43,079 views Pricing calculated - unit_price: 99.00, subtotal: 99.00, shipping: 50.00
+INFO 2025-12-30 20:20:43,079 views Final calculations - taxable_amount: 149.00, tax_amount: 7.4500, total_amount: 156.4500
+INFO 2025-12-30 20:20:43,320 views Selected address d1838089-99d0-4931-8982-36c597903a3c for user 17
+INFO 2025-12-30 20:20:43,558 views Order review page rendered successfully for user 17
+INFO 2025-12-30 20:22:22,086 views Order review accessed by user 17 with method GET
+INFO 2025-12-30 20:22:22,087 views Order review GET parameters - User: 17, variant_id: 38, quantity: 1, coupon_code: , address_id: d1838089-99d0-4931-8982-36c597903a3c
+INFO 2025-12-30 20:22:22,576 views Found variant 38 - kohli water bottle 132
+INFO 2025-12-30 20:22:22,577 views Pricing calculated - unit_price: 99.00, subtotal: 99.00, shipping: 50.00
+INFO 2025-12-30 20:22:22,578 views Final calculations - taxable_amount: 149.00, tax_amount: 7.4500, total_amount: 156.4500
+INFO 2025-12-30 20:22:22,816 views Selected address d1838089-99d0-4931-8982-36c597903a3c for user 17
+INFO 2025-12-30 20:22:23,053 views Order review page rendered successfully for user 17
+INFO 2025-12-30 20:24:59,746 views Order review accessed by user 17 with method GET
+INFO 2025-12-30 20:24:59,747 views Order review GET parameters - User: 17, variant_id: 38, quantity: 1, coupon_code: , address_id: d1838089-99d0-4931-8982-36c597903a3c
+INFO 2025-12-30 20:25:00,228 views Found variant 38 - kohli water bottle 132
+INFO 2025-12-30 20:25:00,229 views Pricing calculated - unit_price: 99.00, subtotal: 99.00, shipping: 50.00
+INFO 2025-12-30 20:25:00,230 views Final calculations - taxable_amount: 149.00, tax_amount: 7.4500, total_amount: 156.4500
+INFO 2025-12-30 20:25:00,777 views Selected address d1838089-99d0-4931-8982-36c597903a3c for user 17
+INFO 2025-12-30 20:25:01,017 views Order review page rendered successfully for user 17
+INFO 2025-12-30 20:30:34,775 views Order review accessed by user 17 with method GET
+INFO 2025-12-30 20:30:34,776 views Order review GET parameters - User: 17, variant_id: 38, quantity: 1, coupon_code: , address_id: d1838089-99d0-4931-8982-36c597903a3c
+INFO 2025-12-30 20:30:35,260 views Found variant 38 - kohli water bottle 132
+INFO 2025-12-30 20:30:35,260 views Pricing calculated - unit_price: 99.00, subtotal: 99.00, shipping: 50.00
+INFO 2025-12-30 20:30:35,261 views Final calculations - taxable_amount: 149.00, tax_amount: 7.4500, total_amount: 156.4500
+INFO 2025-12-30 20:30:35,504 views Selected address d1838089-99d0-4931-8982-36c597903a3c for user 17
+INFO 2025-12-30 20:30:35,742 views Order review page rendered successfully for user 17
+INFO 2025-12-30 20:30:42,010 views Order review accessed by user 17 with method POST
+INFO 2025-12-30 20:30:42,011 views Order creation POST request from user 17
+INFO 2025-12-30 20:30:46,236 zippypost_utils Attempting to process Zippypost shipment for order ORD-40CD2A1E
+INFO 2025-12-30 20:30:47,231 zippypost_utils ================================================================================
+INFO 2025-12-30 20:30:47,232 zippypost_utils Creating Zippypost shipment for order ORD-40CD2A1E
+INFO 2025-12-30 20:30:47,233 zippypost_utils ================================================================================
+DEBUG 2025-12-30 20:30:47,236 zippypost_utils Headers: {
+  "Content-Type": "application/json",
+  "authorization": "c30c5df12e...",
+  "timestamp": "1767106847",
+  "sellerid": "1255"
+}
+DEBUG 2025-12-30 20:30:47,236 zippypost_utils Full Payload:
+DEBUG 2025-12-30 20:30:47,237 zippypost_utils {
+  "order_number": "ORD-40CD2A1E",
+  "purchase_amount": 156.45,
+  "purchase_date": "2025-12-30",
+  "billing_details_same_as_shipping": true,
+  "shipping_details": {
+    "full_name": "Vandann Darji",
+    "contact_number": "9022641867",
+    "customer_email": "",
+    "address_line_one": "D/17 narmada Ashish ",
+    "address_line_two": "Narmada Nagar cabin Cross road Bhayandar East ",
+    "landmark": "",
+    "pincode": "400001",
+    "city": "Thane"
+  },
+  "billing_details": {
+    "full_name": "Vandann Darji",
+    "contact_number": "9022641867",
+    "gstin": "",
+    "address_line_one": "D/17 narmada Ashish ",
+    "address_line_two": "Narmada Nagar cabin Cross road Bhayandar East ",
+    "company_name": "",
+    "pincode": "400001",
+    "city": "Thane"
+  },
+  "items": [
+    {
+      "sku": "194",
+      "item_name": "kohli water bottle 132",
+      "quantity": 1,
+      "item_weight": 0.5,
+      "item_price": 99.0
+    }
+  ],
+  "package_length": 20.0,
+  "package_width": 15.0,
+  "package_height": 10.0,
+  "package_weight": 0.5,
+  "shipping_charge": 50.0,
+  "cod_charge": 50.0,
+  "purchase_tax": 7.45,
+  "purchase_discount": 0.0,
+  "collectable_cod": 156.45,
+  "warehouse_id": 2568,
+  "payment_type": 2,
+  "courier_id": 10,
+  "mode_id": 16
+}
+INFO 2025-12-30 20:30:49,962 zippypost_utils API Response Status Code: 200
+INFO 2025-12-30 20:30:49,962 zippypost_utils Response Headers: {'Server': 'nginx/1.18.0 (Ubuntu)', 'Date': 'Tue, 30 Dec 2025 15:00:53 GMT', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '125', 'Connection': 'keep-alive', 'X-Powered-By': 'Express', 'ETag': 'W/"7d-+ULQR3v6VX5avmYU9FclRaoHRao"'}
+DEBUG 2025-12-30 20:30:49,963 zippypost_utils Full Response Body:
+DEBUG 2025-12-30 20:30:49,964 zippypost_utils {"success":true,"booking":true,"RESULT":{"awb":"77640238056","courier":"Bluedart+","label":"NA","routingCode":"BOM/FRT/FRT"}}
+INFO 2025-12-30 20:30:50,817 zippypost_utils Retrieved label URL for AWB 77640238056
+INFO 2025-12-30 20:32:00,970 views Order review accessed by user 17 with method GET
+INFO 2025-12-30 20:32:00,970 views Order review GET parameters - User: 17, variant_id: 38, quantity: 1, coupon_code: , address_id: d1838089-99d0-4931-8982-36c597903a3c
+INFO 2025-12-30 20:32:01,453 views Found variant 38 - kohli water bottle 132
+INFO 2025-12-30 20:32:01,454 views Pricing calculated - unit_price: 99.00, subtotal: 99.00, shipping: 50.00
+INFO 2025-12-30 20:32:01,454 views Final calculations - taxable_amount: 149.00, tax_amount: 7.4500, total_amount: 156.4500
+INFO 2025-12-30 20:32:01,695 views Selected address d1838089-99d0-4931-8982-36c597903a3c for user 17
+INFO 2025-12-30 20:32:01,933 views Order review page rendered successfully for user 17
+INFO 2025-12-30 20:32:08,238 views Order review accessed by user 17 with method POST
+INFO 2025-12-30 20:32:08,238 views Order creation POST request from user 17

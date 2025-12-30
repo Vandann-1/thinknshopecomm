@@ -1140,25 +1140,40 @@
 <body>
     
 <header class="skatezo-navbar-container fixed top-0 left-0 right-0 z-[9999] bg-white border-b border-gray-200 shadow-lg">
-<div class="bg-black py-2">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 flex justify-center items-center text-[10px] sm:text-xs text-white font-medium uppercase tracking-wider text-center">
-        <span>FREE SHIPPING OVER ₹500</span>
-    </div>
+<div class="bg-[#0b0b0b] border-b border-white/10">
+  <div class="max-w-7xl mx-auto px-4 py-2 flex items-center justify-center gap-2 text-[11px] sm:text-xs font-medium tracking-[0.32em] uppercase text-white/90">
+
+    <span class="text-white/50">Complimentary Shipping on Orders Over</span>
+
+    <span class="px-2 py-[2px] border border-white/20 rounded-md font-semibold tracking-wider text-white">
+      ₹500
+    </span>
+
+    <span class="hidden sm:inline text-white/30">Nationwide Delivery</span>
+
+  </div>
 </div>
-<div class="flex items-center justify-between bg-yellow-50 border border-yellow-300 rounded-lg px-4 py-3 text-sm">
-    <div class="flex items-center gap-2 text-yellow-900">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M13 16h-1v-4h-1m1-4h.01M12 20.5c-4.7 0-8.5-3.8-8.5-8.5S7.3 3.5 12 3.5s8.5 3.8 8.5 8.5-3.8 8.5-8.5 8.5z"/>
-        </svg>
-        <span>Add address to get faster delivery</span>
+
+<div class="max-w-7xl mx-auto mt-4 px-4">
+  <div class="flex items-center justify-between border border-zinc-200 bg-white px-6 py-4">
+
+    <div class="flex items-center gap-3 text-zinc-800">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-zinc-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M12 20.5c-4.7 0-8.5-3.8-8.5-8.5S7.3 3.5 12 3.5s8.5 3.8 8.5 8.5-3.8 8.5-8.5 8.5z"/>
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 16v-4m0-4h.01"/>
+      </svg>
+
+      <p class="text-sm font-medium">Complete your delivery address for faster shipping</p>
     </div>
 
     <a href="{% url 'manage_address' %}"
-       class="text-yellow-900 font-semibold underline hover:text-yellow-700">
-        Add now
+       class="text-xs font-semibold uppercase tracking-wider text-black hover:underline">
+       Add Address
     </a>
+  </div>
 </div>
+
 
 
 <nav class="bg-white border-b sticky top-0 z-40">
@@ -1240,27 +1255,30 @@ function toggleMobileSearch(){
 
 
 
-<div class="bg-white border-b overflow-x-auto no-scrollbar">
-<div class="max-w-7xl mx-auto px-3 py-2">
+<div class="bg-white border-b">
+  <div class="overflow-x-auto no-scrollbar">
+    <div class="max-w-7xl mx-auto px-3 py-2">
 
-<nav class="flex gap-2">
+      <nav class="flex w-max gap-2">
 
-{% for category in featured_categories %}
-<a href="{{ category.get_absolute_url }}"
-class="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold 
-bg-gray-100 text-gray-700 whitespace-nowrap
-hover:bg-red-50 hover:text-red-600 hover:shadow-md hover:scale-105 transition">
+        {% for category in featured_categories %}
+        <a href="{{ category.get_absolute_url }}"
+           class="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold 
+                  bg-gray-100 text-gray-700 whitespace-nowrap
+                  hover:bg-red-50 hover:text-red-600 hover:shadow-md hover:scale-105 transition">
 
-<span class="w-2 h-2 rounded-full bg-red-500"></span>
-{{ category.name }}
+          <span class="w-2 h-2 rounded-full bg-red-500"></span>
+          {{ category.name }}
 
-</a>
-{% endfor %}
+        </a>
+        {% endfor %}
 
-</nav>
+      </nav>
 
+    </div>
+  </div>
 </div>
-</div>
+
 
     
 </header>
