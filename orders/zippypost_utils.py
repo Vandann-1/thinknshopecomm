@@ -178,9 +178,9 @@ def create_shipment(order) -> Tuple[bool, Optional[Dict], Optional[str]]:
             "items": items,
             
             # Package dimensions (in cm)
-            "package_length": 20.0,
-            "package_width": 15.0,
-            "package_height": 10.0,
+            "package_length": 25.0,
+            "package_width": 9.0,
+            "package_height": 9.0,
             "package_weight": total_weight,
             
             # Charges and amounts
