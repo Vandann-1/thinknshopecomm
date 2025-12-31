@@ -1147,170 +1147,103 @@ const USER_AUTH = {{ request.user.is_authenticated|yesno:"true,false" }};
 </head>
 <body>
     
-<header class="skatezo-navbar-container fixed top-0 left-0 right-0 z-[9999] bg-white border-b border-gray-200 shadow-lg">
-<div class="bg-[#0b0b0b] border-b border-white/10">
-  <div class="max-w-7xl mx-auto px-4 py-2 flex items-center justify-center gap-2 text-[11px] sm:text-xs font-medium tracking-[0.32em] uppercase text-white/90">
+<header class="skatezo-navbar-container relative bg-white border-b border-gray-200 shadow-sm">
 
-    <span class="text-white/50">Complimentary Shipping on Orders Over</span>
+<!-- TOP SHIPPING BAR -->
+<div class="bg-black border-b border-white/10">
+  <div class="max-w-7xl mx-auto px-3 py-2 flex items-center justify-center gap-2 text-[10px] sm:text-xs font-semibold uppercase text-white">
 
-    <span class="px-2 py-[2px] border border-white/20 rounded-md font-semibold tracking-wider text-white">
+    <span class="opacity-70 hidden sm:inline">Free Shipping Above</span>
+
+    <span class="px-2 py-[2px] border border-white/30 rounded-md tracking-wider">
       ₹500
     </span>
 
-    <span class="hidden sm:inline text-white/30">Nationwide Delivery</span>
+    <span class="opacity-40 hidden sm:inline">Pan-India Delivery</span>
 
   </div>
 </div>
 
-<div class="max-w-7xl mx-auto mt-5 px-4">
-  <div class="relative overflow-hidden rounded-2xl border border-red-300 bg-gradient-to-r from-red-50 via-white to-red-50 shadow-sm">
+<!-- DELIVERY NOTICE -->
+<div id="addressBar" class="max-w-7xl mx-auto mt-3 px-3">
+  <div class="relative flex items-center justify-between gap-3 bg-red-50 border border-red-200 rounded-xl px-4 py-2 text-xs text-gray-800">
 
-    <!-- Glow -->
-    <div class="absolute -right-20 -top-20 w-64 h-64 bg-red-300/30 blur-3xl rounded-full"></div>
-
-    <div class="relative flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 px-6 py-5">
-
-      <div class="flex items-start gap-3 text-gray-800">
-        <div class="w-10 h-10 rounded-full bg-red-600 flex items-center justify-center text-white shrink-0 shadow-md">
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M12 20.5c-4.7 0-8.5-3.8-8.5-8.5S7.3 3.5 12 3.5s8.5 3.8 8.5 8.5-3.8 8.5-8.5 8.5z"/>
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 16v-4m0-4h.01"/>
-          </svg>
-        </div>
-
-        <div>
-          <p class="text-sm font-extrabold text-gray-900">
-            Faster Delivery Available
-          </p>
-          <p class="text-xs text-gray-600">
-            Add your delivery address now to unlock same-day dispatch.
-          </p>
-        </div>
+    <div class="flex items-center gap-2">
+      <div class="w-7 h-7 rounded-full bg-red-600 text-white flex items-center justify-center text-[11px]">
+        <i class="fas fa-bolt"></i>
       </div>
+      <span class="font-semibold text-gray-900">Faster delivery available</span>
+    </div>
 
+    <div class="flex items-center gap-2">
       <a href="{% url 'manage_address' %}"
-         class="inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-5 py-2 rounded-full text-xs font-extrabold uppercase tracking-wider shadow transition">
-         Add Address
-         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                 d="M9 5l7 7-7 7"/>
-         </svg>
+         class="text-red-600 font-bold text-xs hover:underline whitespace-nowrap">
+         Add address
       </a>
 
+      <button onclick="document.getElementById('addressBar').remove()"
+              class="w-6 h-6 flex items-center justify-center rounded-full hover:bg-red-100 text-gray-400 hover:text-red-600 transition">
+        ✕
+      </button>
     </div>
+
   </div>
 </div>
 
 
-
-
-<nav class="bg-white border-b sticky top-0 z-40">
+<!-- MAIN NAV -->
+<nav class="bg-white border-b mt-4">
 <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
 
-<!-- LEFT -->
 <div class="flex items-center gap-2">
-
-<button onclick="toggleMobileMenu()" 
-class="p-2 rounded-lg hover:bg-gray-100 active:scale-95 text-gray-700 transition">
-<i class="fas fa-bars"></i>
-</button>
-
-<button onclick="toggleMobileSearch()" 
-class="p-2 rounded-lg hover:bg-gray-100 active:scale-95 text-gray-700 transition">
-<i class="fas fa-search"></i>
-</button>
-
+<button onclick="toggleMobileMenu()" class="p-2 rounded-lg hover:bg-gray-100"><i class="fas fa-bars"></i></button>
+<button onclick="toggleMobileSearch()" class="p-2 rounded-lg hover:bg-gray-100"><i class="fas fa-search"></i></button>
 </div>
 
-<!-- CENTER LOGO -->
-<a href="{% url 'products:home' %}" 
-class="text-xl font-black tracking-tight text-red-600">
+<a href="{% url 'products:home' %}" class="text-xl font-black text-red-600">
 Thinkn<span class="text-gray-900">Shop</span>
 </a>
 
-<!-- RIGHT -->
 <div class="flex items-center gap-3">
-
 {% if user.is_authenticated %}
-<a href="{% url 'profile' %}" 
-class="w-9 h-9 rounded-full bg-red-600 text-white flex items-center justify-center 
-font-bold text-sm shadow hover:scale-105 transition">
-{{ user.username|slice:":1"|upper }}
-</a>
+<a href="{% url 'profile' %}" class="w-9 h-9 rounded-full bg-red-600 text-white flex items-center justify-center font-bold shadow">{{ user.username|slice:":1"|upper }}</a>
 {% else %}
-<a href="{% url 'login' %}" 
-class="w-9 h-9 rounded-full border border-gray-300 text-gray-600 flex items-center 
-justify-center hover:bg-gray-100 transition">
-<i class="fas fa-user text-sm"></i>
-</a>
+<a href="{% url 'login' %}" class="w-9 h-9 rounded-full border flex items-center justify-center"><i class="fas fa-user"></i></a>
 {% endif %}
 
-<a href="{% url 'cart_view' %}" 
-class="relative p-2 rounded-lg hover:bg-gray-100 text-gray-700 transition">
+<a href="{% url 'cart_view' %}" class="relative p-2 hover:bg-gray-100 rounded-lg">
 <i class="fas fa-shopping-cart"></i>
 {% if cart_count %}
-<span class="absolute -top-1 -right-1 bg-red-600 text-white text-xs w-4 h-4 flex items-center justify-center rounded-full">
-{{ cart_count }}
-</span>
+<span class="absolute -top-1 -right-1 bg-red-600 text-white text-xs w-4 h-4 rounded-full flex items-center justify-center">{{ cart_count }}</span>
 {% endif %}
 </a>
-
 </div>
 </div>
 
-<!-- MOBILE SEARCH -->
-<div id="mobileSearchBox" class="hidden px-4 pb-3 bg-white border-t">
-<form method="GET" action="{% url 'products:product-list' %}"
-class="flex bg-gray-100 border rounded-lg overflow-hidden">
-
-<input type="text" name="search" value="{{ request.GET.search }}"
-placeholder="Search products..."
-class="flex-1 bg-transparent px-3 py-2 text-sm outline-none">
-
-<button type="submit" class="px-3 text-red-600">
-<i class="fas fa-search"></i>
-</button>
+<div id="mobileSearchBox" class="hidden px-4 pb-3 border-t">
+<form method="GET" action="{% url 'products:product-list' %}" class="flex bg-gray-100 border rounded-lg">
+<input type="text" name="search" placeholder="Search products..." class="flex-1 px-3 py-2 bg-transparent outline-none">
+<button class="px-3 text-red-600"><i class="fas fa-search"></i></button>
 </form>
 </div>
 </nav>
 
-<script>
-function toggleMobileSearch(){
- document.getElementById('mobileSearchBox').classList.toggle('hidden');
-}
-</script>
-
-
-
-
+<!-- CATEGORY STRIP -->
 <div class="bg-white border-b">
-  <div class="overflow-x-auto no-scrollbar">
-    <div class="max-w-7xl mx-auto px-3 py-2">
-
-      <nav class="flex w-max gap-2">
-
-        {% for category in featured_categories %}
-        <a href="{{ category.get_absolute_url }}"
-           class="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold 
-                  bg-gray-100 text-gray-700 whitespace-nowrap
-                  hover:bg-red-50 hover:text-red-600 hover:shadow-md hover:scale-105 transition">
-
-          <span class="w-2 h-2 rounded-full bg-red-500"></span>
-          {{ category.name }}
-
-        </a>
-        {% endfor %}
-
-      </nav>
-
-    </div>
-  </div>
+<div class="overflow-x-auto no-scrollbar">
+<div class="max-w-7xl mx-auto px-3 py-2 flex w-max gap-2">
+{% for category in featured_categories %}
+<a href="{{ category.get_absolute_url }}"
+class="px-4 py-2 rounded-full bg-gray-100 text-sm font-semibold hover:bg-red-50 hover:text-red-600 transition">
+{{ category.name }}
+</a>
+{% endfor %}
+</div>
+</div>
 </div>
 
-
-    
 </header>
+
 
 <!-- Overlay -->
 <div id="mobile-overlay"
