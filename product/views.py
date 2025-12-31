@@ -42,7 +42,7 @@ from django.conf import settings
 The Products
 """
 
-class HomePageView(LoginRequiredMixin,ListView):
+class HomePageView(ListView):
     """
     Enhanced homepage displaying featured categories, brands, collections and products
     with additional features like trending products, price ranges, and reviews

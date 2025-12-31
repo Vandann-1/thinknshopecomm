@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ThinknShop - Premium Hydration</title>
@@ -984,7 +985,14 @@
             }
         }
     </style>
+
+<script>
+const USER_AUTH = {{ request.user.is_authenticated|yesno:"true,false" }};
+</script>
+
+
 </head>
+
 <body>
 
 <script src="https://cdn.tailwindcss.com"></script>
@@ -1154,25 +1162,46 @@
   </div>
 </div>
 
-<div class="max-w-7xl mx-auto mt-4 px-4">
-  <div class="flex items-center justify-between border border-zinc-200 bg-white px-6 py-4">
+<div class="max-w-7xl mx-auto mt-5 px-4">
+  <div class="relative overflow-hidden rounded-2xl border border-red-300 bg-gradient-to-r from-red-50 via-white to-red-50 shadow-sm">
 
-    <div class="flex items-center gap-3 text-zinc-800">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-zinc-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M12 20.5c-4.7 0-8.5-3.8-8.5-8.5S7.3 3.5 12 3.5s8.5 3.8 8.5 8.5-3.8 8.5-8.5 8.5z"/>
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 16v-4m0-4h.01"/>
-      </svg>
+    <!-- Glow -->
+    <div class="absolute -right-20 -top-20 w-64 h-64 bg-red-300/30 blur-3xl rounded-full"></div>
 
-      <p class="text-sm font-medium">Complete your delivery address for faster shipping</p>
+    <div class="relative flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 px-6 py-5">
+
+      <div class="flex items-start gap-3 text-gray-800">
+        <div class="w-10 h-10 rounded-full bg-red-600 flex items-center justify-center text-white shrink-0 shadow-md">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M12 20.5c-4.7 0-8.5-3.8-8.5-8.5S7.3 3.5 12 3.5s8.5 3.8 8.5 8.5-3.8 8.5-8.5 8.5z"/>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 16v-4m0-4h.01"/>
+          </svg>
+        </div>
+
+        <div>
+          <p class="text-sm font-extrabold text-gray-900">
+            Faster Delivery Available
+          </p>
+          <p class="text-xs text-gray-600">
+            Add your delivery address now to unlock same-day dispatch.
+          </p>
+        </div>
+      </div>
+
+      <a href="{% url 'manage_address' %}"
+         class="inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-5 py-2 rounded-full text-xs font-extrabold uppercase tracking-wider shadow transition">
+         Add Address
+         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                 d="M9 5l7 7-7 7"/>
+         </svg>
+      </a>
+
     </div>
-
-    <a href="{% url 'manage_address' %}"
-       class="text-xs font-semibold uppercase tracking-wider text-black hover:underline">
-       Add Address
-    </a>
   </div>
 </div>
+
 
 
 
@@ -2060,6 +2089,83 @@ backdrop-filter:blur(8px);
 
 })();
 </script>
+
+
+
+
+
+
+
+
+
+
+{% if not request.user.is_authenticated %}
+
+<div id="quickLogin" class="fixed inset-0 bg-black/80 backdrop-blur-md hidden z-[9999] flex items-center justify-center">
+
+  <div class="bg-[#0f0f0f] w-[92%] max-w-md rounded-3xl border border-red-600/50 shadow-[0_30px_120px_rgba(220,38,38,0.35)] p-3 relative">
+
+    <div class="bg-white rounded-2xl p-7 text-center relative">
+
+      <button onclick="hideLogin()" class="absolute right-3 top-3 text-gray-400 hover:text-red-600 text-2xl">×</button>
+
+      <div class="mb-6">
+        <div class="w-14 h-14 mx-auto rounded-full bg-red-600 flex items-center justify-center text-white text-2xl font-black shadow-lg">TS</div>
+        <h3 class="text-gray-900 text-2xl font-extrabold mt-4 tracking-wide">THINKNSHOP</h3>
+        <p class="text-red-500 text-xs tracking-widest mt-1 uppercase">Members Only Access</p>
+      </div>
+
+      <p class="text-gray-600 text-sm mb-6">
+        Login once. Get exclusive prices, saved designs and faster checkout.
+      </p>
+
+      <a href="/accounts/login/"
+         class="block w-full bg-red-600 hover:bg-red-700 text-white py-3 rounded-xl font-semibold shadow-md transition mb-3">
+         Login
+      </a>
+
+      <a href="/accounts/register/"
+         class="block w-full border border-red-600 text-red-600 hover:bg-red-600 hover:text-white py-3 rounded-xl font-semibold transition">
+         Create Account
+      </a>
+
+    </div>
+  </div>
+</div>
+
+<script>
+if(!USER_AUTH){
+
+  let opened = false;
+
+  function showFastLogin(){
+    if(opened) return;
+    opened = true;
+    document.getElementById("quickLogin").classList.remove("hidden");
+  }
+
+  function hideLogin(){
+    document.getElementById("quickLogin").classList.add("hidden");
+  }
+
+  // Soft auto open
+  setTimeout(showFastLogin, 3500);
+
+  // Hard gate Buy Now
+  document.querySelectorAll(".buy-now-btn").forEach(btn=>{
+    btn.addEventListener("click", e=>{
+      e.preventDefault();
+      showFastLogin();
+    });
+  });
+
+}
+</script>
+
+{% endif %}
+
+
+
 
 
 

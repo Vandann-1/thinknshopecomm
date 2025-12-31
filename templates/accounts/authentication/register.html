@@ -2,142 +2,108 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Create Account | ThinknShop</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Create Account – ThinknShop</title>
 
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: { sans: ['Inter', 'sans-serif'] },
-          colors: {
-            brand: '#dc2626',
-            brandDark: '#b91c1c'
-          }
-        }
-      }
+<script>
+tailwind.config = {
+  theme:{
+    extend:{
+      fontFamily:{ inter:['Inter','sans-serif'] },
+      colors:{ brand:{ red:'#dc2626', dark:'#b91c1c' } }
     }
-  </script>
+  }
+}
+</script>
 </head>
 
-<body class="min-h-screen bg-white font-sans">
+<body class="min-h-screen bg-white font-inter">
 
-  <!-- Top Brand Bar -->
-  <div class="w-full border-b border-gray-200">
-    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center gap-3">
-      <!-- <img src="{% static 'brand/images/thinknshop.png' %}" class="h-8" alt="ThinknShop"> -->
-      <span class="font-extrabold text-lg tracking-tight">ThinknShop</span>
-    </div>
-  </div>
+<div class="min-h-screen grid grid-cols-1 md:grid-cols-2">
 
-  <!-- Main -->
-  <div class="max-w-6xl mx-auto grid lg:grid-cols-2 min-h-[calc(100vh-72px)]">
+<!-- LEFT RED PANEL -->
+<div class="relative bg-gradient-to-br from-red-500 to-red-700 hidden md:flex flex-col justify-center p-14 text-white">
 
-    <!-- Left (Brand Message) -->
-    <div class="hidden lg:flex flex-col justify-center px-12">
-      <h1 class="text-4xl font-extrabold leading-tight">
-        Join <span class="text-brand">ThinknShop</span><br>
-        Shop smarter, faster.
-      </h1>
-      <p class="mt-4 text-gray-600 max-w-md">
-        Create your account to access exclusive deals, faster checkout,
-        and personalized product drops.
-      </p>
+  <div class="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_20%_20%,white,transparent_40%)]"></div>
 
-      <ul class="mt-8 space-y-3 text-sm text-gray-700">
-        <li>✔ Secure checkout</li>
-        <li>✔ Order tracking</li>
-        <li>✔ Early access offers</li>
-      </ul>
-    </div>
+  <h1 class="text-4xl font-black leading-tight relative z-10">
+    Join <span class="text-white">ThinknShop</span><br>
+    Shop smarter, faster.
+  </h1>
 
-    <!-- Right (Form) -->
-    <div class="flex items-center justify-center px-6">
-      <div class="w-full max-w-md border border-gray-200 rounded-2xl p-8 shadow-sm">
+  <p class="mt-4 text-white/90 text-sm max-w-sm relative z-10">
+    Create your account to unlock exclusive prices, faster checkout,
+    and member-only product drops.
+  </p>
 
-        <h2 class="text-2xl font-extrabold mb-1">Create Account</h2>
-        <p class="text-sm text-gray-500 mb-6">
-          Takes less than a minute.
-        </p>
+  <ul class="mt-8 space-y-3 text-sm relative z-10">
+    <li>✔ Secure checkout</li>
+    <li>✔ Order tracking</li>
+    <li>✔ Early access offers</li>
+  </ul>
+</div>
 
-        {% if messages %}
-          <div class="space-y-3 mb-6">
-            {% for message in messages %}
-              <div class="text-sm px-4 py-3 rounded-lg
-                {% if message.tags == 'error' %}
-                  bg-red-50 text-red-600 border border-red-200
-                {% else %}
-                  bg-green-50 text-green-600 border border-green-200
-                {% endif %}
-              ">
-                {{ message }}
-              </div>
-            {% endfor %}
-          </div>
-        {% endif %}
+<!-- RIGHT FORM -->
+<div class="flex items-center justify-center p-6 md:p-12">
 
-        <form method="post" class="space-y-4">
-          {% csrf_token %}
+<div class="w-full max-w-md">
 
-          <div class="grid grid-cols-2 gap-4">
-            <div>
-              <label class="text-sm font-semibold">First Name</label>
-              <input type="text" name="first_name" required
-                class="mt-1 w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand"/>
-            </div>
-            <div>
-              <label class="text-sm font-semibold">Last Name</label>
-              <input type="text" name="last_name" required
-                class="mt-1 w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand"/>
-            </div>
-          </div>
+<h2 class="text-3xl font-black mb-1 text-gray-900">Create Account</h2>
+<p class="text-sm text-gray-500 mb-8">Takes less than a minute</p>
 
-          <div>
-            <label class="text-sm font-semibold">Username</label>
-            <input type="text" name="username" required
-              class="mt-1 w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand"/>
-          </div>
+{% if messages %}
+{% for message in messages %}
+<div class="mb-4 p-3 rounded-lg text-sm font-semibold
+{% if message.tags == 'error' %}
+bg-red-50 text-red-600 border border-red-200
+{% else %}
+bg-green-50 text-green-700 border border-green-200
+{% endif %}">
+{{ message }}
+</div>
+{% endfor %}
+{% endif %}
 
-          <div>
-            <label class="text-sm font-semibold">Email</label>
-            <input type="email" name="email" required
-              class="mt-1 w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand"/>
-          </div>
+<form method="post" class="space-y-4">
+{% csrf_token %}
 
-          <div>
-            <label class="text-sm font-semibold">Password</label>
-            <input type="password" name="password" required
-              class="mt-1 w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand"/>
-          </div>
+<div class="grid grid-cols-2 gap-4">
+<input name="first_name" placeholder="First name" required
+class="border-b border-gray-300 py-3 focus:border-brand-red outline-none">
+<input name="last_name" placeholder="Last name" required
+class="border-b border-gray-300 py-3 focus:border-brand-red outline-none">
+</div>
 
-          <div>
-            <label class="text-sm font-semibold">Confirm Password</label>
-            <input type="password" name="confirm_password" required
-              class="mt-1 w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand"/>
-          </div>
+<input name="username" placeholder="Username" required
+class="w-full border-b border-gray-300 py-3 focus:border-brand-red outline-none">
 
-          <button
-            type="submit"
-            class="w-full bg-brand hover:bg-brandDark text-white py-3.5 rounded-xl font-extrabold transition">
-            Create Account
-          </button>
-        </form>
+<input type="email" name="email" placeholder="Email" required
+class="w-full border-b border-gray-300 py-3 focus:border-brand-red outline-none">
 
-        <p class="text-sm text-center text-gray-500 mt-6">
-          Already have an account?
-          <a href="{% url 'login' %}" class="text-brand font-bold hover:underline ml-1">
-            Sign in
-          </a>
-        </p>
+<input type="password" name="password" placeholder="Password" required
+class="w-full border-b border-gray-300 py-3 focus:border-brand-red outline-none">
 
-      </div>
-    </div>
+<input type="password" name="confirm_password" placeholder="Confirm Password" required
+class="w-full border-b border-gray-300 py-3 focus:border-brand-red outline-none">
 
-  </div>
+<button type="submit"
+class="w-full bg-brand-red hover:bg-brand-dark text-white py-3 rounded-full font-black tracking-wide transition mt-4">
+CREATE ACCOUNT
+</button>
+</form>
 
+<p class="text-sm text-center text-gray-600 mt-6">
+Already have an account?
+<a href="{% url 'login' %}" class="text-brand-red font-bold hover:underline">Sign in</a>
+</p>
+
+</div>
+</div>
+
+</div>
 </body>
 </html>
