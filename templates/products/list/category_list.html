@@ -222,239 +222,277 @@ body {
 <div class="min-h-screen bg-white" style="background: #ffffff !important; background-color: #ffffff !important;">
   
   <!-- Hero Section - Mobile Optimized with Red Theme -->
-  <section class="bg-gradient-to-br from-gray-50 via-primary-50 to-primary-100 py-8 sm:py-12 lg:py-16 xl:py-20" style="background: linear-gradient(135deg, #fafafa 0%, #fef2f2 50%, #fee2e2 100%) !important;">
-    <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
-      <div class="text-center">
-        <h1 class="mobile-hero-title sm:text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-900 mb-3 sm:mb-6 tracking-tight">
-          Shop by Category
-        </h1>
-        <p class="mobile-hero-subtitle sm:text-xl lg:text-2xl text-gray-600 max-w-3xl mx-auto leading-relaxed px-2 sm:px-4">
-          Discover our complete range of premium fashion categories
-        </p>
-      </div>
-    </div>
-  </section>
+<section class="relative overflow-hidden bg-[#fff7f7] py-10 sm:py-14 lg:py-20">
+
+<div class="max-w-7xl mx-auto px-4 text-center">
+
+<p class="text-[11px] tracking-[3px] uppercase text-red-500 font-semibold">
+Browse Collections
+</p>
+
+<h1 class="mt-3 text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-gray-900">
+Shop by Category
+</h1>
+
+<p class="mt-3 text-sm sm:text-base lg:text-lg text-gray-600 max-w-xl mx-auto">
+Premium streetwear, anime & fashion collections curated for modern style.
+</p>
+
+<!-- Action row -->
+<div class="mt-6 flex justify-center gap-3">
+<a href="#categories"
+class="px-6 py-3 rounded-full bg-black text-white text-sm font-semibold hover:scale-105 transition">
+Explore Categories
+</a>
+<a href="#new"
+class="px-6 py-3 rounded-full border border-black text-black text-sm font-semibold hover:bg-black hover:text-white transition">
+New Drops
+</a>
+</div>
+
+</div>
+
+</section>
+
 
   <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-6 sm:py-12 bg-white" style="background: #ffffff !important;">
     <!-- Search and Filter Section - Mobile Optimized -->
-    <div class="mb-6 sm:mb-12">
-      <form method="GET" class="max-w-2xl mx-auto">
-        <div class="relative">
-          <div class="absolute inset-y-0 left-0 pl-3 sm:pl-4 flex items-center pointer-events-none">
-            <svg class="h-4 w-4 sm:h-5 sm:w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-            </svg>
-          </div>
-          <input 
-            type="text" 
-            name="search" 
-            value="{{ search_query }}"
-            placeholder="Search categories..." 
-            class="search-input w-full pl-10 sm:pl-12 pr-16 sm:pr-20 py-3 sm:py-4 text-sm sm:text-lg border border-gray-200 rounded-xl bg-white shadow-soft focus:border-primary-500 transition-all duration-200"
-          >
-          <button 
-            type="submit" 
-            class="absolute right-1 top-1 bottom-1 px-3 sm:px-6 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 text-xs sm:text-base"
-          >
-            Search
-          </button>
-        </div>
-        {% if search_query %}
-        <div class="text-center mt-3 sm:mt-4">
-          <a href="{% url 'products:category-list' %}" 
-             class="inline-flex items-center px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium text-gray-600 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors duration-200">
-            <svg class="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-            </svg>
-            Clear Search
-          </a>
-        </div>
-        {% endif %}
-      </form>
-    </div>
+<div class="mb-8">
+
+<form method="GET" class="max-w-xl mx-auto px-3">
+
+<div class="relative">
+
+<input
+  type="text"
+  name="search"
+  value="{{ search_query }}"
+  placeholder="Search collections, anime, bottles..."
+  class="w-full h-12 pl-11 pr-24 text-sm rounded-full border border-gray-300 bg-white focus:outline-none focus:ring-2 focus:ring-black"
+/>
+
+<div class="absolute inset-y-0 left-4 flex items-center pointer-events-none">
+<svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+</svg>
+</div>
+
+<button
+  type="submit"
+  class="absolute right-1 top-1 bottom-1 px-4 bg-black text-white text-xs font-semibold rounded-full hover:opacity-90">
+Search
+</button>
+
+</div>
+
+{% if search_query %}
+<div class="text-center mt-3">
+<a href="{% url 'products:category-list' %}"
+class="inline-flex items-center text-xs text-gray-600">
+Clear Search ✕
+</a>
+</div>
+{% endif %}
+
+</form>
+</div>
+
 
     <!-- Statistics Section - Mobile Optimized with Red Theme -->
-    <div class="mb-8 sm:mb-16">
-      <h2 class="text-xl sm:text-3xl font-bold text-gray-900 text-center mb-4 sm:mb-10">Category Overview</h2>
-      <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
-        <div class="stat-card mobile-stat-card sm:p-6 lg:p-8 rounded-xl sm:rounded-2xl shadow-card text-center bg-white">
-          <div class="text-xl sm:text-3xl lg:text-4xl font-bold text-primary-600 mb-1 sm:mb-2">{{ total_categories }}</div>
-          <div class="text-gray-600 font-medium text-xs sm:text-base">Total Categories</div>
-        </div>
-        <div class="stat-card mobile-stat-card sm:p-6 lg:p-8 rounded-xl sm:rounded-2xl shadow-card text-center bg-white">
-          <div class="text-xl sm:text-3xl lg:text-4xl font-bold text-primary-600 mb-1 sm:mb-2">{{ featured_categories|length }}</div>
-          <div class="text-gray-600 font-medium text-xs sm:text-base">Featured Categories</div>
-        </div>
-        <div class="stat-card mobile-stat-card sm:p-6 lg:p-8 rounded-xl sm:rounded-2xl shadow-card text-center bg-white">
-          <div class="text-xl sm:text-3xl lg:text-4xl font-bold text-primary-600 mb-1 sm:mb-2">{{ popular_categories|length }}</div>
-          <div class="text-gray-600 font-medium text-xs sm:text-base">Popular Categories</div>
-        </div>
-        <div class="stat-card mobile-stat-card sm:p-6 lg:p-8 rounded-xl sm:rounded-2xl shadow-card text-center bg-white">
-          <div class="text-xl sm:text-3xl lg:text-4xl font-bold text-primary-600 mb-1 sm:mb-2">{{ categories|length }}</div>
-          <div class="text-gray-600 font-medium text-xs sm:text-base">Main Categories</div>
-        </div>
-      </div>
-    </div>
+ <div class="mb-12">
+
+<h2 class="text-xl font-black text-gray-900 text-center mb-4">
+Category Overview
+</h2>
+
+<!-- MOBILE STRIP -->
+<div class="grid grid-cols-2 gap-3 md:hidden">
+
+<div class="bg-white border border-gray-200 rounded-xl p-4 text-center">
+<p class="text-2xl font-black text-black">{{ total_categories }}</p>
+<p class="text-[11px] uppercase tracking-wide text-gray-500">Categories</p>
+</div>
+
+<div class="bg-white border border-gray-200 rounded-xl p-4 text-center">
+<p class="text-2xl font-black text-black">{{ featured_categories|length }}</p>
+<p class="text-[11px] uppercase tracking-wide text-gray-500">Featured</p>
+</div>
+
+<div class="bg-white border border-gray-200 rounded-xl p-4 text-center">
+<p class="text-2xl font-black text-black">{{ popular_categories|length }}</p>
+<p class="text-[11px] uppercase tracking-wide text-gray-500">Popular</p>
+</div>
+
+<div class="bg-white border border-gray-200 rounded-xl p-4 text-center">
+<p class="text-2xl font-black text-black">{{ categories|length }}</p>
+<p class="text-[11px] uppercase tracking-wide text-gray-500">Main</p>
+</div>
+
+</div>
+
+<!-- DESKTOP STRIP -->
+<div class="hidden md:grid grid-cols-4 gap-4 max-w-5xl mx-auto">
+
+<div class="bg-white border border-gray-200 rounded-2xl p-6 text-center">
+<p class="text-4xl font-black">{{ total_categories }}</p>
+<p class="text-sm text-gray-500 uppercase tracking-wide mt-1">Total Categories</p>
+</div>
+
+<div class="bg-white border border-gray-200 rounded-2xl p-6 text-center">
+<p class="text-4xl font-black">{{ featured_categories|length }}</p>
+<p class="text-sm text-gray-500 uppercase tracking-wide mt-1">Featured</p>
+</div>
+
+<div class="bg-white border border-gray-200 rounded-2xl p-6 text-center">
+<p class="text-4xl font-black">{{ popular_categories|length }}</p>
+<p class="text-sm text-gray-500 uppercase tracking-wide mt-1">Popular</p>
+</div>
+
+<div class="bg-white border border-gray-200 rounded-2xl p-6 text-center">
+<p class="text-4xl font-black">{{ categories|length }}</p>
+<p class="text-sm text-gray-500 uppercase tracking-wide mt-1">Main</p>
+</div>
+
+</div>
+
+</div>
+
 
     <!-- Featured Categories - Mobile Optimized with Red Theme -->
-    {% if featured_categories %}
-    <section class="mb-12 sm:mb-20">
-      <div class="text-center mb-6 sm:mb-12">
-        <h2 class="text-xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-2 sm:mb-4">Featured Categories</h2>
-        <p class="text-sm sm:text-lg text-gray-600 max-w-2xl mx-auto px-2 sm:px-4">Our most popular and trending categories, handpicked for you</p>
-      </div>
-      
-      <!-- Mobile: 2 columns, Tablet+: responsive grid -->
-      <div class="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-8">
-        {% for category in featured_categories %}
-        <div class="category-card-hover bg-white rounded-xl sm:rounded-2xl shadow-card overflow-hidden group mobile-category-card">
-          <div class="relative h-32 sm:h-56 lg:h-64 overflow-hidden">
-            {% if category.image %}
-            <img src="{{ category.image.url }}" alt="{{ category.name }}" 
-                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-            {% else %}
-            <div class="w-full h-full bg-gradient-to-br from-primary-100 to-primary-200 flex items-center justify-center">
-              <span class="text-base sm:text-2xl font-bold text-primary-700">{{ category.name|first }}</span>
-            </div>
-            {% endif %}
-            <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center">
-              <span class="text-white font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-xs sm:text-base">
-                Explore {{ category.name }}
-              </span>
-            </div>
-          </div>
-          
-          <div class="p-3 sm:p-6 lg:p-8 bg-white">
-            <h3 class="text-sm sm:text-2xl font-bold text-gray-900 mb-1 sm:mb-3 line-clamp-1">{{ category.name }}</h3>
-            <p class="text-gray-600 mb-3 sm:mb-6 leading-relaxed text-xs sm:text-base line-clamp-2">{{ category.description|truncatewords:8 }}</p>
-            
-            <div class="flex items-center justify-between mb-3 sm:mb-6 text-xs text-gray-500 flex-wrap gap-1">
-              <span class="flex items-center">
-                <svg class="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
-                </svg>
-                {{ category.total_products }} Products
-              </span>
-              <span class="flex items-center">
-                <svg class="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
-                </svg>
-                {{ category.subcategory_count }} Subcategories
-              </span>
-            </div>
-            
-            <a href="{% url 'products:category-detail' category.slug %}" 
-               class="mobile-btn block w-full text-center bg-primary-600 hover:bg-primary-700 text-white font-semibold sm:py-4 sm:px-6 rounded-lg sm:rounded-xl transition-colors duration-200 sm:text-base">
-              Explore Category
-            </a>
-          </div>
-        </div>
-        {% endfor %}
-      </div>
-    </section>
-    {% endif %}
+{% if featured_categories %}
+<section class="mb-16">
+
+<h2 class="text-xl font-black text-gray-900 text-center mb-5">
+Featured Categories
+</h2>
+
+<!-- MOBILE CAROUSEL -->
+<div class="block md:hidden">
+
+<div class="flex gap-3 px-3 overflow-x-auto snap-x snap-mandatory pb-3">
+
+{% for category in featured_categories %}
+<a href="{% url 'products:category-detail' category.slug %}"
+class="snap-start shrink-0 w-[160px] bg-white border border-gray-200 rounded-xl overflow-hidden">
+
+<div class="aspect-square bg-gray-100">
+{% if category.image %}
+<img src="{{ category.image.url }}" class="w-full h-full object-cover">
+{% else %}
+<div class="w-full h-full flex items-center justify-center text-xl font-black text-gray-400">
+{{ category.name|first }}
+</div>
+{% endif %}
+</div>
+
+<div class="p-2">
+<h3 class="text-[12px] font-semibold leading-tight line-clamp-2">
+{{ category.name }}
+</h3>
+<p class="text-[10px] text-gray-500">
+{{ category.total_products }} Products
+</p>
+</div>
+
+</a>
+{% endfor %}
+</div>
+</div>
+
+<!-- DESKTOP GRID -->
+<div class="hidden md:grid grid-cols-3 lg:grid-cols-4 gap-5 max-w-7xl mx-auto px-4">
+
+{% for category in featured_categories %}
+<a href="{% url 'products:category-detail' category.slug %}"
+class="bg-white border border-gray-200 rounded-2xl overflow-hidden hover:shadow-md transition">
+
+<div class="aspect-[4/3] bg-gray-100">
+{% if category.image %}
+<img src="{{ category.image.url }}" class="w-full h-full object-cover">
+{% else %}
+<div class="w-full h-full flex items-center justify-center text-3xl font-black text-gray-400">
+{{ category.name|first }}
+</div>
+{% endif %}
+</div>
+
+<div class="p-4">
+<h3 class="font-semibold text-sm line-clamp-1">{{ category.name }}</h3>
+<p class="text-xs text-gray-500 mt-1">
+{{ category.total_products }} Products · {{ category.subcategory_count }} Subcategories
+</p>
+</div>
+
+</a>
+{% endfor %}
+</div>
+
+</section>
+{% endif %}
+
 
     <!-- Main Categories Grid - Mobile Optimized with 2 columns -->
-<section class="mb-12 sm:mb-20">
-  <div class="text-center mb-6 sm:mb-12">
-    <h2 class="text-xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-2 sm:mb-4">
-      All Categories
-    </h2>
-    <p class="text-sm sm:text-lg text-gray-600 max-w-2xl mx-auto px-2 sm:px-4">
-      Browse through our complete collection of categories
-    </p>
-  </div>
+{% if categories %}
+<section class="mb-16">
 
-  {% if categories %}
-  <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6">
+<h2 class="text-xl font-black text-center mb-4">All Categories</h2>
 
-    {% for category in categories %}
-    <div class="bg-white rounded-xl shadow-card overflow-hidden group flex flex-col 
-                h-[270px] sm:h-[380px] md:h-[410px]">
+<!-- MOBILE GRID -->
+<div class="grid grid-cols-2 gap-3 md:hidden px-3">
 
-      <!-- IMAGE -->
-      <div class="relative h-20 sm:h-32 md:h-40 overflow-hidden flex-shrink-0">
-        {% if category.image %}
-        <img src="{{ category.image.url }}" alt="{{ category.name }}"
-             class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
-        {% else %}
-        <div class="w-full h-full bg-gray-200 flex items-center justify-center">
-          <span class="text-lg font-semibold text-gray-500">{{ category.name|first }}</span>
-        </div>
-        {% endif %}
+{% for category in categories %}
+<a href="{% url 'products:category-detail' category.slug %}"
+class="bg-white border border-gray-200 rounded-xl overflow-hidden">
 
-        <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center">
-          <span class="text-white font-semibold opacity-0 group-hover:opacity-100 text-[10px] sm:text-xs">
-            View Products
-          </span>
-        </div>
-      </div>
+<div class="aspect-square bg-gray-100">
+{% if category.image %}
+<img src="{{ category.image.url }}" class="w-full h-full object-cover">
+{% else %}
+<div class="w-full h-full flex items-center justify-center text-xl font-black text-gray-400">
+{{ category.name|first }}
+</div>
+{% endif %}
+</div>
 
-      <!-- CONTENT -->
-      <div class="p-2 sm:p-4 flex flex-col flex-grow">
+<div class="p-2">
+<h3 class="text-[12px] font-semibold line-clamp-1">{{ category.name }}</h3>
+<p class="text-[10px] text-gray-500">{{ category.total_products }} products</p>
+</div>
+</a>
+{% endfor %}
+</div>
 
-        <h3 class="text-xs sm:text-lg font-bold text-gray-900 mb-1 line-clamp-1">
-          {{ category.name }}
-        </h3>
+<!-- DESKTOP GRID -->
+<div class="hidden md:grid max-w-7xl mx-auto px-4 grid-cols-3 lg:grid-cols-4 gap-5">
 
-        <p class="text-[10px] sm:text-sm text-gray-600 mb-1 sm:mb-2 line-clamp-2 leading-snug">
-          {{ category.description|truncatewords:10 }}
-        </p>
+{% for category in categories %}
+<a href="{% url 'products:category-detail' category.slug %}"
+class="bg-white border border-gray-200 rounded-2xl overflow-hidden hover:shadow-md transition">
 
-        <!-- STATS -->
-        <div class="flex items-center justify-between text-[10px] sm:text-xs text-gray-500 mb-1 flex-wrap gap-1">
-          <span class="flex items-center">
-            <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
-            </svg>
-            {{ category.total_products }}
-          </span>
+<div class="aspect-[4/3] bg-gray-100">
+{% if category.image %}
+<img src="{{ category.image.url }}" class="w-full h-full object-cover">
+{% else %}
+<div class="w-full h-full flex items-center justify-center text-3xl font-black text-gray-400">
+{{ category.name|first }}
+</div>
+{% endif %}
+</div>
 
-          {% if category.subcategory_count %}
-          <span class="flex items-center">
-            <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2" />
-            </svg>
-            {{ category.subcategory_count }}
-          </span>
-          {% endif %}
-        </div>
+<div class="p-4">
+<h3 class="font-semibold text-sm line-clamp-1">{{ category.name }}</h3>
+<p class="text-xs text-gray-500 mt-1">
+{{ category.total_products }} Products
+{% if category.subcategory_count %} · {{ category.subcategory_count }} Subcategories{% endif %}
+</p>
+</div>
+</a>
+{% endfor %}
+</div>
 
-        {% if category.subcategories.all %}
-        <div class="hidden sm:block mb-3">
-          <p class="text-xs font-semibold text-gray-700 mb-1">Subcategories:</p>
-          <div class="flex flex-wrap gap-1">
-            {% for subcategory in category.subcategories.all|slice:":2" %}
-            <a href="{% url 'products:category-detail' subcategory.slug %}" 
-               class="px-2 py-1 text-xs font-medium text-gray-600 bg-gray-100 rounded-md">
-              {{ subcategory.name }}
-            </a>
-            {% endfor %}
-            {% if category.subcategories.all|length > 2 %}
-            <span class="px-2 py-1 text-xs font-medium text-amber-700 bg-amber-100 rounded-md">
-              +{{ category.subcategories.all|length|add:"-2" }} more
-            </span>
-            {% endif %}
-          </div>
-        </div>
-        {% endif %}
-
-        <!-- CTA BUTTON -->
-        <a href="{% url 'products:category-detail' category.slug %}"
-           class="block w-full text-center bg-gray-900 hover:bg-gray-800 text-white font-semibold 
-                  py-2 sm:py-3 rounded-lg mt-auto text-[11px] sm:text-base transition">
-          View Products
-        </a>
-
-      </div>
-    </div>
-    {% endfor %}
-
-  </div>
-  {% endif %}
 </section>
+{% endif %}
 
 
     <!-- Popular Categories Section - Mobile Optimized with Red Theme -->
