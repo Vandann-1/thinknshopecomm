@@ -1150,19 +1150,12 @@ const USER_AUTH = {{ request.user.is_authenticated|yesno:"true,false" }};
 <header class="skatezo-navbar-container relative bg-white border-b border-gray-200 shadow-sm">
 
 <!-- TOP SHIPPING BAR -->
-<div class="bg-black border-b border-white/10">
-  <div class="max-w-7xl mx-auto px-3 py-2 flex items-center justify-center gap-2 text-[10px] sm:text-xs font-semibold uppercase text-white">
-
-    <span class="opacity-70 hidden sm:inline">Free Shipping Above</span>
-
-    <span class="px-2 py-[2px] border border-white/30 rounded-md tracking-wider">
-      ₹500
-    </span>
-
-    <span class="opacity-40 hidden sm:inline">Pan-India Delivery</span>
-
+<div class="bg-black">
+  <div class="max-w-7xl mx-auto px-3 py-2 text-center text-[11px] sm:text-xs text-white font-medium">
+    Free shipping on orders above <span class="font-semibold">₹500</span> • Pan-India delivery
   </div>
 </div>
+
 
 <!-- DELIVERY NOTICE -->
 <div id="addressBar" class="max-w-7xl mx-auto mt-3 px-3">
@@ -1375,93 +1368,92 @@ document.body.style.overflow=''
 <br>
 <br> -->
 
-<section class="relative w-full min-h-[100dvh] overflow-hidden bg-black">
+<section class="relative w-full h-[78vh] sm:h-[70vh] overflow-hidden bg-black">
 
-  <div id="hero-slider" class="relative w-full min-h-[100dvh]">
+  <div id="hero-slider" class="relative w-full h-full">
 
-    <!-- SLIDE 1 : RED -->
+    <!-- SLIDE 1 -->
     <div class="hero-slide absolute inset-0 bg-red-600 flex items-center">
-      <div class="w-full max-w-6xl mx-auto px-5 flex flex-col md:flex-row items-center gap-10">
+      <div class="w-full max-w-6xl mx-auto px-5 flex flex-col md:flex-row items-center gap-6">
 
-        <!-- TEXT -->
         <div class="text-white text-center md:text-left md:w-1/2">
-          <p class="uppercase tracking-widest text-sm opacity-90">All</p>
+          <p class="uppercase tracking-widest text-xs opacity-90">All</p>
 
-          <h1 class="mt-3 text-4xl md:text-6xl font-black leading-tight">
+          <h1 class="mt-2 text-3xl md:text-5xl font-black leading-tight">
             Bottles<br class="hidden md:block"> in ₹99
           </h1>
 
-          <p class="mt-4 text-white/90 max-w-md mx-auto md:mx-0">
+          <p class="mt-3 text-white/90 max-w-md mx-auto md:mx-0 text-sm">
             Premium finish. Built for everyday hustle.
           </p>
 
-          <a href="{% url 'products:product-list' %}" class="inline-block mt-6 px-8 py-3 bg-black text-white rounded-full font-semibold">
+          <a href="{% url 'products:product-list' %}"
+             class="inline-block mt-4 px-7 py-2.5 bg-black text-white rounded-full text-sm font-semibold">
             Shop Now
           </a>
         </div>
 
-        <!-- PRODUCT -->
         <div class="md:w-1/2 flex justify-center">
-        <img src="https://wallpapercave.com/wp/wp10129207.jpg"
-         class="w-[200px] sm:w-[220px] md:w-[360px] drop-shadow-2xl animate-float"
-         alt="ThinknShop Bottle">
+          <img src="https://wallpapercave.com/wp/wp10129207.jpg"
+               class="w-[180px] sm:w-[200px] md:w-[300px] animate-float drop-shadow-2xl"
+               alt="Bottle">
         </div>
       </div>
     </div>
-    
 
-    <!-- SLIDE 2 : YELLOW -->
+    <!-- SLIDE 2 -->
     <div class="hero-slide absolute inset-0 bg-yellow-400 flex items-center translate-x-full">
-      <div class="w-full max-w-6xl mx-auto px-5 flex flex-col md:flex-row items-center gap-10">
+      <div class="w-full max-w-6xl mx-auto px-5 flex flex-col md:flex-row items-center gap-6">
 
         <div class="text-black text-center md:text-left md:w-1/2">
-          <p class="uppercase tracking-widest text-sm">Trending</p>
+          <p class="uppercase tracking-widest text-xs">Trending</p>
 
-          <h1 class="mt-3 text-4xl md:text-6xl font-black leading-tight">
-            Anime <br class="hidden md:block"> Bottles
+          <h1 class="mt-2 text-3xl md:text-5xl font-black leading-tight">
+            Anime<br class="hidden md:block"> Bottles
           </h1>
 
-          <p class="mt-4 text-black/80 max-w-md mx-auto md:mx-0">
+          <p class="mt-3 text-black/80 max-w-md mx-auto md:mx-0 text-sm">
             Sharp prints. Long-lasting color.
           </p>
 
-          <a href="{% url 'products:product-list' %}" class="inline-block mt-6 px-8 py-3 bg-black text-white rounded-full font-semibold">
+          <a href="{% url 'products:product-list' %}"
+             class="inline-block mt-4 px-7 py-2.5 bg-black text-white rounded-full text-sm font-semibold">
             View Collection
           </a>
         </div>
 
         <div class="md:w-1/2 flex justify-center">
           <img src="https://external-preview.redd.it/PsdO3t-JtAU4jSo3K31PcRvqpF59Zr68VSRwrxxYS88.png?format=pjpg&auto=webp&s=a594e4839ef5d369fa256c2626f5f0ce252cd14e"
-               class="w-[240px] md:w-[360px] animate-float drop-shadow-2xl"
+               class="w-[180px] md:w-[300px] animate-float drop-shadow-2xl"
                alt="">
         </div>
       </div>
     </div>
 
-    <!-- SLIDE 3 : BLACK + ORANGE -->
+    <!-- SLIDE 3 -->
     <div class="hero-slide absolute inset-0 bg-black flex items-center translate-x-full">
-      <div class="w-full max-w-6xl mx-auto px-5 flex flex-col md:flex-row items-center gap-10">
+      <div class="w-full max-w-6xl mx-auto px-5 flex flex-col md:flex-row items-center gap-6">
 
         <div class="text-white text-center md:text-left md:w-1/2">
-          <p class="uppercase tracking-widest text-sm text-orange-400">Custom</p>
+          <p class="uppercase tracking-widest text-xs text-orange-400">Custom</p>
 
-          <h1 class="mt-3 text-4xl md:text-6xl font-black leading-tight">
-            Your <br class="hidden md:block"> Design
+          <h1 class="mt-2 text-3xl md:text-5xl font-black leading-tight">
+            Your<br class="hidden md:block"> Design
           </h1>
 
-          <p class="mt-4 text-white/80 max-w-md mx-auto md:mx-0">
+          <p class="mt-3 text-white/80 max-w-md mx-auto md:mx-0 text-sm">
             Upload. Customize. We print it clean.
           </p>
 
-          <a href="{% url 'products:product-list' %}" class="inline-block mt-6 px-8 py-3 bg-orange-500 text-black rounded-full font-semibold">
-        
+          <a href="{% url 'products:product-list' %}"
+             class="inline-block mt-4 px-7 py-2.5 bg-orange-500 text-black rounded-full text-sm font-semibold">
             Customize Now
           </a>
         </div>
 
         <div class="md:w-1/2 flex justify-center">
           <img src="https://wallpaperaccess.com/full/342047.jpg"
-               class="w-[240px] md:w-[360px] animate-float drop-shadow-2xl"
+               class="w-[180px] md:w-[300px] animate-float drop-shadow-2xl"
                alt="">
         </div>
       </div>
@@ -1470,12 +1462,13 @@ document.body.style.overflow=''
   </div>
 
   <!-- DOTS -->
-  <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-3 z-50">
-    <button class="dot w-3 h-3 rounded-full bg-white"></button>
-    <button class="dot w-3 h-3 rounded-full bg-white/40"></button>
-    <button class="dot w-3 h-3 rounded-full bg-white/40"></button>
+  <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-50">
+    <button class="dot w-2.5 h-2.5 rounded-full bg-white"></button>
+    <button class="dot w-2.5 h-2.5 rounded-full bg-white/40"></button>
+    <button class="dot w-2.5 h-2.5 rounded-full bg-white/40"></button>
   </div>
 </section>
+
 
 
 <script>
@@ -1561,66 +1554,137 @@ showSlide(0);
 
 
     <!-- COLLECTION GRID -->
-    <section class="py-16 sm:py-20 lg:py-28 bg-gray-50" id="shop">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+<section class="py-14 sm:py-20 lg:py-28 bg-gray-50" id="shop">
+<div class="max-w-7xl mx-auto px-4 sm:px-6">
 
-<div class="flex flex-col sm:flex-row justify-between items-center sm:items-end border-b-2 border-gray-200 pb-4 mb-10">
-    <h3 class="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-extrabold uppercase tracking-wide text-gray-900">
-        Explore Our Exclusive Collections
-    </h3>
-
-    <a href="{% url 'products:product-list' %}"
-       class="mt-3 sm:mt-0 text-sm sm:text-base md:text-lg font-semibold text-gray-700 hover:text-red-600">
-        VIEW ALL
-    </a>
+<div class="flex flex-col sm:flex-row justify-between items-center sm:items-end border-b-2 border-gray-200 pb-4 mb-8">
+  <h3 class="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-extrabold uppercase tracking-wide text-gray-900">
+    Explore Our Exclusive Collections
+  </h3>
+  <a href="{% url 'products:product-list' %}" class="mt-3 sm:mt-0 text-sm sm:text-base md:text-lg font-semibold text-gray-700 hover:text-red-600">
+    VIEW ALL
+  </a>
 </div>
 
+<div class="flex md:grid gap-6 md:grid-cols-3
+            overflow-x-auto md:overflow-visible snap-x snap-mandatory
+            scroll-smooth pb-4 no-scrollbar">
 
-            <!-- Grid -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 sm:gap-10">
+<!-- CARD 1 -->
+<div class="min-w-[85%] sm:min-w-[45%] md:min-w-0 snap-start group rounded-xl overflow-hidden bg-white shadow hover:shadow-xl transition">
+<a href="{% url 'products:product-list' %}">
+<img src="https://tse1.mm.bing.net/th/id/OIP.t6Y6eGlJxEM4agu9noWCyAHaHa?pid=ImgDet&w=192&h=192&c=7&dpr=1.4&o=7&rm=3"
+     class="w-full h-52 sm:h-64 object-cover group-hover:scale-105 transition">
+<div class="p-4">
+<h4 class="text-lg font-black uppercase">Anime Collection</h4>
+<p class="text-sm text-gray-600">Limited edition anime saga bottles.</p>
+<span class="text-red-600 text-sm font-semibold">View Drops →</span>
+</div>
+</a>
+</div>
 
-                <!-- CARD 1 -->
-                <div class="group rounded-xl overflow-hidden shadow-md hover:shadow-xl bg-white transition">
-                    <a href="{% url 'products:product-list' %}">
-                        <img src="https://tse1.mm.bing.net/th/id/OIP.t6Y6eGlJxEM4agu9noWCyAHaHa?pid=ImgDet&w=192&h=192&c=7&dpr=1.4&o=7&rm=3"
-                             class="w-full h-56 sm:h-72 object-cover group-hover:scale-105 transition">
-                        <div class="p-5 sm:p-6">
-                            <h4 class="text-lg sm:text-xl font-bold uppercase tracking-wider text-gray-900">THE ANIME COLLECTION</h4>
-                            <p class="text-sm text-gray-600 mt-1 mb-2">Limited edition designs inspired by legendary sagas.</p>
-                            <span class="text-sm font-semibold text-red-600">View Anime Drops →</span>
-                        </div>
-                    </a>
-                </div>
+<!-- CARD 2 -->
+<div class="min-w-[85%] sm:min-w-[45%] md:min-w-0 snap-start group rounded-xl overflow-hidden bg-white shadow hover:shadow-xl transition">
+<a href="{% url 'products:product-list' %}">
+<img src="https://64.media.tumblr.com/0f0808976e48a6747902882666fa5984/tumblr_p1fvxkdNLl1tawvufo1_1280.png"
+     class="w-full h-52 sm:h-64 object-cover group-hover:scale-105 transition">
+<div class="p-4">
+<h4 class="text-lg font-black uppercase">BTS Army Series</h4>
+<p class="text-sm text-gray-600">Official purple army editions.</p>
+<span class="text-red-600 text-sm font-semibold">Explore Series →</span>
+</div>
+</a>
+</div>
 
-                <!-- CARD 2 -->
-                <div class="group rounded-xl overflow-hidden shadow-md hover:shadow-xl bg-white transition">
-                    <a href="{% url 'products:product-list' %}">
-                        <img src="https://64.media.tumblr.com/0f0808976e48a6747902882666fa5984/tumblr_p1fvxkdNLl1tawvufo1_1280.png"
-                             class="w-full h-56 sm:h-72 object-cover group-hover:scale-105 transition">
-                        <div class="p-5 sm:p-6">
-                            <h4 class="text-lg sm:text-xl font-bold uppercase tracking-wider text-gray-900">THE BTS A.R.M.Y. SERIES</h4>
-                            <p class="text-sm text-gray-600 mt-1 mb-2">Exclusive purple gear for the dedicated fan base.</p>
-                            <span class="text-sm font-semibold text-red-600">View Official Drops →</span>
-                        </div>
-                    </a>
-                </div>
+<!-- CARD 3 -->
+<div class="min-w-[85%] sm:min-w-[45%] md:min-w-0 snap-start group rounded-xl overflow-hidden bg-white shadow hover:shadow-xl transition">
+<a href="{% url 'products:product-list' %}">
+<img src="https://i.etsystatic.com/27272948/r/il/e32fd0/4356401131/il_1080xN.4356401131_jhd9.jpg"
+     class="w-full h-52 sm:h-64 object-cover group-hover:scale-105 transition">
+<div class="p-4">
+<h4 class="text-lg font-black uppercase">Design Your Own</h4>
+<p class="text-sm text-gray-600">Upload your own custom artwork.</p>
+<span class="text-red-600 text-sm font-semibold">Start Customizing →</span>
+</div>
+</a>
+</div>
 
-                <!-- CARD 3 -->
-                <div class="group rounded-xl overflow-hidden shadow-md hover:shadow-xl bg-white transition">
-                    <a href="{% url 'products:product-list' %}">
-                        <img src="https://i.etsystatic.com/27272948/r/il/e32fd0/4356401131/il_1080xN.4356401131_jhd9.jpg"
-                             class="w-full h-56 sm:h-72 object-cover group-hover:scale-105 transition">
-                        <div class="p-5 sm:p-6">
-                            <h4 class="text-lg sm:text-xl font-bold uppercase tracking-wider text-gray-900">DESIGN YOUR OWN</h4>
-                            <p class="text-sm text-gray-600 mt-1 mb-2">Upload your picture or choose a unique graphic.</p>
-                            <span class="text-sm font-semibold text-red-600">Start Customizing →</span>
-                        </div>
-                    </a>
-                </div>
+</div>
+</div>
+</section>
 
-            </div>
-        </div>
-    </section>
+
+
+{% if featured_products %}
+<div class="max-w-7xl mx-auto px-4 mt-14">
+
+<h2 class="text-lg font-black mb-4">Best Picks</h2>
+
+<div id="productContainer"
+     class="flex md:grid gap-4 md:grid-cols-2 lg:grid-cols-3
+            overflow-x-auto md:overflow-visible snap-x snap-mandatory
+            scroll-smooth pb-4 no-scrollbar px-2">
+
+{% for product in featured_products %}
+<div class="min-w-[78%] sm:min-w-[48%] md:min-w-0 snap-start
+            bg-white rounded-2xl border border-gray-200 overflow-hidden
+            group relative transition-all duration-300 hover:shadow-xl hover:-translate-y-1
+            h-[430px] flex flex-col">
+
+<div class="absolute top-3 left-3 z-10 flex flex-col gap-1">
+{% if product.is_new_arrival %}<span class="badge badge-blue">NEW</span>{% endif %}
+{% if product.get_discount_percent %}<span class="badge badge-red">{{ product.get_discount_percent }}% OFF</span>{% endif %}
+{% if product.is_bestseller %}<span class="badge badge-amber">BESTSELLER</span>{% endif %}
+{% if product.is_featured %}<span class="badge badge-purple">FEATURED</span>{% endif %}
+</div>
+
+<div class="h-[55%] bg-gray-50 overflow-hidden">
+<a href="{% url 'products:product-detail' product.slug %}">
+{% if product.get_primary_image %}
+<img src="{{ product.get_primary_image }}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+{% else %}
+<div class="h-full flex items-center justify-center text-gray-400">No Image</div>
+{% endif %}
+</a>
+</div>
+
+<div class="p-4 flex flex-col justify-between h-[45%]">
+
+<div>
+<h3 class="font-semibold text-gray-900 line-clamp-2 leading-tight">
+<a href="{% url 'products:product-detail' product.slug %}">{{ product.name }}</a>
+</h3>
+<p class="text-xs text-gray-500 mt-1">{{ product.brand.name }} • {{ product.category.name }}</p>
+
+{% if product.discounted_price %}
+<div class="mt-2 flex items-center gap-2">
+<span class="text-lg font-bold text-gray-900">₹{{ product.discounted_price }}</span>
+<span class="text-sm line-through text-gray-400">₹{{ product.base_price }}</span>
+</div>
+{% else %}
+<div class="mt-2 text-lg font-bold text-gray-900">₹{{ product.base_price }}</div>
+{% endif %}
+</div>
+
+<a href="{% url 'products:product-detail' product.slug %}"
+class="block bg-red-600 hover:bg-red-700 text-white text-center py-2 rounded-xl font-medium transition">
+View Product
+</a>
+
+</div>
+</div>
+{% endfor %}
+</div>
+</div>
+{% endif %}
+
+
+
+
+
+
+
+
 
 
 
