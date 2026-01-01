@@ -1378,104 +1378,112 @@ document.body.style.overflow=''
 
 <section class="relative w-full h-[78vh] sm:h-[70vh] overflow-hidden bg-black">
 
-  <div id="hero-slider" class="relative w-full h-full">
+<!-- CINEMATIC LIGHT FOG -->
+<div class="absolute inset-0 pointer-events-none">
+  <div class="absolute -top-40 -left-40 w-[520px] h-[520px] bg-red-500 rounded-full blur-[160px] opacity-40 animate-pulse"></div>
+  <div class="absolute top-1/3 -right-40 w-[520px] h-[520px] bg-yellow-400 rounded-full blur-[160px] opacity-30 animate-pulse"></div>
+  <div class="absolute bottom-0 left-1/4 w-[420px] h-[420px] bg-orange-500 rounded-full blur-[160px] opacity-25 animate-pulse"></div>
+</div>
 
-    <!-- SLIDE 1 -->
-    <div class="hero-slide absolute inset-0 bg-red-600 flex items-center">
-      <div class="w-full max-w-6xl mx-auto px-5 flex flex-col md:flex-row items-center gap-6">
+<div id="hero-slider" class="relative w-full h-full">
 
-        <div class="text-white text-center md:text-left md:w-1/2">
-          <p class="uppercase tracking-widest text-xs opacity-90">All</p>
+<!-- SLIDE 1 -->
+<div class="hero-slide absolute inset-0 bg-red-600 flex items-center">
+<div class="w-full max-w-6xl mx-auto px-5 flex flex-col md:flex-row items-center gap-8">
 
-          <h1 class="mt-2 text-3xl md:text-5xl font-black leading-tight">
-            Bottles<br class="hidden md:block"> in ₹99
-          </h1>
+<div class="text-white md:w-1/2 text-center md:text-left">
+<p class="uppercase tracking-widest text-xs opacity-80">All</p>
+<h1 class="mt-2 text-3xl md:text-5xl font-black">Bottles in ₹99</h1>
+<p class="mt-3 text-white/80 max-w-md text-sm">Premium finish. Built for everyday hustle.</p>
+<a href="{% url 'products:product-list' %}"
+class="inline-block mt-5 px-8 py-3 bg-black text-white rounded-full text-sm font-semibold">Shop Now</a>
+</div>
 
-          <p class="mt-3 text-white/90 max-w-md mx-auto md:mx-0 text-sm">
-            Premium finish. Built for everyday hustle.
-          </p>
+<div class="md:w-1/2 flex justify-center items-center">
+<div class="hero-word text-4xl md:text-6xl font-black tracking-tight"></div>
+</div>
 
-          <a href="{% url 'products:product-list' %}"
-             class="inline-block mt-4 px-7 py-2.5 bg-black text-white rounded-full text-sm font-semibold">
-            Shop Now
-          </a>
-        </div>
+</div>
+</div>
 
-        <div class="md:w-1/2 flex justify-center">
-          <img src="https://wallpapercave.com/wp/wp10129207.jpg"
-               class="w-[180px] sm:w-[200px] md:w-[300px] animate-float drop-shadow-2xl"
-               alt="Bottle">
-        </div>
-      </div>
-    </div>
+<!-- SLIDE 2 -->
+<div class="hero-slide absolute inset-0 bg-yellow-400 flex items-center translate-x-full">
+<div class="w-full max-w-6xl mx-auto px-5 flex flex-col md:flex-row items-center gap-8">
 
-    <!-- SLIDE 2 -->
-    <div class="hero-slide absolute inset-0 bg-yellow-400 flex items-center translate-x-full">
-      <div class="w-full max-w-6xl mx-auto px-5 flex flex-col md:flex-row items-center gap-6">
+<div class="text-black md:w-1/2 text-center md:text-left">
+<p class="uppercase tracking-widest text-xs">Trending</p>
+<h1 class="mt-2 text-3xl md:text-5xl font-black">Anime Bottles</h1>
+<p class="mt-3 text-black/70 max-w-md text-sm">Sharp prints. Long-lasting color.</p>
+<a href="{% url 'products:product-list' %}"
+class="inline-block mt-5 px-8 py-3 bg-black text-white rounded-full text-sm font-semibold">View Collection</a>
+</div>
 
-        <div class="text-black text-center md:text-left md:w-1/2">
-          <p class="uppercase tracking-widest text-xs">Trending</p>
+<div class="md:w-1/2 flex justify-center items-center">
+<div class="hero-word text-4xl md:text-6xl font-black tracking-tight"></div>
+</div>
 
-          <h1 class="mt-2 text-3xl md:text-5xl font-black leading-tight">
-            Anime<br class="hidden md:block"> Bottles
-          </h1>
+</div>
+</div>
 
-          <p class="mt-3 text-black/80 max-w-md mx-auto md:mx-0 text-sm">
-            Sharp prints. Long-lasting color.
-          </p>
+<!-- SLIDE 3 -->
+<div class="hero-slide absolute inset-0 bg-black flex items-center translate-x-full">
+<div class="w-full max-w-6xl mx-auto px-5 flex flex-col md:flex-row items-center gap-8">
 
-          <a href="{% url 'products:product-list' %}"
-             class="inline-block mt-4 px-7 py-2.5 bg-black text-white rounded-full text-sm font-semibold">
-            View Collection
-          </a>
-        </div>
+<div class="text-white md:w-1/2 text-center md:text-left">
+<p class="uppercase tracking-widest text-xs text-orange-400">Custom</p>
+<h1 class="mt-2 text-3xl md:text-5xl font-black">Your Design</h1>
+<p class="mt-3 text-white/70 max-w-md text-sm">Upload. Customize. We print it clean.</p>
+<a href="{% url 'products:product-list' %}"
+class="inline-block mt-5 px-8 py-3 bg-orange-500 text-black rounded-full text-sm font-semibold">Customize Now</a>
+</div>
 
-        <div class="md:w-1/2 flex justify-center">
-          <img src="https://external-preview.redd.it/PsdO3t-JtAU4jSo3K31PcRvqpF59Zr68VSRwrxxYS88.png?format=pjpg&auto=webp&s=a594e4839ef5d369fa256c2626f5f0ce252cd14e"
-               class="w-[180px] md:w-[300px] animate-float drop-shadow-2xl"
-               alt="">
-        </div>
-      </div>
-    </div>
+<div class="md:w-1/2 flex justify-center items-center">
+<div class="hero-word text-4xl md:text-6xl font-black tracking-tight"></div>
+</div>
 
-    <!-- SLIDE 3 -->
-    <div class="hero-slide absolute inset-0 bg-black flex items-center translate-x-full">
-      <div class="w-full max-w-6xl mx-auto px-5 flex flex-col md:flex-row items-center gap-6">
+</div>
+</div>
 
-        <div class="text-white text-center md:text-left md:w-1/2">
-          <p class="uppercase tracking-widest text-xs text-orange-400">Custom</p>
-
-          <h1 class="mt-2 text-3xl md:text-5xl font-black leading-tight">
-            Your<br class="hidden md:block"> Design
-          </h1>
-
-          <p class="mt-3 text-white/80 max-w-md mx-auto md:mx-0 text-sm">
-            Upload. Customize. We print it clean.
-          </p>
-
-          <a href="{% url 'products:product-list' %}"
-             class="inline-block mt-4 px-7 py-2.5 bg-orange-500 text-black rounded-full text-sm font-semibold">
-            Customize Now
-          </a>
-        </div>
-
-        <div class="md:w-1/2 flex justify-center">
-          <img src="https://wallpaperaccess.com/full/342047.jpg"
-               class="w-[180px] md:w-[300px] animate-float drop-shadow-2xl"
-               alt="">
-        </div>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- DOTS -->
-  <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-50">
-    <button class="dot w-2.5 h-2.5 rounded-full bg-white"></button>
-    <button class="dot w-2.5 h-2.5 rounded-full bg-white/40"></button>
-    <button class="dot w-2.5 h-2.5 rounded-full bg-white/40"></button>
-  </div>
+</div>
 </section>
+
+<style>
+.hero-word{
+ text-shadow:0 0 30px rgba(255,255,255,.4);
+ animation:breath 3s ease-in-out infinite;
+ transform-style:preserve-3d;
+}
+@keyframes breath{
+ 0%,100%{letter-spacing:.02em;opacity:.85}
+ 50%{letter-spacing:.1em;opacity:1}
+}
+</style>
+
+<script>
+const data=[
+["₹99 Bottles","Leakproof","BPA Free","Premium Print"],
+["Anime Bottles","Ultra Sharp","Matte Finish","Fan Favorites"],
+["Upload Design","Live Preview","Clean Print","Fast Ship"]
+];
+
+function tilt(el,e){
+ const r=el.getBoundingClientRect();
+ const x=e.clientX-r.left;
+ const y=e.clientY-r.top;
+ el.style.transform=`rotateX(${-(y/r.height-.5)*10}deg) rotateY(${(x/r.width-.5)*12}deg)`;
+}
+
+document.querySelectorAll(".hero-word").forEach((el,i)=>{
+ let w=0,c=0,d=false;
+ el.onmousemove=e=>tilt(el,e);
+ setInterval(()=>{
+  let txt=data[i][w];
+  el.innerText=d?txt.slice(0,--c):txt.slice(0,++c);
+  if(!d && c===txt.length)d=true;
+  if(d && c===0){d=false;w=(w+1)%data[i].length;}
+ },90);
+});
+</script>
 
 
 
