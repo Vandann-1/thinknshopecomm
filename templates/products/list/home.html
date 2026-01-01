@@ -1300,6 +1300,14 @@ class="flex-1 bg-transparent px-3 py-2 text-sm outline-none">
 <a href="{% url 'products:product-list' %}" class="menu-link"><i class="fas fa-th-large"></i>All Products</a>
 <a href="{% url 'products:category-list' %}" class="menu-link"><i class="fas fa-list"></i>Categories</a>
 <a href="{% url 'products:brand-list' %}" class="menu-link"><i class="fas fa-tags"></i>Brands</a>
+<a href="#" id="openTshirt" class="menu-link flex items-center gap-2">
+    <i class="fas fa-tshirt"></i>
+    Custom T-Shirts
+    <span class="ml-2 text-[10px] bg-red-500 text-white px-2 py-[2px] rounded-full">Coming Soon</span>
+</a>
+
+
+
 </div>
 
 <!-- Account -->
@@ -2206,6 +2214,62 @@ if(!USER_AUTH){
 
 
 
+
+
+
+
+
+
+
+
+<div id="tshirtModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm hidden z-[9999] flex items-center justify-center">
+
+    <div class="bg-white w-[360px] rounded-3xl p-7 text-center shadow-2xl scale-95 opacity-0 transition-all duration-300" id="tshirtBox">
+
+        <div class="text-[11px] tracking-widest text-red-600 font-semibold">THINKNSHOP™</div>
+        <h3 class="text-2xl font-black mt-2">Custom T-Shirts</h3>
+
+        <p class="text-sm text-gray-600 mt-2">
+            Anime, name-print & bulk branding tees launching soon.
+        </p>
+
+        <input type="email" placeholder="Enter your email"
+               class="mt-4 w-full border rounded-xl px-4 py-2 outline-none focus:ring-2 focus:ring-black">
+
+        <button class="mt-4 w-full bg-black text-white py-2 rounded-xl">
+            Get Early Access
+        </button>
+
+        <button id="closeTshirt" class="mt-3 text-xs text-gray-500 hover:underline">
+            Close
+        </button>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const openBtn = document.getElementById("openTshirt");
+    const modal = document.getElementById("tshirtModal");
+    const box = document.getElementById("tshirtBox");
+    const closeBtn = document.getElementById("closeTshirt");
+
+    if (!openBtn || !modal || !box || !closeBtn) return;
+
+    openBtn.onclick = () => {
+        modal.classList.remove("hidden");
+        setTimeout(() => {
+            box.classList.remove("scale-95", "opacity-0");
+            box.classList.add("scale-100", "opacity-100");
+        }, 10);
+    };
+
+    closeBtn.onclick = () => {
+        box.classList.add("scale-95", "opacity-0");
+        setTimeout(() => modal.classList.add("hidden"), 200);
+    };
+});
+</script>
 
 
 
