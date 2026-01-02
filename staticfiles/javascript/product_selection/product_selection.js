@@ -61,24 +61,24 @@ async function initiatePurchase(productId) {
             method: 'GET',
             headers: {
                 'X-Requested-With': 'XMLHttpRequest',
-                'X-CSRFToken': getCSRFToken(),
             }
         });
 
-        // Check if response is ok
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
+        const contentType = response.headers.get("content-type") || "";
 
-        // Check content type
-        const contentType = response.headers.get("content-type");
-        if (!contentType || !contentType.includes("application/json")) {
+        // 🔴 Login redirect or HTML response
+        if (!contentType.includes("application/json")) {
             const text = await response.text();
-            console.error('Server returned non-JSON response:', text.substring(0, 200));
-            throw new Error("Server returned non-JSON response. Please check your backend endpoint.");
+            console.error('Non-JSON response:', text.substring(0, 200));
+            throw new Error("Please login to continue. You must be signed in before buying this product.");
         }
 
         const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.error || "Request failed");
+        }
+
         hidePurchaseLoading();
 
         if (data.success) {
@@ -88,12 +88,13 @@ async function initiatePurchase(productId) {
         } else {
             showPurchaseAlert('error', data.error || 'Failed to load product details');
         }
+
     } catch (error) {
         hidePurchaseLoading();
-        console.error('Error in initiatePurchase:', error);
-        showPurchaseAlert('error', error.message || 'please login to proceed with purchase');
+        showPurchaseAlert('error', error.message);
     }
 }
+
 
 // Display Product Selection Modal
 function displayProductSelection(productData) {
