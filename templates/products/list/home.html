@@ -1570,8 +1570,57 @@ showSlide(0);
 
 
 
+<section class="bg-white">
 
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 pt-10 pb-4 flex justify-between items-center">
+    <h3 class="text-base sm:text-xl font-black">New Arrivals</h3>
+    <a href="{% url 'products:product-list' %}?sort=new"
+       class="text-xs sm:text-sm font-semibold text-red-600">View All</a>
+  </div>
 
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 pb-12">
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 sm:gap-6">
+
+      {% for product in new_arrivals %}
+      <a href="{% url 'products:product-detail' product.slug %}"
+         class="group bg-white rounded-xl sm:rounded-2xl overflow-hidden border border-gray-200 hover:shadow-md transition">
+
+        <!-- IMAGE -->
+        <div class="relative aspect-square bg-gray-100">
+          {% if product.is_new_arrival %}
+          <span class="absolute top-2 left-2 bg-black text-white text-[10px] px-2 py-0.5 rounded-full z-10">
+            NEW
+          </span>
+          {% endif %}
+          <img src="{{ product.get_primary_image }}"
+               class="w-full h-full object-cover group-hover:scale-105 transition">
+        </div>
+
+        <!-- CONTENT -->
+        <div class="p-2 sm:p-3">
+
+          <p class="text-xs sm:text-sm font-semibold leading-tight line-clamp-2 min-h-[32px]">
+            {{ product.name }}
+          </p>
+
+          <div class="mt-1 flex items-center gap-1">
+            {% if product.discounted_price %}
+              <span class="text-sm sm:text-base font-bold text-black">₹{{ product.discounted_price }}</span>
+              <span class="text-[11px] sm:text-xs line-through text-gray-400">₹{{ product.base_price }}</span>
+            {% else %}
+              <span class="text-sm sm:text-base font-bold text-black">₹{{ product.base_price }}</span>
+            {% endif %}
+          </div>
+
+        </div>
+      </a>
+      {% endfor %}
+
+    </div>
+  </div>
+</section>
+
+<!-- ================= FEATURED PRODUCTS ================= -->
 
 {% if featured_products %}
 <div class="max-w-7xl mx-auto mt-12">
@@ -1677,47 +1726,6 @@ View Product
 {% endif %}
 
 
-<section class="bg-white">
-
-  <!-- HEADER -->
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 pt-10 pb-4 flex justify-between items-center">
-    <h3 class="text-base sm:text-xl font-black">New Arrivals</h3>
-    <a href="{% url 'products:product-list' %}?sort=new"
-       class="text-xs sm:text-sm font-semibold text-red-600">View All</a>
-  </div>
-
-  <!-- GRID -->
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 pb-12">
-
-    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-5">
-
-      {% for product in new_arrivals %}
-      <a href="{% url 'products:product-detail' product.slug %}" class="group block bg-white">
-
-        <div class="relative aspect-square bg-gray-100 rounded-xl sm:rounded-2xl overflow-hidden">
-
-          {% if product.is_new_arrival %}
-          <span class="absolute top-2 left-2 bg-black text-white text-[9px] sm:text-[10px] px-2 py-0.5 rounded-full">
-            NEW
-          </span>
-          {% endif %}
-
-          <img src="{{ product.get_primary_image }}"
-               class="w-full h-full object-cover transition group-hover:scale-105">
-        </div>
-
-        <div class="mt-1 sm:mt-2 leading-tight">
-          <p class="text-xs sm:text-sm font-semibold line-clamp-2">{{ product.name }}</p>
-          <p class="text-[11px] sm:text-xs text-gray-600">₹{{ product.price }}</p>
-        </div>
-
-      </a>
-      {% endfor %}
-
-    </div>
-
-  </div>
-</section>
 
 
 
