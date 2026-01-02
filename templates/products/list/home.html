@@ -1634,7 +1634,6 @@ showSlide(0);
             h-[430px] flex flex-col">
 
 <div class="absolute top-3 left-3 z-10 flex flex-col gap-1">
-{% if product.is_new_arrival %}<span class="badge badge-blue">NEW</span>{% endif %}
 {% if product.get_discount_percent %}<span class="badge badge-red">{{ product.get_discount_percent }}% OFF</span>{% endif %}
 {% if product.is_bestseller %}<span class="badge badge-amber">BESTSELLER</span>{% endif %}
 {% if product.is_featured %}<span class="badge badge-purple">FEATURED</span>{% endif %}
@@ -1676,6 +1675,53 @@ View Product
 </div>
 </div>
 {% endif %}
+
+
+<section class="bg-white">
+
+  <!-- HEADER -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 pt-10 pb-4 flex justify-between items-center">
+    <h3 class="text-base sm:text-xl font-black">New Arrivals</h3>
+    <a href="{% url 'products:product-list' %}?sort=new"
+       class="text-xs sm:text-sm font-semibold text-red-600">View All</a>
+  </div>
+
+  <!-- GRID -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 pb-12">
+
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-5">
+
+      {% for product in new_arrivals %}
+      <a href="{% url 'products:product-detail' product.slug %}" class="group block bg-white">
+
+        <div class="relative aspect-square bg-gray-100 rounded-xl sm:rounded-2xl overflow-hidden">
+
+          {% if product.is_new_arrival %}
+          <span class="absolute top-2 left-2 bg-black text-white text-[9px] sm:text-[10px] px-2 py-0.5 rounded-full">
+            NEW
+          </span>
+          {% endif %}
+
+          <img src="{{ product.get_primary_image }}"
+               class="w-full h-full object-cover transition group-hover:scale-105">
+        </div>
+
+        <div class="mt-1 sm:mt-2 leading-tight">
+          <p class="text-xs sm:text-sm font-semibold line-clamp-2">{{ product.name }}</p>
+          <p class="text-[11px] sm:text-xs text-gray-600">₹{{ product.price }}</p>
+        </div>
+
+      </a>
+      {% endfor %}
+
+    </div>
+
+  </div>
+</section>
+
+
+
+
 
 
 
