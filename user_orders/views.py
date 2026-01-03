@@ -289,7 +289,7 @@ def cancel_order(request, order_id):
             'redirect_url': f'/orders/{order.order_id}/'
         })
     
-    return redirect('orders:order_detail', order_id=order.order_id)
+    return redirect('/', order_id=order.order_id)
 
 
 # Re-order
