@@ -650,7 +650,9 @@ function addAddressModalEventListeners(addresses) {
     // Add address button
     const showAddAddressBtn = document.getElementById('showAddAddressBtn');
     if (showAddAddressBtn) {
-        showAddAddressBtn.addEventListener('click', showPurchaseAddAddressModal);
+        showAddAddressBtn.addEventListener('click', function () {
+            window.location.href = '/address/manage_address/';
+        });
     }
 
     // Address selection using event delegation

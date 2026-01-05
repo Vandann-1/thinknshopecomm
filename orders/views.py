@@ -35,12 +35,17 @@ razorpay_client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZOR
 """
 1) GET PRODUCT DETAILS - SO THAT USER WILL SELECT THE VARIANT ETC
 """
-@login_required
 @require_http_methods(["GET", "POST"])
 def get_product_details(request, product_id):
     """
     AJAX endpoint to get product variants, pricing, and availability
     """
+    if not request.user.is_authenticated:
+        return JsonResponse({
+            'success': False,
+            'error': 'Please login to purchase the product'
+        }, status=200)
+
     try:
         product = get_object_or_404(Product, id=product_id, status='active')
         
