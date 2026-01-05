@@ -143,7 +143,7 @@ const EcommerceCartModal = (function() {
                             </div>
                             <div class="flex-1">
                                 <h3 class="text-xl font-semibold text-white mb-2">${data.product.name}</h3>
-                                <div class="text-3xl font-bold text-blue-400 mb-2" id="${priceId}">$${data.product.base_price}</div>
+                                <div class="text-3xl font-bold text-blue-400 mb-2" id="${priceId}">₹${data.product.base_price}</div>
                                 <p class="text-gray-400 text-sm">Please select your preferred options below.</p>
                             </div>
                         </div>
@@ -383,7 +383,7 @@ const EcommerceCartModal = (function() {
             // Update price
             const priceElement = document.getElementById(data.priceId);
             if (priceElement) {
-                priceElement.textContent = `$${variant.price}`;
+                priceElement.textContent = `₹${variant.price}`;
             }
             
             // Update stock info

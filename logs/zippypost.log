@@ -1700,3 +1700,323 @@ INFO 2025-12-30 21:13:33,712 zippypost_utils Response Headers: {'Server': 'nginx
 DEBUG 2025-12-30 21:13:33,713 zippypost_utils Full Response Body:
 DEBUG 2025-12-30 21:13:33,714 zippypost_utils {"success":true,"booking":true,"RESULT":{"awb":"77640247042","courier":"Bluedart+","label":"NA","routingCode":"BOM/FRT/FRT"}}
 INFO 2025-12-30 21:13:34,526 zippypost_utils Retrieved label URL for AWB 77640247042
+INFO 2026-01-04 14:46:03,807 views Order review accessed by user 17 with method GET
+INFO 2026-01-04 14:46:03,809 views Order review GET parameters - User: 17, variant_id: 44, quantity: 1, coupon_code: , address_id: d1838089-99d0-4931-8982-36c597903a3c
+INFO 2026-01-04 14:46:03,813 views Order review accessed by user 17 with method GET
+INFO 2026-01-04 14:46:03,814 views Order review GET parameters - User: 17, variant_id: 44, quantity: 1, coupon_code: , address_id: d1838089-99d0-4931-8982-36c597903a3c
+INFO 2026-01-04 14:46:04,359 views Found variant 44 - monkey d. luffy water bottle 129
+INFO 2026-01-04 14:46:04,360 views Found variant 44 - monkey d. luffy water bottle 129
+INFO 2026-01-04 14:46:04,361 views Pricing calculated - unit_price: 99.00, subtotal: 99.00, shipping: 50.00
+INFO 2026-01-04 14:46:04,361 views Pricing calculated - unit_price: 99.00, subtotal: 99.00, shipping: 50.00
+INFO 2026-01-04 14:46:04,362 views Final calculations - taxable_amount: 149.00, tax_amount: 7.4500, total_amount: 156.4500
+INFO 2026-01-04 14:46:04,363 views Final calculations - taxable_amount: 149.00, tax_amount: 7.4500, total_amount: 156.4500
+INFO 2026-01-04 14:46:04,737 views Selected address d1838089-99d0-4931-8982-36c597903a3c for user 17
+INFO 2026-01-04 14:46:04,737 views Selected address d1838089-99d0-4931-8982-36c597903a3c for user 17
+INFO 2026-01-04 14:46:05,155 views Order review page rendered successfully for user 17
+INFO 2026-01-04 14:46:05,155 views Order review page rendered successfully for user 17
+INFO 2026-01-04 14:46:14,370 views Order review accessed by user 17 with method POST
+INFO 2026-01-04 14:46:14,371 views Order creation POST request from user 17
+INFO 2026-01-04 14:46:20,584 zippypost_utils Attempting to process Zippypost shipment for order ORD-DC794E6F
+INFO 2026-01-04 14:46:21,857 zippypost_utils ================================================================================
+INFO 2026-01-04 14:46:21,858 zippypost_utils Creating Zippypost shipment for order ORD-DC794E6F
+INFO 2026-01-04 14:46:21,859 zippypost_utils ================================================================================
+DEBUG 2026-01-04 14:46:21,863 zippypost_utils Headers: {
+  "Content-Type": "application/json",
+  "authorization": "a7f40795b4...",
+  "timestamp": "1767518181",
+  "sellerid": "1255"
+}
+DEBUG 2026-01-04 14:46:21,864 zippypost_utils Full Payload:
+DEBUG 2026-01-04 14:46:21,865 zippypost_utils {
+  "order_number": "ORD-DC794E6F",
+  "purchase_amount": 156.45,
+  "purchase_date": "2026-01-04",
+  "billing_details_same_as_shipping": true,
+  "shipping_details": {
+    "full_name": "Vandann Darji",
+    "contact_number": "9022641867",
+    "customer_email": "",
+    "address_line_one": "D/17 narmada Ashish ",
+    "address_line_two": "Narmada Nagar cabin Cross road Bhayandar East ",
+    "landmark": "",
+    "pincode": "400001",
+    "city": "Thane"
+  },
+  "billing_details": {
+    "full_name": "Vandann Darji",
+    "contact_number": "9022641867",
+    "gstin": "",
+    "address_line_one": "D/17 narmada Ashish ",
+    "address_line_two": "Narmada Nagar cabin Cross road Bhayandar East ",
+    "company_name": "",
+    "pincode": "400001",
+    "city": "Thane"
+  },
+  "items": [
+    {
+      "sku": "198",
+      "item_name": "monkey d. luffy water bottle 129",
+      "quantity": 1,
+      "item_weight": 0.5,
+      "item_price": 99.0
+    }
+  ],
+  "package_length": 25.0,
+  "package_width": 9.0,
+  "package_height": 9.0,
+  "package_weight": 0.5,
+  "shipping_charge": 50.0,
+  "cod_charge": 50.0,
+  "purchase_tax": 7.45,
+  "purchase_discount": 0.0,
+  "collectable_cod": 156.45,
+  "warehouse_id": 2568,
+  "payment_type": 2,
+  "courier_id": 10,
+  "mode_id": 16
+}
+INFO 2026-01-04 14:46:28,826 zippypost_utils API Response Status Code: 200
+INFO 2026-01-04 14:46:28,827 zippypost_utils Response Headers: {'Server': 'nginx/1.18.0 (Ubuntu)', 'Date': 'Sun, 04 Jan 2026 09:16:28 GMT', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '125', 'Connection': 'keep-alive', 'X-Powered-By': 'Express', 'ETag': 'W/"7d-lwMGCd0t8Tx4OEiW/AZV+E8sj/A"'}
+DEBUG 2026-01-04 14:46:28,828 zippypost_utils Full Response Body:
+DEBUG 2026-01-04 14:46:28,829 zippypost_utils {"success":true,"booking":true,"RESULT":{"awb":"77644460681","courier":"Bluedart+","label":"NA","routingCode":"BOM/FRT/FRT"}}
+INFO 2026-01-04 14:46:34,817 zippypost_utils Retrieved label URL for AWB 77644460681
+INFO 2026-01-04 14:52:02,839 views Order review accessed by user 30 with method GET
+INFO 2026-01-04 14:52:02,844 views Order review GET parameters - User: 30, variant_id: 19, quantity: 1, coupon_code: , address_id: 66965f73-607e-43d3-94c3-7c1b82db4cbc
+INFO 2026-01-04 14:52:03,428 views Found variant 19 - naruto 2 water bottle 164
+INFO 2026-01-04 14:52:03,429 views Pricing calculated - unit_price: 99.00, subtotal: 99.00, shipping: 50.00
+INFO 2026-01-04 14:52:03,430 views Final calculations - taxable_amount: 149.00, tax_amount: 7.4500, total_amount: 156.4500
+INFO 2026-01-04 14:52:03,863 views Selected address 66965f73-607e-43d3-94c3-7c1b82db4cbc for user 30
+INFO 2026-01-04 14:52:04,286 views Order review page rendered successfully for user 30
+INFO 2026-01-04 14:52:04,589 views Order review accessed by user 30 with method GET
+INFO 2026-01-04 14:52:04,590 views Order review GET parameters - User: 30, variant_id: 19, quantity: 1, coupon_code: , address_id: 66965f73-607e-43d3-94c3-7c1b82db4cbc
+INFO 2026-01-04 14:52:05,174 views Found variant 19 - naruto 2 water bottle 164
+INFO 2026-01-04 14:52:05,176 views Pricing calculated - unit_price: 99.00, subtotal: 99.00, shipping: 50.00
+INFO 2026-01-04 14:52:05,177 views Final calculations - taxable_amount: 149.00, tax_amount: 7.4500, total_amount: 156.4500
+INFO 2026-01-04 14:52:05,457 views Selected address 66965f73-607e-43d3-94c3-7c1b82db4cbc for user 30
+INFO 2026-01-04 14:52:05,732 views Order review page rendered successfully for user 30
+INFO 2026-01-04 14:52:16,048 views Order review accessed by user 30 with method POST
+INFO 2026-01-04 14:52:16,050 views Order creation POST request from user 30
+INFO 2026-01-04 14:52:22,498 zippypost_utils Attempting to process Zippypost shipment for order ORD-32BC2B86
+INFO 2026-01-04 14:52:24,036 zippypost_utils ================================================================================
+INFO 2026-01-04 14:52:24,037 zippypost_utils Creating Zippypost shipment for order ORD-32BC2B86
+INFO 2026-01-04 14:52:24,038 zippypost_utils ================================================================================
+DEBUG 2026-01-04 14:52:24,038 zippypost_utils Headers: {
+  "Content-Type": "application/json",
+  "authorization": "2f91ceb7fd...",
+  "timestamp": "1767518544",
+  "sellerid": "1255"
+}
+DEBUG 2026-01-04 14:52:24,038 zippypost_utils Full Payload:
+DEBUG 2026-01-04 14:52:24,044 zippypost_utils {
+  "order_number": "ORD-32BC2B86",
+  "purchase_amount": 156.45,
+  "purchase_date": "2026-01-04",
+  "billing_details_same_as_shipping": true,
+  "shipping_details": {
+    "full_name": "harshad ",
+    "contact_number": "9022216598",
+    "customer_email": "softwarepython123@gmail.com",
+    "address_line_one": "sitabuldi nagpur",
+    "address_line_two": "sitabuldi nagpur",
+    "landmark": "",
+    "pincode": "440001",
+    "city": "nagpur"
+  },
+  "billing_details": {
+    "full_name": "harshad ",
+    "contact_number": "9022216598",
+    "gstin": "",
+    "address_line_one": "sitabuldi nagpur",
+    "address_line_two": "sitabuldi nagpur",
+    "company_name": "",
+    "pincode": "440001",
+    "city": "nagpur"
+  },
+  "items": [
+    {
+      "sku": "164",
+      "item_name": "naruto 2 water bottle 164",
+      "quantity": 1,
+      "item_weight": 0.5,
+      "item_price": 99.0
+    }
+  ],
+  "package_length": 25.0,
+  "package_width": 9.0,
+  "package_height": 9.0,
+  "package_weight": 0.5,
+  "shipping_charge": 50.0,
+  "cod_charge": 50.0,
+  "purchase_tax": 7.45,
+  "purchase_discount": 0.0,
+  "collectable_cod": 156.45,
+  "warehouse_id": 2568,
+  "payment_type": 2,
+  "courier_id": 10,
+  "mode_id": 16
+}
+INFO 2026-01-04 14:52:26,091 zippypost_utils API Response Status Code: 200
+INFO 2026-01-04 14:52:26,093 zippypost_utils Response Headers: {'Server': 'nginx/1.18.0 (Ubuntu)', 'Date': 'Sun, 04 Jan 2026 09:22:26 GMT', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '125', 'Connection': 'keep-alive', 'X-Powered-By': 'Express', 'ETag': 'W/"7d-M/6+fPXCJ1mAZP74S044JsZoSjs"'}
+DEBUG 2026-01-04 14:52:26,094 zippypost_utils Full Response Body:
+DEBUG 2026-01-04 14:52:26,095 zippypost_utils {"success":true,"booking":true,"RESULT":{"awb":"77644464461","courier":"Bluedart+","label":"NA","routingCode":"NGP/NPR/NPR"}}
+INFO 2026-01-04 14:52:29,257 zippypost_utils Retrieved label URL for AWB 77644464461
+INFO 2026-01-05 11:55:36,658 views Order review accessed by user 17 with method GET
+INFO 2026-01-05 11:55:36,661 views Order review GET parameters - User: 17, variant_id: 46, quantity: 1, coupon_code: , address_id: d1838089-99d0-4931-8982-36c597903a3c
+INFO 2026-01-05 11:55:37,402 views Found variant 46 - gym water bottle 69
+INFO 2026-01-05 11:55:37,406 views Pricing calculated - unit_price: 99.00, subtotal: 99.00, shipping: 50.00
+INFO 2026-01-05 11:55:37,407 views Final calculations - taxable_amount: 149.00, tax_amount: 7.4500, total_amount: 156.4500
+INFO 2026-01-05 11:55:37,787 views Selected address d1838089-99d0-4931-8982-36c597903a3c for user 17
+INFO 2026-01-05 11:55:38,091 views Order review page rendered successfully for user 17
+INFO 2026-01-05 11:55:38,398 views Order review accessed by user 17 with method GET
+INFO 2026-01-05 11:55:38,399 views Order review GET parameters - User: 17, variant_id: 46, quantity: 1, coupon_code: , address_id: d1838089-99d0-4931-8982-36c597903a3c
+INFO 2026-01-05 11:55:39,114 views Found variant 46 - gym water bottle 69
+INFO 2026-01-05 11:55:39,117 views Pricing calculated - unit_price: 99.00, subtotal: 99.00, shipping: 50.00
+INFO 2026-01-05 11:55:39,118 views Final calculations - taxable_amount: 149.00, tax_amount: 7.4500, total_amount: 156.4500
+INFO 2026-01-05 11:55:39,421 views Selected address d1838089-99d0-4931-8982-36c597903a3c for user 17
+INFO 2026-01-05 11:55:39,935 views Order review page rendered successfully for user 17
+INFO 2026-01-05 11:55:49,253 views Order review accessed by user 17 with method POST
+INFO 2026-01-05 11:55:49,254 views Order creation POST request from user 17
+INFO 2026-01-05 11:55:55,313 zippypost_utils Attempting to process Zippypost shipment for order ORD-7FD6A1B1
+INFO 2026-01-05 11:55:56,626 zippypost_utils ================================================================================
+INFO 2026-01-05 11:55:56,627 zippypost_utils Creating Zippypost shipment for order ORD-7FD6A1B1
+INFO 2026-01-05 11:55:56,628 zippypost_utils ================================================================================
+DEBUG 2026-01-05 11:55:56,628 zippypost_utils Headers: {
+  "Content-Type": "application/json",
+  "authorization": "b94ed70820...",
+  "timestamp": "1767594356",
+  "sellerid": "1255"
+}
+DEBUG 2026-01-05 11:55:56,629 zippypost_utils Full Payload:
+DEBUG 2026-01-05 11:55:56,630 zippypost_utils {
+  "order_number": "ORD-7FD6A1B1",
+  "purchase_amount": 156.45,
+  "purchase_date": "2026-01-05",
+  "billing_details_same_as_shipping": true,
+  "shipping_details": {
+    "full_name": "Vandann Darji",
+    "contact_number": "9022641867",
+    "customer_email": "",
+    "address_line_one": "D/17 narmada Ashish ",
+    "address_line_two": "Narmada Nagar cabin Cross road Bhayandar East ",
+    "landmark": "",
+    "pincode": "400001",
+    "city": "Thane"
+  },
+  "billing_details": {
+    "full_name": "Vandann Darji",
+    "contact_number": "9022641867",
+    "gstin": "",
+    "address_line_one": "D/17 narmada Ashish ",
+    "address_line_two": "Narmada Nagar cabin Cross road Bhayandar East ",
+    "company_name": "",
+    "pincode": "400001",
+    "city": "Thane"
+  },
+  "items": [
+    {
+      "sku": "258",
+      "item_name": "gym water bottle 69",
+      "quantity": 1,
+      "item_weight": 0.5,
+      "item_price": 99.0
+    }
+  ],
+  "package_length": 25.0,
+  "package_width": 9.0,
+  "package_height": 9.0,
+  "package_weight": 0.5,
+  "shipping_charge": 50.0,
+  "cod_charge": 50.0,
+  "purchase_tax": 7.45,
+  "purchase_discount": 0.0,
+  "collectable_cod": 156.45,
+  "warehouse_id": 2568,
+  "payment_type": 2,
+  "courier_id": 10,
+  "mode_id": 16
+}
+INFO 2026-01-05 11:55:58,673 zippypost_utils API Response Status Code: 200
+INFO 2026-01-05 11:55:58,674 zippypost_utils Response Headers: {'Server': 'nginx/1.18.0 (Ubuntu)', 'Date': 'Mon, 05 Jan 2026 06:25:58 GMT', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '125', 'Connection': 'keep-alive', 'X-Powered-By': 'Express', 'ETag': 'W/"7d-vYE3hk0fNLl7Wqpdf2Sk01Xa0ts"'}
+DEBUG 2026-01-05 11:55:58,675 zippypost_utils Full Response Body:
+DEBUG 2026-01-05 11:55:58,675 zippypost_utils {"success":true,"booking":true,"RESULT":{"awb":"77645422820","courier":"Bluedart+","label":"NA","routingCode":"BOM/FRT/FRT"}}
+INFO 2026-01-05 11:55:59,596 zippypost_utils Retrieved label URL for AWB 77645422820
+INFO 2026-01-05 12:08:24,661 views Order review accessed by user 17 with method GET
+INFO 2026-01-05 12:08:24,667 views Order review GET parameters - User: 17, variant_id: 45, quantity: 1, coupon_code: , address_id: d1838089-99d0-4931-8982-36c597903a3c
+INFO 2026-01-05 12:08:25,272 views Found variant 45 - gojo 2 satoru water bottle 70
+INFO 2026-01-05 12:08:25,287 views Pricing calculated - unit_price: 99.00, subtotal: 99.00, shipping: 50.00
+INFO 2026-01-05 12:08:25,289 views Final calculations - taxable_amount: 149.00, tax_amount: 7.4500, total_amount: 156.4500
+INFO 2026-01-05 12:08:25,585 views Selected address d1838089-99d0-4931-8982-36c597903a3c for user 17
+INFO 2026-01-05 12:08:25,885 views Order review page rendered successfully for user 17
+INFO 2026-01-05 12:08:26,506 views Order review accessed by user 17 with method GET
+INFO 2026-01-05 12:08:26,508 views Order review GET parameters - User: 17, variant_id: 45, quantity: 1, coupon_code: , address_id: d1838089-99d0-4931-8982-36c597903a3c
+INFO 2026-01-05 12:08:27,115 views Found variant 45 - gojo 2 satoru water bottle 70
+INFO 2026-01-05 12:08:27,116 views Pricing calculated - unit_price: 99.00, subtotal: 99.00, shipping: 50.00
+INFO 2026-01-05 12:08:27,116 views Final calculations - taxable_amount: 149.00, tax_amount: 7.4500, total_amount: 156.4500
+INFO 2026-01-05 12:08:27,422 views Selected address d1838089-99d0-4931-8982-36c597903a3c for user 17
+INFO 2026-01-05 12:08:27,729 views Order review page rendered successfully for user 17
+INFO 2026-01-05 12:08:36,328 views Order review accessed by user 17 with method POST
+INFO 2026-01-05 12:08:36,328 views Order creation POST request from user 17
+INFO 2026-01-05 12:08:42,885 zippypost_utils Attempting to process Zippypost shipment for order ORD-8A1BD80C
+INFO 2026-01-05 12:08:44,317 zippypost_utils ================================================================================
+INFO 2026-01-05 12:08:44,318 zippypost_utils Creating Zippypost shipment for order ORD-8A1BD80C
+INFO 2026-01-05 12:08:44,320 zippypost_utils ================================================================================
+DEBUG 2026-01-05 12:08:44,336 zippypost_utils Headers: {
+  "Content-Type": "application/json",
+  "authorization": "e6471e2b17...",
+  "timestamp": "1767595124",
+  "sellerid": "1255"
+}
+DEBUG 2026-01-05 12:08:44,339 zippypost_utils Full Payload:
+DEBUG 2026-01-05 12:08:44,340 zippypost_utils {
+  "order_number": "ORD-8A1BD80C",
+  "purchase_amount": 156.45,
+  "purchase_date": "2026-01-05",
+  "billing_details_same_as_shipping": true,
+  "shipping_details": {
+    "full_name": "Vandann Darji",
+    "contact_number": "9022641867",
+    "customer_email": "",
+    "address_line_one": "D/17 narmada Ashish ",
+    "address_line_two": "Narmada Nagar cabin Cross road Bhayandar East ",
+    "landmark": "",
+    "pincode": "400001",
+    "city": "Thane"
+  },
+  "billing_details": {
+    "full_name": "Vandann Darji",
+    "contact_number": "9022641867",
+    "gstin": "",
+    "address_line_one": "D/17 narmada Ashish ",
+    "address_line_two": "Narmada Nagar cabin Cross road Bhayandar East ",
+    "company_name": "",
+    "pincode": "400001",
+    "city": "Thane"
+  },
+  "items": [
+    {
+      "sku": "253",
+      "item_name": "gojo 2 satoru water bottle 70",
+      "quantity": 1,
+      "item_weight": 0.5,
+      "item_price": 99.0
+    }
+  ],
+  "package_length": 25.0,
+  "package_width": 9.0,
+  "package_height": 9.0,
+  "package_weight": 0.5,
+  "shipping_charge": 50.0,
+  "cod_charge": 50.0,
+  "purchase_tax": 7.45,
+  "purchase_discount": 0.0,
+  "collectable_cod": 156.45,
+  "warehouse_id": 2568,
+  "payment_type": 2,
+  "courier_id": 10,
+  "mode_id": 16
+}
+INFO 2026-01-05 12:08:46,752 zippypost_utils API Response Status Code: 200
+INFO 2026-01-05 12:08:46,755 zippypost_utils Response Headers: {'Server': 'nginx/1.18.0 (Ubuntu)', 'Date': 'Mon, 05 Jan 2026 06:38:46 GMT', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '125', 'Connection': 'keep-alive', 'X-Powered-By': 'Express', 'ETag': 'W/"7d-dVHa32UapJ4cZ+1/JTFxhN59cic"'}
+DEBUG 2026-01-05 12:08:46,756 zippypost_utils Full Response Body:
+DEBUG 2026-01-05 12:08:46,756 zippypost_utils {"success":true,"booking":true,"RESULT":{"awb":"77645457750","courier":"Bluedart+","label":"NA","routingCode":"BOM/FRT/FRT"}}
+INFO 2026-01-05 12:08:47,593 zippypost_utils Retrieved label URL for AWB 77645457750
