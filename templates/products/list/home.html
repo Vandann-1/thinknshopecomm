@@ -1560,9 +1560,69 @@ showSlide(0);
 
 
 
+{% if featured_categories %}
+<section class="py-14 bg-white">
 
+<div class="max-w-7xl mx-auto px-4 mb-6">
+  <div class="text-[11px] uppercase tracking-widest text-gray-400">Popular</div>
+  <h2 class="text-2xl font-black text-gray-900">Shop by Collection</h2>
+</div>
 
+<!-- MOBILE MALL (Swipe) -->
+<div class="block md:hidden">
+  <div class="flex gap-5 px-4 overflow-x-auto snap-x snap-mandatory pb-4">
 
+    {% for category in featured_categories %}
+    <a href="{% url 'products:category-detail' category.slug %}"
+       class="snap-start shrink-0 flex flex-col items-center min-w-[110px]">
+
+      <div class="w-24 h-24 rounded-full bg-gray-100 overflow-hidden border hover:shadow-xl transition">
+        {% if category.image %}
+          <img src="{{ category.image.url }}" class="w-full h-full object-cover">
+        {% else %}
+          <div class="w-full h-full flex items-center justify-center text-2xl font-black text-gray-400">
+            {{ category.name|first }}
+          </div>
+        {% endif %}
+      </div>
+
+      <h3 class="mt-3 text-xs font-bold text-center leading-tight line-clamp-2">
+        {{ category.name }}
+      </h3>
+      <span class="text-[10px] text-gray-500">{{ category.total_products }} items</span>
+    </a>
+    {% endfor %}
+
+  </div>
+</div>
+
+<!-- DESKTOP MALL (Grid) -->
+<div class="hidden md:grid max-w-7xl mx-auto px-4 grid-cols-5 lg:grid-cols-6 gap-8">
+
+  {% for category in featured_categories %}
+  <a href="{% url 'products:category-detail' category.slug %}"
+     class="flex flex-col items-center hover:scale-105 transition">
+
+    <div class="w-28 h-28 lg:w-32 lg:h-32 rounded-full bg-gray-100 overflow-hidden border shadow-sm">
+      {% if category.image %}
+        <img src="{{ category.image.url }}" class="w-full h-full object-cover">
+      {% else %}
+        <div class="w-full h-full flex items-center justify-center text-3xl font-black text-gray-400">
+          {{ category.name|first }}
+        </div>
+      {% endif %}
+    </div>
+
+    <h3 class="mt-3 text-sm font-bold text-center line-clamp-2">
+      {{ category.name }}
+    </h3>
+    <span class="text-xs text-gray-500">{{ category.total_products }} items</span>
+  </a>
+  {% endfor %}
+
+</div>
+</section>
+{% endif %}
 
 
 
@@ -1732,47 +1792,53 @@ View Product
 
 
 
+<section class="bg-white py-20">
 
-<section class="py-24 bg-white overflow-hidden" id="shop">
 <div class="max-w-7xl mx-auto px-4">
 
-<div class="mb-12">
-  <p class="text-xs tracking-[0.35em] text-gray-400">COLLECTIONS</p>
-  <h2 class="text-4xl sm:text-6xl font-black mt-2">
+<div class="mb-14">
+  <div class="text-xs uppercase tracking-widest text-gray-400 mb-2">Collections</div>
+  <h2 class="text-4xl md:text-5xl font-black tracking-tight text-gray-900">
     Built For Different People
   </h2>
 </div>
 
-<div class="overflow-x-auto no-scrollbar">
-  <div class="flex gap-12 min-w-max px-1">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-10">
 
-    <a href="{% url 'products:product-list' %}" class="group min-w-[260px]">
-      <div class="text-4xl sm:text-5xl font-black tracking-tight group-hover:text-red-600 transition">
-        ANIME
-      </div>
-      <div class="mt-2 text-sm tracking-widest text-gray-500">LIMITED DROPS</div>
-      <div class="mt-4 h-[2px] w-12 bg-gray-200 group-hover:bg-red-600 transition"></div>
-    </a>
+<!-- ANIME -->
+<a href="/collections/anime/" class="group relative rounded-3xl overflow-hidden bg-gradient-to-br from-purple-600 to-indigo-700 h-72 flex items-end p-8 shadow-lg hover:scale-105 transition">
 
-    <a href="{% url 'products:product-list' %}" class="group min-w-[260px]">
-      <div class="text-4xl sm:text-5xl font-black tracking-tight group-hover:text-red-600 transition">
-        BTS ARMY
-      </div>
-      <div class="mt-2 text-sm tracking-widest text-gray-500">PURPLE EDITIONS</div>
-      <div class="mt-4 h-[2px] w-12 bg-gray-200 group-hover:bg-red-600 transition"></div>
-    </a>
-
-    <a href="{% url 'products:product-list' %}" class="group min-w-[260px]">
-      <div class="text-4xl sm:text-5xl font-black tracking-tight group-hover:text-red-600 transition">
-        CUSTOM
-      </div>
-      <div class="mt-2 text-sm tracking-widest text-gray-500">DESIGN YOUR OWN</div>
-      <div class="mt-4 h-[2px] w-12 bg-gray-200 group-hover:bg-red-600 transition"></div>
-    </a>
-
+  <div>
+    <h3 class="text-3xl font-black text-white">ANIME</h3>
+    <p class="text-white/80 mt-2 text-sm">Limited Drops</p>
   </div>
-</div>
 
+  <div class="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition"></div>
+</a>
+
+<!-- BTS -->
+<a href="/collections/bts/" class="group relative rounded-3xl overflow-hidden bg-gradient-to-br from-fuchsia-600 to-purple-700 h-72 flex items-end p-8 shadow-lg hover:scale-105 transition">
+
+  <div>
+    <h3 class="text-3xl font-black text-white">BTS ARMY</h3>
+    <p class="text-white/80 mt-2 text-sm">Purple Editions</p>
+  </div>
+
+  <div class="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition"></div>
+</a>
+
+<!-- CUSTOM -->
+<a href="/collections/custom/" class="group relative rounded-3xl overflow-hidden bg-gradient-to-br from-zinc-900 to-black h-72 flex items-end p-8 shadow-lg hover:scale-105 transition">
+
+  <div>
+    <h3 class="text-3xl font-black text-white">CUSTOM</h3>
+    <p class="text-white/70 mt-2 text-sm">Design Your Own</p>
+  </div>
+
+  <div class="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition"></div>
+</a>
+
+</div>
 </div>
 </section>
 
@@ -1781,61 +1847,11 @@ View Product
 
 
 
-<!-- MOBILE FIRST ORDER BAR -->
-<div class="md:hidden sticky top-0 z-40 bg-white border-b border-red-200">
-
-  <div class="flex items-center justify-between px-4 py-2 gap-3">
-
-    <div class="leading-tight">
-      <p class="text-[11px] uppercase tracking-widest text-red-600 font-bold">First Order</p>
-      <p class="text-[13px] font-semibold text-gray-900">
-        Flat <span class="text-red-600 font-bold">30% OFF</span>
-      </p>
-    </div>
-
-    <div class="flex items-center gap-2 bg-gray-100 rounded-lg px-3 py-1.5 border border-gray-200">
-      <span id="welcomeCoupon" class="text-[12px] font-black tracking-wider">WELCOME30</span>
-
-      <button onclick="copyWelcomeCoupon(event)"
-              class="bg-red-600 text-white rounded-md px-2 py-1 text-[11px] font-bold">
-        COPY
-      </button>
-    </div>
-  </div>
-
-</div>
 
 
-<script>
-function copyWelcomeCoupon(event) {
-    const code = document.getElementById("welcomeCoupon").innerText;
-    navigator.clipboard.writeText(code);
 
-    const feedback = document.getElementById("welcomeCopyFeedback");
-    feedback.classList.remove("hidden");
 
-    const btn = event.currentTarget;
-    const originalIcon = btn.innerHTML;
 
-    // Switch to check icon
-    btn.innerHTML = `
-        <svg xmlns="http://www.w3.org/2000/svg"
-             class="w-5 h-5"
-             fill="none"
-             viewBox="0 0 24 24"
-             stroke="currentColor"
-             stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round"
-                  d="M5 13l4 4L19 7" />
-        </svg>
-    `;
-
-    setTimeout(() => {
-        btn.innerHTML = originalIcon;
-        feedback.classList.add("hidden");
-    }, 2000);
-}
-</script>
 
 
 
