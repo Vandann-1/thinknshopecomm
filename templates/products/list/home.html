@@ -1355,13 +1355,6 @@ document.body.style.overflow=''
 </script>
 
 
-<!-- <br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>  -->
 <main class="relative w-full bg-white overflow-hidden">
 
 <!-- =========================================== -->
@@ -2074,101 +2067,7 @@ document.querySelectorAll(".footer-toggle").forEach(btn => {
 
 
 
-<!-- <div id="xmasFloat" style="
-position:fixed;
-inset:0;
-display:none;
-align-items:center;
-justify-content:center;
-z-index:9999;
-background:rgba(255,255,255,.55);
-backdrop-filter:blur(8px);
-">
 
-  <div style="
-  background:white;
-  border:2px solid #fecaca;
-  border-radius:30px;
-  padding:34px;
-  width:360px;
-  box-shadow:0 30px 70px rgba(0,0,0,.2);
-  font-family:system-ui;
-  text-align:center;
-  ">
-
-    <div style="font-size:11px;color:#dc2626;letter-spacing:2px;">🎄 CHRISTMAS DROP</div>
-    <div style="font-size:24px;font-weight:800;margin:10px 0;color:#111;">Limited Gift Packs</div>
-    <div style="font-size:13px;color:#555;margin-bottom:14px;">Secret bottles • Once a year deals</div>
-
-    <div id="xmasTimer" style="font-weight:700;color:#dc2626;margin-bottom:10px;font-size:14px;">
-      Loading timer…
-    </div>
-
-    <div id="xmasStock" style="font-size:12px;color:#333;margin-bottom:18px;">
-      Only <b>63</b> packs left
-    </div>
-
-    <a href="/products/" style="display:block;background:#dc2626;color:white;padding:13px;border-radius:14px;font-weight:700;text-decoration:none;">
-      View Deals
-    </a>
-
-    <div onclick="closeFloat()" style="margin-top:14px;font-size:11px;color:#999;cursor:pointer;">
-      Continue browsing
-    </div>
-
-  </div>
-</div> -->
-
-<script>
-(function(){
-
-  const HOME_PATHS = ["/", "/home", "/main_page/"];   // add your homepage routes here
-
-  const currentPath = window.location.pathname;
-
-  if(!HOME_PATHS.includes(currentPath)) return;   // EXIT on non-home pages
-
-  document.addEventListener("DOMContentLoaded", function(){
-
-    document.getElementById("xmasFloat").style.display = "flex";
-
-    // countdown
-    const timer = document.getElementById("xmasTimer");
-    const end = new Date(new Date().getFullYear(),11,25,23,59,59).getTime();
-
-    setInterval(() => {
-      const diff = end - Date.now();
-      if(diff<=0) return timer.innerHTML="Deal expired";
-
-      const d=Math.floor(diff/86400000),
-            h=Math.floor(diff%86400000/3600000),
-            m=Math.floor(diff%3600000/60000),
-            s=Math.floor(diff%60000/1000);
-
-      timer.innerHTML = `⏰ Ends in ${d}d ${h}h ${m}m ${s}s`;
-    },1000);
-
-    // stock burn
-    let stock = parseInt(localStorage.getItem("xmasStock") || "63");
-    const stockEl = document.getElementById("xmasStock");
-    stockEl.innerHTML = `Only <b>${stock}</b> packs left`;
-
-    setInterval(()=>{
-      if(stock>11 && Math.random()>0.6){
-        stock--;
-        localStorage.setItem("xmasStock",stock);
-        stockEl.innerHTML = `Only <b>${stock}</b> packs left`;
-      }
-    },4000);
-
-  });
-
-  window.closeFloat = function(){
-    document.getElementById("xmasFloat").style.display="none";
-  };
-
-})();
-</script>
 
 
 
