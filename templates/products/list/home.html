@@ -1553,69 +1553,7 @@ showSlide(0);
 
 
 
-{% if featured_categories %}
-<section class="py-14 bg-white">
 
-<div class="max-w-7xl mx-auto px-4 mb-6">
-  <div class="text-[11px] uppercase tracking-widest text-gray-400">Popular</div>
-  <h2 class="text-2xl font-black text-gray-900">Shop by Collection</h2>
-</div>
-
-<!-- MOBILE MALL (Swipe) -->
-<div class="block md:hidden">
-  <div class="flex gap-5 px-4 overflow-x-auto snap-x snap-mandatory pb-4">
-
-    {% for category in featured_categories %}
-    <a href="{% url 'products:category-detail' category.slug %}"
-       class="snap-start shrink-0 flex flex-col items-center min-w-[110px]">
-
-      <div class="w-24 h-24 rounded-full bg-gray-100 overflow-hidden border hover:shadow-xl transition">
-        {% if category.image %}
-          <img src="{{ category.image.url }}" class="w-full h-full object-cover">
-        {% else %}
-          <div class="w-full h-full flex items-center justify-center text-2xl font-black text-gray-400">
-            {{ category.name|first }}
-          </div>
-        {% endif %}
-      </div>
-
-      <h3 class="mt-3 text-xs font-bold text-center leading-tight line-clamp-2">
-        {{ category.name }}
-      </h3>
-      <span class="text-[10px] text-gray-500">{{ category.total_products }} items</span>
-    </a>
-    {% endfor %}
-
-  </div>
-</div>
-
-<!-- DESKTOP MALL (Grid) -->
-<div class="hidden md:grid max-w-7xl mx-auto px-4 grid-cols-5 lg:grid-cols-6 gap-8">
-
-  {% for category in featured_categories %}
-  <a href="{% url 'products:category-detail' category.slug %}"
-     class="flex flex-col items-center hover:scale-105 transition">
-
-    <div class="w-28 h-28 lg:w-32 lg:h-32 rounded-full bg-gray-100 overflow-hidden border shadow-sm">
-      {% if category.image %}
-        <img src="{{ category.image.url }}" class="w-full h-full object-cover">
-      {% else %}
-        <div class="w-full h-full flex items-center justify-center text-3xl font-black text-gray-400">
-          {{ category.name|first }}
-        </div>
-      {% endif %}
-    </div>
-
-    <h3 class="mt-3 text-sm font-bold text-center line-clamp-2">
-      {{ category.name }}
-    </h3>
-    <span class="text-xs text-gray-500">{{ category.total_products }} items</span>
-  </a>
-  {% endfor %}
-
-</div>
-</section>
-{% endif %}
 
 
 
@@ -1785,55 +1723,7 @@ View Product
 
 
 
-<section class="bg-white py-20">
 
-<div class="max-w-7xl mx-auto px-4">
-
-<div class="mb-14">
-  <div class="text-xs uppercase tracking-widest text-gray-400 mb-2">Collections</div>
-  <h2 class="text-4xl md:text-5xl font-black tracking-tight text-gray-900">
-    Built For Different People
-  </h2>
-</div>
-
-<div class="grid grid-cols-1 md:grid-cols-3 gap-10">
-
-<!-- ANIME -->
-<a href="/collections/anime/" class="group relative rounded-3xl overflow-hidden bg-gradient-to-br from-purple-600 to-indigo-700 h-72 flex items-end p-8 shadow-lg hover:scale-105 transition">
-
-  <div>
-    <h3 class="text-3xl font-black text-white">ANIME</h3>
-    <p class="text-white/80 mt-2 text-sm">Limited Drops</p>
-  </div>
-
-  <div class="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition"></div>
-</a>
-
-<!-- BTS -->
-<a href="/collections/bts/" class="group relative rounded-3xl overflow-hidden bg-gradient-to-br from-fuchsia-600 to-purple-700 h-72 flex items-end p-8 shadow-lg hover:scale-105 transition">
-
-  <div>
-    <h3 class="text-3xl font-black text-white">BTS ARMY</h3>
-    <p class="text-white/80 mt-2 text-sm">Purple Editions</p>
-  </div>
-
-  <div class="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition"></div>
-</a>
-
-<!-- CUSTOM -->
-<a href="/collections/custom/" class="group relative rounded-3xl overflow-hidden bg-gradient-to-br from-zinc-900 to-black h-72 flex items-end p-8 shadow-lg hover:scale-105 transition">
-
-  <div>
-    <h3 class="text-3xl font-black text-white">CUSTOM</h3>
-    <p class="text-white/70 mt-2 text-sm">Design Your Own</p>
-  </div>
-
-  <div class="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition"></div>
-</a>
-
-</div>
-</div>
-</section>
 
 
 
