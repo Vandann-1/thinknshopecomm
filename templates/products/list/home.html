@@ -1367,51 +1367,45 @@ document.body.style.overflow=''
 <!-- =========================================== -->
 
 <!-- HERO SECTION -->
-<section class="relative w-full min-h-[78vh] sm:min-h-[70vh] bg-[#0b0202]"
-         style="contain:layout paint size;">
+<section class="relative w-full min-h-[78vh] sm:min-h-[70vh] bg-black">
 
   <!-- HEIGHT LOCK -->
   <div class="min-h-[78vh] sm:min-h-[70vh] w-full"></div>
-
-  <!-- ATMOSPHERIC GLOW -->
-  <div class="absolute inset-0 pointer-events-none overflow-hidden">
-    <div class="absolute -top-52 -left-52 w-[600px] h-[600px] bg-[#ff1f1f] rounded-full blur-[200px] opacity-30"></div>
-    <div class="absolute top-1/2 -right-52 w-[520px] h-[520px] bg-[#ff6b00] rounded-full blur-[180px] opacity-25"></div>
-    <div class="absolute bottom-[-180px] left-1/3 w-[520px] h-[520px] bg-[#ff0000] rounded-full blur-[200px] opacity-20"></div>
-  </div>
 
   <!-- CONTENT -->
   <div class="absolute inset-0 flex items-center justify-center z-10 px-4">
     <div class="text-center max-w-3xl">
 
-      <span class="uppercase tracking-[0.3em] text-[#ff8a8a] text-[11px]">
+      <span class="uppercase tracking-[0.35em] text-gray-400 text-[11px]">
         THINKNSHOP EXCLUSIVE
       </span>
 
-      <h1 class="mt-4 text-4xl sm:text-5xl md:text-6xl font-black leading-tight text-white">
+      <h1 class="mt-5 text-4xl sm:text-5xl md:text-6xl font-black leading-tight text-white">
         Premium Bottles<br class="hidden sm:block">Only ₹99
       </h1>
 
-      <p class="mt-4 text-white/70 max-w-xl mx-auto">
+      <p class="mt-4 text-gray-400 max-w-xl mx-auto">
         Anime • Custom • Minimal • Built for daily hustle
       </p>
 
-      <div class="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
+      <div class="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
+
         <a href="{% url 'products:product-list' %}"
-           class="px-10 py-3 rounded-full bg-[#e11d1d] hover:bg-[#c40f0f] text-white font-semibold transition shadow-lg shadow-red-500/30">
+           class="px-10 py-3 rounded-full bg-white text-black font-semibold hover:bg-gray-200 transition">
           Shop Now
         </a>
 
         <a href="/collections/custom/"
-           class="px-10 py-3 rounded-full border border-white/25 text-white hover:bg-white/10 transition">
+           class="px-10 py-3 rounded-full border border-gray-600 text-white hover:border-white transition">
           Customize
         </a>
+
       </div>
 
     </div>
   </div>
-
 </section>
+
 
 
 
