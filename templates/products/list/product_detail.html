@@ -225,24 +225,53 @@
                     {% endif %}
 
                     <!-- Size Selection -->
-                    {% if variants_by_size %}
-                    <div>
-                        <div class="flex items-center justify-between mb-3">
-                            <label class="text-base font-medium text-gray-900">Size</label>
-                            <a href="#" class="text-sm text-primary-600 hover:text-primary-700 transition-colors">Size Guide</a>
-                        </div>
-                        <div class="grid grid-cols-4 sm:grid-cols-6 gap-2">
-                            {% for size_name, size_data in variants_by_size.items %}
-                            <button type="button" 
-                                    class="size-option py-3 px-4 text-sm font-medium border-2 border-gray-200 rounded-lg hover:border-primary-300 focus:border-primary-500 focus:outline-none transition-all"
-                                    data-size="{{ size_data.size.id }}" 
-                                    data-size-name="{{ size_name }}">
-                                {{ size_name }}
-                            </button>
-                            {% endfor %}
-                        </div>
-                    </div>
-                    {% endif %}
+{% if variants_by_size %}
+<div class="space-y-3">
+
+    <!-- Header -->
+    <div class="flex items-center justify-between">
+        <label class="text-base font-semibold text-gray-900 tracking-wide">
+            Select Size
+        </label>
+        <button type="button"
+                class="text-sm font-medium text-primary-600 hover:underline">
+            Size Guide
+        </button>
+    </div>
+
+    <!-- Mobile: Horizontal Scroll | Desktop: Grid -->
+    <div class="flex gap-3 overflow-x-auto pb-2 sm:grid sm:grid-cols-5 sm:gap-3 sm:overflow-visible">
+
+        {% for size_name, size_data in variants_by_size.items %}
+        <button
+            type="button"
+            class="size-option
+                   min-w-[64px] sm:min-w-0
+                   px-4 py-3
+                   text-sm font-semibold
+                   border-2 border-gray-200
+                   rounded-xl
+                   bg-white
+                   text-gray-800
+                   transition-all duration-200
+                   hover:border-primary-400 hover:bg-primary-50
+                   focus:outline-none
+                   data-[active=true]:border-primary-600
+                   data-[active=true]:bg-primary-600
+                   data-[active=true]:text-white
+                   data-[active=true]:shadow-lg"
+            data-size="{{ size_data.size.id }}"
+            data-size-name="{{ size_name }}"
+            data-active="false"
+        >
+            {{ size_name }}
+        </button>
+        {% endfor %}
+
+    </div>
+</div>
+{% endif %}
+
                 </div>
 
                 <!-- Stock Status -->
