@@ -2020,3 +2020,24 @@ INFO 2026-01-05 12:08:46,755 zippypost_utils Response Headers: {'Server': 'nginx
 DEBUG 2026-01-05 12:08:46,756 zippypost_utils Full Response Body:
 DEBUG 2026-01-05 12:08:46,756 zippypost_utils {"success":true,"booking":true,"RESULT":{"awb":"77645457750","courier":"Bluedart+","label":"NA","routingCode":"BOM/FRT/FRT"}}
 INFO 2026-01-05 12:08:47,593 zippypost_utils Retrieved label URL for AWB 77645457750
+INFO 2026-01-16 21:59:08,342 views Order review accessed by user 17 with method GET
+INFO 2026-01-16 21:59:08,348 views Order review GET parameters - User: 17, variant_id: 49, quantity: 1, coupon_code: , address_id: dfa05e35-ab1b-407d-9835-b86a21f4aa66
+INFO 2026-01-16 21:59:08,831 views Found variant 49 - Naruto water bottles
+INFO 2026-01-16 21:59:08,833 views Pricing calculated - unit_price: 99.58, subtotal: 99.58, shipping: 50.00
+INFO 2026-01-16 21:59:08,834 views Final calculations - taxable_amount: 149.58, tax_amount: 7.4790, total_amount: 157.0590
+INFO 2026-01-16 21:59:09,079 views Selected address dfa05e35-ab1b-407d-9835-b86a21f4aa66 for user 17
+INFO 2026-01-16 21:59:09,322 views Order review page rendered successfully for user 17
+INFO 2026-01-16 22:01:20,527 views Order review accessed by user 17 with method GET
+INFO 2026-01-16 22:01:20,529 views Order review GET parameters - User: 17, variant_id: 49, quantity: 1, coupon_code: , address_id: dfa05e35-ab1b-407d-9835-b86a21f4aa66
+INFO 2026-01-16 22:01:21,025 views Found variant 49 - Naruto water bottles
+INFO 2026-01-16 22:01:21,026 views Pricing calculated - unit_price: 99.58, subtotal: 99.58, shipping: 50.00
+INFO 2026-01-16 22:01:21,028 views Final calculations - taxable_amount: 149.58, tax_amount: 7.4790, total_amount: 157.0590
+INFO 2026-01-16 22:01:21,282 views Selected address dfa05e35-ab1b-407d-9835-b86a21f4aa66 for user 17
+INFO 2026-01-16 22:01:21,539 views Order review page rendered successfully for user 17
+INFO 2026-01-16 22:13:59,294 views Order review accessed by user 17 with method GET
+INFO 2026-01-16 22:13:59,295 views Order review GET parameters - User: 17, variant_id: 50, quantity: 1, coupon_code: , address_id: dfa05e35-ab1b-407d-9835-b86a21f4aa66
+INFO 2026-01-16 22:13:59,784 views Found variant 50 - Evil Goku bottles
+INFO 2026-01-16 22:13:59,785 views Pricing calculated - unit_price: 99.60, subtotal: 99.60, shipping: 50.00
+INFO 2026-01-16 22:13:59,786 views Final calculations - taxable_amount: 149.60, tax_amount: 7.4800, total_amount: 157.0800
+INFO 2026-01-16 22:14:00,041 views Selected address dfa05e35-ab1b-407d-9835-b86a21f4aa66 for user 17
+INFO 2026-01-16 22:14:00,285 views Order review page rendered successfully for user 17

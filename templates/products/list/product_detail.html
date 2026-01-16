@@ -359,18 +359,45 @@
                 {% endif %}
 
                 <!-- Action Buttons -->
-                <div class="space-y-3">
+<div class="space-y-3">
 
-                    <div class="grid grid-cols-2 gap-3">
-                        <button class="btn btn-secondary py-3 px-4 border border-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-50 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
-                            {% if is_in_wishlist %}Remove from Wishlist{% else %}Add to Wishlist{% endif %}
-                        </button>
-                        <button class="purchase-btn purchase-btn-success py-3 px-4 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-primary-600 focus:ring-offset-2" 
-                                data-product-id="{{product.id}}">
-                            Buy Now
-                        </button>
-                    </div>
-                </div>
+  <div class="grid grid-cols-3 gap-3">
+
+    <!-- Wishlist -->
+    <button
+      class="py-3 px-4 border border-gray-300 text-gray-700 font-medium rounded-lg
+             hover:bg-gray-50 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
+      {% if is_in_wishlist %}Remove{% else %}Wishlist{% endif %}
+    </button>
+
+    <!-- Add to Cart -->
+    <button
+      onclick="EcommerceCartModal.fillProductIntoCart({{ product.id }})"
+      class="group py-3 px-4 border border-gray-300 rounded-lg
+             flex items-center justify-center gap-2
+             hover:border-primary-600 hover:bg-primary-50
+             transition-all focus:outline-none focus:ring-2 focus:ring-primary-600 focus:ring-offset-2"
+      title="Add to Cart">
+
+      <i class="fas fa-cart-plus text-gray-600 group-hover:text-primary-600 transition-colors"></i>
+      <span class="hidden sm:inline font-medium text-gray-700 group-hover:text-primary-600">
+        Cart
+      </span>
+    </button>
+
+    <!-- Buy Now -->
+    <button
+      class="purchase-btn purchase-btn-success py-3 px-4 bg-primary-600 hover:bg-primary-700
+             text-white font-medium rounded-lg transition-colors
+             focus:outline-none focus:ring-2 focus:ring-primary-600 focus:ring-offset-2"
+      data-product-id="{{ product.id }}">
+      Buy Now
+    </button>
+
+  </div>
+
+</div>
+
             </div>
         </div>
 
