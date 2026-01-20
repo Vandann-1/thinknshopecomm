@@ -2,6 +2,8 @@ from django.urls import path
 from . import views
 
 
+app_name='orders'
+
 urlpatterns = [
     # Product details and variant selection
     path('products/<int:product_id>/details/', 

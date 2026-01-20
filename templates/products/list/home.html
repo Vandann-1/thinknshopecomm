@@ -7,6 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ThinknShop - Premium Hydration</title>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+html{font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+</style>
+
     <style>
         :root {
             --primary-color: #d32f2f;
@@ -1355,13 +1360,6 @@ document.body.style.overflow=''
 </script>
 
 
-<!-- <br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>  -->
 <main class="relative w-full bg-white overflow-hidden">
 
 <!-- =========================================== -->
@@ -1369,155 +1367,57 @@ document.body.style.overflow=''
 <!-- =========================================== -->
 
 <!-- HERO SECTION -->
- <!-- <br> -->
-<!-- <br>
-<br>
+<section class="relative w-full min-h-[78vh] sm:min-h-[70vh] bg-black">
 
-<br>
-<br> -->
+  <!-- HEIGHT LOCK -->
+  <div class="min-h-[78vh] sm:min-h-[70vh] w-full"></div>
 
-<section class="relative w-full h-[78vh] sm:h-[70vh] overflow-hidden bg-black">
+  <!-- CONTENT -->
+  <div class="absolute inset-0 flex items-center justify-center z-10 px-4">
+    <div class="text-center max-w-3xl">
 
-<!-- CINEMATIC LIGHT FOG -->
-<div class="absolute inset-0 pointer-events-none">
-  <div class="absolute -top-40 -left-40 w-[520px] h-[520px] bg-red-500 rounded-full blur-[160px] opacity-40 animate-pulse"></div>
-  <div class="absolute top-1/3 -right-40 w-[520px] h-[520px] bg-yellow-400 rounded-full blur-[160px] opacity-30 animate-pulse"></div>
-  <div class="absolute bottom-0 left-1/4 w-[420px] h-[420px] bg-orange-500 rounded-full blur-[160px] opacity-25 animate-pulse"></div>
-</div>
+      <span class="uppercase tracking-[0.35em] text-gray-400 text-[11px]">
+        THINKNSHOP EXCLUSIVE
+      </span>
 
-<div id="hero-slider" class="relative w-full h-full">
+      <h1 class="mt-5 text-4xl sm:text-5xl md:text-6xl font-black leading-tight text-white">
+        Premium Bottles<br class="hidden sm:block">Only ₹99
+      </h1>
 
-<!-- SLIDE 1 -->
-<div class="hero-slide absolute inset-0 bg-red-600 flex items-center">
-<div class="w-full max-w-6xl mx-auto px-5 flex flex-col md:flex-row items-center gap-8">
+      <p class="mt-4 text-gray-400 max-w-xl mx-auto">
+        Anime • Custom • Minimal • Built for daily hustle
+      </p>
 
-<div class="text-white md:w-1/2 text-center md:text-left">
-<p class="uppercase tracking-widest text-xs opacity-80">All</p>
-<h1 class="mt-2 text-3xl md:text-5xl font-black">Bottles in ₹99</h1>
-<p class="mt-3 text-white/80 max-w-md text-sm">Premium finish. Built for everyday hustle.</p>
-<a href="{% url 'products:product-list' %}"
-class="inline-block mt-5 px-8 py-3 bg-black text-white rounded-full text-sm font-semibold">Shop Now</a>
-</div>
+      <div class="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
 
-<div class="md:w-1/2 flex justify-center items-center">
-<div class="hero-word text-4xl md:text-6xl font-black tracking-tight"></div>
-</div>
+        <a href="{% url 'products:product-list' %}"
+           class="px-10 py-3 rounded-full bg-white text-black font-semibold hover:bg-gray-200 transition">
+          Shop Now
+        </a>
 
-</div>
-</div>
+        <a href="/collections/custom/"
+           class="px-10 py-3 rounded-full border border-gray-600 text-white hover:border-white transition">
+          Customize
+        </a>
 
-<!-- SLIDE 2 -->
-<div class="hero-slide absolute inset-0 bg-yellow-400 flex items-center translate-x-full">
-<div class="w-full max-w-6xl mx-auto px-5 flex flex-col md:flex-row items-center gap-8">
+      </div>
 
-<div class="text-black md:w-1/2 text-center md:text-left">
-<p class="uppercase tracking-widest text-xs">Trending</p>
-<h1 class="mt-2 text-3xl md:text-5xl font-black">Anime Bottles</h1>
-<p class="mt-3 text-black/70 max-w-md text-sm">Sharp prints. Long-lasting color.</p>
-<a href="{% url 'products:product-list' %}"
-class="inline-block mt-5 px-8 py-3 bg-black text-white rounded-full text-sm font-semibold">View Collection</a>
-</div>
-
-<div class="md:w-1/2 flex justify-center items-center">
-<div class="hero-word text-4xl md:text-6xl font-black tracking-tight"></div>
-</div>
-
-</div>
-</div>
-
-<!-- SLIDE 3 -->
-<div class="hero-slide absolute inset-0 bg-black flex items-center translate-x-full">
-<div class="w-full max-w-6xl mx-auto px-5 flex flex-col md:flex-row items-center gap-8">
-
-<div class="text-white md:w-1/2 text-center md:text-left">
-<p class="uppercase tracking-widest text-xs text-orange-400">Custom</p>
-<h1 class="mt-2 text-3xl md:text-5xl font-black">Your Design</h1>
-<p class="mt-3 text-white/70 max-w-md text-sm">Upload. Customize. We print it clean.</p>
-<a href="{% url 'products:product-list' %}"
-class="inline-block mt-5 px-8 py-3 bg-orange-500 text-black rounded-full text-sm font-semibold">Customize Now</a>
-</div>
-
-<div class="md:w-1/2 flex justify-center items-center">
-<div class="hero-word text-4xl md:text-6xl font-black tracking-tight"></div>
-</div>
-
-</div>
-</div>
-
-</div>
+    </div>
+  </div>
 </section>
 
-<style>
-.hero-word{
- text-shadow:0 0 30px rgba(255,255,255,.4);
- animation:breath 3s ease-in-out infinite;
- transform-style:preserve-3d;
-}
-@keyframes breath{
- 0%,100%{letter-spacing:.02em;opacity:.85}
- 50%{letter-spacing:.1em;opacity:1}
-}
-</style>
-
-<script>
-const data=[
-["₹99 Bottles","Leakproof","BPA Free","Premium Print"],
-["Anime Bottles","Ultra Sharp","Matte Finish","Fan Favorites"],
-["Upload Design","Live Preview","Clean Print","Fast Ship"]
-];
-
-function tilt(el,e){
- const r=el.getBoundingClientRect();
- const x=e.clientX-r.left;
- const y=e.clientY-r.top;
- el.style.transform=`rotateX(${-(y/r.height-.5)*10}deg) rotateY(${(x/r.width-.5)*12}deg)`;
-}
-
-document.querySelectorAll(".hero-word").forEach((el,i)=>{
- let w=0,c=0,d=false;
- el.onmousemove=e=>tilt(el,e);
- setInterval(()=>{
-  let txt=data[i][w];
-  el.innerText=d?txt.slice(0,--c):txt.slice(0,++c);
-  if(!d && c===txt.length)d=true;
-  if(d && c===0){d=false;w=(w+1)%data[i].length;}
- },90);
-});
-</script>
 
 
 
-<script>
-const slides = document.querySelectorAll(".hero-slide");
-const dots = document.querySelectorAll(".dot");
-let current = 0;
 
-function showSlide(i) {
-  slides.forEach((slide, idx) => {
-    slide.style.transform =
-      idx === i ? "translateX(0)" : "translateX(100%)";
-  });
 
-  dots.forEach((d, idx) => {
-    d.classList.toggle("bg-white", idx === i);
-    d.classList.toggle("bg-white/40", idx !== i);
-  });
-}
 
-dots.forEach((dot, i) => {
-  dot.addEventListener("click", () => {
-    current = i;
-    showSlide(current);
-  });
-});
 
-setInterval(() => {
-  current = (current + 1) % slides.length;
-  showSlide(current);
-}, 5000);
 
-showSlide(0);
-</script>
+
+
+
+
 
 
 
@@ -1532,9 +1432,8 @@ showSlide(0);
         0% { transform: translateX(0); }
         100% { transform: translateX(-50%); }
     }
-    .marquee-runner {
-        animation: scroll-left 18s linear infinite;
-    }
+.marquee-runner{will-change:transform;animation:scroll-left 18s linear infinite}
+
 </style>
 
 <div class="w-full overflow-hidden bg-red-600 py-3 shadow-md">
@@ -1561,8 +1460,76 @@ showSlide(0);
 
 
 
+{% if featured_categories %}
+<section class="bg-white py-8 min-h-[200px]">
 
+<div class="max-w-7xl mx-auto px-4 mb-5">
+  <span class="text-[11px] uppercase tracking-widest text-gray-400">Popular</span>
+  <h2 class="text-lg sm:text-xl font-black text-gray-900">
+    Shop by Collection
+  </h2>
+</div>
 
+<!-- MOBILE SWIPE -->
+<div class="block md:hidden">
+  <div class="flex gap-5 px-4 overflow-x-auto snap-x snap-mandatory pb-4 no-scrollbar">
+
+    {% for category in featured_categories %}
+    <a href="{% url 'products:category-detail' category.slug %}"
+       class="snap-start shrink-0 w-[86px] text-center">
+
+      <div class="w-[86px] h-[86px] rounded-full bg-gray-100 overflow-hidden border shadow-sm mx-auto">
+        {% if category.image %}
+          <img src="{{ category.image.url }}"
+               loading="lazy" decoding="async"
+               class="w-full h-full object-contain p-2">
+        {% else %}
+          <span class="w-full h-full flex items-center justify-center text-2xl font-black text-gray-400">
+            {{ category.name|first }}
+          </span>
+        {% endif %}
+      </div>
+
+      <p class="mt-2 text-[11px] font-semibold leading-tight line-clamp-2">
+        {{ category.name }}
+      </p>
+    </a>
+    {% endfor %}
+
+  </div>
+</div>
+
+<!-- DESKTOP GRID -->
+<div class="hidden md:block">
+  <div class="max-w-7xl mx-auto px-6 grid grid-cols-6 lg:grid-cols-8 gap-6">
+
+    {% for category in featured_categories %}
+    <a href="{% url 'products:category-detail' category.slug %}"
+       class="group text-center hover:scale-105 transition">
+
+      <div class="w-24 h-24 mx-auto rounded-full bg-gray-100 overflow-hidden border shadow-sm">
+        {% if category.image %}
+          <img src="{{ category.image.url }}"
+               loading="lazy" decoding="async"
+               class="w-full h-full object-contain p-2">
+        {% else %}
+          <span class="w-full h-full flex items-center justify-center text-3xl font-black text-gray-400">
+            {{ category.name|first }}
+          </span>
+        {% endif %}
+      </div>
+
+      <p class="mt-3 text-sm font-semibold leading-tight line-clamp-2">
+        {{ category.name }}
+      </p>
+    </a>
+    {% endfor %}
+
+  </div>
+</div>
+
+</section>
+{% endif %}
 
 
 
@@ -1592,8 +1559,12 @@ showSlide(0);
             NEW
           </span>
           {% endif %}
-          <img src="{{ product.get_primary_image }}"
-               class="w-full h-full object-cover group-hover:scale-105 transition">
+<img src="{{ product.get_primary_image }}"
+     loading="lazy"
+     decoding="async"
+     fetchpriority="low"
+     class="w-full h-full object-contain transition group-hover:scale-105">
+
         </div>
 
         <!-- CONTENT -->
@@ -1640,8 +1611,12 @@ showSlide(0);
 
       <!-- IMAGE -->
       <div class="aspect-square bg-gray-100">
-        <img src="{{ product.get_primary_image }}"
-             class="w-full h-full object-cover">
+<img src="{{ product.get_primary_image }}"
+     loading="lazy"
+     decoding="async"
+     fetchpriority="low"
+     class="w-full h-full object-contain transition group-hover:scale-105">
+
       </div>
 
       <!-- CONTENT -->
@@ -1690,7 +1665,11 @@ showSlide(0);
 
 <div class="h-[55%] bg-gray-50 overflow-hidden">
 <a href="{% url 'products:product-detail' product.slug %}">
-<img src="{{ product.get_primary_image }}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+<img src="{{ product.get_primary_image }}"
+     loading="lazy"
+     decoding="async"
+     fetchpriority="low"
+     class="w-full h-full object-contain transition group-hover:scale-105">
 </a>
 </div>
 
@@ -1733,109 +1712,17 @@ View Product
 
 
 
-<section class="py-24 bg-white overflow-hidden" id="shop">
-<div class="max-w-7xl mx-auto px-4">
-
-<div class="mb-12">
-  <p class="text-xs tracking-[0.35em] text-gray-400">COLLECTIONS</p>
-  <h2 class="text-4xl sm:text-6xl font-black mt-2">
-    Built For Different People
-  </h2>
-</div>
-
-<div class="overflow-x-auto no-scrollbar">
-  <div class="flex gap-12 min-w-max px-1">
-
-    <a href="{% url 'products:product-list' %}" class="group min-w-[260px]">
-      <div class="text-4xl sm:text-5xl font-black tracking-tight group-hover:text-red-600 transition">
-        ANIME
-      </div>
-      <div class="mt-2 text-sm tracking-widest text-gray-500">LIMITED DROPS</div>
-      <div class="mt-4 h-[2px] w-12 bg-gray-200 group-hover:bg-red-600 transition"></div>
-    </a>
-
-    <a href="{% url 'products:product-list' %}" class="group min-w-[260px]">
-      <div class="text-4xl sm:text-5xl font-black tracking-tight group-hover:text-red-600 transition">
-        BTS ARMY
-      </div>
-      <div class="mt-2 text-sm tracking-widest text-gray-500">PURPLE EDITIONS</div>
-      <div class="mt-4 h-[2px] w-12 bg-gray-200 group-hover:bg-red-600 transition"></div>
-    </a>
-
-    <a href="{% url 'products:product-list' %}" class="group min-w-[260px]">
-      <div class="text-4xl sm:text-5xl font-black tracking-tight group-hover:text-red-600 transition">
-        CUSTOM
-      </div>
-      <div class="mt-2 text-sm tracking-widest text-gray-500">DESIGN YOUR OWN</div>
-      <div class="mt-4 h-[2px] w-12 bg-gray-200 group-hover:bg-red-600 transition"></div>
-    </a>
-
-  </div>
-</div>
-
-</div>
-</section>
 
 
 
 
 
 
-<!-- MOBILE FIRST ORDER BAR -->
-<div class="md:hidden sticky top-0 z-40 bg-white border-b border-red-200">
-
-  <div class="flex items-center justify-between px-4 py-2 gap-3">
-
-    <div class="leading-tight">
-      <p class="text-[11px] uppercase tracking-widest text-red-600 font-bold">First Order</p>
-      <p class="text-[13px] font-semibold text-gray-900">
-        Flat <span class="text-red-600 font-bold">30% OFF</span>
-      </p>
-    </div>
-
-    <div class="flex items-center gap-2 bg-gray-100 rounded-lg px-3 py-1.5 border border-gray-200">
-      <span id="welcomeCoupon" class="text-[12px] font-black tracking-wider">WELCOME30</span>
-
-      <button onclick="copyWelcomeCoupon(event)"
-              class="bg-red-600 text-white rounded-md px-2 py-1 text-[11px] font-bold">
-        COPY
-      </button>
-    </div>
-  </div>
-
-</div>
 
 
-<script>
-function copyWelcomeCoupon(event) {
-    const code = document.getElementById("welcomeCoupon").innerText;
-    navigator.clipboard.writeText(code);
 
-    const feedback = document.getElementById("welcomeCopyFeedback");
-    feedback.classList.remove("hidden");
 
-    const btn = event.currentTarget;
-    const originalIcon = btn.innerHTML;
 
-    // Switch to check icon
-    btn.innerHTML = `
-        <svg xmlns="http://www.w3.org/2000/svg"
-             class="w-5 h-5"
-             fill="none"
-             viewBox="0 0 24 24"
-             stroke="currentColor"
-             stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round"
-                  d="M5 13l4 4L19 7" />
-        </svg>
-    `;
-
-    setTimeout(() => {
-        btn.innerHTML = originalIcon;
-        feedback.classList.add("hidden");
-    }, 2000);
-}
-</script>
 
 
 
@@ -2058,101 +1945,7 @@ document.querySelectorAll(".footer-toggle").forEach(btn => {
 
 
 
-<!-- <div id="xmasFloat" style="
-position:fixed;
-inset:0;
-display:none;
-align-items:center;
-justify-content:center;
-z-index:9999;
-background:rgba(255,255,255,.55);
-backdrop-filter:blur(8px);
-">
 
-  <div style="
-  background:white;
-  border:2px solid #fecaca;
-  border-radius:30px;
-  padding:34px;
-  width:360px;
-  box-shadow:0 30px 70px rgba(0,0,0,.2);
-  font-family:system-ui;
-  text-align:center;
-  ">
-
-    <div style="font-size:11px;color:#dc2626;letter-spacing:2px;">🎄 CHRISTMAS DROP</div>
-    <div style="font-size:24px;font-weight:800;margin:10px 0;color:#111;">Limited Gift Packs</div>
-    <div style="font-size:13px;color:#555;margin-bottom:14px;">Secret bottles • Once a year deals</div>
-
-    <div id="xmasTimer" style="font-weight:700;color:#dc2626;margin-bottom:10px;font-size:14px;">
-      Loading timer…
-    </div>
-
-    <div id="xmasStock" style="font-size:12px;color:#333;margin-bottom:18px;">
-      Only <b>63</b> packs left
-    </div>
-
-    <a href="/products/" style="display:block;background:#dc2626;color:white;padding:13px;border-radius:14px;font-weight:700;text-decoration:none;">
-      View Deals
-    </a>
-
-    <div onclick="closeFloat()" style="margin-top:14px;font-size:11px;color:#999;cursor:pointer;">
-      Continue browsing
-    </div>
-
-  </div>
-</div> -->
-
-<script>
-(function(){
-
-  const HOME_PATHS = ["/", "/home", "/main_page/"];   // add your homepage routes here
-
-  const currentPath = window.location.pathname;
-
-  if(!HOME_PATHS.includes(currentPath)) return;   // EXIT on non-home pages
-
-  document.addEventListener("DOMContentLoaded", function(){
-
-    document.getElementById("xmasFloat").style.display = "flex";
-
-    // countdown
-    const timer = document.getElementById("xmasTimer");
-    const end = new Date(new Date().getFullYear(),11,25,23,59,59).getTime();
-
-    setInterval(() => {
-      const diff = end - Date.now();
-      if(diff<=0) return timer.innerHTML="Deal expired";
-
-      const d=Math.floor(diff/86400000),
-            h=Math.floor(diff%86400000/3600000),
-            m=Math.floor(diff%3600000/60000),
-            s=Math.floor(diff%60000/1000);
-
-      timer.innerHTML = `⏰ Ends in ${d}d ${h}h ${m}m ${s}s`;
-    },1000);
-
-    // stock burn
-    let stock = parseInt(localStorage.getItem("xmasStock") || "63");
-    const stockEl = document.getElementById("xmasStock");
-    stockEl.innerHTML = `Only <b>${stock}</b> packs left`;
-
-    setInterval(()=>{
-      if(stock>11 && Math.random()>0.6){
-        stock--;
-        localStorage.setItem("xmasStock",stock);
-        stockEl.innerHTML = `Only <b>${stock}</b> packs left`;
-      }
-    },4000);
-
-  });
-
-  window.closeFloat = function(){
-    document.getElementById("xmasFloat").style.display="none";
-  };
-
-})();
-</script>
 
 
 
@@ -2292,45 +2085,32 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-<div id="waFloat" class="fixed bottom-4 right-4 z-[99999]">
+<!-- WhatsApp Floating Button -->
+<div id="waFloat"
+     style="position:fixed;
+            right:16px;
+            bottom:calc(env(safe-area-inset-bottom) + 16px);
+            z-index:2147483647;
+            display:block;">
 
   <a href="https://wa.me/919920860553?text=Hello%20ThinknShop%2C%20I%20would%20like%20to%20inquire%20about%20your%20products."
      target="_blank"
      aria-label="Chat on WhatsApp"
-     class="w-12 h-12 rounded-full bg-[#25D366]
-            flex items-center justify-center
-            shadow-xl hover:scale-110 transition relative">
+     style="width:48px;
+            height:48px;
+            border-radius:9999px;
+            background:#25D366;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            box-shadow:0 10px 25px rgba(0,0,0,.35);
+            transform:translateZ(0);">
 
     <!-- WhatsApp Icon -->
-    <svg viewBox="0 0 32 32" fill="white" class="w-6 h-6">
+    <svg viewBox="0 0 32 32" fill="white" width="24" height="24">
       <path d="M19.11 17.31c-.29-.15-1.72-.85-1.99-.95-.27-.1-.47-.15-.66.15-.19.29-.76.95-.93 1.15-.17.19-.34.22-.63.07-.29-.15-1.22-.45-2.32-1.43-.86-.77-1.44-1.72-1.61-2.01-.17-.29-.02-.45.13-.6.13-.13.29-.34.44-.51.15-.17.19-.29.29-.49.1-.19.05-.37-.02-.51-.07-.15-.66-1.59-.9-2.18-.24-.58-.48-.5-.66-.51h-.56c-.19 0-.49.07-.76.37-.27.29-1.03 1.01-1.03 2.46s1.06 2.85 1.21 3.05c.15.19 2.08 3.17 5.04 4.45.7.3 1.24.48 1.66.61.7.22 1.34.19 1.85.12.56-.08 1.72-.7 1.97-1.38.24-.68.24-1.27.17-1.38-.07-.12-.27-.19-.56-.34z"/>
-      <path d="M16 2.67c-7.36 0-13.33 5.97-13.33 13.33 0 2.35.61 4.65 1.77 6.68L2.67 29.33l6.84-1.79c1.95 1.07 4.15 1.63 6.49 1.63 7.36 0 13.33-5.97 13.33-13.33S23.36 2.67 16 2.67zm0 24c-2.05 0-4.06-.55-5.82-1.59l-.42-.24-4.06 1.06 1.08-3.95-.27-.41c-1.13-1.75-1.73-3.78-1.73-5.87 0-6.01 4.89-10.91 10.91-10.91s10.91 4.89 10.91 10.91-4.89 10.91-10.91 10.91z"/>
-    </svg>
+      <path d="M16 2.67c-7.36 0-13.33 5.97-13.33 13.33 0 2.35.61 4.65 1.77 6.68L2.67 29.33l6.84-1.79c1.95 1.07 4.15 1.63 6.49 1.63 7.36 0 13.33-5.97 13.33-13.33S23.36 2.67 16 2.67zm0 24c-2.05 0-4.06-.55-5.82-1.59l-.42-.24-4.06 1.06 1.08-3.95-.27-.41c-1.13-1.75-1.73-3.78-1.73-5.87 0-6.01 4.89-10.9
 
-    <!-- CLOSE BUTTON -->
-    <button onclick="hideWA(event)"
-            class="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-black text-white text-xs
-                   flex items-center justify-center shadow-md">
-      ×
-    </button>
-
-  </a>
-</div>
-
-<script>
-(function(){
-  if(localStorage.getItem("hideWA")){
-    document.getElementById("waFloat").style.display = "none";
-  }
-
-  window.hideWA = function(e){
-    e.preventDefault();
-    e.stopPropagation();
-    document.getElementById("waFloat").style.display = "none";
-    localStorage.setItem("hideWA","1");
-  }
-})();
-</script>
 
 
 

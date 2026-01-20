@@ -346,83 +346,99 @@
 </div>
 
 
-                <!-- Payment Method -->
+<!-- Payment Method -->
 <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 md:p-8 mb-6">
 
-    <h2 class="text-sm uppercase tracking-widest text-gray-400 font-semibold mb-5">
-        Payment Method
-    </h2>
+  <h2 class="text-sm uppercase tracking-widest text-gray-400 font-semibold mb-6">
+    How do you want to complete this order?
+  </h2>
 
-    <form id="orderForm">
-        {% csrf_token %}
+  <form id="orderForm">
+    {% csrf_token %}
 
-        <div class="space-y-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
 
-            <!-- Online -->
-            <label class="group block cursor-pointer">
-                <input type="radio" name="payment_method" value="razorpay" class="sr-only peer" checked>
+      <!-- ONLINE PAY -->
+      <button
+        type="button"
+        data-value="razorpay"
+        class="payment-btn group relative text-left border-2 rounded-2xl p-6 transition-all
+               border-gray-200 hover:border-gray-900 hover:shadow-md">
 
-                <div class="border-2 rounded-xl p-5 transition-all
-                            border-gray-200 peer-checked:border-gray-900 peer-checked:ring-1 peer-checked:ring-gray-900
-                            hover:border-gray-400">
-
-                    <div class="flex items-start justify-between gap-4">
-
-                        <div class="flex items-center gap-4">
-                            <div class="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center">
-                                <svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                          d="M3 7h18M5 11h14M5 15h14M5 19h14"/>
-                                </svg>
-                            </div>
-
-                            <div>
-                                <p class="font-semibold text-gray-900">Pay Online</p>
-                                <p class="text-sm text-gray-500">UPI, Cards, Net Banking, Wallets</p>
-                            </div>
-                        </div>
-
-                        <span class="text-xs text-gray-400 mt-1">Recommended</span>
-                    </div>
-                </div>
-            </label>
-
-            <!-- COD -->
-            <label class="group block cursor-pointer">
-                <input type="radio" name="payment_method" value="cod" class="sr-only peer">
-
-                <div class="border-2 rounded-xl p-5 transition-all
-                            border-gray-200 peer-checked:border-gray-900 peer-checked:ring-1 peer-checked:ring-gray-900
-                            hover:border-gray-400">
-
-                    <div class="flex items-center gap-4">
-                        <div class="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center">
-                            <svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                      d="M12 8c-1.657 0-3 1.343-3 3v3h6v-3c0-1.657-1.343-3-3-3z"/>
-                            </svg>
-                        </div>
-
-                        <div>
-                            <p class="font-semibold text-gray-900">Cash on Delivery</p>
-                            <p class="text-sm text-gray-500">Pay when your order is delivered</p>
-                        </div>
-                    </div>
-                </div>
-            </label>
-
+        <div class="absolute top-4 right-4 text-xs font-medium text-gray-400 group-hover:text-gray-900">
+          Instant
         </div>
 
-        <div class="mt-6 border border-gray-200 rounded-xl bg-gray-50 px-4 py-3 flex items-center gap-3 text-sm text-gray-600">
-            <svg class="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 20 20">
-                <path fill-rule="evenodd"
-                      d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
-                      clip-rule="evenodd"/>
-            </svg>
-            256-bit SSL encrypted • Secure checkout
+        <div class="flex items-center gap-4">
+          <div class="w-12 h-12 rounded-xl bg-black text-white flex items-center justify-center">
+            ⚡
+          </div>
+          <div>
+            <p class="font-semibold text-gray-900 text-lg">Pay Now</p>
+            <p class="text-sm text-gray-500 mt-1">
+              UPI • Cards • NetBanking
+            </p>
+          </div>
         </div>
-    </form>
+
+        <p class="mt-4 text-sm text-gray-600">
+          Order is processed immediately. Faster delivery. No confirmation calls.
+        </p>
+      </button>
+
+      <!-- COD -->
+      <button
+        type="button"
+        data-value="cod"
+        class="payment-btn group relative text-left border-2 rounded-2xl p-6 transition-all
+               border-gray-200 hover:border-gray-900 hover:shadow-md">
+
+        <div class="absolute top-4 right-4 text-xs font-medium text-gray-400 group-hover:text-gray-900">
+          Slower
+        </div>
+
+        <div class="flex items-center gap-4">
+          <div class="w-12 h-12 rounded-xl bg-gray-100 text-gray-700 flex items-center justify-center">
+            💵
+          </div>
+          <div>
+            <p class="font-semibold text-gray-900 text-lg">Pay on Delivery</p>
+            <p class="text-sm text-gray-500 mt-1">
+              Cash only at doorstep
+            </p>
+          </div>
+        </div>
+
+        <p class="mt-4 text-sm text-gray-600">
+          Manual confirmation required. Delivery may take longer.
+        </p>
+      </button>
+
+    </div>
+
+    <input type="hidden" name="payment_method" id="payment_method" value="razorpay">
+
+    <div class="mt-6 flex items-center gap-3 text-sm text-gray-600">
+      <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-gray-100">🔒</span>
+      End-to-end encrypted payment. No card data stored.
+    </div>
+
+  </form>
 </div>
+
+<script>
+  const buttons = document.querySelectorAll('.payment-btn');
+  const input = document.getElementById('payment_method');
+
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      buttons.forEach(b => b.classList.remove('border-black', 'ring-1'));
+      btn.classList.add('border-black', 'ring-1');
+      input.value = btn.dataset.value;
+    });
+  });
+</script>
+
 
 
                 <!-- Order Notes -->

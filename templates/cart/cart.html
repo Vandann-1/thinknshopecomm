@@ -67,7 +67,7 @@
             <span class="font-semibold">{{ cart.get_items_count }}</span> items in cart
         </div>
     </div>
-    
+
 
     {% if messages %}
     <div class="mb-6">z
@@ -168,13 +168,13 @@
                             <!-- Price -->
                             <div class="mb-4">
                                 <span class="text-2xl font-bold text-gray-900">
-                                    ${{ item.unit_price }}
+                                    ₹{{ item.unit_price }}
                                 </span>
                                 <span class="text-sm text-gray-500 ml-2">per item</span>
                                 {% if item.has_price_changed %}
                                 <div class="mt-1">
-                                    <span class="line-through text-gray-400 text-sm">${{ item.unit_price }}</span>
-                                    <span class="text-green-600 font-semibold text-sm ml-2">${{ item.get_current_price
+                                    <span class="line-through text-gray-400 text-sm">₹{{ item.unit_price }}</span>
+                                    <span class="text-green-600 font-semibold text-sm ml-2">₹{{ item.get_current_price
                                         }}</span>
                                     <span class="text-xs text-green-600 ml-1">Updated!</span>
                                 </div>
@@ -183,8 +183,8 @@
 
                             <!-- Quantity Controls -->
                             <div class="flex items-center gap-4 flex-wrap">
-                                <form method="post" action="#" class="flex items-center gap-2"
-                                    onclick="event.stopPropagation()">
+                                <form method="post" action="{% url 'update_cart_quantity' item.id %}"
+                                    class="flex items-center gap-2" onclick="event.stopPropagation()">
                                     {% csrf_token %}
                                     <label for="quantity_{{ item.id }}"
                                         class="text-sm font-medium text-gray-700">Qty:</label>
@@ -197,7 +197,8 @@
                                     </button>
                                 </form>
 
-                                <form method="post" action="#" class="inline" onclick="event.stopPropagation()">
+                                <form method="post" action="{% url 'remove_from_cart' item.id %}" class="inline"
+                                    onclick="event.stopPropagation()">
                                     {% csrf_token %}
                                     <button type="submit"
                                         class="flex items-center gap-1 text-red-600 hover:text-red-800 text-sm font-medium transition"
@@ -216,7 +217,7 @@
                         <div class="text-right">
                             <p class="text-sm text-gray-500 mb-1">Total</p>
                             <p class="text-2xl font-bold text-gray-900">
-                                ${{ item.get_total_price }}
+                                ₹{{ item.get_total_price }}
                             </p>
                         </div>
                     </div>
@@ -226,7 +227,7 @@
 
             <!-- Clear Cart Button -->
             <div class="mt-6 flex justify-between items-center">
-                <form method="post" action="#" class="inline">
+                <form method="post" action="{% url 'clear_cart' %}" class="inline">
                     {% csrf_token %}
                     <button type="submit"
                         class="flex items-center gap-2 text-red-600 hover:text-red-800 font-medium transition"
@@ -259,13 +260,13 @@
 
                     <div class="flex justify-between items-center py-3 border-b border-gray-100">
                         <span class="text-gray-600">Subtotal</span>
-                        <span class="font-semibold text-gray-900">${{ total_amount }}</span>
+                        <span class="font-semibold text-gray-900">₹{{ total_amount }}</span>
                     </div>
 
                     <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-4 mt-4">
                         <div class="flex justify-between items-center">
                             <span class="text-lg font-semibold text-gray-900">Total</span>
-                            <span class="text-2xl font-bold text-blue-600">${{ total_amount }}</span>
+                            <span class="text-2xl font-bold text-blue-600">₹{{ total_amount }}</span>
                         </div>
                     </div>
                 </div>

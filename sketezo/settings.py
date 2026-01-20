@@ -94,7 +94,6 @@ WSGI_APPLICATION = 'sketezo.wsgi.application'
 # Production Only (Render PostgreSQL)
 import dj_database_url
 
-import dj_database_url
 
 DATABASES = {
     'default': dj_database_url.config(

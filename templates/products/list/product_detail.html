@@ -225,24 +225,53 @@
                     {% endif %}
 
                     <!-- Size Selection -->
-                    {% if variants_by_size %}
-                    <div>
-                        <div class="flex items-center justify-between mb-3">
-                            <label class="text-base font-medium text-gray-900">Size</label>
-                            <a href="#" class="text-sm text-primary-600 hover:text-primary-700 transition-colors">Size Guide</a>
-                        </div>
-                        <div class="grid grid-cols-4 sm:grid-cols-6 gap-2">
-                            {% for size_name, size_data in variants_by_size.items %}
-                            <button type="button" 
-                                    class="size-option py-3 px-4 text-sm font-medium border-2 border-gray-200 rounded-lg hover:border-primary-300 focus:border-primary-500 focus:outline-none transition-all"
-                                    data-size="{{ size_data.size.id }}" 
-                                    data-size-name="{{ size_name }}">
-                                {{ size_name }}
-                            </button>
-                            {% endfor %}
-                        </div>
-                    </div>
-                    {% endif %}
+{% if variants_by_size %}
+<div class="space-y-3">
+
+    <!-- Header -->
+    <div class="flex items-center justify-between">
+        <label class="text-base font-semibold text-gray-900 tracking-wide">
+            Select Size
+        </label>
+        <button type="button"
+                class="text-sm font-medium text-primary-600 hover:underline">
+            Size Guide
+        </button>
+    </div>
+
+    <!-- Mobile: Horizontal Scroll | Desktop: Grid -->
+    <div class="flex gap-3 overflow-x-auto pb-2 sm:grid sm:grid-cols-5 sm:gap-3 sm:overflow-visible">
+
+        {% for size_name, size_data in variants_by_size.items %}
+        <button
+            type="button"
+            class="size-option
+                   min-w-[64px] sm:min-w-0
+                   px-4 py-3
+                   text-sm font-semibold
+                   border-2 border-gray-200
+                   rounded-xl
+                   bg-white
+                   text-gray-800
+                   transition-all duration-200
+                   hover:border-primary-400 hover:bg-primary-50
+                   focus:outline-none
+                   data-[active=true]:border-primary-600
+                   data-[active=true]:bg-primary-600
+                   data-[active=true]:text-white
+                   data-[active=true]:shadow-lg"
+            data-size="{{ size_data.size.id }}"
+            data-size-name="{{ size_name }}"
+            data-active="false"
+        >
+            {{ size_name }}
+        </button>
+        {% endfor %}
+
+    </div>
+</div>
+{% endif %}
+
                 </div>
 
                 <!-- Stock Status -->
@@ -359,18 +388,45 @@
                 {% endif %}
 
                 <!-- Action Buttons -->
-                <div class="space-y-3">
+<div class="space-y-3">
 
-                    <div class="grid grid-cols-2 gap-3">
-                        <button class="btn btn-secondary py-3 px-4 border border-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-50 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
-                            {% if is_in_wishlist %}Remove from Wishlist{% else %}Add to Wishlist{% endif %}
-                        </button>
-                        <button class="purchase-btn purchase-btn-success py-3 px-4 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-primary-600 focus:ring-offset-2" 
-                                data-product-id="{{product.id}}">
-                            Buy Now
-                        </button>
-                    </div>
-                </div>
+  <div class="grid grid-cols-3 gap-3">
+
+    <!-- Wishlist -->
+    <button
+      class="py-3 px-4 border border-gray-300 text-gray-700 font-medium rounded-lg
+             hover:bg-gray-50 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
+      {% if is_in_wishlist %}Remove{% else %}Wishlist{% endif %}
+    </button>
+
+    <!-- Add to Cart -->
+    <button
+      onclick="EcommerceCartModal.fillProductIntoCart({{ product.id }})"
+      class="group py-3 px-4 border border-gray-300 rounded-lg
+             flex items-center justify-center gap-2
+             hover:border-primary-600 hover:bg-primary-50
+             transition-all focus:outline-none focus:ring-2 focus:ring-primary-600 focus:ring-offset-2"
+      title="Add to Cart">
+
+      <i class="fas fa-cart-plus text-gray-600 group-hover:text-primary-600 transition-colors"></i>
+      <span class="hidden sm:inline font-medium text-gray-700 group-hover:text-primary-600">
+        Cart
+      </span>
+    </button>
+
+    <!-- Buy Now -->
+    <button
+      class="purchase-btn purchase-btn-success py-3 px-4 bg-primary-600 hover:bg-primary-700
+             text-white font-medium rounded-lg transition-colors
+             focus:outline-none focus:ring-2 focus:ring-primary-600 focus:ring-offset-2"
+      data-product-id="{{ product.id }}">
+      Buy Now
+    </button>
+
+  </div>
+
+</div>
+
             </div>
         </div>
 
