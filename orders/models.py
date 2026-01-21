@@ -258,3 +258,43 @@ class ZippypostOrder(TimestampedModel):
 
 
 
+# Nimbus Post Courier Partner
+class NimbuspostOrder(TimestampedModel):
+    STATUS_CHOICES = (
+        ("CREATED", "Created"),
+        ("PICKED_UP", "Picked Up"),
+        ("IN_TRANSIT", "In Transit"),
+        ("OUT_FOR_DELIVERY", "Out for Delivery"),
+        ("DELIVERED", "Delivered"),
+        ("RTO_INITIATED", "RTO Initiated"),
+        ("RTO_DELIVERED", "RTO Delivered"),
+        ("CANCELLED", "Cancelled"),
+        ("FAILED", "Failed"),
+    )
+
+    order = models.OneToOneField(
+        Order,
+        on_delete=models.CASCADE,
+        related_name="nimbuspost",
+        null=True,
+        blank=True
+    )
+    
+    shipment_id = models.CharField(max_length=100, null=True, blank=True)
+    awb_number = models.CharField(max_length=100, unique=True, null=True, blank=True)
+    courier_id = models.CharField(max_length=100, null=True, blank=True)
+    courier_name = models.CharField(max_length=255, null=True, blank=True)
+    
+    status = models.CharField(
+        max_length=50,
+        choices=STATUS_CHOICES,
+        default="CREATED"
+    )
+    
+    label_url = models.TextField(null=True, blank=True)
+    manifest_url = models.TextField(null=True, blank=True)
+    
+    additional_info = models.JSONField(default=dict, blank=True)
+
+    def __str__(self):
+        return f"NimbusPost | {self.awb_number}"
