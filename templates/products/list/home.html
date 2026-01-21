@@ -1155,38 +1155,21 @@ const USER_AUTH = {{ request.user.is_authenticated|yesno:"true,false" }};
 <header class="skatezo-navbar-container relative bg-white border-b border-gray-200 shadow-sm">
 
 <!-- TOP SHIPPING BAR -->
-<div class="bg-black">
-  <div class="max-w-7xl mx-auto px-3 py-2 text-center text-[11px] sm:text-xs text-white font-medium">
-    Free shipping on orders above <span class="font-semibold">₹500</span> • Pan-India delivery
-  </div>
-</div>
+<div class="bg-gradient-to-r from-red-600 to-red-500 shadow-sm">
+  <div class="max-w-7xl mx-auto px-3 py-2
+              text-center text-[11px] sm:text-xs
+              text-white font-medium tracking-wide">
 
-
-<!-- DELIVERY NOTICE -->
-<div id="addressBar" class="max-w-7xl mx-auto mt-3 px-3">
-  <div class="relative flex items-center justify-between gap-3 bg-red-50 border border-red-200 rounded-xl px-4 py-2 text-xs text-gray-800">
-
-    <div class="flex items-center gap-2">
-      <div class="w-7 h-7 rounded-full bg-red-600 text-white flex items-center justify-center text-[11px]">
-        <i class="fas fa-bolt"></i>
-      </div>
-      <span class="font-semibold text-gray-900">Faster delivery available</span>
-    </div>
-
-    <div class="flex items-center gap-2">
-      <a href="{% url 'manage_address' %}"
-         class="text-red-600 font-bold text-xs hover:underline whitespace-nowrap">
-         Add address
-      </a>
-
-      <button onclick="document.getElementById('addressBar').remove()"
-              class="w-6 h-6 flex items-center justify-center rounded-full hover:bg-red-100 text-gray-400 hover:text-red-600 transition">
-        ✕
-      </button>
-    </div>
+     Free shipping on orders above
+    <span class="font-semibold">₹500</span>
+    <span class="opacity-80">• Pan-India delivery</span>
 
   </div>
 </div>
+
+
+
+
 
 
 <!-- MAIN NAV -->
@@ -1367,44 +1350,37 @@ document.body.style.overflow=''
 <!-- =========================================== -->
 
 <!-- HERO SECTION -->
-<section class="relative w-full min-h-[78vh] sm:min-h-[70vh] bg-black">
+<section class="relative w-full bg-gray-100">
 
-  <!-- HEIGHT LOCK -->
-  <div class="min-h-[78vh] sm:min-h-[70vh] w-full"></div>
+  <!-- Background Image -->
+<div class="absolute inset-0">
+  <img src="{% static 'brand/images/mm.jpeg' %}"
+       alt="ThinkNShop Collection"
+       class="w-full h-full object-cover">
+  <div class="absolute inset-0 bg-black/40"></div>
+</div>
+
 
   <!-- CONTENT -->
-  <div class="absolute inset-0 flex items-center justify-center z-10 px-4">
-    <div class="text-center max-w-3xl">
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6
+              h-[120px] sm:h-[160px]
+              flex flex-col justify-center">
 
-      <span class="uppercase tracking-[0.35em] text-gray-400 text-[11px]">
-        THINKNSHOP EXCLUSIVE
-      </span>
+    <!-- Breadcrumb -->
+    <nav class="text-xs text-gray-200 mb-1">
+      <!-- <a href="/" class="hover:underline">Home</a> -->
+      <span class="mx-1">›</span>
+      <span class="text-white font-medium">{{ collection.name }}</span>
+    </nav>
 
-      <h1 class="mt-5 text-4xl sm:text-5xl md:text-6xl font-black leading-tight text-white">
-        Premium Bottles<br class="hidden sm:block">Only ₹99
-      </h1>
+    <!-- Title -->
+    <h1 class="text-lg sm:text-2xl font-black text-white tracking-tight">
+      {{ collection.name }}
+    </h1>
 
-      <p class="mt-4 text-gray-400 max-w-xl mx-auto">
-        Anime • Custom • Minimal • Built for daily hustle
-      </p>
-
-      <div class="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
-
-        <a href="{% url 'products:product-list' %}"
-           class="px-10 py-3 rounded-full bg-white text-black font-semibold hover:bg-gray-200 transition">
-          Shop Now
-        </a>
-
-        <a href="/collections/custom/"
-           class="px-10 py-3 rounded-full border border-gray-600 text-white hover:border-white transition">
-          Customize
-        </a>
-
-      </div>
-
-    </div>
   </div>
 </section>
+
 
 
 
@@ -1428,201 +1404,250 @@ document.body.style.overflow=''
 
 <!-- ================= MARQUEE SECTION (RED + WHITE) ================= -->
 <style>
-    @keyframes scroll-left {
-        0% { transform: translateX(0); }
-        100% { transform: translateX(-50%); }
-    }
-.marquee-runner{will-change:transform;animation:scroll-left 18s linear infinite}
+  @keyframes scroll-left {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
 
+  .marquee-track {
+    will-change: transform;
+    animation: scroll-left 22s linear infinite;
+  }
+
+  .marquee:hover .marquee-track {
+    animation-play-state: paused;
+  }
 </style>
 
-<div class="w-full overflow-hidden bg-red-600 py-3 shadow-md">
-    <div class="marquee-runner flex whitespace-nowrap font-semibold text-white text-sm sm:text-base">
+<div class="marquee w-full overflow-hidden bg-black py-2 border-b border-white/10">
+  <div class="marquee-track flex whitespace-nowrap items-center
+              text-white text-xs sm:text-sm font-medium tracking-wide">
 
-        <span class="mx-10">FREE SHIPPING ABOVE ₹500</span>
-        <span class="mx-10 opacity-90">COD AVAILABLE</span>
-        <span class="mx-10">100% REFUND GUARANTEE</span>
-        <span class="mx-10 opacity-90">FAST DELIVERY PAN INDIA</span>
-        <span class="mx-10">PREMIUM QUALITY PRODUCTS</span>
+    <!-- ITEMS -->
+    <span class="mx-8 flex items-center gap-2 opacity-90">
+      <span class="w-1.5 h-1.5 rounded-full bg-white"></span>
+      FREE SHIPPING ABOVE ₹500
+    </span>
 
-        <!-- seamless loop for infinite scroll -->
-        <span class="mx-10">FREE SHIPPING ABOVE ₹500</span>
-        <span class="mx-10 opacity-90">COD AVAILABLE</span>
-        <span class="mx-10">100% REFUND GUARANTEE</span>
-        <span class="mx-10 opacity-90">FAST DELIVERY PAN INDIA</span>
-        <span class="mx-10">PREMIUM QUALITY PRODUCTS</span>
+    <span class="mx-8 flex items-center gap-2 opacity-70">
+      <span class="w-1.5 h-1.5 rounded-full bg-white"></span>
+      COD AVAILABLE
+    </span>
 
-    </div>
+    <span class="mx-8 flex items-center gap-2 opacity-90">
+      <span class="w-1.5 h-1.5 rounded-full bg-white"></span>
+      100% REFUND GUARANTEE
+    </span>
+
+    <span class="mx-8 flex items-center gap-2 opacity-70">
+      <span class="w-1.5 h-1.5 rounded-full bg-white"></span>
+      FAST DELIVERY PAN INDIA
+    </span>
+
+    <span class="mx-8 flex items-center gap-2 opacity-90">
+      <span class="w-1.5 h-1.5 rounded-full bg-white"></span>
+      PREMIUM QUALITY PRODUCTS
+    </span>
+
+    <!-- DUPLICATE FOR LOOP -->
+    <span class="mx-8 flex items-center gap-2 opacity-90">
+      <span class="w-1.5 h-1.5 rounded-full bg-white"></span>
+      FREE SHIPPING ABOVE ₹500
+    </span>
+
+    <span class="mx-8 flex items-center gap-2 opacity-70">
+      <span class="w-1.5 h-1.5 rounded-full bg-white"></span>
+      COD AVAILABLE
+    </span>
+
+    <span class="mx-8 flex items-center gap-2 opacity-90">
+      <span class="w-1.5 h-1.5 rounded-full bg-white"></span>
+      100% REFUND GUARANTEE
+    </span>
+
+    <span class="mx-8 flex items-center gap-2 opacity-70">
+      <span class="w-1.5 h-1.5 rounded-full bg-white"></span>
+      FAST DELIVERY PAN INDIA
+    </span>
+
+    <span class="mx-8 flex items-center gap-2 opacity-90">
+      <span class="w-1.5 h-1.5 rounded-full bg-white"></span>
+      PREMIUM QUALITY PRODUCTS
+    </span>
+
+  </div>
 </div>
+
 <!-- ================= END MARQUEE ================= -->
 
+<!-- DELIVERY NOTICE -->
+<div id="addressBar" class="max-w-7xl mx-auto mt-3 px-3">
+  <div class="flex items-center justify-between gap-3
+              bg-red-50/80 backdrop-blur
+              border border-red-200/60
+              rounded-xl px-4 py-2
+              text-[11px] sm:text-xs text-gray-800">
 
-
-
-
-{% if featured_categories %}
-<section class="bg-white py-8 min-h-[200px]">
-
-<div class="max-w-7xl mx-auto px-4 mb-5">
-  <span class="text-[11px] uppercase tracking-widest text-gray-400">Popular</span>
-  <h2 class="text-lg sm:text-xl font-black text-gray-900">
-    Shop by Collection
-  </h2>
-</div>
-
-<!-- MOBILE SWIPE -->
-<div class="block md:hidden">
-  <div class="flex gap-5 px-4 overflow-x-auto snap-x snap-mandatory pb-4 no-scrollbar">
-
-    {% for category in featured_categories %}
-    <a href="{% url 'products:category-detail' category.slug %}"
-       class="snap-start shrink-0 w-[86px] text-center">
-
-      <div class="w-[86px] h-[86px] rounded-full bg-gray-100 overflow-hidden border shadow-sm mx-auto">
-        {% if category.image %}
-          <img src="{{ category.image.url }}"
-               loading="lazy" decoding="async"
-               class="w-full h-full object-contain p-2">
-        {% else %}
-          <span class="w-full h-full flex items-center justify-center text-2xl font-black text-gray-400">
-            {{ category.name|first }}
-          </span>
-        {% endif %}
+    <!-- LEFT -->
+    <div class="flex items-center gap-2">
+      <div class="w-7 h-7 rounded-full
+                  bg-red-600 text-white
+                  flex items-center justify-center text-[11px]">
+        🚚
       </div>
+      <span class="font-medium text-gray-900">
+        Faster delivery available for your location
+      </span>
+    </div>
 
-      <p class="mt-2 text-[11px] font-semibold leading-tight line-clamp-2">
-        {{ category.name }}
-      </p>
-    </a>
-    {% endfor %}
+    <!-- RIGHT -->
+    <div class="flex items-center gap-2">
+      <a href="{% url 'manage_address' %}"
+         class="text-red-600 font-semibold whitespace-nowrap hover:underline">
+        Add address
+      </a>
+
+      <button onclick="document.getElementById('addressBar').remove()"
+              aria-label="Dismiss"
+              class="w-6 h-6 flex items-center justify-center
+                     rounded-full
+                     text-gray-400 hover:text-red-600
+                     hover:bg-red-100 transition">
+        ✕
+      </button>
+    </div>
 
   </div>
 </div>
 
-<!-- DESKTOP GRID -->
-<div class="hidden md:block">
-  <div class="max-w-7xl mx-auto px-6 grid grid-cols-6 lg:grid-cols-8 gap-6">
-
-    {% for category in featured_categories %}
-    <a href="{% url 'products:category-detail' category.slug %}"
-       class="group text-center hover:scale-105 transition">
-
-      <div class="w-24 h-24 mx-auto rounded-full bg-gray-100 overflow-hidden border shadow-sm">
-        {% if category.image %}
-          <img src="{{ category.image.url }}"
-               loading="lazy" decoding="async"
-               class="w-full h-full object-contain p-2">
-        {% else %}
-          <span class="w-full h-full flex items-center justify-center text-3xl font-black text-gray-400">
-            {{ category.name|first }}
-          </span>
-        {% endif %}
-      </div>
-
-      <p class="mt-3 text-sm font-semibold leading-tight line-clamp-2">
-        {{ category.name }}
-      </p>
-    </a>
-    {% endfor %}
-
-  </div>
-</div>
-
-</section>
-{% endif %}
 
 
 
 
 
 
-
+<!-- ================= NEW ARRIVALS ================= -->
 <section class="bg-white">
 
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 pt-10 pb-4 flex justify-between items-center">
-    <h3 class="text-base sm:text-xl font-black">New Arrivals</h3>
+  <!-- HEADER -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 pt-10 pb-6 relative">
+    <h3 class="text-base sm:text-xl font-black text-black tracking-tight text-center">
+      New Arrivals
+    </h3>
+
     <a href="{% url 'products:product-list' %}?sort=new"
-       class="text-xs sm:text-sm font-semibold text-red-600">View All</a>
+       class="absolute right-4 sm:right-6 top-1/2 -translate-y-1/2
+              text-xs sm:text-sm font-semibold text-red-600">
+      View All
+    </a>
   </div>
 
+  <!-- PRODUCTS -->
   <div class="max-w-7xl mx-auto px-4 sm:px-6 pb-12">
     <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 sm:gap-6">
 
       {% for product in new_arrivals %}
       <a href="{% url 'products:product-detail' product.slug %}"
-         class="group bg-white rounded-xl sm:rounded-2xl overflow-hidden border border-gray-200 hover:shadow-md transition">
+         class="group block bg-white overflow-hidden
+                rounded-2xl
+                ring-1 ring-black/5
+                hover:ring-black/10
+                shadow-sm hover:shadow-md
+                transition-all duration-300">
 
         <!-- IMAGE -->
-        <div class="relative aspect-square bg-gray-100">
+        <div class="relative aspect-square bg-gray-100 overflow-hidden">
+
           {% if product.is_new_arrival %}
-          <span class="absolute top-2 left-2 bg-black text-white text-[10px] px-2 py-0.5 rounded-full z-10">
+          <!-- BLACK NEW TAG -->
+          <span class="absolute top-2 left-2 z-10
+                       text-[10px] px-2.5 py-1
+                       rounded-md
+                       bg-black text-white
+                       font-semibold tracking-wide
+                       shadow-sm">
             NEW
           </span>
           {% endif %}
-<img src="{{ product.get_primary_image }}"
-     loading="lazy"
-     decoding="async"
-     fetchpriority="low"
-     class="w-full h-full object-contain transition group-hover:scale-105">
 
+          <!-- Skeleton -->
+          <div class="absolute inset-0 animate-pulse
+                      bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200"></div>
+
+          <img src="{{ product.get_primary_image }}"
+               loading="lazy"
+               decoding="async"
+               class="relative z-10 w-full h-full object-cover
+                      transition-transform duration-300
+                      group-hover:scale-[1.03]"
+               onload="this.previousElementSibling.style.display='none'">
         </div>
 
         <!-- CONTENT -->
-        <div class="p-2 sm:p-3">
-
-          <p class="text-xs sm:text-sm font-semibold leading-tight line-clamp-2 min-h-[32px]">
+        <div class="px-3 pt-3 pb-4">
+          <p class="text-xs sm:text-sm font-medium text-gray-900
+                    leading-tight line-clamp-2 min-h-[34px]">
             {{ product.name }}
           </p>
 
           <div class="mt-1 flex items-center gap-1">
             {% if product.discounted_price %}
-              <span class="text-sm sm:text-base font-bold text-black">₹{{ product.discounted_price }}</span>
-              <span class="text-[11px] sm:text-xs line-through text-gray-400">₹{{ product.base_price }}</span>
+              <span class="text-sm sm:text-base font-bold text-black">
+                ₹{{ product.discounted_price }}
+              </span>
+              <span class="text-[11px] text-gray-400 line-through">
+                ₹{{ product.base_price }}
+              </span>
             {% else %}
-              <span class="text-sm sm:text-base font-bold text-black">₹{{ product.base_price }}</span>
+              <span class="text-sm sm:text-base font-bold text-black">
+                ₹{{ product.base_price }}
+              </span>
             {% endif %}
           </div>
-
         </div>
+
       </a>
       {% endfor %}
 
     </div>
   </div>
+
 </section>
+
+
 
 <!-- ================= FEATURED PRODUCTS ================= -->
 
 {% if featured_products %}
-<div class="max-w-7xl mx-auto mt-12">
+<section class="bg-white mt-12">
 
-<h2 class="text-lg font-black mb-4 px-4">Best Picks</h2>
+<!-- HEADER -->
+<div class="max-w-7xl mx-auto px-4 sm:px-6 pb-4 text-center">
+  <h2 class="text-lg sm:text-xl font-black text-black tracking-tight">
+    Best Picks
+  </h2>
+</div>
 
-<!-- ================= MOBILE (PHONE) ================= -->
-<!-- MOBILE SQUARE CAROUSEL -->
-<!-- MOBILE PRODUCT GRID -->
-<div class="block md:hidden px-3 pb-6">
-
+<!-- ================= MOBILE GRID ================= -->
+<div class="block md:hidden max-w-7xl mx-auto px-3 pb-6">
   <div class="grid grid-cols-2 gap-3">
 
     {% for product in featured_products %}
     <a href="{% url 'products:product-detail' product.slug %}"
-       class="bg-white border border-gray-200 rounded-2xl overflow-hidden active:scale-95 transition">
+       class="bg-white rounded-xl ring-1 ring-black/5 overflow-hidden
+              shadow-sm transition active:scale-95">
 
       <!-- IMAGE -->
-      <div class="aspect-square bg-gray-100">
-<img src="{{ product.get_primary_image }}"
-     loading="lazy"
-     decoding="async"
-     fetchpriority="low"
-     class="w-full h-full object-contain transition group-hover:scale-105">
-
+      <div class="relative aspect-square bg-gray-100 overflow-hidden">
+        <img src="{{ product.get_primary_image }}"
+             loading="lazy"
+             decoding="async"
+             class="w-full h-full object-cover">
       </div>
 
       <!-- CONTENT -->
       <div class="p-2">
-
-        <h3 class="text-[12px] font-semibold leading-tight line-clamp-2 min-h-[32px]">
+        <h3 class="text-[12px] font-medium text-gray-900 leading-tight line-clamp-2 min-h-[32px]">
           {{ product.name }}
         </h3>
 
@@ -1632,77 +1657,93 @@ document.body.style.overflow=''
           <span class="text-[10px] line-through text-gray-400">₹{{ product.base_price }}</span>
         </div>
         {% else %}
-        <div class="mt-1 text-[13px] font-bold">₹{{ product.base_price }}</div>
+        <div class="mt-1 text-[13px] font-bold text-black">₹{{ product.base_price }}</div>
         {% endif %}
-
       </div>
+
     </a>
     {% endfor %}
 
   </div>
-
 </div>
 
-<!-- ================= DESKTOP (KEEP OLD) ================= -->
-<div class="hidden md:block px-4">
+<!-- ================= DESKTOP GRID ================= -->
+<div class="hidden md:block max-w-7xl mx-auto px-4 pb-12">
+  <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
 
-<div id="productContainer"
-     class="flex md:grid gap-4 md:grid-cols-2 lg:grid-cols-3
-            overflow-x-auto md:overflow-visible snap-x snap-mandatory
-            scroll-smooth pb-4 no-scrollbar px-2">
+    {% for product in featured_products %}
+    <div class="group bg-white rounded-2xl ring-1 ring-black/5
+                shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden flex flex-col">
 
-{% for product in featured_products %}
-<div class="min-w-[78%] sm:min-w-[48%] md:min-w-0 snap-start
-            bg-white rounded-2xl border border-gray-200 overflow-hidden
-            group relative transition-all duration-300 hover:shadow-xl hover:-translate-y-1
-            h-[430px] flex flex-col">
+      <!-- BADGES -->
+      <div class="absolute top-3 left-3 z-10 flex flex-col gap-1">
+        {% if product.get_discount_percent %}
+        <span class="text-[10px] px-2 py-1 bg-black text-white rounded-md font-semibold">
+          {{ product.get_discount_percent }}% OFF
+        </span>
+        {% endif %}
+        {% if product.is_bestseller %}
+        <span class="text-[10px] px-2 py-1 bg-amber-500 text-white rounded-md font-semibold">
+          BESTSELLER
+        </span>
+        {% endif %}
+        {% if product.is_featured %}
+        <span class="text-[10px] px-2 py-1 bg-purple-600 text-white rounded-md font-semibold">
+          FEATURED
+        </span>
+        {% endif %}
+      </div>
 
-<div class="absolute top-3 left-3 z-10 flex flex-col gap-1">
-{% if product.get_discount_percent %}<span class="badge badge-red">{{ product.get_discount_percent }}% OFF</span>{% endif %}
-{% if product.is_bestseller %}<span class="badge badge-amber">BESTSELLER</span>{% endif %}
-{% if product.is_featured %}<span class="badge badge-purple">FEATURED</span>{% endif %}
+      <!-- IMAGE -->
+      <a href="{% url 'products:product-detail' product.slug %}" class="block">
+        <div class="aspect-[4/3] bg-gray-50 overflow-hidden">
+          <img src="{{ product.get_primary_image }}"
+               loading="lazy"
+               decoding="async"
+               class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.03]">
+        </div>
+      </a>
+
+      <!-- CONTENT -->
+      <div class="p-4 flex flex-col flex-grow">
+
+        <h3 class="font-semibold text-gray-900 line-clamp-2 leading-tight">
+          <a href="{% url 'products:product-detail' product.slug %}">
+            {{ product.name }}
+          </a>
+        </h3>
+
+        <p class="text-xs text-gray-500 mt-1">
+          {{ product.brand.name }} • {{ product.category.name }}
+        </p>
+
+        {% if product.discounted_price %}
+        <div class="mt-2 flex items-center gap-2">
+          <span class="text-lg font-bold text-black">₹{{ product.discounted_price }}</span>
+          <span class="text-sm line-through text-gray-400">₹{{ product.base_price }}</span>
+        </div>
+        {% else %}
+        <div class="mt-2 text-lg font-bold text-black">₹{{ product.base_price }}</div>
+        {% endif %}
+
+        <!-- BUTTON -->
+        <a href="{% url 'products:product-detail' product.slug %}"
+           class="mt-auto inline-block text-center py-2 rounded-xl bg-black text-white
+                  text-sm font-medium hover:bg-gray-900 transition">
+          View Product
+        </a>
+
+      </div>
+    </div>
+    {% endfor %}
+
+  </div>
 </div>
 
-<div class="h-[55%] bg-gray-50 overflow-hidden">
-<a href="{% url 'products:product-detail' product.slug %}">
-<img src="{{ product.get_primary_image }}"
-     loading="lazy"
-     decoding="async"
-     fetchpriority="low"
-     class="w-full h-full object-contain transition group-hover:scale-105">
-</a>
-</div>
-
-<div class="p-4 flex flex-col justify-between h-[45%]">
-
-<div>
-<h3 class="font-semibold text-gray-900 line-clamp-2 leading-tight">
-<a href="{% url 'products:product-detail' product.slug %}">{{ product.name }}</a>
-</h3>
-<p class="text-xs text-gray-500 mt-1">{{ product.brand.name }} • {{ product.category.name }}</p>
-
-{% if product.discounted_price %}
-<div class="mt-2 flex items-center gap-2">
-<span class="text-lg font-bold text-gray-900">₹{{ product.discounted_price }}</span>
-<span class="text-sm line-through text-gray-400">₹{{ product.base_price }}</span>
-</div>
-{% else %}
-<div class="mt-2 text-lg font-bold text-gray-900">₹{{ product.base_price }}</div>
+</section>
 {% endif %}
-</div>
 
-<a href="{% url 'products:product-detail' product.slug %}"
-class="block bg-red-600 hover:bg-red-700 text-white text-center py-2 rounded-xl font-medium transition">
-View Product
-</a>
 
-</div>
-</div>
-{% endfor %}
-</div>
-</div>
-</div>
-{% endif %}
 
 
 
