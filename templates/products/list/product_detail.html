@@ -1160,4 +1160,73 @@ document.addEventListener('DOMContentLoaded', function() {
 }
 </style>
 
+
+
+{% if not request.user.is_authenticated %}
+
+<!-- SOFT LOGIN SHEET -->
+<div id="quickLogin"
+     class="fixed inset-0 hidden z-[9999] bg-black/40 flex items-end md:items-center justify-center">
+
+  <div class="w-full md:max-w-sm bg-white rounded-t-2xl md:rounded-2xl shadow-2xl">
+
+    <!-- HEADER -->
+    <div class="flex items-center justify-between px-4 py-3 border-b">
+      <div>
+        <p class="text-xs uppercase tracking-widest text-gray-500">ThinknShop</p>
+        <h3 class="text-sm font-bold">Sign in to continue</h3>
+      </div>
+      <button onclick="hideLogin()" class="text-xl leading-none px-2">×</button>
+    </div>
+
+    <!-- BODY -->
+    <div class="p-4 space-y-3">
+      <a href="/accounts/login/"
+         class="block w-full bg-black text-white py-3 rounded-lg text-center text-sm font-semibold">
+        Login
+      </a>
+      <a href="/accounts/register/"
+         class="block w-full border border-black py-3 rounded-lg text-center text-sm font-semibold">
+        Create Account
+      </a>
+      <p class="text-[11px] text-gray-500 text-center">
+        Save designs, track orders & get exclusive prices.
+      </p>
+    </div>
+
+  </div>
+</div>
+
+<script>
+(function(){
+  const USER_AUTH = {{ request.user.is_authenticated|yesno:"true,false" }};
+  if(USER_AUTH) return;
+
+  const popup = document.getElementById("quickLogin");
+  if(!popup) return;
+
+  let opened = false;
+
+  function showFastLogin(){
+    if(opened) return;
+    opened = true;
+    popup.classList.remove("hidden");
+  }
+
+  window.hideLogin = function(){
+    popup.classList.add("hidden");
+  }
+
+  // Auto show after 3.5 sec (once)
+  setTimeout(showFastLogin, 3500);
+
+})();
+</script>
+
+{% endif %}
+
+
+
+
+
 {% endblock %}
