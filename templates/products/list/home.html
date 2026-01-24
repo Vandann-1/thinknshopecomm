@@ -1201,12 +1201,28 @@ Thinkn<span class="text-gray-900">Shop</span>
 </div>
 </div>
 
-<div id="mobileSearchBox" class="hidden px-4 pb-3 border-t">
-<form method="GET" action="{% url 'products:product-list' %}" class="flex bg-gray-100 border rounded-lg">
-<input type="text" name="search" placeholder="Search products..." class="flex-1 px-3 py-2 bg-transparent outline-none">
-<button class="px-3 text-red-600"><i class="fas fa-search"></i></button>
-</form>
+<div class="p-4 border-b">
+  <form method="GET"
+        action="{% url 'products:product-list' %}"
+        class="flex items-center bg-gray-100 border rounded-lg overflow-hidden
+               focus-within:border-red-500 focus-within:ring-1 focus-within:ring-red-500">
+
+    <input type="text"
+           name="search"
+           value="{{ request.GET.search|default:'' }}"
+           placeholder="Search products..."
+           aria-label="Search products"
+           class="flex-1 bg-transparent px-3 py-2 text-sm outline-none">
+
+    <button type="submit"
+            aria-label="Submit search"
+            class="px-3 text-red-600">
+      <i class="fas fa-search"></i>
+    </button>
+
+  </form>
 </div>
+
 </nav>
 
 <!-- CATEGORY STRIP -->
