@@ -69,10 +69,226 @@ def get_headers(token: str) -> Dict[str, str]:
         'Authorization': f'Bearer {token}'
     }
 
+
+def check_courier_serviceability(
+    token: str,
+    origin_pincode: str,
+    destination_pincode: str,
+    weight: float,
+    payment_type: str,
+    order_amount: float
+) -> Tuple[bool, Optional[List], Optional[str]]:
+    """
+    Check which couriers can service a particular route.
+    
+    Args:
+        token: Authentication token
+        origin_pincode: Pickup pincode
+        destination_pincode: Delivery pincode
+        weight: Package weight in grams
+        payment_type: 'prepaid' or 'cod'
+        order_amount: Total order amount
+        
+    Returns:
+        tuple: (success, serviceable_couriers_list, error_message)
+    """
+    url = f"{NIMBUSPOST_BASE_URL}/courier/serviceability"
+    
+    payload = {
+        "origin": origin_pincode,
+        "destination": destination_pincode,
+        "weight": weight,
+        "payment_type": payment_type,
+        "order_amount": order_amount
+    }
+    
+    try:
+        logger.info(f"Checking courier serviceability:")
+        logger.info(f"  Origin: {origin_pincode} → Destination: {destination_pincode}")
+        logger.info(f"  Weight: {weight}g, Payment: {payment_type}, Amount: ₹{order_amount}")
+        
+        response = requests.post(url, headers=get_headers(token), json=payload, timeout=30)
+        data = response.json()
+        
+        logger.debug(f"Serviceability API Response: {json.dumps(data, indent=2)}")
+        
+        if response.status_code == 200 and data.get('status'):
+            serviceable_couriers = data.get('data', [])
+            
+            if serviceable_couriers:
+                logger.info(f"[SUCCESS] Found {len(serviceable_couriers)} serviceable couriers:")
+                # Log the raw data to see actual key names
+                logger.debug(f"First courier data: {json.dumps(serviceable_couriers[0], indent=2)}")
+                
+                for courier in serviceable_couriers[:5]:
+                    # Handle multiple possible key formats
+                    courier_name = (courier.get('name') or 
+                                  courier.get('courier_name') or 
+                                  courier.get('courier') or 
+                                  'Unknown')
+                    courier_id = (courier.get('id') or 
+                                courier.get('courier_id') or 
+                                courier.get('courier'))
+                    freight = courier.get('freight_charges') or courier.get('freight_charge') or courier.get('rate') or 0
+                    edd = courier.get('edd') or courier.get('estimated_delivery_days') or 'N/A'
+                    
+                    logger.info(f"  - {courier_name} (ID: {courier_id})")
+                    logger.info(f"    Rate: ₹{freight}, EDD: {edd}")
+                
+                return True, serviceable_couriers, None
+            else:
+                logger.warning("[WARNING] No serviceable couriers found for this route")
+                return True, [], "No couriers available for this pincode combination"
+        
+        error_msg = data.get('message', 'Serviceability check failed')
+        logger.error(f"[FAILED] {error_msg}")
+        return False, None, error_msg
+        
+    except Exception as e:
+        logger.exception(f"[ERROR] Serviceability check error: {str(e)}")
+        return False, None, str(e)
+
+
+def select_best_courier(serviceable_couriers: List[Dict]) -> Optional[Dict]:
+    """
+    Select the best courier from serviceable options.
+    Priority: 1) Lowest cost, 2) Fastest delivery
+    
+    Args:
+        serviceable_couriers: List of serviceable courier options
+        
+    Returns:
+        Selected courier dict or None
+    """
+    if not serviceable_couriers:
+        logger.error("No serviceable couriers provided to select from")
+        return None
+    
+    # Log raw courier data for debugging
+    logger.debug(f"Selecting from {len(serviceable_couriers)} couriers")
+    logger.debug(f"Sample courier data: {json.dumps(serviceable_couriers[0], indent=2)}")
+    
+    # Helper function to safely get freight charge
+    def get_freight(courier):
+        freight = (courier.get('freight_charges') or 
+                  courier.get('freight_charge') or 
+                  courier.get('rate') or 
+                  courier.get('total_charges') or
+                  999999)
+        try:
+            return float(freight)
+        except (ValueError, TypeError):
+            return 999999.0
+    
+    # Helper function to parse EDD date and calculate days from today
+    def get_edd_days(courier):
+        from datetime import datetime
+        
+        edd = (courier.get('edd') or 
+              courier.get('estimated_delivery_days') or 
+              courier.get('delivery_days'))
+        
+        if not edd:
+            return 999
+        
+        # If it's already a number, return it
+        if isinstance(edd, (int, float)):
+            return int(edd)
+        
+        # If it's a date string like "25-01-2026", calculate days from today
+        if isinstance(edd, str):
+            try:
+                # Try parsing date format: DD-MM-YYYY
+                edd_date = datetime.strptime(edd, '%d-%m-%Y')
+                today = datetime.now()
+                days_diff = (edd_date - today).days
+                return max(0, days_diff)  # Don't return negative days
+            except ValueError:
+                try:
+                    # Try alternative format: YYYY-MM-DD
+                    edd_date = datetime.strptime(edd, '%Y-%m-%d')
+                    today = datetime.now()
+                    days_diff = (edd_date - today).days
+                    return max(0, days_diff)
+                except ValueError:
+                    # If it's a plain number as string
+                    try:
+                        return int(edd)
+                    except (ValueError, TypeError):
+                        return 999
+        
+        return 999
+    
+    # Sort by freight charge (ascending) then by delivery days (ascending)
+    sorted_couriers = sorted(
+        serviceable_couriers,
+        key=lambda x: (get_freight(x), get_edd_days(x))
+    )
+    
+    selected = sorted_couriers[0]
+    
+    # Extract courier info with fallback key names
+    courier_name = (selected.get('name') or 
+                   selected.get('courier_name') or 
+                   selected.get('courier') or 
+                   'Unknown')
+    courier_id = (selected.get('id') or 
+                 selected.get('courier_id') or 
+                 selected.get('courier'))
+    freight = get_freight(selected)
+    edd_days = get_edd_days(selected)
+    edd_display = selected.get('edd') or selected.get('estimated_delivery_days') or 'N/A'
+    
+    logger.info(f"[SELECTED] Best courier: {courier_name}")
+    logger.info(f"[SELECTED] Courier ID: {courier_id}")
+    logger.info(f"[SELECTED] Rate: ₹{freight}, EDD: {edd_display} ({edd_days} days)")
+    
+    # Validate that we have a courier_id
+    if not courier_id:
+        logger.error(f"[ERROR] Selected courier has no ID! Data: {json.dumps(selected, indent=2)}")
+        return None
+    
+    return selected
+
+
+def get_enabled_couriers() -> Tuple[bool, Optional[List], Optional[str]]:
+    """
+    Get list of couriers enabled in your NimbusPost account.
+    
+    Returns:
+        tuple: (success, courier_list, error_message)
+    """
+    token = login_nimbuspost()
+    if not token:
+        return False, None, "Authentication failed"
+    
+    url = f"{NIMBUSPOST_BASE_URL}/courier"
+    
+    try:
+        logger.info("Fetching enabled couriers from account...")
+        response = requests.get(url, headers=get_headers(token), timeout=30)
+        data = response.json()
+        
+        if response.status_code == 200 and data.get('status'):
+            couriers = data.get('data', [])
+            logger.info(f"[SUCCESS] Found {len(couriers)} enabled couriers in account")
+            if couriers:
+                for courier in couriers[:5]:
+                    logger.info(f"  - {courier.get('name')} (ID: {courier.get('id')})")
+            return True, couriers, None
+        
+        error_msg = data.get('message', 'Failed to fetch couriers')
+        logger.error(f"[FAILED] {error_msg}")
+        return False, None, error_msg
+        
+    except Exception as e:
+        logger.exception(f"[ERROR] Courier list error: {str(e)}")
+        return False, None, str(e)
+
+
 def create_nimbuspost_shipment(order) -> Tuple[bool, Optional[Dict], Optional[str]]:
     """
-    Create a shipment on NimbusPost - WITHOUT automatic courier selection.
-    Courier will be assigned manually from NimbusPost dashboard.
+    Create a shipment on NimbusPost - with proper serviceability check.
     
     Args:
         order: Order instance
@@ -121,9 +337,78 @@ def create_nimbuspost_shipment(order) -> Tuple[bool, Optional[Dict], Optional[st
         if payment_type == 'cod':
             cod_charges = 30
         
-        # Create shipment payload - as per NimbusPost API documentation
+        # STEP 1: Check courier serviceability for this specific route
         logger.info("=" * 80)
-        logger.info("Creating Shipment (Courier will be assigned manually from dashboard)")
+        logger.info("STEP 1: Checking Courier Serviceability")
+        logger.info("=" * 80)
+        
+        success_check, serviceable_couriers, error_check = check_courier_serviceability(
+            token=token,
+            origin_pincode=NIMBUSPOST_PICKUP_PINCODE,
+            destination_pincode=shipping_addr.pincode,
+            weight=total_weight,
+            payment_type=payment_type,
+            order_amount=float(order.total_amount)
+        )
+        
+        if not success_check:
+            error_msg = f"Serviceability check failed: {error_check}"
+            logger.error(f"[FAILED] {error_msg}")
+            return False, None, error_msg
+        
+        if not serviceable_couriers or len(serviceable_couriers) == 0:
+            error_msg = (
+                f"No courier can service the route from {NIMBUSPOST_PICKUP_PINCODE} "
+                f"to {shipping_addr.pincode}. This pincode may not be serviceable or "
+                f"you need to enable more courier partners in your NimbusPost account."
+            )
+            logger.error(f"[FAILED] {error_msg}")
+            logger.error("=" * 80)
+            logger.error("RECOMMENDED ACTIONS:")
+            logger.error("1. Verify the destination pincode is correct")
+            logger.error("2. Enable more courier partners in NimbusPost dashboard:")
+            logger.error("   Settings → Courier Partners → Enable Delhivery, Blue Dart, DTDC, etc.")
+            logger.error("3. Contact NimbusPost support: tech@nimbuspost.com")
+            logger.error("=" * 80)
+            return False, None, error_msg
+        
+        # STEP 2: Select the best courier from serviceable options
+        logger.info("=" * 80)
+        logger.info("STEP 2: Selecting Best Courier")
+        logger.info("=" * 80)
+        
+        selected_courier = select_best_courier(serviceable_couriers)
+        if not selected_courier:
+            error_msg = "Failed to select a valid courier from serviceable options"
+            logger.error(f"[FAILED] {error_msg}")
+            return False, None, error_msg
+        
+        # Extract courier ID with multiple fallback key names
+        selected_courier_id = str(
+            selected_courier.get('id') or 
+            selected_courier.get('courier_id') or 
+            selected_courier.get('courier') or 
+            ''
+        )
+        
+        selected_courier_name = (
+            selected_courier.get('name') or 
+            selected_courier.get('courier_name') or 
+            selected_courier.get('courier') or 
+            'Unknown'
+        )
+        
+        # Final validation
+        if not selected_courier_id or selected_courier_id == 'None':
+            error_msg = f"Courier ID is invalid or missing. Courier data: {json.dumps(selected_courier, indent=2)}"
+            logger.error(f"[FAILED] {error_msg}")
+            return False, None, error_msg
+        
+        logger.info(f"Selected: {selected_courier_name} (ID: {selected_courier_id})")
+        
+        # STEP 3: Create shipment payload
+        logger.info("=" * 80)
+        logger.info("STEP 3: Creating Shipment")
         logger.info("=" * 80)
         
         payload = {
@@ -134,9 +419,10 @@ def create_nimbuspost_shipment(order) -> Tuple[bool, Optional[Dict], Optional[st
             "payment_type": payment_type,
             "order_amount": float(order.total_amount),
             "package_weight": total_weight,
-            "package_length": 25,
-            "package_breadth": 9,
-            "package_height": 9,
+            "package_length": 10,
+            "package_breadth": 10,
+            "package_height": 10,
+            "courier_id": selected_courier_id,  # Use the verified serviceable courier
             "consignee": {
                 "name": shipping_addr.full_name,
                 "address": shipping_addr.address_line_1,
@@ -153,7 +439,8 @@ def create_nimbuspost_shipment(order) -> Tuple[bool, Optional[Dict], Optional[st
                 "city": NIMBUSPOST_PICKUP_CITY,
                 "state": NIMBUSPOST_PICKUP_STATE,
                 "pincode": NIMBUSPOST_PICKUP_PINCODE,
-                "phone": NIMBUSPOST_PICKUP_PHONE
+                "phone": NIMBUSPOST_PICKUP_PHONE,
+                "email": NIMBUSPOST_SUPPORT_EMAIL
             },
             "order_items": order_items
         }
@@ -175,16 +462,24 @@ def create_nimbuspost_shipment(order) -> Tuple[bool, Optional[Dict], Optional[st
             logger.info("=" * 80)
             logger.info("[SUCCESS] Shipment Created Successfully!")
             logger.info("=" * 80)
-            logger.info(f"  Order ID: {data.get('data', {}).get('order_id')}")
+            logger.info(f"  AWB Number: {data.get('data', {}).get('awb_number')}")
+            logger.info(f"  Courier: {data.get('data', {}).get('courier_name')}")
             logger.info(f"  Shipment ID: {data.get('data', {}).get('shipment_id')}")
-            logger.info(f"  Status: {data.get('data', {}).get('status')}")
-            logger.info(f"  Payment Type: {data.get('data', {}).get('payment_type')}")
-            logger.info("  Note: Assign courier manually from NimbusPost dashboard")
+            logger.info(f"  Label URL: {data.get('data', {}).get('label')}")
             logger.info("=" * 80)
             return True, data, None
         
         error_msg = data.get('message', 'Unknown error')
         logger.error(f"[FAILED] Shipment creation failed: {error_msg}")
+        
+        # Provide helpful error context
+        if "Invalid Courier ID" in error_msg:
+            logger.error("=" * 80)
+            logger.error("CRITICAL: Courier ID was marked serviceable but got rejected!")
+            logger.error("This might be a temporary issue with the courier.")
+            logger.error("Please try again or contact NimbusPost support.")
+            logger.error("=" * 80)
+        
         return False, data, error_msg
 
     except Exception as e:
@@ -194,7 +489,7 @@ def create_nimbuspost_shipment(order) -> Tuple[bool, Optional[Dict], Optional[st
 
 def process_nimbuspost_shipment(order):
     """
-    Process NimbusPost shipment creation without automatic courier selection.
+    Orchestrate the entire NimbusPost shipment process.
     
     Args:
         order: Order instance
@@ -208,7 +503,7 @@ def process_nimbuspost_shipment(order):
         logger.info(f"Processing NimbusPost shipment for order {order.order_id}")
         
         # Check if shipment already exists
-        if hasattr(order, 'nimbuspost') and order.nimbuspost.shipment_id:
+        if hasattr(order, 'nimbuspost') and order.nimbuspost.awb_number:
             logger.info(f"Shipment already exists for order {order.order_id}")
             return True
 
@@ -233,14 +528,12 @@ def process_nimbuspost_shipment(order):
             )
             
             # Update main order
-            if shipment_data.get('awb_number'):
-                order.tracking_id = shipment_data.get('awb_number')
-            if shipment_data.get('courier_name'):
-                order.courier_partner = shipment_data.get('courier_name')
+            order.tracking_id = shipment_data.get('awb_number')
+            order.courier_partner = shipment_data.get('courier_name')
             order.save(update_fields=['tracking_id', 'courier_partner'])
             
             logger.info(f"[SUCCESS] NimbusPost shipment processed successfully")
-            logger.info(f"Shipment ID: {shipment_data.get('shipment_id')}, Status: {shipment_data.get('status')}")
+            logger.info(f"AWB: {shipment_data.get('awb_number')}, Courier: {shipment_data.get('courier_name')}")
             return True
             
         else:
@@ -250,6 +543,7 @@ def process_nimbuspost_shipment(order):
     except Exception as e:
         logger.exception(f"NimbusPost integration error for order {order.order_id}: {str(e)}")
         return False
+
 # ============================================================================================================================================
 def track_shipment(awb: str) -> Tuple[bool, Optional[Dict], Optional[str]]:
     """Track shipment using AWB - Returns complete tracking data."""
