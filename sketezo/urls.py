@@ -19,7 +19,7 @@ from django.urls import path,include
 from django.conf import settings
 from django.conf.urls.static import static
 from .views import *
-from customize.views import *
+
 
 
 
@@ -38,7 +38,6 @@ urlpatterns = [
     path('address/',include('address.urls')),
     path('orders/',include('orders.urls')),
     path('user_orders/',include('user_orders.urls')),
-    path('customize/', customize_bottle_view, name='customize-bottle'),
     
         # sitemap (ADD THIS LINE)
 

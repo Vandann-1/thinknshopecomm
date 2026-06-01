@@ -37,7 +37,6 @@ INSTALLED_APPS = [
     'orders',
     'discount',
     'user_orders',
-    'customize',
     'cloudinary',
 'cloudinary_storage',
     
@@ -83,25 +82,25 @@ WSGI_APPLICATION = 'sketezo.wsgi.application'
 
 
 
-# # For Development Only
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / "db.sqlite3",
-#     }
-# }
+# For Development Only
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / "db.sqlite3",
+    }
+}
 
 # Production Only (Render PostgreSQL)
-import dj_database_url
+# import dj_database_url
 
 
-DATABASES = {
-    'default': dj_database_url.config(
-        default="postgresql://thinknshop_jdjq_user:gPFMloDQ99kMgGozwvqZMrE5VhDsOs4m@dpg-d4t7m9vdiees73atjfug-a.oregon-postgres.render.com/thinknshop_jdjq",
-        conn_max_age=600,
-        ssl_require=True,
-    )
-}
+# DATABASES = {
+#     'default': dj_database_url.config(
+#         default="postgresql://thinknshop_jdjq_user:gPFMloDQ99kMgGozwvqZMrE5VhDsOs4m@dpg-d4t7m9vdiees73atjfug-a.oregon-postgres.render.com/thinknshop_jdjq",
+#         conn_max_age=600,
+#         ssl_require=True,
+#     )
+# }
 
 
 
