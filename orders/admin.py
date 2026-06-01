@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Order, OrderItem, OrderStatusUpdate, ZippypostOrder
+from .models import Order, OrderItem, OrderStatusUpdate, ZippypostOrder, NimbuspostOrder
 from django.utils.html import format_html
 
 
@@ -244,3 +244,4 @@ class OrderStatusUpdateAdmin(admin.ModelAdmin):
 
 
 admin.site.register(ZippypostOrder)
+admin.site.register(NimbuspostOrder)

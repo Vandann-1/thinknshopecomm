@@ -509,13 +509,13 @@ def create_order(request):
                                 created_by=request.user
                             )
                 
-                # 2. Create Zippypost Shipment (Outside atomic block)
+                # 2. Create Nimbuspost Shipment (Outside atomic block)
                 try:
-                    from .zippypost_utils import process_zippypost_shipment
-                    process_zippypost_shipment(order)
-                except Exception as zip_error:
+                    from .nimbuspost_utils import process_nimbuspost_shipment
+                    process_nimbuspost_shipment(order)
+                except Exception as nimbus_error:
                     # Log error but don't fail the order
-                    logger.error(f"COD Zippypost Error for {order.order_id}: {zip_error}")
+                    logger.error(f"COD Nimbuspost Error for {order.order_id}: {nimbus_error}")
                 
                 messages.success(request, f'Order {order.order_id} placed successfully!')
                 return redirect('order_detail',order_id=order.order_id)
@@ -549,7 +549,7 @@ def create_order(request):
                 'user_phone': address.phone_number
             }
             # construct redirect url
-            redirect_url = reverse_lazy('complete_payment', kwargs={'order_id': order.order_id})
+            redirect_url = reverse_lazy('orders:complete_payment', kwargs={'order_id': order.order_id})
             return JsonResponse({'redirect_url': redirect_url})
             # Redirect to payment page instead of rendering
             # return redirect(reverse_lazy('complete_payment', kwargs={'order_id': order.order_id}))
@@ -614,6 +614,7 @@ def verify_payment(request):
     try:
         data = json.loads(request.body)
         
+        
         razorpay_order_id = data.get('razorpay_order_id')
         razorpay_payment_id = data.get('razorpay_payment_id')
         razorpay_signature = data.get('razorpay_signature')
@@ -656,19 +657,19 @@ def verify_payment(request):
                         created_by=request.user
                     )
             
-            # ========== ZIPPYPOST INTEGRATION ==========
-            # Create shipment on Zippypost after successful payment
+            # ========== NIMBUSPOST INTEGRATION ==========
+            # Create shipment on Nimbuspost after successful payment
             try:
-                from .zippypost_utils import process_zippypost_shipment
+                from .nimbuspost_utils import process_nimbuspost_shipment
                 
                 # Process shipment in background (or inline for now)
-                process_zippypost_shipment(order)
+                process_nimbuspost_shipment(order)
                 
-            except Exception as zippypost_error:
+            except Exception as nimbuspost_error:
                 # Log error but don't fail the order - manual processing can be done later
-                logger.exception(f"Zippypost integration error for order {order.order_id}: {str(zippypost_error)}")
+                logger.exception(f"Nimbuspost integration error for order {order.order_id}: {str(nimbuspost_error)}")
                 logger.error("Order payment successful but shipment creation failed - needs manual processing")
-            # ========== END ZIPPYPOST INTEGRATION ==========
+            # ========== END NIMBUSPOST INTEGRATION ==========
             
             return JsonResponse({
                 'success': True,
@@ -866,132 +867,150 @@ def check_stock_availability(request):
 # =================================================================================================================================================================
 
 
-
 @login_required
 def order_detail(request, order_id):
     """
-    Order detail page
+    Order detail page with complete Nimbuspost tracking
     """
     order = get_object_or_404(Order, order_id=order_id, user=request.user)
     
-    # Tracking Data
+    # Initialize tracking variables
     timeline = []
     tracking_data = None
+    shipment_details = None
+    status_info = None
     
-    print(f"DEBUG: Order {order.order_id} - Checking Zippypost")
+    logger.info(f"Loading order details for {order.order_id}")
     
-    # 1. Try to get Zippypost Tracking
-    if hasattr(order, 'zippypost') and order.zippypost.tracking_number:
-        tracking_no = order.zippypost.tracking_number
-        print(f"DEBUG: Found valid tracking number: {tracking_no}")
+    # Try to get Nimbuspost Tracking
+    if hasattr(order, 'nimbuspost') and order.nimbuspost.awb_number:
+        awb = order.nimbuspost.awb_number
+        logger.info(f"Found Nimbuspost AWB: {awb}")
+        
         try:
-            from .zippypost_utils import track_shipment
-            print(f"DEBUG: Calling track_shipment for {tracking_no}")
+            from .nimbuspost_utils import track_shipment, parse_tracking_data, get_status_display_info
             
-            success, api_data, error = track_shipment(tracking_no)
-            print(f"DEBUG: API Response Success: {success}")
-            print(f"DEBUG: API Data: {api_data}")
+            # Call tracking API
+            success, api_data, error = track_shipment(awb)
             
             if success and api_data:
-                # Extract events from Zippypost response
-                # Response format: {'success': True, 'result': {'events': [...], 'courier': '...', ...}}
-                result = api_data.get('result') or api_data.get('RESULT') or {}
+                logger.info(f"Successfully retrieved tracking data for AWB: {awb}")
                 
-                # Extract extra tracking details
-                tracking_data = {
-                    'courier': result.get('courier'),
-                    'status': result.get('status'),
-                    'mode': result.get('mode'),
-                    'zone': result.get('zone'),
-                    'order_number': result.get('order_number')
-                }
+                # Parse the tracking response
+                parsed_data = parse_tracking_data(api_data)
                 
-                events = result.get('events', [])
-                
-                for event in events:
-                    # Parse timestamp
-                    scan_time = event.get('scan_time')
-                    timestamp = None
-                    if scan_time:
-                        try:
-                            timestamp = datetime.fromisoformat(scan_time.replace('Z', '+00:00'))
-                        except:
-                            pass
+                if parsed_data:
+                    # Extract shipment info
+                    shipment_info = parsed_data.get('shipment_info', {})
+                    tracking_events = parsed_data.get('tracking_events', [])
+                    status_summary = parsed_data.get('status_summary', {})
                     
-                    # Map scan codes to icons
-                    scan_code = event.get('scan_code')
-                    icon = 'check-circle'
-                    if scan_code == 3: # In-transit
-                        icon = 'truck'
-                    elif scan_code == 4: # Out for delivery
-                        icon = 'truck'
-                    elif scan_code == 5: # Delivered
-                         icon = 'check-circle'
-                    elif scan_code == 6: # Cancelled
-                        icon = 'x-circle'
-                    elif scan_code in [7, 10, 11, 18]: # Lost/Damaged/Exception
-                        icon = 'alert-circle'
-                            
-                    timeline.append({
-                        'title': event.get('scan', 'Update'),
-                        'description': event.get('remark', ''),
-                        'location': event.get('location', ''),
-                        'date': timestamp,
-                        'completed': True,
-                        'icon': icon,
-                        'is_cancelled': scan_code == 6
-                    })
-                
-                # Sort by date descending (latest first)
-                timeline.sort(key=lambda x: x['date'] or datetime.min, reverse=True)
+                    # Set tracking data for template
+                    tracking_data = {
+                        'awb_number': shipment_info.get('awb_number'),
+                        'rto_awb': shipment_info.get('rto_awb'),
+                        'order_number': shipment_info.get('order_number'),
+                        'courier_id': shipment_info.get('courier_id'),
+                        'status': shipment_info.get('status'),
+                        'rto_status': shipment_info.get('rto_status'),
+                        'shipment_info': shipment_info.get('shipment_info'),
+                        'created_date': shipment_info.get('created'),
+                    }
+                    
+                    # Set shipment details
+                    shipment_details = {
+                        'warehouse_id': shipment_info.get('warehouse_id'),
+                        'rto_warehouse_id': shipment_info.get('rto_warehouse_id'),
+                        'total_events': status_summary.get('total_events'),
+                        'latest_location': status_summary.get('latest_location'),
+                        'latest_update': status_summary.get('latest_update'),
+                        'is_rto': status_summary.get('is_rto', False),
+                    }
+                    
+                    # Get status display info
+                    current_status = shipment_info.get('status', 'IT')
+                    status_info = get_status_display_info(current_status)
+                    
+                    # Build timeline from tracking events
+                    for event in tracking_events:
+                        timeline.append({
+                            'title': event.get('message', 'Update'),
+                            'description': f"Status: {event.get('status_code', 'N/A')}",
+                            'location': event.get('location', ''),
+                            'date': event.get('timestamp'),
+                            'completed': True,
+                            'icon': event.get('icon', 'check-circle'),
+                            'is_cancelled': event.get('is_exception', False),
+                            'is_rto': event.get('is_rto', False),
+                            'is_delivered': event.get('is_delivered', False),
+                            'status_code': event.get('status_code'),
+                        })
+                    
+                    logger.info(f"Processed {len(timeline)} tracking events")
+                    
+                else:
+                    logger.warning("Failed to parse tracking data")
+            else:
+                logger.error(f"Tracking API failed: {error}")
                 
         except Exception as e:
-            logger.error(f"Error fetching tracking for {order.order_id}: {e}")
-            print(f"DEBUG: Exception: {e}")
-            
-    # 2. If no Zippypost data (or failure), fallback to local status
+            logger.exception(f"Error fetching tracking for {order.order_id}: {e}")
+    
+    # Fallback to local status if no tracking data
     if not timeline:
-        # Simple local status timeline
+        logger.info("No tracking data available, using local order status")
         timeline = [{
             'title': 'Order Placed',
-            'description': 'Order has been placed successfully',
+            'description': 'Your order has been placed successfully',
             'date': order.created_at,
             'completed': True,
-            'icon': 'check-circle'
+            'icon': 'check-circle',
+            'location': ''
         }]
+        
         if order.status == 'confirmed':
-             timeline.insert(0, {
-                'title': 'Confirmed',
-                'description': 'Order confirmed, preparing for shipment',
+            timeline.insert(0, {
+                'title': 'Order Confirmed',
+                'description': 'Order confirmed and preparing for shipment',
                 'date': order.updated_at,
                 'completed': True,
-                'icon': 'check-circle'
+                'icon': 'check-circle',
+                'location': ''
             })
         elif order.status == 'shipped':
             timeline.insert(0, {
                 'title': 'Shipped',
-                'description': f"Shipped with {order.courier_partner or 'courier'}",
+                'description': f"Package shipped via {order.courier_partner or 'courier partner'}",
                 'date': order.updated_at,
                 'completed': True,
-                'icon': 'truck'
+                'icon': 'truck',
+                'location': ''
             })
         elif order.status == 'delivered':
             timeline.insert(0, {
                 'title': 'Delivered',
-                'description': 'Package delivered to you',
-                'date': order.delivered_at,
+                'description': 'Package successfully delivered',
+                'date': order.delivered_at or order.updated_at,
                 'completed': True,
-                'icon': 'check-circle'
+                'icon': 'check-circle',
+                'location': ''
             })
-
+        elif order.status == 'cancelled':
+            timeline.insert(0, {
+                'title': 'Cancelled',
+                'description': 'Order has been cancelled',
+                'date': order.updated_at,
+                'completed': True,
+                'icon': 'x-circle',
+                'is_cancelled': True,
+                'location': ''
+            })
+    
     # Calculate Order Summary
     items = order.items.all()
     subtotal = sum(item.total_price for item in items)
     total_quantity = sum(item.quantity for item in items)
-    
-    # Try to get shipping from order if available (assuming added in prev steps or existing)
-    # Default to 0 if not found for robust display
-    shipping_fee = getattr(order, 'shipping_fee', Decimal('0.00')) 
+    shipping_fee = getattr(order, 'shipping_fee', Decimal('0.00'))
     
     order_summary = {
         'subtotal': subtotal,
@@ -1002,86 +1021,73 @@ def order_detail(request, order_id):
         'total_quantity': total_quantity,
         'item_count': items.count()
     }
-
+    
+    # Prepare context
     context = {
         'order': order,
         'order_items': items,
         'can_cancel': order.can_be_cancelled(),
         'timeline': timeline,
         'tracking_data': tracking_data,
+        'shipment_details': shipment_details,
+        'status_info': status_info,
         'order_summary': order_summary,
         'delivery_info': {
-             'estimated_delivery': getattr(order, 'estimated_delivery', None),
-             'delivery_date': order.delivered_at if order.status == 'delivered' else None,
-             'tracking_available': bool(timeline)
+            'estimated_delivery': getattr(order, 'estimated_delivery', None),
+            'delivery_date': order.delivered_at if order.status == 'delivered' else None,
+            'tracking_available': bool(timeline and len(timeline) > 1)
         },
-        'status_updates': [] 
     }
     
     return render(request, 'user_orders/order_detail.html', context)
-
-
+# ===========================================================================================================================================
 @require_POST
 def cancel_order(request, order_id):
     """
-    Cancel order and release reserved stock
+    Cancel order and release reserved stock - AJAX COMPATIBLE
     """
     import sys
+    from django.http import JsonResponse
+    
     print(f"\n{'='*50}", flush=True)
-    print(f"🔔 DEBUG: cancel_order VIEW HIT", flush=True)
+    print(f"🔔 DEBUG: cancel_order VIEW HIT (AJAX)", flush=True)
     print(f"📦 DEBUG: Order ID: {order_id}", flush=True)
-    print(f"👤 DEBUG: User: {request.user}", flush=True)
-    print(f"🔧 DEBUG: Method: {request.method}", flush=True)
-    print(f"{'='*50}\n", flush=True)
     sys.stdout.flush()
     
     try:
         order = get_object_or_404(Order, order_id=order_id, user=request.user)
-        print(f"✅ DEBUG: Order found: {order.order_id}, Status: {order.status}", flush=True)
         
         if not order.can_be_cancelled():
-            print("❌ DEBUG: Order cannot be cancelled", flush=True)
-            messages.error(request, 'Order cannot be cancelled at this stage')
-            return redirect('user-orders')
-        # 1. ALWAYS try to cancel Zippypost shipment if it exists
-        print(f"🔍 DEBUG: Checking for Zippypost shipment...", flush=True)
-        if hasattr(order, 'zippypost') and order.zippypost.tracking_number:
-            print(f"📮 DEBUG: Found Zippypost shipment: {order.zippypost.tracking_number}", flush=True)
-            print(f"📊 DEBUG: Current shipping status: {order.zippypost.shipping_status}", flush=True)
-            
+            return JsonResponse({
+                'success': False, 
+                'message': 'Order cannot be cancelled at this stage'
+            }, status=400)
+
+        # 1. ALWAYS try to cancel Nimbuspost shipment if it exists
+        if hasattr(order, 'nimbuspost') and order.nimbuspost.awb_number:
             try:
-                from .zippypost_utils import cancel_shipment
-                print(f"🚀 DEBUG: Calling Zippypost cancel API...", flush=True)
-                zip_success, zip_resp, zip_error = cancel_shipment(order.zippypost.tracking_number)
-                print(f"📥 DEBUG: Zippypost API response - Success: {zip_success}", flush=True)
-                print(f"📝 DEBUG: Error (if any): {zip_error}", flush=True)
+                from .nimbuspost_utils import cancel_shipment
+                print(f"🚀 DEBUG: Calling Nimbuspost cancel API for {order.nimbuspost.awb_number}", flush=True)
+                nimbus_success, nimbus_resp, nimbus_error = cancel_shipment(order.nimbuspost.awb_number)
                 
-                if zip_success:
-                    order.zippypost.shipping_status = 'CANCELLED'
-                    order.zippypost.save()
-                    print(f"✅ DEBUG: Zippypost status updated to CANCELLED", flush=True)
-                    messages.success(request, 'Shipment cancellation request sent to courier partner.')
+                if nimbus_success:
+                    order.nimbuspost.status = 'CANCELLED'
+                    order.nimbuspost.save()
+                    print(f"✅ DEBUG: Nimbuspost status updated to CANCELLED", flush=True)
                 else:
-                    print(f"⚠️ DEBUG: Zippypost cancellation failed: {zip_error}", flush=True)
-                    logger.error(f"Failed to cancel Zippypost shipment: {zip_error}")
-                    messages.warning(request, f"Could not cancel courier shipment automatically: {zip_error}. Please contact support.")
+                    print(f"⚠️ DEBUG: Nimbuspost cancellation failed: {nimbus_error}", flush=True)
+                    logger.error(f"Failed to cancel Nimbuspost shipment: {nimbus_error}")
             except Exception as e:
-                print(f"💥 DEBUG: Exception in Zippypost cancel: {str(e)}", flush=True)
-                logger.exception(f"Error in Zippypost cancel flow: {e}")
-                messages.warning(request, f"Could not cancel courier shipment: {str(e)}")
-        else:
-            print(f"ℹ️ DEBUG: No Zippypost shipment found for this order", flush=True)
+                logger.exception(f"Error in Nimbuspost cancel flow: {e}")
         
         # 2. ALWAYS cancel local order
-        print(f"🔄 DEBUG: Starting local order cancellation...", flush=True)
         with transaction.atomic():
             # Release reserved stock
-            print(f"📦 DEBUG: Releasing stock for {order.items.count()} items...", flush=True)
             for item in order.items.all():
                 variant = item.variant
-                variant.reserved_stock -= item.quantity
+                # Prevent negative reserved stock
+                variant.reserved_stock = max(0, variant.reserved_stock - item.quantity)
                 variant.save()
-                print(f" ✅ Released {item.quantity} units of {variant}", flush=True)
                 
                 # Record stock movement
                 StockMovement.objects.create(
@@ -1095,7 +1101,6 @@ def cancel_order(request, order_id):
                 )
             
             # Update order status
-            print(f"📝 DEBUG: Updating order status to 'cancelled'...", flush=True)
             order.status = 'cancelled'
             order.save()
             
@@ -1105,20 +1110,21 @@ def cancel_order(request, order_id):
                     discount = Discount.objects.get(code=order.coupon_code)
                     discount.used_count = max(0, discount.used_count - 1)
                     discount.save()
-                    print(f"🎟️ DEBUG: Reversed discount usage for code: {order.coupon_code}", flush=True)
                 except Discount.DoesNotExist:
-                    print(f"⚠️ DEBUG: Discount code not found: {order.coupon_code}", flush=True)
                     pass
-        
-        print(f"✅ DEBUG: Order cancellation completed successfully!", flush=True)
-        messages.success(request, f'Order {order.order_id} cancelled successfully')
-        return redirect('user-orders')
-        
+            
+            print(f"✅ DEBUG: Order cancellation completed successfully!", flush=True)
+            return JsonResponse({
+                'success': True, 
+                'message': 'Order cancelled successfully'
+            })
+            
     except Exception as e:
-        print(f"💥 DEBUG: Exception occurred: {str(e)}", flush=True)
-        logger.exception(f"Error cancelling order {order_id}: {str(e)}")
-        messages.error(request, f'Error cancelling order: {str(e)}')
-        return redirect('user-orders')
+        logger.exception(f"Error cancelling order {order_id}: {e}")
+        return JsonResponse({
+            'success': False, 
+            'message': f"Internal error: {str(e)}"
+        }, status=500)
 # =============================================================================================================
 @login_required
 def user_orders(request):
